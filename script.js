@@ -463,6 +463,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initCalendar();
 });
 
+/*
 // ============================================
 // CONTACT FORM HANDLING
 // ============================================
@@ -510,7 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
             */
         });
     }
-});
+}); */
 
 // Populate contact information dynamically
 function populateContactInfo() {
