@@ -508,10 +508,11 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 formStatus.innerHTML = '<p style="color: #ff6b35;">Error sending message. Please try again.</p>';
             });
-            */
+            
         });
     }
-}); */
+}); 
+*/
 
 // Populate contact information dynamically
 function populateContactInfo() {
