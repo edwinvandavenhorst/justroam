@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustRoam - Rent a Truck</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="main-nav"></nav>
+
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Rent our Ford Ranger with dual rooftop tents!</h1>
+            <p>Ready for your next adventure. Sleeps 4 comfortably</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="rent-content">
+        <div class="container">
+            <!-- Image Gallery -->
+            <div class="gallery-section">
+                <div class="gallery-main">
+                    <img id="mainImage" src="images/IMG_5025.jpeg" alt="Ford Ranger Main View" style="object-position: center 25%;">
+                    <button class="gallery-arrow gallery-arrow-left" id="prevBtn">‹</button>
+                    <button class="gallery-arrow gallery-arrow-right" id="nextBtn">›</button>
+                </div>
+                <div class="gallery-thumbnails">
+                    <div class="thumbnail active" data-image="images/IMG_5025.jpeg" data-position="center 25%">
+                        <img src="images/IMG_5025.jpeg" alt="View 1">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4042.jpeg" data-position="center 25%">
+                        <img src="images/IMG_4042.jpeg" alt="View 2">
+                    </div>
+                    <div class="thumbnail" data-image="images/image_forrest_1.jpeg" data-position="center 80%">
+                        <img src="images/image_forrest_1.jpeg" alt="View 3">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4254.jpeg" data-position="center 60%">
+                        <img src="images/IMG_4254.jpeg" alt="View 4">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4825.jpeg" data-position="center 20%">
+                        <img src="images/IMG_4825.jpeg" alt="View 5">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4829.jpeg" data-orientation="portrait">
+                        <img src="images/IMG_4829.jpeg" alt="View 6">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4831.jpeg" data-position="center 20%">
+                        <img src="images/IMG_4831.jpeg" alt="View 7">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4832.jpeg">
+                        <img src="images/IMG_4832.jpeg" alt="View 8">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4834.jpeg">
+                        <img src="images/IMG_4834.jpeg" alt="View 9">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4837.jpeg" data-orientation="portrait">
+                        <img src="images/IMG_4837.jpeg" alt="View 10">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4840.jpeg" data-orientation="portrait">
+                        <img src="images/IMG_4840.jpeg" alt="View 11">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4841.jpeg" data-orientation="portrait">
+                        <img src="images/IMG_4841.jpeg" alt="View 12">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4843.jpeg" data-orientation="portrait">
+                        <img src="images/IMG_4843.jpeg" alt="View 13">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_4866.jpeg" data-orientation="portrait">
+                        <img src="images/IMG_4866.jpeg" alt="View 14">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_Forrest_2.jpeg">
+                        <img src="images/IMG_Forrest_2.jpeg" alt="View 15">
+                    </div>
+                    <div class="thumbnail" data-image="images/IMG_3836.jpeg">
+                        <img src="images/IMG_3836.jpeg" alt="View 16">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details and Booking -->
+            <div class="rent-details-grid">
+                <!-- Vehicle Details -->
+                <div class="details-card">
+                    <h2>Vehicle specifications</h2>
+                    <ul class="specs-list">
+                        <li><strong>Vehicle:</strong> Ford Ranger</li>
+                        <li><strong>Sleeping capacity:</strong> 4 people (dual rooftop tents)<br>
+                            <em style="font-size: 0.9rm; color: #666; padding-left: 9.2rem;">1 x 140cm & 1 x 160cm</em>
+                        </li>
+                        <li><strong>Transmission:</strong> Manual</li>
+                        <li><strong>Fuel type:</strong> Diesel</li>
+                        <li><strong>Drive:</strong> 4WD</li>
+                        <br>
+                    </ul>
+
+                 <!--   <h3>Features & equipment</h3>
+                    <ul class="features-list">
+                        <li>✓ 50l water tank with pump</li>
+                        <li>✓ Kitchen with dual-burner gas stove</li>
+                        <li>✓ 2 pans, cutlery and chopping board</li>
+                        <li>✓ Portable coffee maker and jet boil water cooker</li>
+                        <li>✓ Propane gas tank - refillable</li>
+                        <li>✓ Awning with built-in LED lights</li>
+                        <li>✓ Table with 4 foldable chairs and a bench</li>
+                        <li>✓ LED lighting throughout (tents, awning, canopy)</li>
+                        <li>✓ Power outlets - can even charge laptop</li>
+                        <li>✓ Upgraded suspension for off-road capability</li>
+                        <li>✓ Recovery equipment: winch & recovery plates</li>
+                        <li>✓ Optional: convert awning into enclosed tent room</li>
+                    </ul>
+                -->
+
+                <h3>Features & Equipment</h3>
+
+                <h4 style="color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;">SLEEPING</h4>
+                <ul class="features-list">
+                    <li>✓ Dual rooftop tents (Sheepie Yuna 140cm & 160cm)</li>
+                    <li>✓ LED lighting in both tents</li>
+                    <li>✓ Comfortable matresses of 250cm long, sleeps even tall people</li>
+                </ul>
+
+                <h4 style="color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;">KITCHEN</h4>
+                <ul class="features-list">
+                    <li>✓ 50l water tank with pump</li>
+                    <li>✓ 45l fridge</li>
+                    <li>✓ Dual-burner gas stove</li>
+                    <li>✓ Pans and cutlery</li>
+                    <li>✓ Portable coffee maker and jetboil water cooker</li>
+                    <li>✓ Propane gas tank - refillable</li>
+                </ul>
+
+                <h4 style="color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;">CAMP SETUP</h4>
+                <ul class="features-list">
+                    <li>✓ Awning with built-in LED lights</li>
+                    <li>✓ Table with 4 foldable chairs and a bench</li>
+                    <li>✓ Optional: convert awning into enclosed tent room</li>
+                </ul>
+
+                <h4 style="color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;">POWER & TECH</h4>
+                <ul class="features-list">
+                    <li>✓ Power outlets - can charge laptops</li>
+                    <li>✓ 5 USB charging ports: 3x USB-A, 2x USB-C</li>
+                </ul>
+
+                <h4 style="color: var(--primary-color); margin-top: 1.5rem; margin-bottom: 0.75rem;">OFF-ROAD & SAFETY</h4>
+                <ul class="features-list">
+                    <li>✓ Upgraded suspension for off-road capability</li>
+                    <li>✓ Recovery equipment: winch & recovery plates</li>
+                    <li>✓ Compressor</li>
+                </ul>
+                </div>
+
+                <!-- Availability Calendar -->
+                <div class="details-card calendar-card">
+                    <h2>Check Availability</h2>
+                    
+                    <div class="calendar-container">
+                        
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="prevMonth" class="calendar-nav-btn">‹</button>
+                                <h3 id="currentMonth">Loading...</h3>
+                                <button id="nextMonth" class="calendar-nav-btn">›</button>
+                            </div>
+                            
+                            <div class="calendar-weekdays">
+                                <div>Mon</div>
+                                <div>Tue</div>
+                                <div>Wed</div>
+                                <div>Thu</div>
+                                <div>Fri</div>
+                                <div>Sat</div>
+                                <div>Sun</div>
+                            </div>
+                            
+                            <div id="calendarDays" class="calendar-days">
+                                <!-- Days will be generated by JavaScript -->
+                            </div>
+                            
+                            <div class="calendar-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color available"></span> Available
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color booked"></span> Booked / unavailable
+                                </div>
+                            </div>
+                                                
+                        <div class="booking-cta">
+                            <p>Ready to book? Check availability and pricing on Goboony</p>
+                            <a href="https://www.goboony.nl/campers/nederland/zuid-holland/voorburg/92756" class="btn btn-primary" target="_blank">Book on Goboony</a>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="info-sections">
+                <div class="info-card">
+                    <h3>Perfect for 🏕️</h3>
+                    <p>Weekend getaways, extended overland adventures, family trips, beach camping, mountain exploration, and off-grid experiences across Europe and North Africa.</p>
+                </div>
+                <div class="info-card">
+                    <h3>What's included 📦</h3>
+                    <p>Your rental includes the fully equipped Ford Ranger with dual rooftop tents, basic camping equipment, kitchen supplies, and recovery gear. We provide a comprehensive handover to ensure you're comfortable with all systems before departure.</p>
+                </div>
+                <div class="info-card">
+                    <h3>Rental requirements ⚠️</h3>
+                    <p>Valid driver's license (held for minimum 2 years), minimum age 25. Insurance and breakdown coverage included. Security deposit required. </p>
+                    <br><p>Not avaiable for parties or festivals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="main-footer"></footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

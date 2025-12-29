@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustRoam - Get in Touch</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="script.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="main-nav"></nav>
+
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Get in Touch</h1>
+            <p>Have questions? Want to book the truck? Let's connect!</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-container">
+                    <div class="contact-form">
+                    <h2>Send us a message</h2>
+                    <br>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a subject</option>
+                                <option value="rental">Rental Inquiry</option>
+                                <option value="booking">Booking Question</option>
+                                <option value="build">Build Questions</option>
+                                <option value="general">General Question</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                    </form>
+                    <div class="form-status" id="formStatus"></div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="contact-info-container">
+                    <div class="contact-info-card">
+                        <h2>Contact info</h2>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-details">
+                                <h3>Email</h3>
+                                <a href="mailto:" id="contact-email">Loading...</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-details">
+                                <h3>Phone</h3>
+                                <a href="tel:" id="contact-phone">Loading...</a>
+                            </div>
+                        </div>
+                                                
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="social-card">
+                        <h2>Follow our adventures</h2>
+                        <p>Stay updated with our latest trips and project builds</p>
+                        
+                        <div class="social-links-grid">
+                        <a href="#" class="social-link-card" target="_blank">
+                            <div class="social-icon">📷</div>
+                            <div class="social-info">
+                                <h3>Instagram</h3>
+                                <p>@_justroam_</p>  <!-- Changed from @yourusername -->
+                            </div>
+                        </a>
+                        
+                        <a href="#" class="social-link-card" target="_blank">
+                            <div class="social-icon">🔗</div>
+                            <div class="social-info">
+                                <h3>Linktree</h3>
+                                <p>_justroam_</p>  <!-- Added "linktree" text -->
+                            </div>
+                        </a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>How do I book the truck?</h3>
+                    <p>You can book through our Goboony page or contact us directly via the form above. We'll respond within 24 hours to confirm availability and arrange pickup details.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>What's included in the rental?</h3>
+                    <p>The rental includes the fully equipped Ford Ranger with dual rooftop tents, basic camping equipment, kitchen supplies, bedding, and recovery gear. Insurance and breakdown coverage are also included.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Can I take the truck outside the Netherlands?</h3>
+                    <p>Yes! The truck is equipped for European travel. Morocco and other international trips are possible - just let us know your destination when booking so we can ensure you have the right documentation.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>What are the rental requirements?</h3>
+                    <p>You'll need a valid driver's license (held for minimum 2 years), minimum age 25, and a clean driving record. A security deposit is required at pickup.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Is there a minimum rental period?</h3>
+                    <p>We have a minimum rental period of 3 days for weekend trips. Longer rentals (1 week+) receive preferential pricing.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Do you offer delivery?</h3>
+                    <p>Pickup is typically from the Netherlands, but delivery can be arranged for longer rentals. Contact us to discuss options and pricing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+    <footer class="footer" id="main-footer"></footer>

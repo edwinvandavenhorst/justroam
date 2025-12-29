@@ -1,0 +1,29 @@
+{
+  "seasons": [
+    {
+      "name": "High Season",
+      "startDate": "2026-06-27",
+      "endDate": "2026-09-01",
+      "dailyRate": 200
+    },
+    {
+      "name": "Spring Season",
+      "startDate": "2026-04-25",
+      "endDate": "2026-06-27",
+      "dailyRate": 175
+    },
+    {
+      "name": "Fall Season",
+      "startDate": "2026-09-01",
+      "endDate": "2026-10-04",
+      "dailyRate": 175
+    },
+    {
+      "name": "Low Season",
+      "startDate": "2025-10-04",
+      "endDate": "2026-04-25",
+      "dailyRate": 160
+    }
+  ],
+  "lastUpdated": "2025-12-28T05:28:58.287Z"
+}

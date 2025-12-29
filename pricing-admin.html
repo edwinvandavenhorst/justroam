@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Admin - JustRoam</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .pricing-table th,
+        .pricing-table td {
+            padding: 1rem;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        .pricing-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .pricing-table input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .pricing-table input[type="number"] {
+            width: 100px;
+        }
+        
+        .pricing-table input[type="date"] {
+            width: 150px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .output-box {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 2rem;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow: auto;
+            border: 1px solid #ddd;
+        }
+        
+        .add-row-btn {
+            margin: 1rem 0;
+        }
+        
+        .instructions {
+            background: #e8f5e9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .instructions ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        .instructions li {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>📊 Pricing Configuration Tool</h1>
+        
+        <div class="instructions">
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li><strong>Load existing pricing:</strong> The tool automatically loads your current pricing.json file</li>
+                <li><strong>Edit the tables:</strong> Add, remove, or modify seasonal pricing and unavailable dates</li>
+                <li><strong>Click "💾 Save to pricing.json":</strong> Validates your data</li>
+                <li><strong>Click "⬇️ Download pricing.json":</strong> Downloads the updated file</li>
+                <li><strong>Replace the file:</strong> Move the downloaded file to your JustRoam folder (replace old one)</li>
+                <li><strong>Refresh your website:</strong> The calendar automatically reads the new pricing!</li>
+            </ol>
+            <p><strong>💡 Tip:</strong> Your website always reads from pricing.json - you never need to edit code!</p>
+        </div>
+        
+        <h2>⛰️ Seasonal Pricing</h2>
+        <table class="pricing-table" id="seasonTable">
+            <thead>
+                <tr>
+                    <th>Season Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Daily Rate (€)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="seasonTableBody">
+                <tr>
+                    <td><input type="text" value="High Season" class="season-name"></td>
+                    <td><input type="date" value="2026-06-27" class="season-start"></td>
+                    <td><input type="date" value="2026-09-01" class="season-end"></td>
+                    <td><input type="number" value="161" class="season-rate"></td>
+                    <td><button onclick="deleteRow(this)" class="btn btn-secondary">Delete</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="Spring Season" class="season-name"></td>
+                    <td><input type="date" value="2026-04-25" class="season-start"></td>
+                    <td><input type="date" value="2026-06-27" class="season-end"></td>
+                    <td><input type="number" value="141" class="season-rate"></td>
+                    <td><button onclick="deleteRow(this)" class="btn btn-secondary">Delete</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="Fall Season" class="season-name"></td>
+                    <td><input type="date" value="2026-09-01" class="season-start"></td>
+                    <td><input type="date" value="2026-10-04" class="season-end"></td>
+                    <td><input type="number" value="141" class="season-rate"></td>
+                    <td><button onclick="deleteRow(this)" class="btn btn-secondary">Delete</button></td>
+                </tr>
+                <tr>
+                    <td><input type="text" value="Low Season" class="season-name"></td>
+                    <td><input type="date" value="2025-10-04" class="season-start"></td>
+                    <td><input type="date" value="2026-04-25" class="season-end"></td>
+                    <td><input type="number" value="129" class="season-rate"></td>
+                    <td><button onclick="deleteRow(this)" class="btn btn-secondary">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button onclick="addSeasonRow()" class="btn btn-primary add-row-btn">+ Add Season</button>
+        
+        <div class="btn-group">
+            <button onclick="loadFromJSON()" class="btn btn-secondary">📂 Load from pricing.json</button>
+            <button onclick="saveToJSON()" class="btn btn-primary">💾 Save to pricing.json</button>
+            <button onclick="downloadJSON()" class="btn btn-primary">⬇️ Download pricing.json</button>
+        </div>
+        
+        <h3>Status</h3>
+        <div class="output-box" id="output">Load existing pricing.json or edit the tables above and click "Save to pricing.json"</div>
+        
+        <a href="rent.html" class="btn btn-secondary" style="margin-top: 2rem; display: inline-block;">← Back to Rent Page</a>
+    </div>
+    
+    <script>
+        // Load pricing from JSON file on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            loadFromJSON();
+        });
+        
+        function addSeasonRow() {
+            const tbody = document.getElementById('seasonTableBody');
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td><input type="text" value="" class="season-name" placeholder="Season name"></td>
+                <td><input type="date" value="" class="season-start"></td>
+                <td><input type="date" value="" class="season-end"></td>
+                <td><input type="number" value="" class="season-rate" placeholder="161"></td>
+                <td><button onclick="deleteRow(this)" class="btn btn-secondary">Delete</button></td>
+            `;
+        }
+        
+        function deleteRow(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+        
+        async function loadFromJSON() {
+            try {
+                const response = await fetch('pricing.json');
+                if (!response.ok) {
+                    throw new Error('pricing.json not found');
+                }
+                
+                const data = await response.json();
+                
+                // Clear existing table
+                document.getElementById('seasonTableBody').innerHTML = '';
+                
+                // Load seasons
+                if (data.seasons) {
+                    data.seasons.forEach(season => {
+                        const tbody = document.getElementById('seasonTableBody');
+                        const row = tbody.insertRow();
+                        row.innerHTML = `
+                            <td><input type="text" value="${season.name}" class="season-name"></td>
+                            <td><input type="date" value="${season.startDate}" class="season-start"></td>
+                            <td><input type="date" value="${season.endDate}" class="season-end"></td>
+                            <td><input type="number" value="${season.dailyRate}" class="season-rate"></td>
+                            <td><button onclick="deleteRow(this)" class="btn btn-secondary">Delete</button></td>
+                        `;
+                    });
+                }
+                
+                document.getElementById('output').textContent = '✅ Loaded pricing.json successfully!';
+                
+            } catch (error) {
+                console.log('Could not load pricing.json:', error);
+                document.getElementById('output').textContent = 'ℹ️ No pricing.json found. Using default values. Edit and click "Save to pricing.json" to create it.';
+            }
+        }
+        
+        function collectData() {
+            const seasons = [];
+            const seasonRows = document.querySelectorAll('#seasonTableBody tr');
+            
+            seasonRows.forEach(row => {
+                const name = row.querySelector('.season-name').value;
+                const start = row.querySelector('.season-start').value;
+                const end = row.querySelector('.season-end').value;
+                const rate = parseInt(row.querySelector('.season-rate').value);
+                
+                if (name && start && end && rate) {
+                    seasons.push({
+                        name: name,
+                        startDate: start,
+                        endDate: end,
+                        dailyRate: rate
+                    });
+                }
+            });
+            
+            return {
+                seasons: seasons,
+                lastUpdated: new Date().toISOString()
+            };
+        }
+        
+        function saveToJSON() {
+            const data = collectData();
+            const jsonString = JSON.stringify(data, null, 2);
+            
+            // Show in output box
+            document.getElementById('output').textContent = 
+                '✅ Pricing data ready!\n\n' +
+                'IMPORTANT: Your browser cannot directly save files.\n' +
+                'Click "⬇️ Download pricing.json" below to download the file.\n' +
+                'Then replace the old pricing.json in your JustRoam folder.\n\n' +
+                'Preview:\n' + jsonString;
+        }
+        
+        function downloadJSON() {
+            const data = collectData();
+            const jsonString = JSON.stringify(data, null, 2);
+            
+            // Create blob and download
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pricing.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            document.getElementById('output').textContent = 
+                '✅ Downloaded pricing.json!\n\n' +
+                'Next steps:\n' +
+                '1. Find the downloaded pricing.json file (probably in Downloads folder)\n' +
+                '2. Move it to your JustRoam folder (replace the old one if it exists)\n' +
+                '3. Refresh your website - the calendar will now show updated prices!\n\n' +
+                'Note: Unavailable dates come from your iCal feed automatically.';
+        }
+    </script>
+</body>
+</html>
