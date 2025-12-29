@@ -67,6 +67,19 @@
                         <button type="submit" class="btn btn-primary btn-large">Send Message</button>
                     </form>
                     <div class="form-status" id="formStatus"></div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const form = document.getElementById('contactForm');
+                            if (form) {
+                                form.addEventListener('submit', function() {
+                                    // After Formspree processes, redirect after 2 seconds
+                                    setTimeout(function() {
+                                        window.location.href = 'thank-you.html';
+                                    }, 2000);
+                                });
+                            }
+                        });
+                    </script>
                     </div>
                 </div>
 
