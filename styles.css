@@ -1283,10 +1283,13 @@ img {
 
 .footer-instagram {
     display: flex;
-    align-items: center;  /* Vertically center icon and text */
-    gap: 0.5rem;  /* Space between icon and text */
+    align-items: center;  /* Vertically centers icon and text */
+ /*   justify-content: center;  /* Horizontally centers the whole thing */
+    gap: 0.5 rem;
     color: white;
     text-decoration: none;
+    white-space: nowrap;
+
 }
 
 .footer-img {
@@ -1295,10 +1298,14 @@ img {
     display: block;
 }
 
+.footer-instagram svg {
+    display: inline-block;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
 
 .footer-instagram span {
-    margin-left: 0.5rem;
-    color: white;
+    line-height: 1;
 }
 
 .footer-links a {
