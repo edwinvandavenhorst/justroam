@@ -1281,6 +1281,26 @@ img {
     list-style: none;
 }
 
+.footer-instagram {
+    display: flex;
+    align-items: center;  /* Vertically center icon and text */
+    gap: 0.5rem;  /* Space between icon and text */
+    color: white;
+    text-decoration: none;
+}
+
+.footer-img {
+    height: 200px;
+    width: auto;
+    display: block;
+}
+
+
+.footer-instagram span {
+    margin-left: 0.5rem;
+    color: white;
+}
+
 .footer-links a {
     color: var(--white);
     text-decoration: none;
