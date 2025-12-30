@@ -377,7 +377,7 @@ img {
 .cta-section {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
     color: var(--white);
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-md) 0;
     text-align: center;
 }
 

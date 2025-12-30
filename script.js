@@ -54,10 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="footer-section">
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
-                        <li><a href="rent.html">Rent a Truck</a></li>
-                        <li><a href="build.html">Build Details</a></li>
-                        <li><a href="stories.html">Travel Stories</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                    <li>
+                        <div class="footer-kvk" style="display: flex; align-items: center; gap: 0.5rem; color: white;">
+                            <img src="images/building.png" alt="Building icon" style="width: 24px; height: 24px; display: inline-block; flex-shrink: 0; vertical-align: middle;">
+                            <span>KVK: 71621865</span>
+                        </div>
+                    </li>
                         <li>
                             <a href="https://www.instagram.com/_justroam_/" class="footer-instagram" target="_blank" title="Follow us on Instagram">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
