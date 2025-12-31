@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </li>
                         <li>
                             <a href="tel:+31611334832" class="footer-links">
-                                <img src="images/phone.png" alt="Phone">
+                                <img src="images/phone.png" alt="phone">
                                 <span>+31 6 1133 4832</span>
                             </a>
                         </li>
