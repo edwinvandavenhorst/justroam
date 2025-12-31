@@ -1831,6 +1831,45 @@ footer {
     .page-header h1 {
         font-size: 2rem;
     }
+    /* Calendar */
+    .calendar-container {
+        padding: var(--spacing-xs);
+    }
+    
+    .calendar-header {
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .calendar-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .calendar-weekdays,
+    .calendar-days {
+        gap: 2px;
+        font-size: 0.75rem;
+    }
+    
+    .calendar-day {
+        padding: 0.2rem;
+        padding-top: 0.3rem;
+        font-size: 0.75rem;
+    }
+    
+    .calendar-nav-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 1.2rem;
+    }
+    
+    .calendar-legend {
+        margin-top: var(--spacing-xs);
+        font-size: 0.8rem;
+    }
+    
+    /* Build Page - Products */
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Tablet styles */
@@ -1876,43 +1915,3 @@ footer {
     margin-top: 0.25rem;
 }
 
-/* Calendar mobile fixes */
-.calendar-container {
-    padding: var(--spacing-sm);
-}
-
-.calendar-header {
-    margin-bottom: var(--spacing-sm);
-}
-
-.calendar-header h3 {
-    font-size: 1.25rem;
-}
-
-.calendar-weekdays,
-.calendar-days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 0.25rem;
-    width: 100%;
-}
-
-.calendar-weekdays div,
-.calendar-days div {
-    aspect-ratio: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-    padding: 0.25rem;
-}
-
-.calendar-nav-btn {
-    padding: 0.5rem;
-    font-size: 1.5rem;
-}
-
-.calendar-legend {
-    margin-top: var(--spacing-sm);
-    font-size: 0.875rem;
-}
