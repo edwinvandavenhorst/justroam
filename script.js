@@ -1,4 +1,87 @@
 // ============================================
+// CENTRALIZED LINK MANAGEMENT
+// ============================================
+// Update all your links in ONE place - right here!
+
+// ===== YOUR LINKS - UPDATE THESE =====
+const LINKS = {
+    goboony: 'https://www.goboony.nl/campers/nederland/zuid-holland/voorburg/92756',
+    instagram: 'https://instagram.com/_justroam_',
+    linktree: 'https://linktr.ee/_justroam_',
+    email: 'info@justroam.nl',
+    phone: '+31611334832',
+    phoneLink: 'tel:+31611334832'  // Same as phone but formatted for tel: links
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ===== GOBOONY LINKS =====
+    // Updates all "Book on Goboony" buttons across the site
+    document.querySelectorAll('.btn-goboony').forEach(link => {
+        link.href = LINKS.goboony;
+        console.log('Updated Goboony button:', link.href);
+    });
+    
+    // Also update any text that says "Book on Goboony" or similar
+    document.querySelectorAll('a').forEach(link => {
+        const text = link.textContent.toLowerCase();
+        if (text.includes('book on goboony') || text.includes('goboony')) {
+            if (link.getAttribute('href') === '#' || link.href.endsWith('#')) {
+                link.href = LINKS.goboony;
+                console.log('Updated Goboony text link:', link.href);
+            }
+        }
+    });
+    
+    // ===== INSTAGRAM LINKS =====
+    // Updates all Instagram links
+    document.querySelectorAll('a').forEach(link => {
+        const text = link.textContent.toLowerCase();
+        // Check if it's an Instagram link by text content
+        if (text.includes('instagram') || (text.includes('@') && text.includes('justroam'))) {
+            // Update if href is # or ends with # (works with local files too)
+            if (link.getAttribute('href') === '#' || link.href.endsWith('#')) {
+                link.href = LINKS.instagram;
+            }
+        }
+    });
+    
+    // ===== LINKTREE LINKS =====
+    // Updates all Linktree links
+    document.querySelectorAll('a').forEach(link => {
+        const text = link.textContent.toLowerCase();
+        if (text.includes('linktree')) {
+            if (link.getAttribute('href') === '#' || link.href.endsWith('#')) {
+                link.href = LINKS.linktree;
+            }
+        }
+    });
+    
+    // ===== EMAIL LINKS =====
+    // Updates all email addresses and mailto links
+    document.querySelectorAll('a[href*="mailto"]').forEach(link => {
+        link.href = 'mailto:' + LINKS.email;
+        if (link.textContent.includes('example.com')) {
+            link.textContent = LINKS.email;
+        }
+    });
+    
+    // ===== PHONE LINKS =====
+    // Updates all phone number links
+    document.querySelectorAll('a[href*="tel"]').forEach(link => {
+        link.href = LINKS.phoneLink;
+        if (link.textContent.includes('1234 5678')) {
+            link.textContent = LINKS.phone;
+        }
+    });
+    
+    console.log('✅ All links updated successfully!');
+    console.log('Goboony:', LINKS.goboony);
+    console.log('Instagram:', LINKS.instagram);
+    console.log('Linktree:', LINKS.linktree);
+});
+
+// ============================================
 // NAVIGATION - CENTRALIZED
 // ============================================
 
@@ -52,19 +135,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 </a>
 
                 <div class="footer-section">
-                    <h3>Quick Links</h3>
+                    <h3>Contact details</h3>
                     <ul class="footer-links">
-                    <li>
-                        <div class="footer-kvk" style="display: flex; align-items: center; gap: 0.5rem; color: white;">
-                            <img src="images/building.png" alt="Building icon" style="width: 24px; height: 24px; display: inline-block; flex-shrink: 0; vertical-align: middle;">
-                            <span>KVK: 71621865</span>
-                        </div>
-                    </li>
                         <li>
-                            <a href="https://www.instagram.com/_justroam_/" class="footer-instagram" target="_blank" title="Follow us on Instagram">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" fill="white"/>
-                                </svg>
+                            <div class="footer-nolink">
+                                <img src="images/building.png" alt="Building icon">
+                                <span>KVK: 71621865</span>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="mailto:info@justroam.nl" class="footer-links" target="_blank" title="Contact us">
+                                <img src="images/mail.png" alt="Email icon">
+                                <span>info@justroam.nl</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+31611334832" class="footer-links">
+                                <img src="images/Phone.png" alt="Phone">
+                                <span>+31 6 1133 4832</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/_justroam_/" class="footer-links" target="_blank" title="Follow us on Instagram">
+                                <img src="images/instagram.png" alt="Instagram icon">
                                 <span>Follow us on Instagram</span>
                             </a>
                         </li>
@@ -72,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 JustRoam. All rights reserved.</p>
+                <p>&copy; JustRoam. All rights reserved.</p>
             </div>
         </div>
     `;
@@ -472,56 +565,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initCalendar();
 });
 
-/*
+
 // ============================================
 // CONTACT FORM HANDLING
 // ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-            
-         // Show loading state
-            formStatus.innerHTML = '<p style="color: #2c5f2d;">Sending message...</p>';
-
-        // Redirect to thank you page after brief delay
-            setTimeout(() => {
-                window.location.href = 'thank-you.html';
-            }, 1000);
-            
-            // In production, you would send this to your backend:
-            /*
-            fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            })
-            .then(response => response.json())
-            .then(data => {
-                formStatus.innerHTML = '<p style="color: #2c5f2d;">Message sent successfully!</p>';
-                contactForm.reset();
-            })
-            .catch(error => {
-                formStatus.innerHTML = '<p style="color: #ff6b35;">Error sending message. Please try again.</p>';
-            });
-            
-        });
-    }
-}); 
-*/
 
 // Populate contact information dynamically
 function populateContactInfo() {
@@ -543,54 +590,6 @@ function populateContactInfo() {
 // Run on page load
 document.addEventListener('DOMContentLoaded', populateContactInfo);
 
-// ============================================
-// NEWSLETTER SUBSCRIPTION
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const newsletterForms = document.querySelectorAll('.newsletter-form, .subscribe-form');
-    
-    newsletterForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = this.querySelector('input[type="email"]').value;
-            
-            // Show success message
-            const successMsg = document.createElement('p');
-            successMsg.style.color = '#2c5f2d';
-            successMsg.style.fontWeight = '600';
-            successMsg.style.marginTop = '1rem';
-            successMsg.textContent = 'Thanks for subscribing! Check your email for confirmation.';
-            
-            this.appendChild(successMsg);
-            this.querySelector('input[type="email"]').value = '';
-            
-            // Remove message after 5 seconds
-            setTimeout(() => {
-                successMsg.remove();
-            }, 5000);
-            
-            // In production, send to your backend:
-            /*
-            fetch('/api/subscribe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: email }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle success
-            })
-            .catch(error => {
-                // Handle error
-            });
-            */
-        });
-    });
-});
 
 // ============================================
 // SMOOTH SCROLLING
@@ -704,88 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ============================================
-// CENTRALIZED LINK MANAGEMENT
-// ============================================
-// Update all your links in ONE place - right here!
 
-// ===== YOUR LINKS - UPDATE THESE =====
-const LINKS = {
-    goboony: 'https://www.goboony.nl/campers/nederland/zuid-holland/voorburg/92756',
-    instagram: 'https://instagram.com/_justroam_',
-    linktree: 'https://linktr.ee/_justroam_',
-    email: 'info@justroam.nl',
-    phone: '+31611334832',
-    phoneLink: 'tel:+31611334832'  // Same as phone but formatted for tel: links
-};
-
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // ===== GOBOONY LINKS =====
-    // Updates all "Book on Goboony" buttons across the site
-    document.querySelectorAll('.btn-goboony').forEach(link => {
-        link.href = LINKS.goboony;
-        console.log('Updated Goboony button:', link.href);
-    });
-    
-    // Also update any text that says "Book on Goboony" or similar
-    document.querySelectorAll('a').forEach(link => {
-        const text = link.textContent.toLowerCase();
-        if (text.includes('book on goboony') || text.includes('goboony')) {
-            if (link.getAttribute('href') === '#' || link.href.endsWith('#')) {
-                link.href = LINKS.goboony;
-                console.log('Updated Goboony text link:', link.href);
-            }
-        }
-    });
-    
-    // ===== INSTAGRAM LINKS =====
-    // Updates all Instagram links
-    document.querySelectorAll('a').forEach(link => {
-        const text = link.textContent.toLowerCase();
-        // Check if it's an Instagram link by text content
-        if (text.includes('instagram') || (text.includes('@') && text.includes('justroam'))) {
-            // Update if href is # or ends with # (works with local files too)
-            if (link.getAttribute('href') === '#' || link.href.endsWith('#')) {
-                link.href = LINKS.instagram;
-            }
-        }
-    });
-    
-    // ===== LINKTREE LINKS =====
-    // Updates all Linktree links
-    document.querySelectorAll('a').forEach(link => {
-        const text = link.textContent.toLowerCase();
-        if (text.includes('linktree')) {
-            if (link.getAttribute('href') === '#' || link.href.endsWith('#')) {
-                link.href = LINKS.linktree;
-            }
-        }
-    });
-    
-    // ===== EMAIL LINKS =====
-    // Updates all email addresses and mailto links
-    document.querySelectorAll('a[href*="mailto"]').forEach(link => {
-        link.href = 'mailto:' + LINKS.email;
-        if (link.textContent.includes('example.com')) {
-            link.textContent = LINKS.email;
-        }
-    });
-    
-    // ===== PHONE LINKS =====
-    // Updates all phone number links
-    document.querySelectorAll('a[href*="tel"]').forEach(link => {
-        link.href = LINKS.phoneLink;
-        if (link.textContent.includes('1234 5678')) {
-            link.textContent = LINKS.phone;
-        }
-    });
-    
-    console.log('✅ All links updated successfully!');
-    console.log('Goboony:', LINKS.goboony);
-    console.log('Instagram:', LINKS.instagram);
-    console.log('Linktree:', LINKS.linktree);
-});
 
 // ============================================
 // POPULATE CONTACT INFO
