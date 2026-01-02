@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">Home</a></li>
                 <li><a href="rent.html" class="nav-link ${currentPage === 'rent.html' ? 'active' : ''}">Rent a truck</a></li>
-                <!--<li><a href="build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">Build a truck</a></li>-->
+                <li><a href="build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">Build your truck</a></li>
                 <!--<li><a href="stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">Our stories</a><li>-->
                 <li><a href="faq.html" class="nav-link ${currentPage === 'faq.html' ? 'active' : ''}">FAQs</a></li>
                 <li><a href="contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">Get in touch</a></li>
@@ -748,4 +748,267 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
+
+// ============================================
+// BUILD PAGE - TIMELINE GALLERY (ADDED)
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const timelineEl = document.getElementById('buildTimeline');
+    const jumpEl = document.getElementById('buildJump');
+
+    // Only run on build.html
+    if (!timelineEl) return;
+
+    // --- Configure your timeline here ---
+    // Assumes images are named IMG_1.jpeg ... IMG_49.jpeg inside /images
+    const BUILD_PHASES = [
+  {
+    id: 'stock',
+    title: 'Stock',
+    note: 'Baseline shots before any changes.',
+    images: [1, 2, 3, 4]
+  },
+  {
+    id: 'step-1-remove-tonneau',
+    title: 'Step 1: Remove tonneau cover & add canopy',
+    note: '',
+    images: [5,6,7]
+  },
+  
+  {
+    id: 'step-2-upgrade-lights',
+    title: 'Step 2: Upgrade lights',
+    note: '',
+    images: [8, 9, 15, 16, 17]
+  },
+  {
+    id: 'step-3-install-winch',
+    title: 'Step 3: Install winch',
+    note: '',
+    images: [18, 19]
+  },
+  {
+    id: 'step-4-install-snorkel',
+    title: 'Step 4: Install snorkel',
+    note: '',
+    images: [10, 11]
+  },
+  {
+    id: 'step-5-install-water-tank',
+    title: 'Step 5: Install water tank',
+    note: '',
+    images: [12, 13]
+  },
+  {
+    id: 'step-6-install-electrical',
+    title: 'Step 6: Install electrical system',
+    note: '',
+    images: [14, 20]
+  },
+  {
+    id: 'step-7-build-interior',
+    title: 'Step 7: Build interior',
+    note: '',
+    images: [21, 31, 32, 33, 38, 39, 40]
+  },
+  {
+    id: 'step-8-upgrade-suspension',
+    title: 'Step 8: Upgrade suspension',
+    note: '',
+    images: [35, 36]
+  },
+  {
+    id: 'step-9-make-offroad-ready',
+    title: 'Step 9: Make offroad ready',
+    note: '',
+    images: [22, 34]
+  },
+  {
+    id: 'step-10-place-roof-tents',
+    title: 'Step 10: Place roof tents',
+    note: '',
+    images: [23, 24, 25, 26, 27, 28, 29, 30]
+  },
+  {
+    id: 'step-11-finished-interior',
+    title: 'Step 11: Finished interior',
+    note: '',
+    images: [41, 42, 43, 44, 45, 46, 47, 48, 49]
+  },
+  {
+    id: 'step-12-finished-car-hero',
+    title: 'Step 12: Finished car - hero',
+    note: '',
+    images: [50]
+  }
+];
+
+
+    // --- Render jump nav ---
+    if (jumpEl) {
+        jumpEl.innerHTML = BUILD_PHASES.map(p =>
+            `<a href="#${p.id}">${escapeHtml(p.title)}</a>`
+        ).join('');
+    }
+
+    // Flatten list of all images (for lightbox navigation)
+    const allImages = BUILD_PHASES.flatMap(p => p.images.map(n => ({
+        src: `images/build/IMG_${n}.jpeg`,
+        caption: `${p.title} — IMG_${n}`,
+        phaseId: p.id
+    })));
+
+    // --- Render phases ---
+    timelineEl.innerHTML = BUILD_PHASES.map(phase => {
+        const thumbs = phase.images.map(n => {
+            const src = `images/build/IMG_${n}.jpeg`;
+            return `
+                <div class="build-thumb" data-src="${src}" data-caption="${escapeHtml(phase.title)} — IMG_${n}">
+                    <img src="${src}" alt="${escapeHtml(phase.title)} photo IMG_${n}" loading="lazy">
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <article class="build-phase" id="${phase.id}">
+                <div class="build-phase-header">
+                    <h3 class="build-phase-title">${escapeHtml(phase.title)}</h3>
+                    <p class="build-phase-note">${escapeHtml(phase.note || '')}</p>
+                </div>
+                <div class="build-grid">
+                    ${thumbs}
+                </div>
+            </article>
+        `;
+    }).join('');
+
+    // --- Lightbox wiring ---
+    const lb = document.getElementById('buildLightbox');
+    const lbImg = document.getElementById('buildLightboxImg');
+    const lbCaption = document.getElementById('buildLightboxCaption');
+    const lbClose = document.getElementById('buildLightboxClose');
+    const lbPrev = document.getElementById('buildLightboxPrev');
+    const lbNext = document.getElementById('buildLightboxNext');
+
+    let currentIndex = -1;
+
+    function openLightboxBySrc(src) {
+        const idx = allImages.findIndex(i => i.src === src);
+        if (idx === -1) return;
+        currentIndex = idx;
+        renderLightbox();
+        lb.classList.add('open');
+        lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lb.classList.remove('open');
+        lb.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        currentIndex = -1;
+    }
+
+    function renderLightbox() {
+        const item = allImages[currentIndex];
+        if (!item) return;
+        lbImg.src = item.src;
+        lbCaption.textContent = item.caption;
+
+        // Hide prev/next at ends
+        lbPrev.style.display = currentIndex <= 0 ? 'none' : 'grid';
+        lbNext.style.display = currentIndex >= allImages.length - 1 ? 'none' : 'grid';
+    }
+
+    // Click thumbs
+    timelineEl.addEventListener('click', function (e) {
+        const thumb = e.target.closest('.build-thumb');
+        if (!thumb) return;
+        openLightboxBySrc(thumb.getAttribute('data-src'));
+    });
+
+    // Close actions
+    lbClose.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', function (e) {
+        if (e.target === lb) closeLightbox();
+    });
+
+    // Prev/Next
+    lbPrev.addEventListener('click', function () {
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderLightbox();
+        }
+    });
+    lbNext.addEventListener('click', function () {
+        if (currentIndex < allImages.length - 1) {
+            currentIndex++;
+            renderLightbox();
+        }
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', function (e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft' && currentIndex > 0) { currentIndex--; renderLightbox(); }
+        if (e.key === 'ArrowRight' && currentIndex < allImages.length - 1) { currentIndex++; renderLightbox(); }
+    });
+
+    // Helpers
+    function range(from, to) {
+        const out = [];
+        for (let i = from; i <= to; i++) out.push(i);
+        return out;
+    }
+
+    function escapeHtml(str) {
+        return String(str)
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+});
+
+// ============================================
+// PACKAGE PREFILL ON CONTACT PAGE (ADDED)
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const pkg = (params.get('package') || '').toLowerCase();
+  if (!pkg) return;
+
+  const allowed = new Set(['basic', 'advanced', 'full']);
+  if (!allowed.has(pkg)) return;
+
+  // Add hidden field for Formspree
+  let hidden = form.querySelector('input[name="package"]');
+  if (!hidden) {
+    hidden = document.createElement('input');
+    hidden.type = 'hidden';
+    hidden.name = 'package';
+    form.appendChild(hidden);
+  }
+  hidden.value = pkg;
+
+  // Prepend a helpful first line in the message (without overwriting user text)
+  const message = document.getElementById('message');
+  if (message && !message.value.trim()) {
+    const label = pkg === 'full' ? 'Full overland-ready' : pkg.charAt(0).toUpperCase() + pkg.slice(1);
+    message.value =
+      `Interested in package: ${label}\n` +
+      `Vehicle: (make/model/year)\n` +
+      `Country: (NL/DE/BE)\n` +
+      `Target timing: \n\n` +
+      `Message: `;
+    message.focus();
+  }
 });
