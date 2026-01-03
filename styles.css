@@ -980,6 +980,8 @@ img {
     color: var(--primary-color);
 }
 
+
+
 /* ============================================
    BLOG PAGE
    ============================================ */
@@ -2100,6 +2102,17 @@ footer {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.build-hero .build-hero-content {
+    position: relative;
+    z-index: 1;
+    color: var(--white);
+    padding: var(--spacing-lg) 0;
+    text-align: left;
+    margin-left: 0;  /* Add this line */
+    margin-right: auto;
+    padding-left: var(--spacing-lg)
 }
 
 .build-hero-overlay {
