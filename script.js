@@ -222,15 +222,22 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Thumbnail clicks
         thumbnails.forEach((thumbnail, index) => {
-            thumbnail.addEventListener('click', function() {
+            thumbnail.addEventListener('click', function(e) {
+                e.preventDefault(); // Prevent any default anchor behavior
                 currentIndex = index;
                 updateGallery();
+                
+                // Scroll main image into view smoothly
+                if (mainImage) {
+                    mainImage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
             });
         });
         
         // Previous button
         if (prevBtn) {
-            prevBtn.addEventListener('click', function() {
+            prevBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 if (currentIndex > 0) {
                     currentIndex--;
                     updateGallery();
@@ -240,7 +247,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Next button
         if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
+            nextBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 if (currentIndex < thumbnails.length - 1) {
                     currentIndex++;
                     updateGallery();
@@ -767,16 +775,14 @@ document.addEventListener('DOMContentLoaded', function () {
   {
     id: 'stock',
     title: 'Stock',
-    note: '',
+    note: 'It all started with a stock Ford Ranger.',
     images: [1, 2, 3, 4],
     richContent: `
         <div class="build-rich-content">
-            <h4>💡 Decision point</h4>
-                <p>We needed a double-cab pickup (4 seats) for family trips and guiding small group nature retreats. Most Dutch pickups have deleted backseats due to tax incentives, severely limiting options. The Ford Ranger double cab fit both needs.</p>
-                <p><b>🌲 The bigger mission</b></p>
-                <p>Beyond family travel, this truck enables nature disconnect retreats—small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
+            <h4>Decision point:</h4>
+            <p>The reason we landed on the Ford was the hard requirement to have a car that could fit 4 people. Most pickups in the Netherlands are sold with a deleted backseat. This tax driven solution limited the search.</p>
         </div>
-        `
+    `
   },
   {
     id: 'step-1-remove-tonneau',
