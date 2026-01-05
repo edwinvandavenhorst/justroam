@@ -747,7 +747,7 @@ img {
 }
 
 .features-list li:last-child {
-    padding-bottom: 0;  /* No padding on last item */
+    padding-bottom: 1;  /* No padding on last item */
     margin-bottom: 0;
 }
 
