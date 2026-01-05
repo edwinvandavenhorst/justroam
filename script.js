@@ -751,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// BUILD PAGE - TIMELINE GALLERY (ADDED)
+// BUILD PAGE - TIMELINE GALLERY
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -767,8 +767,16 @@ document.addEventListener('DOMContentLoaded', function () {
   {
     id: 'stock',
     title: 'Stock',
-    note: 'Baseline shots before any changes.',
-    images: [1, 2, 3, 4]
+    note: '',
+    images: [1, 2, 3, 4],
+    richContent: `
+        <div class="build-rich-content">
+            <h4>💡 Decision point</h4>
+                <p>We needed a double-cab pickup (4 seats) for family trips and guiding small group nature retreats. Most Dutch pickups have deleted backseats due to tax incentives, severely limiting options. The Ford Ranger double cab fit both needs.</p>
+                <p><b>🌲 The bigger mission</b></p>
+                <p>Beyond family travel, this truck enables nature disconnect retreats—small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
+        </div>
+        `
   },
   {
     id: 'step-1-remove-tonneau',
@@ -880,6 +888,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <div class="build-grid">
                     ${thumbs}
                 </div>
+                ${phase.richContent || ''}
             </article>
         `;
     }).join('');

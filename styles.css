@@ -2386,6 +2386,43 @@ footer {
     .build-lightbox { padding: 1rem; }
 }
 
+/* Build phase rich content */
+.build-rich-content {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--gray-lighter);
+}
+
+.build-rich-content h4 {
+    color: var(--text-dark);
+    font-size: 1.2rem;
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.build-rich-content h4:first-child {
+    margin-top: 0;
+}
+
+.build-rich-content ul {
+    margin-bottom: var(--spacing-lg);
+    padding-left: var(--spacing-md);
+}
+
+.build-rich-content li {
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.6;
+}
+
+.build-rich-content li strong {
+    color: var(--text-dark);
+}
+
+.build-rich-content p {
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
+}
+
 /* ============================================
    ADVENTURE STORY TEMPLATE (ADDED)
    ============================================ */
