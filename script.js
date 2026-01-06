@@ -879,6 +879,26 @@ document.addEventListener('DOMContentLoaded', function () {
         jumpEl.innerHTML = BUILD_PHASES.map(p =>
             `<a href="#${p.id}">${escapeHtml(p.title)}</a>`
         ).join('');
+        
+        // Add smooth scroll with offset to account for fixed navbar
+        const jumpLinks = jumpEl.querySelectorAll('a[href^="#"]');
+        jumpLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    const navbarHeight = 100; // Adjust this value to match your navbar height + spacing
+                    const offsetPosition = targetElement.offsetTop - navbarHeight;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     }
 
     // Flatten list of all images (for lightbox navigation)
