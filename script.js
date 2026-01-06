@@ -774,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const BUILD_PHASES = [
   {
     id: 'stock',
-    title: 'Stock',
+    title: 'Start of the journey: buying the truck',
     note: '',
     images: [1, 2, 3, 4],
     richContent: `
@@ -795,7 +795,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="build-rich-content">
             <h4>The first step was simple</h4>
             <p>Dipping my toe into this truck conversion was luckily the easiest part. A couple of bolts and the tonneau cover and roll-bar were gone. Off to the next assignment.</p>
-            <p><b>💡 Decision point</b></p>
+            <H4>💡 Decision point</h4>
             <p>Sourcing the aluminum canopy was straightforward. We chose the Bushtech based on availability. The dealer was incredibly supportive: Installation at their shop was possible, I got help from the dealer in putting it on the car using their forklift. From there, with a final check up from the dealer, I mounted the canopy. </p>
         </div>
     `
@@ -805,15 +805,15 @@ document.addEventListener('DOMContentLoaded', function () {
     id: 'step-2-upgrade-lights',
     title: 'Step 2: Upgrade lights and install winch',
     note: '',
-    images: [8, 9, 15, 16, 17, 18, 19],
+    images: [8, 9, 15, 16, 17, 18, 54, 19],
     richContent: `
         <div class="build-rich-content">
             <h4>💡 Decision point</h4>
-            <p>✔ LED headlights: Upgrading from halogen to LED was straightforward and offered significantly more light and visibility at night.</p>
-            <p>✔ Auxiliary lights in grill: We wanted to keep the stock bumper and grill, so integrating auxiliary lights into the grill mesh was the cleanest option. The result really completed the front-end look.</p>
-            <p>✔ Winch installation: We wanted to make sure that the truck was able for self-recovery in remote areas. Essential safety equipment for off-road travel and getting unstuck when there's no one around to help.<p>
-            <p><b>📚 Learnings</b></p>
-            <p>Sequence matters: I installed the lights first, then had to remove the bumper again weeks later to fit the winch. Next time, I'd do both upgrades in one session. This would have saved hours of work</p>
+            <p><strong>✓ LED headlights: </strong>Upgrading from halogen to LED was straightforward and offered significantly more light and visibility at night.</p>
+            <p><strong>✓ Auxiliary lights in grill: </strong>We wanted to keep the stock bumper and grill, so integrating auxiliary lights into the grill mesh was the cleanest option. The result really completed the front-end look.</p>
+            <p><strong>✓ Winch installation: </strong> We wanted to make sure that the truck was able for self-recovery in remote areas. Essential safety equipment for off-road travel and getting unstuck when there's no one around to help.<p>
+            <h4>📚 Learnings</h4>
+            <p><b>Sequence matters: </b>I installed the lights first, then had to remove the bumper again weeks later to fit the winch. Next time, I'd do both upgrades in one session. This would have saved hours of work</p>
         </div> 
     `
   },
@@ -821,26 +821,66 @@ document.addEventListener('DOMContentLoaded', function () {
     id: 'step-3-install-snorkel',
     title: 'Step 3: Install snorkel',
     note: '',
-    images: [10, 11]
+    images: [10, 11],
+    richContent: `
+        <div class="build-rich-content">
+            <h4>💡 Decision point</h4>
+            <p>The snorkel provides security for water crossings—essential for remote travel. We went with a quality brand because it's constantly exposed to UV rays. Cheaping out might save a bit, but a cracked snorkel leading to water ingestion could cost thousands in engine damage.</p>
+        </div> 
+    `
+    },
+
+  {
+    id: 'step-4-install-water-tank',
+    title: 'Step 4: Install water tank',
+    note: '',
+    images: [12, 13],
+    richContent: `
+        <div class="build-rich-content">
+            <h4>💡 Decision point</h4>
+            <p>✓ We initially wanted an 80l tank positioned above the wheel arch. When it arrived, it was way too large and would've dominated the interior space. After searching alternatives, we found a 50l flat tank that fits perfectly. It fits the space well and is not intrusive for the rest of the interior.</p>
+            <p>✓ We decided to not install any water level gauge to keep it simple. We just fill up when we can and so far we haven't ran out of water.</p>
+            <p>✓ We installed a heating pad to prevent freezing in winter conditions. Essential for protecting both the tank and pump when camping in sub-zero temperatures.</p>
+        </div>
+    `
   },
   {
-    id: 'step-5-install-water-tank',
-    title: 'Step 5: Install water tank',
+    id: 'step-5-install-electrical',
+    title: 'Step 5: Install electrical system',
     note: '',
-    images: [12, 13]
+    images: [51, 14, 20, 53, 49, 52],
+    richContent: `
+        <div class="build-rich-content">
+            <h4>📚 Learnings</h4>
+            <p><b>✓ Map out all power needs before buying components.</b> Taking time to plan upfront saved me from buying and rebuying connectors and switches.</p>
+            <p><b>✓ Double-check every crimp: </b>A loose connection can cause failures that are hard to diagnose later. Use proper crimping tools and test each connection before closing everything up.</p>
+            <p><b>✓ Pull all wires at once: </b>Run cables from battery to front in one session to avoid missing connections or having to disassemble panels multiple times.</p>
+        </div>
+    `
   },
   {
-    id: 'step-6-install-electrical',
-    title: 'Step 6: Install electrical system',
+    id: 'step-6-build-interior',
+    title: 'Step 6: Build interior',
     note: '',
-    images: [14, 20]
+    images: [21, 31, 32, 38, 39, 40, 55, 56, 57],
+    richContent: `
+        <div class="build-rich-content">    
+            <h4>📚 Learnings</h4>
+                <p><b>✓ Decide what wood to use: </b>the type of wood used is essential in how strong the construction is and if it can withstand the weather.</p>
+                <p><b>✓ Measure everything twice (or three times): </b> I didn't have exact dimensions for the fridge, cooker, and drawer sliders before building. This meant rebuilding sections multiple times to get everything to fit—wasted wood and hours of work.</p>
+                <p><b>✓ Get the right sliders: </b>I bought too light of sliders which resulted in broken sliders after the first offroad trip. After that trip, I had to make upgrades and modifications plus spend more money</p>
+                <p><b>✓ Test ergonomics before finalizing: </b>Solar panels under the kitchen seemed smart until the suspension lift made everything too high to reach comfortably. Learned this on the first trip and had to rebuild the entire layout. Lesson: mock up the full setup with actual heights before committing.</p>
+        </div>
+    `
   },
+  
   {
-    id: 'step-7-build-interior',
-    title: 'Step 7: Build interior',
+    id: 'step-7-place-roof-tents',
+    title: 'Step 7: Place roof tents',
     note: '',
-    images: [21, 31, 32, 33, 38, 39, 40]
+    images: [23, 24, 25, 26, 27, 28, 29, 30]
   },
+  
   {
     id: 'step-8-upgrade-suspension',
     title: 'Step 8: Upgrade suspension',
@@ -853,12 +893,7 @@ document.addEventListener('DOMContentLoaded', function () {
     note: '',
     images: [22, 34]
   },
-  {
-    id: 'step-10-place-roof-tents',
-    title: 'Step 10: Place roof tents',
-    note: '',
-    images: [23, 24, 25, 26, 27, 28, 29, 30]
-  },
+  
   {
     id: 'step-11-finished-interior',
     title: 'Step 11: Finished interior',
@@ -878,7 +913,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (jumpEl) {
         // Add heading for desktop
         const heading = document.createElement('h3');
-        heading.textContent = 'Build Steps';
+        heading.textContent = 'Timeline steps';
         
         // Add mobile toggle button
         const toggleBtn = document.createElement('button');

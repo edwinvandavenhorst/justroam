@@ -942,6 +942,7 @@ img {
     font-weight: bold;
 }
 
+
 .build-specs-section {
     background: var(--background);
     padding: var(--spacing-xl) 0;
@@ -2140,6 +2141,80 @@ footer {
     max-width: 60ch;
     opacity: 0.95;
     margin-bottom: var(--spacing-md);
+}
+
+/* Quick Overview Card in Hero */
+.build-hero-stats {
+    position: absolute;
+    top: 50%;
+    right: 3rem;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    width: 320px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 2;
+}
+
+.build-hero-stats h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.build-hero-stats ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.build-hero-stats li {
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--gray-lighter);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-dark);
+}
+
+.build-hero-stats li:last-child {
+    border-bottom: none;
+}
+
+.build-hero-stats strong {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* Responsive adjustments for hero stats */
+@media (max-width: 1200px) {
+    .build-hero-stats {
+        right: 2rem;
+        width: 280px;
+    }
+}
+
+@media (max-width: 968px) {
+    .build-hero-stats {
+        position: static;
+        transform: none;
+        margin-top: 2rem;
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .build-hero-content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 600px) {
+    .build-hero-stats {
+        max-width: 100%;
+    }
 }
 
 .build-hero-buttons {
