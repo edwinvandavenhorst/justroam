@@ -775,12 +775,14 @@ document.addEventListener('DOMContentLoaded', function () {
   {
     id: 'stock',
     title: 'Stock',
-    note: 'It all started with a stock Ford Ranger.',
+    note: '',
     images: [1, 2, 3, 4],
     richContent: `
         <div class="build-rich-content">
-            <h4>Decision point:</h4>
-            <p>The reason we landed on the Ford was the hard requirement to have a car that could fit 4 people. Most pickups in the Netherlands are sold with a deleted backseat. This tax driven solution limited the search.</p>
+            <h4>💡 Decision point</h4>
+            <p>We needed a double-cab pickup (4 seats) to make sure we could use the truck for our family trips. Finding a truck that met these requirements was hard as most Dutch pickups have deleted backseats due to tax incentives. Add our budget and we could select from just a few trucks, ultimately landing on our Ford Ranger.</p>
+            <p><b>🌲 The bigger mission</b></p>
+            <p>Beyond family travel, this truck enables nature disconnect retreats—small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
         </div>
     `
   },
@@ -788,14 +790,29 @@ document.addEventListener('DOMContentLoaded', function () {
     id: 'step-1-remove-tonneau',
     title: 'Step 1: Remove tonneau cover & add canopy',
     note: '',
-    images: [5,6,7]
+    images: [5,6,7],
+    richContent: `
+        <div class="build-rich-content">
+            <h4>The first step was simple</h4>
+            <p>Dipping my toe into this truck conversion was luckily the easiest part. A couple of bolts and the tonneau cover and roll-bar were gone. Off to the next assignment.</p>
+            <p><b>💡 Decision point</b></p>
+            <p>Sourcing the aluminum canopy was straightforward. We chose the Bushtech based on availability. The dealer was incredibly supportive: Installation at their shop was possible, we got help from the dealer in putting it on the car using their forklift. From there, with a final check up from the dealer, we mounted the canopy. </p>
+        </div>
+    `
   },
   
   {
     id: 'step-2-upgrade-lights',
     title: 'Step 2: Upgrade lights',
     note: '',
-    images: [8, 9, 15, 16, 17]
+    images: [8, 9, 15, 16, 17],
+    richContent: `
+        <div class="build-rich-content">
+            <h4>The first step was simple</h4>
+            <p>Dipping my toe into this truck conversion was luckily the easiest part. A couple of bolts and the tonneau cover and roll-bar were gone. Off to the next assignment.</p>
+
+        </div> 
+    `
   },
   {
     id: 'step-3-install-winch',
