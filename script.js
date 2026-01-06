@@ -796,33 +796,30 @@ document.addEventListener('DOMContentLoaded', function () {
             <h4>The first step was simple</h4>
             <p>Dipping my toe into this truck conversion was luckily the easiest part. A couple of bolts and the tonneau cover and roll-bar were gone. Off to the next assignment.</p>
             <p><b>💡 Decision point</b></p>
-            <p>Sourcing the aluminum canopy was straightforward. We chose the Bushtech based on availability. The dealer was incredibly supportive: Installation at their shop was possible, we got help from the dealer in putting it on the car using their forklift. From there, with a final check up from the dealer, we mounted the canopy. </p>
+            <p>Sourcing the aluminum canopy was straightforward. We chose the Bushtech based on availability. The dealer was incredibly supportive: Installation at their shop was possible, I got help from the dealer in putting it on the car using their forklift. From there, with a final check up from the dealer, I mounted the canopy. </p>
         </div>
     `
   },
   
   {
     id: 'step-2-upgrade-lights',
-    title: 'Step 2: Upgrade lights',
+    title: 'Step 2: Upgrade lights and install winch',
     note: '',
-    images: [8, 9, 15, 16, 17],
+    images: [8, 9, 15, 16, 17, 18, 19],
     richContent: `
         <div class="build-rich-content">
-            <h4>The first step was simple</h4>
-            <p>Dipping my toe into this truck conversion was luckily the easiest part. A couple of bolts and the tonneau cover and roll-bar were gone. Off to the next assignment.</p>
-
+            <h4>💡 Decision point</h4>
+            <p>✔ LED headlights: Upgrading from halogen to LED was straightforward and offered significantly more light and visibility at night.</p>
+            <p>✔ Auxiliary lights in grill: We wanted to keep the stock bumper and grill, so integrating auxiliary lights into the grill mesh was the cleanest option. The result really completed the front-end look.</p>
+            <p>✔ Winch installation: We wanted to make sure that the truck was able for self-recovery in remote areas. Essential safety equipment for off-road travel and getting unstuck when there's no one around to help.<p>
+            <p><b>📚 Learnings</b></p>
+            <p>Sequence matters: I installed the lights first, then had to remove the bumper again weeks later to fit the winch. Next time, I'd do both upgrades in one session. This would have saved hours of work</p>
         </div> 
     `
   },
-  {
-    id: 'step-3-install-winch',
-    title: 'Step 3: Install winch',
-    note: '',
-    images: [18, 19]
-  },
-  {
-    id: 'step-4-install-snorkel',
-    title: 'Step 4: Install snorkel',
+    {
+    id: 'step-3-install-snorkel',
+    title: 'Step 3: Install snorkel',
     note: '',
     images: [10, 11]
   },
