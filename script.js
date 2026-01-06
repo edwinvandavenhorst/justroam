@@ -876,12 +876,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Render jump nav ---
     if (jumpEl) {
-        jumpEl.innerHTML = BUILD_PHASES.map(p =>
-            `<a href="#${p.id}">${escapeHtml(p.title)}</a>`
+        // Add heading for desktop
+        const heading = document.createElement('h3');
+        heading.textContent = 'Build Steps';
+        
+        // Add mobile toggle button
+        const toggleBtn = document.createElement('button');
+        toggleBtn.className = 'build-jump-toggle';
+        toggleBtn.innerHTML = '📋 Build Steps <span class="toggle-icon">▼</span>';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        
+        // Create wrapper for links
+        const linksWrapper = document.createElement('div');
+        linksWrapper.className = 'build-jump-links';
+        linksWrapper.innerHTML = BUILD_PHASES.map(p =>
+            `<a href="#${p.id}" class="build-jump-link">${escapeHtml(p.title)}</a>`
         ).join('');
         
-        // Add smooth scroll with offset to account for fixed navbar
-        const jumpLinks = jumpEl.querySelectorAll('a[href^="#"]');
+        // Clear and rebuild jumpEl
+        jumpEl.innerHTML = '';
+        jumpEl.appendChild(heading);
+        jumpEl.appendChild(toggleBtn);
+        jumpEl.appendChild(linksWrapper);
+        
+        // Mobile toggle functionality
+        toggleBtn.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+            linksWrapper.classList.toggle('expanded');
+            this.querySelector('.toggle-icon').textContent = isExpanded ? '▼' : '▲';
+        });
+        
+        // Add smooth scroll with offset and close mobile menu
+        const jumpLinks = linksWrapper.querySelectorAll('a[href^="#"]');
         jumpLinks.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -889,15 +916,47 @@ document.addEventListener('DOMContentLoaded', function () {
                 const targetElement = document.getElementById(targetId);
                 
                 if (targetElement) {
-                    const navbarHeight = 100; // Adjust this value to match your navbar height + spacing
+                    const navbarHeight = 100;
                     const offsetPosition = targetElement.offsetTop - navbarHeight;
                     
                     window.scrollTo({
                         top: offsetPosition,
                         behavior: 'smooth'
                     });
+                    
+                    // Close mobile menu after selection
+                    if (window.innerWidth <= 768) {
+                        linksWrapper.classList.remove('expanded');
+                        toggleBtn.setAttribute('aria-expanded', 'false');
+                        toggleBtn.querySelector('.toggle-icon').textContent = '▼';
+                    }
+                    
+                    // Update active state
+                    jumpLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
                 }
             });
+        });
+        
+        // Highlight current step on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    jumpLinks.forEach(link => {
+                        if (link.getAttribute('href') === `#${id}`) {
+                            jumpLinks.forEach(l => l.classList.remove('active'));
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        // Observe all build phases
+        BUILD_PHASES.forEach(phase => {
+            const element = document.getElementById(phase.id);
+            if (element) observer.observe(element);
         });
     }
 
