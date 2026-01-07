@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <li><a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">Home</a></li>
                 <li><a href="rent.html" class="nav-link ${currentPage === 'rent.html' ? 'active' : ''}">Rent a truck</a></li>
                 <li><a href="build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">Build your truck</a></li>
-                <!--<li><a href="stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">Our stories</a><li>-->
+                <li><a href="stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">Our stories</a><li>
                 <li><a href="faq.html" class="nav-link ${currentPage === 'faq.html' ? 'active' : ''}">FAQs</a></li>
                 <li><a href="contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">Get in touch</a></li>
             </ul>
@@ -781,7 +781,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="build-rich-content">
             <h4>💡 Decision point</h4>
             <p>We needed a double-cab pickup (4 seats) to make sure we could use the truck for our family trips. Finding a truck that met these requirements was hard as most Dutch pickups have deleted backseats due to tax incentives. Add our budget and we could select from just a few trucks, ultimately landing on our Ford Ranger.</p>
-            <p><b>🌲 The bigger mission</b></p>
+            <h4>🌲 The bigger mission</h4>
             <p>Beyond family travel, this truck enables nature disconnect retreats—small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
         </div>
     `
@@ -878,33 +878,75 @@ document.addEventListener('DOMContentLoaded', function () {
     id: 'step-7-place-roof-tents',
     title: 'Step 7: Place roof tents',
     note: '',
-    images: [23, 24, 25, 26, 27, 28, 29, 30]
+    images: [23, 24, 25, 26, 27, 28, 29, 30],
+    richContent: `
+        <div class="build-rich-content">    
+            <h4>💡 Decision points</h4>
+                <p><b>✓ 1 versus 2 tents: </b>We chose 2 tents to give some more space to each individual. Sleeping four in one tent would mean cramped quarters and poor sleep quality.</p>
+                <p><b>✓ Awning: </b>We wanted the full 270 degree awning with optional tent to create a large shaded cover. With that, we can cook in the rain or escape the sun without retreating into the tents.</p>
+            <h4>📚 Learnings</h4>
+                <p><b>✓ Installation: </b>Having a roof tent specialist install them was essential. They knew exactly how to position and secure the tents for proper weight distribution and aerodynamics. Not something to DIY.</p>
+                <p><b>✓ Roof rack installation: </b>I initially planned to use standard roof bars for the front tent. The specialist strongly advised against this—the bars aren't designed for the weight and vibration of off-road driving and would likely fail or detach. Sold them and installed a proper fixed roof rack instead. Safety first.</p>
+        </div>
+    `
   },
   
   {
     id: 'step-8-upgrade-suspension',
-    title: 'Step 8: Upgrade suspension',
+    title: 'Step 8: Upgrade suspension and clutch',
     note: '',
-    images: [35, 36]
+    images: [35, 36],
+    richContent: `
+        <div class="build-rich-content">    
+            <h4>💡 Decision points</h4>
+                <p><strong>✓ Upgraded suspension: </strong>No difficult decision at all. Once the roof tents were installed, I immediately noticed the impact of the weight and overall stability of the truck. The upgrade to heavy duty suspension enables us to safely travel on- and offroad with the full equipment and four people. </p>
+                <p><strong>✓ Upgraded clutch: </strong>On our first trip, we realized the stock clutch couldn't handle the increased weight and off-road driving. Frequent clutch slipping on steep terrain burned it up quickly. After returning home, we upgraded to a heavy-duty clutch—now the truck handles technical terrain without issue.</p>
+            <h4>📚 Learnings</h4>
+                <p><b>✓ Clutch: </b>Heavy-duty clutches cost €3500+. We tested the stock clutch first and it failed after one trip. Learned our lesson and upgraded. But this approach saved us from spending on upgrades we might not have needed—test first, then upgrade based on real-world performance.</p>
+        </div>
+    `
   },
   {
     id: 'step-9-make-offroad-ready',
     title: 'Step 9: Make offroad ready',
     note: '',
-    images: [22, 34]
+    images: [22, 34, 58],
+    richContent: `
+        <div class="build-rich-content">    
+            <h4>💡 Decision points</h4>
+                <p><strong>✓ Rock sliders: </strong>We decided to remove the stock running boards which were made of plastic and replace them with rock sliders. These sliders protect the car better against big rocks while still offering the ability to step up on them and reach the tent covers.</p>
+                <p><strong>✓ Recovery boards: </strong>After getting stuck in our back yard and being winched out by another 4x4 it became clear that we needed these boards. They are a precaution for when it's slippery and you need to get out of that situation.</p>
+        </div>
+    `
+    
   },
   
   {
-    id: 'step-11-finished-interior',
-    title: 'Step 11: Finished interior',
+    id: 'step-10-finished-interior',
+    title: 'Step 10: Finished interior',
     note: '',
-    images: [41, 42, 43, 44, 45, 46, 47, 48, 49]
-  },
-  {
-    id: 'step-12-finished-car-hero',
-    title: 'Step 12: Finished car - hero',
-    note: '',
-    images: [50]
+    images: [41, 42, 43, 44, 45, 46, 47, 48, 49],
+    richContent: `
+        <div class="build-rich-content">    
+            <h4>🐾 Walk-through</h4>
+                <p>Welcome to the fully built interior. The interior has the following features:</p>
+                <p>✓ Water tap and bassin for cooking and cleaning</p>
+                <p>✓ Shower connection for quick water access or showering</p>
+                <p>✓ Large drawer with gas stove, water bassin, storage</p>
+                <p>✓ Large drawer with fridge (45l) and storage</p>
+                <p>✓ Drawer for cuttlery, condiments, winch and tent equipment</p>
+                <p>✓ Side cabinet with access to water pump and storage</p>
+                <p>✓ Side cubby for plates and cups</p>
+                <p>✓ Side cabinet for storing the camping seats (4 + bench)</p>
+                <p>✓ Side cabinet for compressor and access to the second battery</p>
+                <p>✓ Camping table mounted on the ceiling for easy access</p>
+                <p>✓ Solar panels mounted under the camping table for easy access</p>
+                <p>✓ Water tank and access to the fill cap</p>
+                <p>✓ Small items we always carry are a foldable shovel to help recover the car or just dig a hole. A small axe to chop wood for making a fire</p>
+                <p>✓ Fire extinguisher just in case</p>
+        </div>
+       
+    `
   }
 ];
 
