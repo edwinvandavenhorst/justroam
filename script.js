@@ -664,22 +664,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
-// VIDEO PLACEHOLDER SETUP (Build Page)
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const buildVideo = document.getElementById('buildVideo');
-    
-    if (buildVideo) {
-        // When you have your video URL, set it like this:
-        // buildVideo.src = 'https://www.youtube.com/embed/YOUR_VIDEO_ID';
-        
-        // Or for Vimeo:
-        // buildVideo.src = 'https://player.vimeo.com/video/YOUR_VIDEO_ID';
-    }
-});
-
-// ============================================
 // SCROLL ANIMATIONS (Optional Enhancement)
 // ============================================
 

@@ -8,6 +8,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on all touch devices */
 }
 
 :root {
@@ -124,6 +125,17 @@ img {
     padding: var(--spacing-xs) var(--spacing-sm);
     border-radius: var(--radius);
     transition: var(--transition);
+    outline: none;
+}
+
+.nav-link:focus {
+    outline: none;
+}
+
+/* Show outline only for keyboard navigation */
+.nav-link:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 .nav-instagram {
@@ -1880,6 +1892,59 @@ footer {
 
 /* Tablet styles */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
+    /* Navigation - prevent outline/focus issues on tablets */
+    .nav-link {
+        -webkit-tap-highlight-color: transparent;
+        outline: none;
+    }
+    
+    .nav-link:focus {
+        outline: none;
+    }
+    
+    .nav-container {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    .nav-menu {
+        gap: var(--spacing-sm); /* Tighter spacing for tablets */
+    }
+    
+    /* Calendar improvements for tablets */
+    .calendar-container {
+        padding: var(--spacing-md);
+        max-width: 100%;
+    }
+    
+    .calendar-weekdays,
+    .calendar-days {
+        gap: 4px;
+        font-size: 0.85rem;
+    }
+    
+    .calendar-day {
+        padding: 0.4rem;
+        padding-top: 0.5rem;
+        min-height: 45px;
+        font-size: 0.85rem;
+    }
+    
+    .calendar-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .calendar-nav-btn {
+        padding: 0.5rem 1rem;
+        font-size: 1.3rem;
+    }
+    
+    /* Footer adjustments */
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    /* Grid layouts */
     .features-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -1890,6 +1955,17 @@ footer {
     
     .blog-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* Contact page */
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    /* Rent page details */
+    .rent-details-grid {
+        grid-template-columns: 1fr;
     }
 }
 
