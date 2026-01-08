@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <li><a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">Home</a></li>
                 <li><a href="rent.html" class="nav-link ${currentPage === 'rent.html' ? 'active' : ''}">Rent a truck</a></li>
                 <li><a href="build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">Build your truck</a></li>
-                <li><a href="stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">Our stories</a><li>
+                <li><a href="stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">Our stories</a></li>
                 <li><a href="faq.html" class="nav-link ${currentPage === 'faq.html' ? 'active' : ''}">FAQs</a></li>
                 <li><a href="contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">Get in touch</a></li>
             </ul>
