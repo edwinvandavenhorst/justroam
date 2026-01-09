@@ -691,7 +691,41 @@ img {
 
 /* Responsive */
 @media (max-width: 768px) {
-    
+    .booking-card {
+        padding: 1rem;
+    }
+
+    .calendar-container {
+        max-width: 100%;
+        overflow-x: hidden; /* or auto if you want a fallback scroll */
+    } 
+
+    .calendar-weekdays,
+    .calendar-days {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+
+    .calendar-day {
+        min-width: 0;
+        padding: 0.15rem;
+        padding-top: 0.25rem;
+    }
+
+     .calendar-header {
+        gap: 0.5rem;
+    }
+
+    .calendar-nav-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 1.1rem;
+    }
+
+    .calendar-header h3 {
+        font-size: 1rem;
+    }
+    }
+
     .day-number {
         font-size: 0.9rem;
     }
