@@ -1781,8 +1781,9 @@ footer {
     }
     
     .footer-img {
-        height: 150px;
-        margin: 0 auto;
+        height: auto;
+        margin: auto;
+        display: block;
         flex-shrink: 0;
     }
     
