@@ -346,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let bookedDates = [];
     
     // iCal URL
-    const icalUrl = 'https://calendar.justroam.nl/ranger';
+    const icalUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.justroam.nl/ranger');
     
     // Initialize calendar
     async function initCalendar() {
