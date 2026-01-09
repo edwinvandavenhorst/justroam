@@ -81,102 +81,251 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Linktree:', LINKS.linktree);
 });
 
+function getActiveLang() {
+    const stored = localStorage.getItem('lang');
+    if (stored === 'en' || stored === 'nl') {
+        return stored;
+    }
+
+    return navigator.language &&
+           navigator.language.toLowerCase().startsWith('nl')
+           ? 'nl'
+           : 'en';
+}
+
+
+// ============================================
+// NAVIGATION - TRANSLATIONS
+// ============================================
+
+function isNlPage() {
+  return window.location.pathname.includes('/nl/');
+}
+
+function getCurrentPageFilename() {
+  return window.location.pathname.split('/').pop() || 'index.html';
+}
+
+function getActiveLang() {
+  // If you're switching pages (/nl/ vs root), path is the source of truth
+  return isNlPage() ? 'nl' : 'en';
+}
+
+const NAV_TEXT = {
+  en: {
+    home: 'Home',
+    rent: 'Rent a truck',
+    build: 'Build your truck',
+    stories: 'Our stories',
+    faq: 'FAQs',
+    contact: 'Get in touch'
+  },
+  nl: {
+    home: 'Home',              // or "Start" if you prefer
+    rent: 'Huur een truck',
+    build: 'Bouw je truck',    // or "Truck ombouwen"
+    stories: 'Onze verhalen',
+    faq: 'Veelgestelde vragen',
+    contact: 'Neem contact op'
+  }
+};
+
+
 // ============================================
 // NAVIGATION - CENTRALIZED
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Get current page filename
-    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const currentPage = getCurrentPageFilename();
+    const lang = getActiveLang();        // 'en' or 'nl'
+    const t = NAV_TEXT[lang];
     
+    const onNl = window.location.pathname.includes('/nl/');
+    const pagePrefix = onNl ? './' : '';
+    const imgPrefix = onNl ? '../' : '';
+
+
     // Navigation structure
     const navHTML = `
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <img src="images/Logo_JustRoam_ClearBackground.png" alt="JustRoam Logo" class="logo-img">
-            </a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">Home</a></li>
-                <li><a href="rent.html" class="nav-link ${currentPage === 'rent.html' ? 'active' : ''}">Rent a truck</a></li>
-                <li><a href="build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">Build your truck</a></li>
-                <li><a href="stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">Our stories</a></li>
-                <li><a href="faq.html" class="nav-link ${currentPage === 'faq.html' ? 'active' : ''}">FAQs</a></li>
-                <li><a href="contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">Get in touch</a></li>
-            </ul>
-            <a href="https://www.instagram.com/_justroam_/" class="nav-instagram" target="_blank" title="Follow us on Instagram">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" fill="currentColor"/>
-            </svg>
-            </a>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+    <div class="nav-container">
+      <a href="${pagePrefix}index.html" class="nav-logo">
+        <img src="${imgPrefix}images/Logo_JustRoam_ClearBackground.png" alt="JustRoam Logo" class="logo-img">
+      </a>
+
+      <ul class="nav-menu">
+        <li><a href="${pagePrefix}index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">${t.home}</a></li>
+        <li><a href="${pagePrefix}rent.html" class="nav-link ${currentPage === 'rent.html' ? 'active' : ''}">${t.rent}</a></li>
+        <li><a href="${pagePrefix}build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">${t.build}</a></li>
+        <li><a href="${pagePrefix}stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">${t.stories}</a></li>
+        <li><a href="${pagePrefix}faq.html" class="nav-link ${currentPage === 'faq.html' ? 'active' : ''}">${t.faq}</a></li>
+        <li><a href="${pagePrefix}contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">${t.contact}</a></li>
+
+        <li class="nav-lang-item">
+            <div class="lang-switch lang-switch--mobile" aria-label="Language selector">
+                <a href="#" class="lang-link" data-lang="en" aria-label="Switch to English">EN</a>
+                <span class="lang-separator">|</span>
+                <a href="#" class="lang-link" data-lang="nl" aria-label="Switch to Dutch">NL</a>
             </div>
+            </li>
+      </ul>
+            
+            <div class="nav-social">
+                <a href="https://www.instagram.com/_justroam_/" class="nav-instagram" target="_blank" title="Follow us on Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" fill="currentColor"/>
+                </svg>
+                </a>
+                
+                <div class="lang-switch lang-switch--desktop">
+                    <a href="#" class="lang-link" data-lang="en" aria-label="Switch to English">EN</a>
+                    <span class="lang-separator">|</span>
+                    <a href="#" class="lang-link" data-lang="nl" aria-label="Switch to Dutch">NL</a>
+                </div>
+            </div>
+            
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
         </div>
     `;
     
     // Insert navigation into the page
     const navElement = document.getElementById('main-nav');
     if (navElement) {
-        navElement.innerHTML = navHTML;
-    }
+    navElement.innerHTML = navHTML;
+    initLanguageSwitch(); // <-- IMPORTANT: after injection
+}
+
 });
 
 // ============================================
-// FOOTER - CENTRALIZED
+// LANGUAGE SWITCH (DESKTOP)
 // ============================================
 
-document.addEventListener('DOMContentLoaded', function() {
-    const footerHTML = `
-        <div class="container">
-            <div class="footer-content">
-                <a href="index.html" class="footer-logo">
-                <img src="images/Logo_JustRoam_ClearBackground.png" alt="JustRoam Logo" class="footer-img">
-                </a>
+function initLanguageSwitch() {
+    const langLinks = document.querySelectorAll('.lang-link');
+    if (!langLinks.length) {
+        console.warn('No .lang-link elements found (nav not injected yet?)');
+        return;
+    }
 
-                <div class="footer-section">
-                    <h3>Contact details</h3>
-                    <ul class="footer-links">
-                        <li>
-                            <div class="footer-nolink">
-                                <img src="images/building.png" alt="Building icon">
-                                <span>KVK: 71621865</span>
-                            </div>
-                        </li>
-                        <li>
-                            <a href="mailto:info@justroam.nl" class="footer-links" target="_blank" title="Contact us">
-                                <img src="images/mail.png" alt="Email icon">
-                                <span>info@justroam.nl</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="tel:+31611334832" class="footer-links">
-                                <img src="images/phone.png" alt="phone">
-                                <span>+31 6 1133 4832</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.instagram.com/_justroam_/" class="footer-links" target="_blank" title="Follow us on Instagram">
-                                <img src="images/instagram.png" alt="Instagram icon">
-                                <span>Follow us on Instagram</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; JustRoam. All rights reserved.</p>
-            </div>
+ /*   const savedLang = localStorage.getItem('lang');
+    const browserLang = (navigator.language || '').toLowerCase().startsWith('nl') ? 'nl' : 'en';
+    const activeLang = (savedLang === 'nl' || savedLang === 'en') ? savedLang : browserLang;
+*/
+    const onNlSite = window.location.pathname.includes('/nl/');
+    const activeLang = onNlSite ? 'nl' : 'en';
+
+    // Highlight active language
+    langLinks.forEach(link => {
+        link.classList.toggle('active', link.dataset.lang === activeLang);
+    });
+
+    // Handle manual switch
+    langLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const lang = this.dataset.lang;
+            localStorage.setItem('lang', lang);
+
+            const file = window.location.pathname.split('/').pop() || 'index.html';
+            const currentlyNl = window.location.pathname.includes('/nl/');
+
+            // Use relative navigation (safe for GitHub Pages + custom domains)
+            if (lang === 'nl') {
+                window.location.href = currentlyNl ? file : `nl/${file}`;
+            } else {
+                window.location.href = currentlyNl ? `../${file}` : file;
+            }
+        });
+    });
+}
+
+// ============================================
+// FOOTER - CENTRALIZED 
+// ============================================
+
+function isNlPage() {
+  return window.location.pathname.includes('/nl/');
+}
+
+function getFooterText() {
+  return isNlPage()
+    ? {
+        contactTitle: 'Contactgegevens',
+        instagram: 'Volg ons op Instagram',
+        rights: 'Alle rechten voorbehouden.'
+      }
+    : {
+        contactTitle: 'Contact details',
+        instagram: 'Follow us on Instagram',
+        rights: 'All rights reserved.'
+      };
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const t = getFooterText();
+
+  // On /nl/* pages we must go up one level for assets and page links
+  const prefix = isNlPage() ? '../' : '';
+
+  const footerHTML = `
+    <div class="container">
+      <div class="footer-content">
+        <a href="${prefix}index.html" class="footer-logo">
+          <img src="${prefix}images/Logo_JustRoam_ClearBackground.png" alt="JustRoam Logo" class="footer-img">
+        </a>
+
+        <div class="footer-section">
+          <h3>${t.contactTitle}</h3>
+          <ul class="footer-links">
+            <li>
+              <div class="footer-nolink">
+                <img src="${prefix}images/building.png" alt="Building icon">
+                <span>KVK: 71621865</span>
+              </div>
+            </li>
+
+            <li>
+              <a href="mailto:info@justroam.nl" class="footer-link" title="Contact us">
+                <img src="${prefix}images/mail.png" alt="Email icon">
+                <span>info@justroam.nl</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="tel:+31611334832" class="footer-link">
+                <img src="${prefix}images/phone.png" alt="Phone icon">
+                <span>+31 6 1133 4832</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="https://www.instagram.com/_justroam_/" class="footer-link" target="_blank" rel="noopener" title="Follow us on Instagram">
+                <img src="${prefix}images/instagram.png" alt="Instagram icon">
+                <span>${t.instagram}</span>
+              </a>
+            </li>
+          </ul>
         </div>
-    `;
-    
-    // Insert footer into the page
-    const footerElement = document.getElementById('main-footer');
-    if (footerElement) {
-        footerElement.innerHTML = footerHTML;
-    }
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; JustRoam. ${t.rights}</p>
+      </div>
+    </div>
+  `;
+
+  const footerElement = document.getElementById('main-footer');
+  if (footerElement) {
+    footerElement.innerHTML = footerHTML;
+  } else {
+    console.warn('⚠️ Footer placeholder not found. Add: <footer id="main-footer"></footer>');
+  }
 });
+
 
 // ============================================
 // MOBILE NAVIGATION
@@ -336,6 +485,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     if (!calendarDays) return; // Only run on rent page
+   
+    // Locale based on site (English root vs /nl/)
+    const locale = window.location.pathname.includes('/nl/') ? 'nl-NL' : 'en-GB';
     
     let currentDate = new Date();
     let displayMonth = currentDate.getMonth();
@@ -465,11 +617,17 @@ document.addEventListener('DOMContentLoaded', function() {
         // Clear calendar
         calendarDays.innerHTML = '';
         
-        // Set month/year header
+/*        // Set month/year header
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
             'July', 'August', 'September', 'October', 'November', 'December'];
         currentMonthElement.textContent = `${monthNames[displayMonth]} ${displayYear}`;
-        
+*/
+
+        // Set month/year header (localized)
+        const monthDate = new Date(displayYear, displayMonth, 1);
+        let label = monthDate.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+        currentMonthElement.textContent = label;
+
         // Get first and last day of month
         const firstDay = new Date(displayYear, displayMonth, 1);
         const lastDay = new Date(displayYear, displayMonth + 1, 0);
@@ -750,13 +908,28 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function () {
     const timelineEl = document.getElementById('buildTimeline');
     const jumpEl = document.getElementById('buildJump');
+    const lang = getSiteLang();
+    const assetPrefix = getAssetPrefix();
 
     // Only run on build.html
     if (!timelineEl) return;
 
+    function getSiteLang() {
+        const path = window.location.pathname;
+        if (path.includes('/nl/')) return 'nl';
+        if (path.includes('/de/')) return 'de'; // future
+        return 'en';
+        }
+
+    // If you're in /nl/ or /de/, your images folder is one level up
+    function getAssetPrefix() {
+        const path = window.location.pathname;
+        return (path.includes('/nl/') || path.includes('/de/')) ? '../' : '';
+    }
+
     // --- Configure your timeline here ---
     // Assumes images are named IMG_1.jpeg ... IMG_49.jpeg inside /images
-    const BUILD_PHASES = [
+/*    const BUILD_PHASES = [
   {
     id: 'stock',
     title: 'Start of the journey: buying the truck',
@@ -934,18 +1107,239 @@ document.addEventListener('DOMContentLoaded', function () {
     `
   }
 ];
+*/
 
+const BUILD_PHASES_BASE = [
+  { id: 'stock', images: [1, 2, 3, 4] },
+  { id: 'step-1-remove-tonneau', images: [5, 6, 7] },
+  { id: 'step-2-upgrade-lights', images: [8, 9, 15, 16, 17, 18, 54, 19] },
+  { id: 'step-3-install-snorkel', images: [10, 11] },
+  { id: 'step-4-install-water-tank', images: [12, 13] },
+  { id: 'step-5-install-electrical', images: [51, 14, 20, 53, 49, 52] },
+  { id: 'step-6-build-interior', images: [21, 31, 32, 38, 39, 40, 55, 56, 57] },
+  { id: 'step-7-place-roof-tents', images: [23, 24, 25, 26, 27, 28, 29, 30] },
+  { id: 'step-8-upgrade-suspension', images: [35, 36] },
+  { id: 'step-9-make-offroad-ready', images: [22, 34, 58] },
+  { id: 'step-10-finished-interior', images: [41, 42, 43, 44, 45, 46, 47, 48, 49] }
+];
+
+const BUILD_I18N = {
+  en: {
+    ui: {
+      jumpHeading: 'Timeline steps',
+      toggleLabel: '📋 Build Steps'
+    },
+    phases: {
+      'stock': {
+        title: 'Start of the journey: buying the truck',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Decision point</h4>
+            <p>We needed a double-cab pickup (4 seats) to make sure we could use the truck for our family trips. Finding a truck that met these requirements was hard as most Dutch pickups have deleted backseats due to tax incentives. Add our budget and we could select from just a few trucks, ultimately landing on our Ford Ranger.</p>
+            <h4>🌲 The bigger mission</h4>
+            <p>Beyond family travel, this truck enables nature disconnect retreats—small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
+          </div>`
+      },
+
+      'step-1-remove-tonneau': {
+        title: 'Step 1: Remove tonneau cover & add canopy',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>The first step was simple</h4>
+            <p>Dipping my toe into this truck conversion was luckily the easiest part. A couple of bolts and the tonneau cover and roll-bar were gone. Off to the next assignment.</p>
+            <h4>💡 Decision point</h4>
+            <p>Sourcing the aluminum canopy was straightforward. We chose the Bushtech based on availability. The dealer was incredibly supportive: Installation at their shop was possible, I got help from the dealer in putting it on the car using their forklift. From there, with a final check up from the dealer, I mounted the canopy.</p>
+          </div>`
+      },
+
+      // ... keep the rest of your EN phases as-is (copy/paste them here)
+    }
+  },
+
+  nl: {
+    ui: {
+      jumpHeading: 'Timeline stappen',
+      toggleLabel: '📋 Build stappen'
+    },
+    phases: {
+      'stock': {
+        title: 'Start van de reis: de truck kopen',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Keuzemoment</h4>
+            <p>We wilden een double cab pick-up (4 zitplaatsen), zodat we de wagen echt voor gezinsreizen konden gebruiken. Een geschikte pick-up vinden was lastig, omdat veel wagens in Nederland geen achterbank hebben ivm de bijtellingsregels voor bedrijfswagens. Tesamen met ons vastgestelde budget bleef er maar een kleine selectie over — uiteindelijk kozen we voor onze Ford Ranger.</p>
+            <h4>🌲 De grotere missie</h4>
+            <p>Naast gezinsreizen maakt deze truck ‘disconnect’-retraites in de natuur mogelijk: kleine groepen, weg van telefoons, meldingen en dagelijkse drukte. Dankzij 4 slaapplaatsen kunnen we groepen meenemen naar afgelegen plekken voor echte rust en hernieuwde verbinding met de natuur.</p>
+          </div>`
+      },
+
+      'step-1-remove-tonneau': {
+        title: 'Stap 1: Tonneau cover verwijderen & aluminium opbouw plaatsen',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>De eerste stap was simpel</h4>
+            <p>Gelukkig was het begin van onze ombouw het makkelijkst: een paar bouten los en de tonneau cover en roll-bar waren weg. Op naar de volgende klus.</p>
+            <h4>💡 Keuzemoment</h4>
+            <p>De aluminium opbouw regelen was vrij rechttoe rechtaan. We kozen voor Bushtech op basis van beschikbaarheid. De dealer was super behulpzaam: montage in de werkplaats was mogelijk, en met hun heftruck hielpen ze om alles op de auto te zetten. Daarna heb ik, na een laatste check, de opbouw definitief gemonteerd.</p>
+          </div>`
+      },
+
+      'step-2-upgrade-lights': {
+        title: 'Stap 2: Verlichting upgraden en lier installeren',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Keuzemomenten</h4>
+            <p><strong>✓ LED-koplampen:</strong> Van halogeen naar LED was eenvoudig en gaf ’s nachts veel meer licht en zicht.</p>
+            <p><strong>✓ Extra lampen in de grille:</strong> We wilden de originele bumper en grille behouden. Lampen in de grill integreren gaf het strakste resultaat — en maakte de voorkant echt “af”.</p>
+            <p><strong>✓ Lier:</strong> Zelfredzaamheid in afgelegen gebieden was een must. Een lier is essentieel veiligheidsmateriaal voor off-road reizen, zeker als er niemand in de buurt is om te helpen.</p>
+            <h4>📚 Leerpunten</h4>
+            <p><b>Volgorde is belangrijk:</b> ik begon met het vervangen van de lampen in de koplampen om vervolgens weken later de bumper opnieuw te moeten demonteren voor de lier. Volgende keer doe ik dit in één sessie — dat scheelt uren werk.</p>
+          </div>`
+      },
+
+      'step-3-install-snorkel': {
+        title: 'Stap 3: Snorkel installeren',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Keuzemoment</h4>
+            <p>Een snorkel geeft zekerheid bij waterdoorsteken — belangrijk voor reizen waarbij we door water waden. We kozen voor een kwaliteitsmerk omdat het continu aan UV wordt blootgesteld. Besparen lijkt aantrekkelijk, maar een gescheurde snorkel en water in de motor kan je duizenden euro’s aan motorschade kosten.</p>
+          </div>`
+      },
+
+      'step-4-install-water-tank': {
+        title: 'Stap 4: Watertank installeren',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Keuzemomenten</h4>
+            <p>✓ We wilden eerst een tank van 80 L boven de wielkast. Toen hij binnenkwam bleek hij véél te groot en zou hij de hele ruimte domineren. Uiteindelijk vonden we een platte tank van 50 L die perfect past en nauwelijks in de weg zit.</p>
+            <p>✓ We hebben geen meter geplaatst om het simpel te houden. We vullen bij wanneer het kan — tot nu toe nog nooit zonder water gezeten.</p>
+            <p>✓ We plaatsten een verwarmingsmat om bevriezen in de winter te voorkomen. Belangrijk om zowel de tank als de pomp te beschermen bij temperaturen rond of onder het vriespunt.</p>
+          </div>`
+      },
+
+      'step-5-install-electrical': {
+        title: 'Stap 5: Elektrisch systeem installeren',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>📚 Leerpunten</h4>
+            <p><b>✓ Breng alle stroombehoeften eerst in kaart.</b> Goed plannen vooraf voorkwam onnodig opnieuw kopen van connectoren en schakelaars.</p>
+            <p><b>✓ Check elke krimpverbinding:</b> een losse verbinding kan later storingen geven die lastig te vinden zijn. Gebruik goed gereedschap en test alles vóór je het dichtbouwt.</p>
+            <p><b>✓ Trek alle kabels in één keer:</b> van accu naar voren in één sessie voorkomt gemiste aansluitingen en opnieuw panelen demonteren.</p>
+          </div>`
+      },
+
+      'step-6-build-interior': {
+        title: 'Stap 6: Interieur bouwen',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>📚 Leerpunten</h4>
+            <p><b>✓ Kies het juiste hout:</b> de gekozen houtsoort bepaalt sterkte en weerbestendigheid.</p>
+            <p><b>✓ Meet alles twee (of drie) keer:</b> ik had niet alle exacte maten van koelkast, gasstel en ladegeleiders. Daardoor moest ik delen opnieuw bouwen — helaas een behoorlijke verspilling van hout en uren.</p>
+            <p><b>✓ Koop de juiste ladegeleiders:</b> ik kocht te lichte geleiders; tijdens de eerste off-road reis gingen ze kapot. Daarna moest ik de geleiders upgraden en de lades modificeren (en extra geld uitgeven).</p>
+            <p><b>✓ Test ergonomie vóór je definitief bouwt:</b> zonnepanelen onder de keuken leek slim, tot de verhoging door de nieuwe veren en schokbrekers alles te hoog maakte om alles comfortabel te bereiken. Na onze eerste reis hebben we helaas het hele interieur opnieuw ingericht en gebouwd. Les: mock-up op echte hoogtes voordat je gaat bouwen.</p>
+          </div>`
+      },
+
+      'step-7-place-roof-tents': {
+        title: 'Stap 7: Daktenten plaatsen',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Keuzemomenten</h4>
+            <p><b>✓ 1 versus 2 tenten:</b> we kozen voor 2 tenten zodat iedereen meer ruimte heeft. Met vier personen in één tent betekent krap slapen en minder slaapkwaliteit.</p>
+            <p><b>✓ Luifel:</b> we wilden een 270° luifel met optionele tent voor veel schaduw. Zo kunnen we koken in de regen of uit de zon blijven zonder ons terug te moeten trekken in onze daktenten.</p>
+            <h4>📚 Leerpunten</h4>
+            <p><b>✓ Montage:</b> een specialist laten installeren was essentieel. Zij weten exact hoe je tenten positioneert en vastzet voor gewichtsverdeling en aerodynamica — niet iets om te “DIY’en”.</p>
+            <p><b>✓ Dakdrager:</b> ik wilde eerst standaard dakdragers gebruiken voor de voorste tent. De specialist raadde dit sterk af: te veel gewicht en vibratie tijdens off-road rijden. Snel de dragers verkocht en een vaste drager gemonteerd. Veiligheid eerst.</p>
+          </div>`
+      },
+
+      'step-8-upgrade-suspension': {
+        title: 'Stap 8: Vering en koppeling upgraden',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Keuzemomenten</h4>
+            <p><strong>✓ Zwaardere vering:</strong> geen moeilijke keuze. Met de daktenten op de wagen merkte ik direct het effect op gewicht en stabiliteit. Heavy duty veren en schokbrekers maakt het mogelijk om veilig te reizen met volle bepakking en vier persoen zowel op asfalt als in het terrein.</p>
+            <p><strong>✓ Zwaardere koppeling:</strong> op de eerste reis bleek dat de standaard koppeling het extra gewicht en off-road rijden niet goed aankon. Wegrijden met een slippende koppeling op steile stukken zorgde dat de koppeling snel op brandde. Na thuiskomst hebben we om deze reden direct een heavy-duty koppeling geplaatst — nu zijn er geen problemen meer tijdens het wegrijden.</p>
+            <h4>📚 Leerpunten</h4>
+            <p><b>✓ Koppeling:</b> heavy-duty koppelingen kosten €3500+. We hebben eerst de standaard koppeling getest; die faalde op onze eerste reis. Les geleerd en upgrade gedaan. Maar: eerst testen kan geld besparen als een upgrade misschien niet nodig blijkt.</p>
+          </div>`
+      },
+
+      'step-9-make-offroad-ready': {
+        title: 'Stap 9: Off-road ready maken',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>💡 Keuzemomenten</h4>
+            <p><strong>✓ Rock sliders:</strong> we haalden de standaard (plastic) side steps weg en vervingen ze door rock sliders. Beter beschermd tegen rotsen én nog steeds handig om op te stappen om bij het dak te komen of de tenthoezen te verwijderen.</p>
+            <p><strong>✓ Recovery boards:</strong> nadat we vast kwamen te zitten in onze achtertuin en we door een andere 4x4 uit deze benarde situatie zijn getrokken, was het duidelijk: deze boards moesten er komen. Dit geeft ons de nodige grip op modder/sneeuw/zand voor als je ergens vast zit.</p>
+          </div>`
+      },
+
+      'step-10-finished-interior': {
+        title: 'Stap 10: Interieur afgerond',
+        note: '',
+        richContent: `
+          <div class="build-rich-content">
+            <h4>🐾 Rondleiding</h4>
+            <p>Welkom in het volledig gebouwde interieur. Dit zit erin:</p>
+            <p>✓ Kraan en wasbak voor koken en schoonmaken</p>
+            <p>✓ Douche-aansluiting voor snel toegang tot water of douchen</p>
+            <p>✓ Grote lade met gasfornuis, wasbak en opslag</p>
+            <p>✓ Grote lade met koelkast (45 L) en opslag</p>
+            <p>✓ Lade voor bestek, kruiden, lier- en tentspullen</p>
+            <p>✓ Opslag met toegang tot waterpomp + opslag</p>
+            <p>✓ Kast voor borden en bekers</p>
+            <p>✓ Opslag voor campingstoelen (4 + bank)</p>
+            <p>✓ Opslag voor compressor + toegang tot tweede accu</p>
+            <p>✓ Camping tafel aan het plafond gemonteerd</p>
+            <p>✓ Zonnepanelen onder de tafel gemonteerd</p>
+            <p>✓ Watertank + toegang tot vuldop</p>
+            <p>✓ Altijd mee: opvouwbare schep (recoveren / kuil graven) en een kleine bijl om hout te hakken</p>
+            <p>✓ Brandblusser — voor de zekerheid</p>
+          </div>`
+      }
+    }
+  },
+
+  // Future: add BUILD_I18N.de = { ui: {...}, phases: {...} }
+};
+
+const i18n = BUILD_I18N[lang] || BUILD_I18N.en;
+
+const BUILD_PHASES = BUILD_PHASES_BASE.map(p => {
+  const txt = i18n.phases[p.id] || BUILD_I18N.en.phases[p.id];
+  return {
+    ...p,
+    title: txt?.title || p.id,
+    note: txt?.note || '',
+    richContent: txt?.richContent || ''
+  };
+});
 
     // --- Render jump nav ---
     if (jumpEl) {
         // Add heading for desktop
         const heading = document.createElement('h3');
-        heading.textContent = 'Timeline steps';
+/*        heading.textContent = 'Timeline steps';*/
+        heading.textContent = i18n.ui.jumpHeading;
         
         // Add mobile toggle button
         const toggleBtn = document.createElement('button');
         toggleBtn.className = 'build-jump-toggle';
-        toggleBtn.innerHTML = '📋 Build Steps <span class="toggle-icon">▼</span>';
+/*        toggleBtn.innerHTML = '📋 Build Steps <span class="toggle-icon">▼</span>';*/
+        toggleBtn.innerHTML = `${i18n.ui.toggleLabel} <span class="toggle-icon">▼</span>`;
         toggleBtn.setAttribute('aria-expanded', 'false');
         
         // Create wrapper for links
@@ -1024,7 +1418,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Flatten list of all images (for lightbox navigation)
     const allImages = BUILD_PHASES.flatMap(p => p.images.map(n => ({
-        src: `images/build/IMG_${n}.jpeg`,
+/*        src: `images/build/IMG_${n}.jpeg`,*/
+        src: `${assetPrefix}images/build/IMG_${n}.jpeg`,
         caption: `${p.title} — IMG_${n}`,
         phaseId: p.id
     })));
@@ -1032,7 +1427,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Render phases ---
     timelineEl.innerHTML = BUILD_PHASES.map(phase => {
         const thumbs = phase.images.map(n => {
-            const src = `images/build/IMG_${n}.jpeg`;
+/*            const src = `images/build/IMG_${n}.jpeg`;*/
+            const src = `${assetPrefix}images/build/IMG_${n}.jpeg`;
             return `
                 <div class="build-thumb" data-src="${src}" data-caption="${escapeHtml(phase.title)} — IMG_${n}">
                     <img src="${src}" alt="${escapeHtml(phase.title)} photo IMG_${n}" loading="lazy">
