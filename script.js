@@ -334,6 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevMonthBtn = document.getElementById('prevMonth');
     const nextMonthBtn = document.getElementById('nextMonth');
     
+    
     if (!calendarDays) return; // Only run on rent page
     
     let currentDate = new Date();
@@ -345,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let bookedDates = [];
     
     // iCal URL
-    const icalUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('http://calendar.justroam.nl/ranger');
+    const icalUrl = 'https://calendar.justroam.nl/ranger';
     
     // Initialize calendar
     async function initCalendar() {
