@@ -365,6 +365,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let currentIndex = 0;
     
+    // Show/hide arrows based on position (defined early so we can call it on init)
+    function updateArrowVisibility() {
+        if (prevBtn) {
+            prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
+        }
+        if (nextBtn) {
+            nextBtn.style.display = currentIndex === thumbnails.length - 1 ? 'none' : 'block';
+        }
+    }
+    
     if (thumbnails.length > 0 && mainImage) {
         // Initial state - hide left arrow on first image
         updateArrowVisibility();
@@ -450,16 +460,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Update arrow visibility
             updateArrowVisibility();
-        }
-        
-        // Show/hide arrows based on position
-        function updateArrowVisibility() {
-            if (prevBtn) {
-                prevBtn.style.display = currentIndex === 0 ? 'none' : 'block';
-            }
-            if (nextBtn) {
-                nextBtn.style.display = currentIndex === thumbnails.length - 1 ? 'none' : 'block';
-            }
         }
         
         // Keyboard navigation
@@ -1154,9 +1154,142 @@ const BUILD_I18N = {
           </div>`
       },
 
-      // ... keep the rest of your EN phases as-is (copy/paste them here)
+    
+    'step-2-upgrade-lights': {
+        title: 'Step 2: Upgrade lights and install winch',
+        note: '',
+        images: [8, 9, 15, 16, 17, 18, 54, 19],
+        richContent: `
+            <div class="build-rich-content">
+                <h4>💡 Decision point</h4>
+                <p><strong>✓ LED headlights: </strong>Upgrading from halogen to LED was straightforward and offered significantly more light and visibility at night.</p>
+                <p><strong>✓ Auxiliary lights in grill: </strong>We wanted to keep the stock bumper and grill, so integrating auxiliary lights into the grill mesh was the cleanest option. The result really completed the front-end look.</p>
+                <p><strong>✓ Winch installation: </strong> We wanted to make sure that the truck was able for self-recovery in remote areas. Essential safety equipment for off-road travel and getting unstuck when there's no one around to help.</p>
+                <h4>📚 Learnings</h4>
+                <p><b>Sequence matters: </b>I installed the lights first, then had to remove the bumper again weeks later to fit the winch. Next time, I'd do both upgrades in one session. This would have saved hours of work</p>
+            </div> 
+        `
+        },
+    
+    'step-3-install-snorkel': {
+        title: 'Step 3: Install snorkel',
+        note: '',
+        images: [10, 11],
+        richContent: `
+            <div class="build-rich-content">
+                <h4>💡 Decision point</h4>
+                <p>The snorkel provides security for water crossings—essential for remote travel. We went with a quality brand because it's constantly exposed to UV rays. Cheaping out might save a bit, but a cracked snorkel leading to water ingestion could cost thousands in engine damage.</p>
+            </div>`
+        },
+
+  
+    'step-4-install-water-tank': {
+        title: 'Step 4: Install water tank',
+        note: '',
+        images: [12, 13],
+        richContent: `
+            <div class="build-rich-content">
+                <h4>💡 Decision point</h4>
+                <p>✓ We initially wanted an 80l tank positioned above the wheel arch. When it arrived, it was way too large and would've dominated the interior space. After searching alternatives, we found a 50l flat tank that fits perfectly. It fits the space well and is not intrusive for the rest of the interior.</p>
+                <p>✓ We decided to not install any water level gauge to keep it simple. We just fill up when we can and so far we haven't ran out of water.</p>
+                <p>✓ We installed a heating pad to prevent freezing in winter conditions. Essential for protecting both the tank and pump when camping in sub-zero temperatures.</p>
+            </div> `
+    },
+  
+    'step-5-install-electrical': {
+        title: 'Step 5: Install electrical system',
+        note: '',
+        images: [51, 14, 20, 53, 49, 52],
+        richContent: `
+            <div class="build-rich-content">
+                <h4>📚 Learnings</h4>
+                <p><b>✓ Map out all power needs before buying components.</b> Taking time to plan upfront saved me from buying and rebuying connectors and switches.</p>
+                <p><b>✓ Double-check every crimp: </b>A loose connection can cause failures that are hard to diagnose later. Use proper crimping tools and test each connection before closing everything up.</p>
+                <p><b>✓ Pull all wires at once: </b>Run cables from battery to front in one session to avoid missing connections or having to disassemble panels multiple times.</p>
+            </div> `
+    },
+ 
+    'step-6-build-interior': {
+        title: 'Step 6: Build interior',
+        note: '',
+        images: [21, 31, 32, 38, 39, 40, 55, 56, 57],
+        richContent: `
+            <div class="build-rich-content">    
+                <h4>📚 Learnings</h4>
+                    <p><b>✓ Decide what wood to use: </b>the type of wood used is essential in how strong the construction is and if it can withstand the weather.</p>
+                    <p><b>✓ Measure everything twice (or three times): </b> I didn't have exact dimensions for the fridge, cooker, and drawer sliders before building. This meant rebuilding sections multiple times to get everything to fit—wasted wood and hours of work.</p>
+                    <p><b>✓ Get the right sliders: </b>I bought too light of sliders which resulted in broken sliders after the first offroad trip. After that trip, I had to make upgrades and modifications plus spend more money</p>
+                    <p><b>✓ Test ergonomics before finalizing: </b>Solar panels under the kitchen seemed smart until the suspension lift made everything too high to reach comfortably. Learned this on the first trip and had to rebuild the entire layout. Lesson: mock up the full setup with actual heights before committing.</p>
+            </div>`
+    },
+  
+    'step-7-place-roof-tents': {
+        title: 'Step 7: Place roof tents',
+        note: '',
+        images: [23, 24, 25, 26, 27, 28, 29, 30],
+        richContent: `
+            <div class="build-rich-content">    
+                <h4>💡 Decision points</h4>
+                    <p><b>✓ 1 versus 2 tents: </b>We chose 2 tents to give some more space to each individual. Sleeping four in one tent would mean cramped quarters and poor sleep quality.</p>
+                    <p><b>✓ Awning: </b>We wanted the full 270 degree awning with optional tent to create a large shaded cover. With that, we can cook in the rain or escape the sun without retreating into the tents.</p>
+                <h4>📚 Learnings</h4>
+                    <p><b>✓ Installation: </b>Having a roof tent specialist install them was essential. They knew exactly how to position and secure the tents for proper weight distribution and aerodynamics. Not something to DIY.</p>
+                    <p><b>✓ Roof rack installation: </b>I initially planned to use standard roof bars for the front tent. The specialist strongly advised against this—the bars aren't designed for the weight and vibration of off-road driving and would likely fail or detach. Sold them and installed a proper fixed roof rack instead. Safety first.</p>
+            </div> `
+    },
+  
+    'step-8-upgrade-suspension': {
+        title: 'Step 8: Upgrade suspension and clutch',
+        note: '',
+        images: [35, 36],
+        richContent: `
+            <div class="build-rich-content">    
+                <h4>💡 Decision points</h4>
+                    <p><strong>✓ Upgraded suspension: </strong>No difficult decision at all. Once the roof tents were installed, I immediately noticed the impact of the weight and overall stability of the truck. The upgrade to heavy duty suspension enables us to safely travel on- and offroad with the full equipment and four people. </p>
+                    <p><strong>✓ Upgraded clutch: </strong>On our first trip, we realized the stock clutch couldn't handle the increased weight and off-road driving. Frequent clutch slipping on steep terrain burned it up quickly. After returning home, we upgraded to a heavy-duty clutch—now the truck handles technical terrain without issue.</p>
+                <h4>📚 Learnings</h4>
+                    <p><b>✓ Clutch: </b>Heavy-duty clutches cost €3500+. We tested the stock clutch first and it failed after one trip. Learned our lesson and upgraded. But this approach saved us from spending on upgrades we might not have needed—test first, then upgrade based on real-world performance.</p>
+            </div> `
+    },
+
+    'step-9-make-offroad-ready': {
+        title: 'Step 9: Make offroad ready',
+        note: '',
+        images: [22, 34, 58],
+        richContent: `
+            <div class="build-rich-content">    
+                <h4>💡 Decision points</h4>
+                    <p><strong>✓ Rock sliders: </strong>We decided to remove the stock running boards which were made of plastic and replace them with rock sliders. These sliders protect the car better against big rocks while still offering the ability to step up on them and reach the tent covers.</p>
+                    <p><strong>✓ Recovery boards: </strong>After getting stuck in our back yard and being winched out by another 4x4 it became clear that we needed these boards. They are a precaution for when it's slippery and you need to get out of that situation.</p>
+            </div> `
+    },
+  
+    'step-10-finished-interior':{
+    title: 'Step 10: Finished interior',
+    note: '',
+    images: [41, 42, 43, 44, 45, 46, 47, 48, 49],
+    richContent: `
+        <div class="build-rich-content">    
+            <h4>🐾 Walk-through</h4>
+                <p>Welcome to the fully built interior. The interior has the following features:</p>
+                <p>✓ Water tap and bassin for cooking and cleaning</p>
+                <p>✓ Shower connection for quick water access or showering</p>
+                <p>✓ Large drawer with gas stove, water bassin, storage</p>
+                <p>✓ Large drawer with fridge (45l) and storage</p>
+                <p>✓ Drawer for cuttlery, condiments, winch and tent equipment</p>
+                <p>✓ Side cabinet with access to water pump and storage</p>
+                <p>✓ Side cubby for plates and cups</p>
+                <p>✓ Side cabinet for storing the camping seats (4 + bench)</p>
+                <p>✓ Side cabinet for compressor and access to the second battery</p>
+                <p>✓ Camping table mounted on the ceiling for easy access</p>
+                <p>✓ Solar panels mounted under the camping table for easy access</p>
+                <p>✓ Water tank and access to the fill cap</p>
+                <p>✓ Small items we always carry are a foldable shovel to help recover the car or just dig a hole. A small axe to chop wood for making a fire</p>
+                <p>✓ Fire extinguisher just in case</p>
+        </div> `
+        }
     }
-  },
+  },  // Close 'en' object
 
   nl: {
     ui: {
@@ -1165,7 +1298,7 @@ const BUILD_I18N = {
     },
     phases: {
       'stock': {
-        title: 'Start van de reis: de truck kopen',
+        title: 'Start van de reis: de koop',
         note: '',
         richContent: `
           <div class="build-rich-content">
@@ -1420,7 +1553,7 @@ const BUILD_PHASES = BUILD_PHASES_BASE.map(p => {
     const allImages = BUILD_PHASES.flatMap(p => p.images.map(n => ({
 /*        src: `images/build/IMG_${n}.jpeg`,*/
         src: `${assetPrefix}images/build/IMG_${n}.jpeg`,
-        caption: `${p.title} — IMG_${n}`,
+        caption: `${p.title}`,  // Removed — IMG_${n}
         phaseId: p.id
     })));
 
@@ -1430,8 +1563,8 @@ const BUILD_PHASES = BUILD_PHASES_BASE.map(p => {
 /*            const src = `images/build/IMG_${n}.jpeg`;*/
             const src = `${assetPrefix}images/build/IMG_${n}.jpeg`;
             return `
-                <div class="build-thumb" data-src="${src}" data-caption="${escapeHtml(phase.title)} — IMG_${n}">
-                    <img src="${src}" alt="${escapeHtml(phase.title)} photo IMG_${n}" loading="lazy">
+                <div class="build-thumb" data-src="${src}" data-caption="${escapeHtml(phase.title)}">
+                    <img src="${src}" alt="${escapeHtml(phase.title)} photo" loading="lazy">
                 </div>
             `;
         }).join('');
@@ -1483,9 +1616,16 @@ const BUILD_PHASES = BUILD_PHASES_BASE.map(p => {
         lbImg.src = item.src;
         lbCaption.textContent = item.caption;
 
-        // Hide prev/next at ends
-        lbPrev.style.display = currentIndex <= 0 ? 'none' : 'grid';
-        lbNext.style.display = currentIndex >= allImages.length - 1 ? 'none' : 'grid';
+        // Hide prev/next at phase boundaries (not just start/end of all images)
+        const currentPhase = item.phaseId;
+        const prevItem = allImages[currentIndex - 1];
+        const nextItem = allImages[currentIndex + 1];
+        
+        // Hide prev arrow if at first image OR if previous image is from different phase
+        lbPrev.style.display = (currentIndex <= 0 || prevItem?.phaseId !== currentPhase) ? 'none' : 'grid';
+        
+        // Hide next arrow if at last image OR if next image is from different phase
+        lbNext.style.display = (currentIndex >= allImages.length - 1 || nextItem?.phaseId !== currentPhase) ? 'none' : 'grid';
     }
 
     // Click thumbs
@@ -1504,14 +1644,26 @@ const BUILD_PHASES = BUILD_PHASES_BASE.map(p => {
     // Prev/Next
     lbPrev.addEventListener('click', function () {
         if (currentIndex > 0) {
-            currentIndex--;
-            renderLightbox();
+            const currentPhase = allImages[currentIndex].phaseId;
+            const prevItem = allImages[currentIndex - 1];
+            
+            // Only go prev if previous image is in same phase
+            if (prevItem && prevItem.phaseId === currentPhase) {
+                currentIndex--;
+                renderLightbox();
+            }
         }
     });
     lbNext.addEventListener('click', function () {
         if (currentIndex < allImages.length - 1) {
-            currentIndex++;
-            renderLightbox();
+            const currentPhase = allImages[currentIndex].phaseId;
+            const nextItem = allImages[currentIndex + 1];
+            
+            // Only go next if next image is in same phase
+            if (nextItem && nextItem.phaseId === currentPhase) {
+                currentIndex++;
+                renderLightbox();
+            }
         }
     });
 
