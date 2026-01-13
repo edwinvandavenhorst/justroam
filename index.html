@@ -3,10 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JustRoam - Travel & experiences</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>JustRoam - Overland Truck Rental & Custom Builds | Netherlands</title>
+    <meta name="title" content="JustRoam - Overland Truck Rental & Custom Builds | Netherlands">
+    <meta name="description" content="Rent our fully-equipped Ford Ranger with dual rooftop tents for your next adventure, or get your own custom overland build. Based in the Netherlands.">
+    <meta name="keywords" content="overland rental, truck rental Netherlands, rooftop tent rental, Ford Ranger rental, custom overland build, adventure travel, camping truck">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://justroam.nl/">
+    <meta property="og:title" content="JustRoam - Overland Adventures Start Here">
+    <meta property="og:description" content="Rent our fully-equipped Ford Ranger or build your own overlanding setup. Your adventure starts here.">
+    <meta property="og:image" content="https://justroam.nl/images/hero.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://justroam.nl/">
+    <meta property="twitter:title" content="JustRoam - Overland Adventures Start Here">
+    <meta property="twitter:description" content="Rent our fully-equipped Ford Ranger or build your own overlanding setup.">
+    <meta property="twitter:image" content="https://justroam.nl/images/hero.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://justroam.nl/">
+    
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="favicon.png">
+
+    <link rel="stylesheet" href="cookie-consent.css">
+    <script src="cookie-consent.js" defer></script>
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "JustRoam",
+      "description": "Overland truck rental and custom builds",
+      "url": "https://justroam.nl",
+      "telephone": "+31611334832",
+      "email": "info@justroam.nl",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Voorburg",
+        "addressCountry": "NL"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "addressCountry": "NL"
+      },
+      "priceRange": "€€",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Product",
+              "name": "Ford Ranger Rental with Dual Rooftop Tents"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Custom Overland Vehicle Builds"
+            }
+          }
+        ]
+      }
+    }
+    </script>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar" id="main-nav"></nav>
@@ -30,17 +100,27 @@
             <h2 class="section-title">Why choose our overlanding setup?</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🚙</div>
+                    <!--<div class="feature-icon">🚙</div>-->
+                    <div class="feature-icon">
+                      <img src="images/JustRoam_equipped.png" alt="Fully equipped overlanding truck">
+                    </div>
+                    
                     <h3>Fully equipped</h3>
                     <p>Custom-built Ford Ranger with kitchen, camping gear and recovery equipment - tackle any terrain with confidence.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🏕️</div>
+                    <!--<div class="feature-icon">🏕️</div>-->
+                    <div class="feature-icon">
+                      <img src="images/JustRoam_Family.png" alt="Family friendly">
+                    </div>
                     <h3>Adventure for the whole family</h3>
                     <p>Sleeps four comfortably in our dual rooftop tent setup, perfect for families and groups.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
+                    <!--<div class="feature-icon">🌍</div>-->
+                    <div class="feature-icon">
+                      <img src="images/JustRoam_travel.png" alt="Family friendly">
+                    </div>
                     <h3>Ready to explore</h3>
                     <p>Start your trip in the Netherlands and go for Weekend trips to the Ardennes or month-long adventures to Morocco - your choice!</p>
                 </div>
