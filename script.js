@@ -508,11 +508,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Load pricing from JSON
+    // Load pricing from JSON
     async function loadPricingData() {
         try {
-            const response = await fetch('pricing.json');
+            // Detect if we're in a subdirectory (like /nl/)
+            const isSubdirectory = window.location.pathname.includes('/nl/');
+            const pricingPath = isSubdirectory ? '../pricing.json' : 'pricing.json';
+            
+            const response = await fetch(pricingPath);
             pricingData = await response.json();
-            console.log('✅ Pricing loaded:', pricingData);
+            console.log('✅ Pricing loaded from:', pricingPath, pricingData);
         } catch (error) {
             console.error('❌ Could not load pricing.json:', error);
             // Fallback pricing

@@ -4,26 +4,26 @@
       "name": "High Season",
       "startDate": "2026-06-27",
       "endDate": "2026-09-01",
-      "dailyRate": 200
+      "dailyRate": 185
     },
     {
       "name": "Spring Season",
       "startDate": "2026-04-25",
       "endDate": "2026-06-27",
-      "dailyRate": 175
+      "dailyRate": 150
     },
     {
       "name": "Fall Season",
       "startDate": "2026-09-01",
       "endDate": "2026-10-04",
-      "dailyRate": 175
+      "dailyRate": 150
     },
     {
       "name": "Low Season",
       "startDate": "2025-10-04",
-      "endDate": "2026-04-25",
-      "dailyRate": 160
+      "endDate": "2026-04-24",
+      "dailyRate": 124
     }
   ],
-  "lastUpdated": "2025-12-28T05:28:58.287Z"
+  "lastUpdated": "2026-01-14T06:33:31.741Z"
 }
