@@ -743,6 +743,19 @@ img {
 
 .booking-cta p {
     font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--dark);
+}
+
+.booking-cta-small {
+    text-align: center;
+    margin-top: var(--spacing-md);
+ /*   padding-top: var(--spacing-md);*/
+ /*   border-top: 2px solid var(--gray-lighter);*/
+}
+
+.booking-cta-small p {
+    font-size: 0.9rem;
     margin-bottom: var(--spacing-xs);
     color: var(--dark);
 }

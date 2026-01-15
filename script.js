@@ -1143,7 +1143,7 @@ const BUILD_I18N = {
             <h4>💡 Decision point</h4>
             <p>We needed a double-cab pickup (4 seats) to make sure we could use the truck for our family trips. Finding a truck that met these requirements was hard as most Dutch pickups have deleted backseats due to tax incentives. Add our budget and we could select from just a few trucks, ultimately landing on our Ford Ranger.</p>
             <h4>🌲 The bigger mission</h4>
-            <p>Beyond family travel, this truck enables nature disconnect retreats—small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
+            <p>Beyond family travel, this truck enables nature disconnect retreats for small groups where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
           </div>`
       },
 
@@ -1183,7 +1183,7 @@ const BUILD_I18N = {
         richContent: `
             <div class="build-rich-content">
                 <h4>💡 Decision point</h4>
-                <p>The snorkel provides security for water crossings—essential for remote travel. We went with a quality brand because it's constantly exposed to UV rays. Cheaping out might save a bit, but a cracked snorkel leading to water ingestion could cost thousands in engine damage.</p>
+                <p>The snorkel provides security for water crossings and is an essential security during remote travel. We went with a quality brand because it's constantly exposed to UV rays. Cheaping out might save a bit, but a cracked snorkel leading to water ingestion could cost thousands in engine damage.</p>
             </div>`
         },
 
@@ -1239,7 +1239,7 @@ const BUILD_I18N = {
                     <p><b>✓ Awning: </b>We wanted the full 270 degree awning with optional tent to create a large shaded cover. With that, we can cook in the rain or escape the sun without retreating into the tents.</p>
                 <h4>📚 Learnings</h4>
                     <p><b>✓ Installation: </b>Having a roof tent specialist install them was essential. They knew exactly how to position and secure the tents for proper weight distribution and aerodynamics. Not something to DIY.</p>
-                    <p><b>✓ Roof rack installation: </b>I initially planned to use standard roof bars for the front tent. The specialist strongly advised against this—the bars aren't designed for the weight and vibration of off-road driving and would likely fail or detach. Sold them and installed a proper fixed roof rack instead. Safety first.</p>
+                    <p><b>✓ Roof rack installation: </b>I initially planned to use standard roof bars for the front tent. The specialist strongly advised against this as these bars aren't designed for the weight and vibration of off-road driving and would likely fail or detach. Sold them and installed a proper fixed roof rack instead. Safety first.</p>
             </div> `
     },
   
@@ -1251,9 +1251,9 @@ const BUILD_I18N = {
             <div class="build-rich-content">    
                 <h4>💡 Decision points</h4>
                     <p><strong>✓ Upgraded suspension: </strong>No difficult decision at all. Once the roof tents were installed, I immediately noticed the impact of the weight and overall stability of the truck. The upgrade to heavy duty suspension enables us to safely travel on- and offroad with the full equipment and four people. </p>
-                    <p><strong>✓ Upgraded clutch: </strong>On our first trip, we realized the stock clutch couldn't handle the increased weight and off-road driving. Frequent clutch slipping on steep terrain burned it up quickly. After returning home, we upgraded to a heavy-duty clutch—now the truck handles technical terrain without issue.</p>
+                    <p><strong>✓ Upgraded clutch: </strong>On our first trip, we realized the stock clutch couldn't handle the increased weight and off-road driving. Frequent clutch slipping on steep terrain burned it up quickly. After returning home, we upgraded to a heavy-duty clutch. Now the truck handles technical terrain without issue.</p>
                 <h4>📚 Learnings</h4>
-                    <p><b>✓ Clutch: </b>Heavy-duty clutches cost €3500+. We tested the stock clutch first and it failed after one trip. Learned our lesson and upgraded. But this approach saved us from spending on upgrades we might not have needed—test first, then upgrade based on real-world performance.</p>
+                    <p><b>✓ Clutch: </b>Heavy-duty clutches cost €3500+. We tested the stock clutch first and it failed after one trip. Learned our lesson and upgraded. But this approach saved us from spending on upgrades we might not have needed. Our advice is often to test first, then upgrade based on real-world experiences.</p>
             </div> `
     },
 
@@ -1308,7 +1308,7 @@ const BUILD_I18N = {
         richContent: `
           <div class="build-rich-content">
             <h4>💡 Keuzemoment</h4>
-            <p>We wilden een double cab pick-up (4 zitplaatsen), zodat we de wagen echt voor gezinsreizen konden gebruiken. Een geschikte pick-up vinden was lastig, omdat veel wagens in Nederland geen achterbank hebben ivm de bijtellingsregels voor bedrijfswagens. Tesamen met ons vastgestelde budget bleef er maar een kleine selectie over — uiteindelijk kozen we voor onze Ford Ranger.</p>
+            <p>We wilden een double cab pick-up (4 zitplaatsen), zodat we de wagen echt voor gezinsreizen konden gebruiken. Een geschikte pick-up vinden was lastig, omdat veel wagens in Nederland geen achterbank hebben ivm de bijtellingsregels voor bedrijfswagens. Tesamen met ons vastgestelde budget bleef er maar een kleine selectie over en uiteindelijk kozen we voor onze Ford Ranger.</p>
             <h4>🌲 De grotere missie</h4>
             <p>Naast gezinsreizen maakt deze truck ‘disconnect’-retraites in de natuur mogelijk: kleine groepen, weg van telefoons, meldingen en dagelijkse drukte. Dankzij 4 slaapplaatsen kunnen we groepen meenemen naar afgelegen plekken voor echte rust en hernieuwde verbinding met de natuur.</p>
           </div>`
@@ -1333,10 +1333,10 @@ const BUILD_I18N = {
           <div class="build-rich-content">
             <h4>💡 Keuzemomenten</h4>
             <p><strong>✓ LED-koplampen:</strong> Van halogeen naar LED was eenvoudig en gaf ’s nachts veel meer licht en zicht.</p>
-            <p><strong>✓ Extra lampen in de grille:</strong> We wilden de originele bumper en grille behouden. Lampen in de grill integreren gaf het strakste resultaat — en maakte de voorkant echt “af”.</p>
+            <p><strong>✓ Extra lampen in de grille:</strong> We wilden de originele bumper en grille behouden. Lampen in de grill integreren gaf het strakste resultaat en maakte de voorkant echt “af”.</p>
             <p><strong>✓ Lier:</strong> Zelfredzaamheid in afgelegen gebieden was een must. Een lier is essentieel veiligheidsmateriaal voor off-road reizen, zeker als er niemand in de buurt is om te helpen.</p>
             <h4>📚 Leerpunten</h4>
-            <p><b>Volgorde is belangrijk:</b> ik begon met het vervangen van de lampen in de koplampen om vervolgens weken later de bumper opnieuw te moeten demonteren voor de lier. Volgende keer doe ik dit in één sessie — dat scheelt uren werk.</p>
+            <p><b>Volgorde is belangrijk:</b> ik begon met het vervangen van de lampen in de koplampen om vervolgens weken later de bumper opnieuw te moeten demonteren voor de lier. Volgende keer doe ik dit in één sessie, dat scheelt uren werk.</p>
           </div>`
       },
 
@@ -1346,7 +1346,7 @@ const BUILD_I18N = {
         richContent: `
           <div class="build-rich-content">
             <h4>💡 Keuzemoment</h4>
-            <p>Een snorkel geeft zekerheid bij waterdoorsteken — belangrijk voor reizen waarbij we door water waden. We kozen voor een kwaliteitsmerk omdat het continu aan UV wordt blootgesteld. Besparen lijkt aantrekkelijk, maar een gescheurde snorkel en water in de motor kan je duizenden euro’s aan motorschade kosten.</p>
+            <p>Een snorkel geeft zekerheid bij waterdoorsteken iets wat belangrijk is voor reizen waarbij we door water waden. We kozen voor een kwaliteitsmerk omdat het continu aan UV wordt blootgesteld. Besparen lijkt aantrekkelijk, maar een gescheurde snorkel en water in de motor kan je duizenden euro’s aan motorschade kosten.</p>
           </div>`
       },
 
@@ -1357,7 +1357,7 @@ const BUILD_I18N = {
           <div class="build-rich-content">
             <h4>💡 Keuzemomenten</h4>
             <p>✓ We wilden eerst een tank van 80 L boven de wielkast. Toen hij binnenkwam bleek hij véél te groot en zou hij de hele ruimte domineren. Uiteindelijk vonden we een platte tank van 50 L die perfect past en nauwelijks in de weg zit.</p>
-            <p>✓ We hebben geen meter geplaatst om het simpel te houden. We vullen bij wanneer het kan — tot nu toe nog nooit zonder water gezeten.</p>
+            <p>✓ We hebben geen meter geplaatst om het simpel te houden. We vullen bij wanneer het kan en tot nu toe nog nooit zonder water gezeten.</p>
             <p>✓ We plaatsten een verwarmingsmat om bevriezen in de winter te voorkomen. Belangrijk om zowel de tank als de pomp te beschermen bij temperaturen rond of onder het vriespunt.</p>
           </div>`
       },
@@ -1368,8 +1368,8 @@ const BUILD_I18N = {
         richContent: `
           <div class="build-rich-content">
             <h4>📚 Leerpunten</h4>
-            <p><b>✓ Breng alle stroombehoeften eerst in kaart.</b> Goed plannen vooraf voorkwam onnodig opnieuw kopen van connectoren en schakelaars.</p>
-            <p><b>✓ Check elke krimpverbinding:</b> een losse verbinding kan later storingen geven die lastig te vinden zijn. Gebruik goed gereedschap en test alles vóór je het dichtbouwt.</p>
+            <p><b>✓ Breng alle stroombehoeften eerst in kaart.</b> Goed plannen voorkwam onnodige vertraging door het extra moeten kopen van connectoren en schakelaars.</p>
+            <p><b>✓ Check elke krimpverbinding:</b> een losse verbinding kan later storingen geven die lastig te vinden zijn. Belangrijk is dat elke verbinding goed wordt getest vóór je het dichtbouwt.</p>
             <p><b>✓ Trek alle kabels in één keer:</b> van accu naar voren in één sessie voorkomt gemiste aansluitingen en opnieuw panelen demonteren.</p>
           </div>`
       },
@@ -1381,9 +1381,9 @@ const BUILD_I18N = {
           <div class="build-rich-content">
             <h4>📚 Leerpunten</h4>
             <p><b>✓ Kies het juiste hout:</b> de gekozen houtsoort bepaalt sterkte en weerbestendigheid.</p>
-            <p><b>✓ Meet alles twee (of drie) keer:</b> ik had niet alle exacte maten van koelkast, gasstel en ladegeleiders. Daardoor moest ik delen opnieuw bouwen — helaas een behoorlijke verspilling van hout en uren.</p>
+            <p><b>✓ Meet alles twee (of drie) keer:</b> ik had niet alle exacte maten van koelkast, kookstel en ladegeleiders. Daardoor moest ik delen opnieuw bouwen met helaas een behoorlijke verspilling van hout en uren.</p>
             <p><b>✓ Koop de juiste ladegeleiders:</b> ik kocht te lichte geleiders; tijdens de eerste off-road reis gingen ze kapot. Daarna moest ik de geleiders upgraden en de lades modificeren (en extra geld uitgeven).</p>
-            <p><b>✓ Test ergonomie vóór je definitief bouwt:</b> zonnepanelen onder de keuken leek slim, tot de verhoging door de nieuwe veren en schokbrekers alles te hoog maakte om alles comfortabel te bereiken. Na onze eerste reis hebben we helaas het hele interieur opnieuw ingericht en gebouwd. Les: mock-up op echte hoogtes voordat je gaat bouwen.</p>
+            <p><b>✓ Test ergonomie vóór je definitief bouwt:</b> zonnepanelen onder de keuken leek slim, tot de verhoging door de nieuwe veren en schokbrekers alles te hoog maakte om alles comfortabel te bereiken. Na onze eerste reis hebben we helaas het hele interieur opnieuw ingericht en gebouwd. Les: zorg dat zware lades met de koelkast en het kookstel zo laag mogelijk zitten in de opbouw.</p>
           </div>`
       },
 
@@ -1396,7 +1396,7 @@ const BUILD_I18N = {
             <p><b>✓ 1 versus 2 tenten:</b> we kozen voor 2 tenten zodat iedereen meer ruimte heeft. Met vier personen in één tent betekent krap slapen en minder slaapkwaliteit.</p>
             <p><b>✓ Luifel:</b> we wilden een 270° luifel met optionele tent voor veel schaduw. Zo kunnen we koken in de regen of uit de zon blijven zonder ons terug te moeten trekken in onze daktenten.</p>
             <h4>📚 Leerpunten</h4>
-            <p><b>✓ Montage:</b> een specialist laten installeren was essentieel. Zij weten exact hoe je tenten positioneert en vastzet voor gewichtsverdeling en aerodynamica — niet iets om te “DIY’en”.</p>
+            <p><b>✓ Montage:</b> een specialist laten installeren was essentieel. Zij weten exact hoe je tenten positioneert en vastzet voor gewichtsverdeling en aerodynamica niet iets om zelf te proberen.</p>
             <p><b>✓ Dakdrager:</b> ik wilde eerst standaard dakdragers gebruiken voor de voorste tent. De specialist raadde dit sterk af: te veel gewicht en vibratie tijdens off-road rijden. Snel de dragers verkocht en een vaste drager gemonteerd. Veiligheid eerst.</p>
           </div>`
       },
@@ -1408,7 +1408,7 @@ const BUILD_I18N = {
           <div class="build-rich-content">
             <h4>💡 Keuzemomenten</h4>
             <p><strong>✓ Zwaardere vering:</strong> geen moeilijke keuze. Met de daktenten op de wagen merkte ik direct het effect op gewicht en stabiliteit. Heavy duty veren en schokbrekers maakt het mogelijk om veilig te reizen met volle bepakking en vier persoen zowel op asfalt als in het terrein.</p>
-            <p><strong>✓ Zwaardere koppeling:</strong> op de eerste reis bleek dat de standaard koppeling het extra gewicht en off-road rijden niet goed aankon. Wegrijden met een slippende koppeling op steile stukken zorgde dat de koppeling snel op brandde. Na thuiskomst hebben we om deze reden direct een heavy-duty koppeling geplaatst — nu zijn er geen problemen meer tijdens het wegrijden.</p>
+            <p><strong>✓ Zwaardere koppeling:</strong> op de eerste reis bleek dat de standaard koppeling het extra gewicht en off-road rijden niet goed aankon. Wegrijden met een slippende koppeling op steile stukken zorgde dat de koppeling snel op brandde. Na thuiskomst hebben we om deze reden direct een heavy-duty koppeling geplaatst en zijn er geen problemen meer tijdens het wegrijden.</p>
             <h4>📚 Leerpunten</h4>
             <p><b>✓ Koppeling:</b> heavy-duty koppelingen kosten €3500+. We hebben eerst de standaard koppeling getest; die faalde op onze eerste reis. Les geleerd en upgrade gedaan. Maar: eerst testen kan geld besparen als een upgrade misschien niet nodig blijkt.</p>
           </div>`
@@ -1445,7 +1445,7 @@ const BUILD_I18N = {
             <p>✓ Zonnepanelen onder de tafel gemonteerd</p>
             <p>✓ Watertank + toegang tot vuldop</p>
             <p>✓ Altijd mee: opvouwbare schep (recoveren / kuil graven) en een kleine bijl om hout te hakken</p>
-            <p>✓ Brandblusser — voor de zekerheid</p>
+            <p>✓ Brandblusser voor de zekerheid</p>
           </div>`
       }
     }
