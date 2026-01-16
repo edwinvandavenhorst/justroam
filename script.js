@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navHTML = `
     <div class="nav-container">
       <a href="${pagePrefix}index.html" class="nav-logo">
-        <img src="${imgPrefix}images/Logo_JustRoam_ClearBackground.png" alt="JustRoam Logo" class="logo-img">
+        <img src="${imgPrefix}images/Logo_JustRoam.svg" alt="JustRoam Logo" class="logo-img">
       </a>
 
       <ul class="nav-menu">
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="container">
       <div class="footer-content">
         <a href="${prefix}index.html" class="footer-logo">
-          <img src="${prefix}images/Logo_JustRoam_ClearBackground.png" alt="JustRoam Logo" class="footer-img">
+          <img src="${prefix}images/Logo_JustRoam_notext.svg" alt="JustRoam Logo" class="footer-img">
         </a>
 
         <div class="footer-section">
