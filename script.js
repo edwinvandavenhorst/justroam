@@ -122,8 +122,8 @@ const NAV_TEXT = {
   },
   nl: {
     home: 'Home',              // or "Start" if you prefer
-    rent: 'Huur een truck',
-    build: 'Bouw je truck',    // or "Truck ombouwen"
+    rent: 'Huur een wagen',
+    build: 'Bouw je wagen',    // or "Truck ombouwen"
     stories: 'Onze verhalen',
     faq: 'Veelgestelde vragen',
     contact: 'Neem contact op'
