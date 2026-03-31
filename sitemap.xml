@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- English pages -->
+  <url>
+    <loc>https://justroam.nl/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/build.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/build.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/build.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/rent.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/rent.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/rent.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/blog_build.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/blog_build.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/blog_build.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/stories.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/stories.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/stories.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/faq.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/contact.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Dutch pages -->
+  <url>
+    <loc>https://justroam.nl/nl/</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/nl/build.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/build.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/build.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/nl/rent.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/rent.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/rent.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/nl/blog_build.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/blog_build.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/blog_build.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/nl/stories.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/stories.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/stories.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/nl/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/faq.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/nl/contact.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/contact.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/contact.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+</urlset>

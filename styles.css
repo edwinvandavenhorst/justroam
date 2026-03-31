@@ -128,6 +128,14 @@ img {
     white-space: nowrap;
 }
 
+.nav-container--nl .nav-menu {
+    gap: 1 rem;
+}
+
+.nav-container--nl .nav-link {
+    padding: var(--spacing-xs) 0.4rem;
+}
+
 .nav-instagram {
     display: flex;
     align-items: center;
@@ -399,6 +407,7 @@ img {
 .feature-card {
     text-align: center;
     padding: var(--spacing-md);
+    border: 1px solid var(--gray-lighter);
     border-radius: var(--radius-lg);
     background: var(--white);
     box-shadow: var(--shadow-sm);

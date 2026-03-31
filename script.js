@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Navigation structure
     const navHTML = `
-    <div class="nav-container">
+    <div class="nav-container${onNl ? ' nav-container--nl' : ''}">
       <a href="${pagePrefix}index.html" class="nav-logo">
         <img src="${imgPrefix}images/Logo_JustRoam.svg" alt="JustRoam Logo" class="logo-img">
       </a>

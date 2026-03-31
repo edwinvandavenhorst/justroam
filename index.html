@@ -5,27 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Primary Meta Tags -->
-    <title>JustRoam - Overland Truck Rental & Custom Builds | Netherlands</title>
-    <meta name="title" content="JustRoam - Overland Truck Rental & Custom Builds | Netherlands">
-    <meta name="description" content="Rent our fully-equipped Ford Ranger with dual rooftop tents for your next adventure, or get your own custom overland build. Based in the Netherlands.">
-    <meta name="keywords" content="overland rental, truck rental Netherlands, rooftop tent rental, Ford Ranger rental, custom overland build, adventure travel, camping truck">
+    <title>JustRoam | 4x4 builds & verhuur | Avontuurlijke reizen</title>
+    <meta name="title" content="JustRoam | 4x4 builds & verhuur | Avontuurlijke reizen">
+    <meta name="description" content="Maatwerk offroad opbouw voor jouw voertuig en verhuur van Ford Ranger met dubbele daktent. Ervaar het overlanding leven of laat jouw droomwagen bouwen. Gebaseerd in Nederland.">
+    <meta name="keywords" content="overland voertuigen nederland, offroad voertuigen ombouwen, 4x4 camper bouwen, ford ranger daktent verhuur, overland verhuur nederland, maatwerk wagen opbouw, overlanding europa, daktent auto huren">
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://justroam.nl/">
-    <meta property="og:title" content="JustRoam - Overland Adventures Start Here">
-    <meta property="og:description" content="Rent our fully-equipped Ford Ranger or build your own overlanding setup. Your adventure starts here.">
+    <meta property="og:title" content="JustRoam | 4x4 builds & verhuur | Avontuurlijke reizen">
+    <meta property="og:description" content="Maatwerk overland voertuigen en verhuur van Ford Ranger met twee daktenten. Jouw 4x4 avontuur begint hier.">
     <meta property="og:image" content="https://justroam.nl/images/hero.jpg">
+    <meta property="og:locale" content="nl_NL">
+    <meta property="og:site_name" content="JustRoam">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://justroam.nl/">
-    <meta property="twitter:title" content="JustRoam - Overland Adventures Start Here">
-    <meta property="twitter:description" content="Rent our fully-equipped Ford Ranger or build your own overlanding setup.">
+    <meta property="twitter:title" content="JustRoam | 4x4 builds & verhuur | Avontuurlijke reizen">
+    <meta property="twitter:description" content="Maatwerk offroad voertuigen en verhuur van Ford Ranger met twee daktenten. Jouw avontuur begint hier.">
     <meta property="twitter:image" content="https://justroam.nl/images/hero.jpg">
     
     <!-- Canonical URL -->
     <link rel="canonical" href="https://justroam.nl/">
+    <link rel="alternate" hreflang="en" href="https://justroam.nl/">
+    <link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/">
+    <link rel="alternate" hreflang="x-default" href="https://justroam.nl/">
     
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -39,41 +44,45 @@
       "@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": "JustRoam",
-      "description": "Overland truck rental and custom builds",
+      "description": "Maatwerk offroad voertuigen en verhuur van Ford Ranger met daktenten. Gebaseerd in Nederland.",
       "url": "https://justroam.nl",
       "telephone": "+31611334832",
       "email": "info@justroam.nl",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Voorburg",
-        "addressCountry": "NL"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
+        "addressRegion": "Zuid-Holland",
         "addressCountry": "NL"
       },
       "priceRange": "€€",
+      "areaServed": [
+      { "@type": "Country", "name": "Netherlands" },
+      { "@type": "Country", "name": "Germany" },
+      { "@type": "Country", "name": "Belgium" }
+      ],
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Services",
         "itemListElement": [
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Product",
-              "name": "Ford Ranger Rental with Dual Rooftop Tents"
-            }
-          },
-          {
-            "@type": "Offer",
-            "itemOffered": {
-              "@type": "Service",
-              "name": "Custom Overland Vehicle Builds"
-            }
-          }
-        ]
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Maatwerk offroad builds",
+          "description": "Complete offroad opbouw voor klant-eigen voertuigen in West-Europa"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Product",
+          "name": "Ford Ranger verhuur met dubbele daktent",
+          "description": "Volledig uitgeruste Ford Ranger met twee daktenten, keuken en recovery gear"
+        }
       }
-    }
+    ]
+  }
+}
     </script>
 </head>
 
@@ -86,10 +95,10 @@
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <h1 class="hero-title">Your overlanding adventure starts here!</h1>
-            <p class="hero-subtitle">Rent our fully-equipped Ford Ranger with dual rooftop tents, or let me build your own overlanding setup</p>
+            <p class="hero-subtitle">Get your own custom overland build or rent our fully-equipped Ford Ranger with dual rooftop tents</p>
             <div class="hero-buttons">
-                <a href="rent.html" class="btn btn-primary" style="min-width: 200px;">Rent now</a>
-                <a href="build.html" class="btn btn-secondary" style="min-width: 200px;">Get your build started</a>
+                <a href="build.html" class="btn btn-primary" style="min-width: 200px;">Get your build started</a>
+                <a href="rent.html" class="btn btn-secondary" style="min-width: 200px;">Rent now</a>
             </div>
         </div>
     </section>
@@ -97,44 +106,35 @@
     <!-- Features Section -->
     <section class="features">
         <div class="container">
-            <h2 class="section-title">Why choose our overlanding setup?</h2>
+            <h2 class="section-title">Adventure. Build. Rent.</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <!--<div class="feature-icon">🚙</div>-->
-                    <div class="feature-icon">
-                      <img src="images/JustRoam_equipped.png" alt="Fully equipped overlanding truck">
-                    </div>
-                    
-                    <h3>Fully equipped</h3>
-                    <p>Custom-built Ford Ranger with kitchen, camping gear and recovery equipment, ready to tackle any terrain with confidence.</p>
+                    <h3>Nature is calling!</h3>
+                    <p>Imagine waking up to a sunrise over a Norwegian fjord, or falling asleep to waves on an empty beach. Overlanding takes you there.</p>
                 </div>
                 <div class="feature-card">
-                    <!--<div class="feature-icon">🏕️</div>-->
-                    <div class="feature-icon">
-                      <img src="images/JustRoam_Family.png" alt="Family friendly">
-                    </div>
-                    <h3>Adventure for the whole family</h3>
-                    <p>Sleeps four comfortably in our dual rooftop tent setup, perfect for families and groups.</p>
+                    <h3>Built for real adventure</h3>
+                    <p>Every build is designed around how you actually travel. From a basic setup to a full overland conversion. Together we design something that fits your adventures.</p>
                 </div>
-                <div class="feature-card">
-                    <!--<div class="feature-icon">🌍</div>-->
-                    <div class="feature-icon">
-                      <img src="images/JustRoam_travel.png" alt="Family friendly">
-                    </div>
-                    <h3>Ready to explore</h3>
-                    <p>Start your trip in the Netherlands and go for Weekend trips to the Ardennes or month-long adventures to Morocco, chase after your own dream destination!</p>
+                <div class="feature-card">                    
+                    <h3>Want to go out there?</h3>
+                    <p>Rent our Ford Ranger for a weekend or longer. Find out what overlanding is really like before deciding on your own setup.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
+     
     <section class="cta-section">
-        <div class="container">
-            <h2>Ready for your next adventure?</h2>
-            <p>Book the truck for your next overlanding trip</p>
-            <a href="rent.html" class="btn btn-primary btn-large">Check availability</a>
-        </div>
+      <div class="container">
+      <h2>Ready to build or rent and go on an adventure?</h2>
+      <p>Tell us what you're after and we'll point you in the right direction</p>
+      <div style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+        <a href="build.html" class="btn btn-primary" style="min-width: 200px;">Explore builds</a>
+        <a href="rent.html" class="btn btn-secondary" style="min-width: 200px;">Check availability</a>
+      </div>
+      </div>
     </section>
 
     <!-- Footer -->
