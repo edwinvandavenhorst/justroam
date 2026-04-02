@@ -42,60 +42,69 @@
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "serviceType": "Custom Overland Vehicle Builds",
-    "provider": {
-      "@type": "Organization",
-      "name": "JustRoam",
-      "url": "https://justroam.nl",
-      "logo": "https://justroam.nl/favicon.png"
-    },
-    "areaServed": [
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Custom Overland Vehicle Builds",
+  "provider": {
+    "@type": "Organization",
+    "name": "JustRoam",
+    "url": "https://justroam.nl",
+    "logo": "https://justroam.nl/favicon.png"
+  },
+  "areaServed": [
+    { "@type": "Country", "name": "Netherlands" },
+    { "@type": "Country", "name": "Germany" },
+    { "@type": "Country", "name": "Belgium" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Overland Build Packages",
+    "itemListElement": [
       {
-        "@type": "Country",
-        "name": "Netherlands"
-      },
-      {
-        "@type": "Country",
-        "name": "Germany"
-      },
-      {
-        "@type": "Country",
-        "name": "Belgium"
-      }
-    ],
-    "hasOfferCatalog": {
-      "@type": "OfferCatalog",
-      "name": "Overland Build Packages",
-      "itemListElement": [
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Basic Build Package",
-            "description": "Electronics and canopy integration for customer-owned vehicles"
-          }
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Getting started — basics",
+          "description": "Aluminium canopy, dual-battery system and solar charging"
         },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Advanced Build Package",
-            "description": "Basic package plus custom interior and water system"
-          }
-        },
-        {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": "Full Overland-Ready Build",
-            "description": "Complete overland setup with roof tents and recovery gear"
-          }
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "EUR",
+          "minPrice": "3000",
+          "maxPrice": "6000"
         }
-      ]
-    }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Getting serious — interior and water",
+          "description": "Full electrical setup plus custom interior, kitchen and water system"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "EUR",
+          "minPrice": "6000",
+          "maxPrice": "15000"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Going all-in — full overland ready",
+          "description": "Complete overland setup with roof tents, suspension upgrade and recovery gear"
+        },
+        "priceSpecification": {
+          "@type": "PriceSpecification",
+          "priceCurrency": "EUR",
+          "minPrice": "15000",
+          "maxPrice": "30000"
+        }
+      }
+    ]
   }
+}
   </script>
 </head>
 
