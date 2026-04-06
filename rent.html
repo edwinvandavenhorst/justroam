@@ -42,8 +42,8 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Service",
-      "serviceType": "Vehicle Rental"
+      "@type": "Service", 
+      "serviceType": "Vehicle Rental",
       "name": "Ford Ranger Overland Rental with Dual Rooftop Tents",
       "description": "Fully-equipped Ford Ranger with dual Sheepie Yuna rooftop tents, kitchen, camping gear, and recovery equipment",
       "provider": {
@@ -59,6 +59,13 @@
         "@type": "Offer",
         "availability": "https://schema.org/InStock",
         "priceCurrency": "EUR",
+        "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "minPrice": "140",
+        "maxPrice": "245",
+        "priceCurrency": "EUR",
+        "unitCode": "DAY"
+    },
         "seller": {
           "@type": "Organization",
           "name": "JustRoam"
