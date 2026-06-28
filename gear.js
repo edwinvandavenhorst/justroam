@@ -51,6 +51,7 @@ var GEAR_T = GEAR_IS_NL ? {
         if (next) next.addEventListener('click', function () { view.setMonth(view.getMonth() + 1); render(); });
         if (itemSelect) itemSelect.addEventListener('change', function () { selStart = null; selEnd = null; render(); });
         if (requestBtn) requestBtn.addEventListener('click', onRequestClick);
+        window.addEventListener('resize', render);
 
         initCalendar();
 
@@ -133,26 +134,34 @@ var GEAR_T = GEAR_IS_NL ? {
         }
 
         function render() {
-            renderMonth(view, monthLabel0, days0);
+            // On desktop both months are visible side by side, so the boundary
+            // days between them would otherwise be rendered twice (once as the
+            // tail of month 0, once as the head of month 1) and could show
+            // inconsistent state. Suppress the overflow copy that duplicates a
+            // day already shown as a real cell in the other panel. On mobile
+            // only month 0 is visible, so its trailing overflow stays
+            // interactive - it is the only way to reach next month's days.
+            var twoMonth = window.matchMedia('(min-width: 901px)').matches;
+            renderMonth(view, monthLabel0, days0, false, twoMonth);
             var view2 = new Date(view.getFullYear(), view.getMonth() + 1, 1);
-            renderMonth(view2, monthLabel1, days1);
+            renderMonth(view2, monthLabel1, days1, twoMonth, false);
             updateDisplays();
         }
 
-        function renderMonth(monthDate, labelEl, daysEl) {
+        function renderMonth(monthDate, labelEl, daysEl, suppressLeading, suppressTrailing) {
             if (labelEl) labelEl.textContent = monthDate.toLocaleDateString(locale, { month: 'long', year: 'numeric' });
             daysEl.innerHTML = '';
             var y = monthDate.getFullYear(), m = monthDate.getMonth();
             var lastDay = new Date(y, m + 1, 0);
             var off = new Date(y, m, 1).getDay() - 1; if (off === -1) off = 6;
             var prevLast = new Date(y, m, 0).getDate();
-            for (var i = off - 1; i >= 0; i--) daysEl.appendChild(cell(new Date(y, m - 1, prevLast - i), true));
-            for (var d = 1; d <= lastDay.getDate(); d++) daysEl.appendChild(cell(new Date(y, m, d), false));
+            for (var i = off - 1; i >= 0; i--) daysEl.appendChild(cell(new Date(y, m - 1, prevLast - i), true, suppressLeading));
+            for (var d = 1; d <= lastDay.getDate(); d++) daysEl.appendChild(cell(new Date(y, m, d), false, false));
             var tot = daysEl.children.length, rem = tot % 7 === 0 ? 0 : 7 - (tot % 7);
-            for (var n = 1; n <= rem; n++) daysEl.appendChild(cell(new Date(y, m + 1, n), true));
+            for (var n = 1; n <= rem; n++) daysEl.appendChild(cell(new Date(y, m + 1, n), true, suppressTrailing));
         }
 
-        function cell(date, other) {
+        function cell(date, other, suppressed) {
             var el = document.createElement('div');
             el.className = 'calendar-day';
             if (other) el.classList.add('other-month');
@@ -160,6 +169,8 @@ var GEAR_T = GEAR_IS_NL ? {
             num.className = 'day-number';
             num.textContent = date.getDate();
             el.appendChild(num);
+
+            if (other && suppressed) return el;
 
             if (isToday(date)) { el.classList.add('today'); return el; }
             if (isPast(date)) { el.classList.add('past'); return el; }
@@ -339,7 +350,8 @@ var GEAR_T = GEAR_IS_NL ? {
                 phone: document.getElementById('g-phone').value,
                 message: document.getElementById('g-message').value,
                 website: document.getElementById('g-website').value,
-                formLoadedAt: formLoadedAt
+                formLoadedAt: formLoadedAt,
+                locale: GEAR_IS_NL ? 'nl' : 'en'
             };
 
                         fetch(REQUEST_ENDPOINT, {
