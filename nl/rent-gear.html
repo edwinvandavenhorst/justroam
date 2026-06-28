@@ -354,63 +354,68 @@
                         <input type="email" id="g-email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="g-phone">Telefoon *</label>
-                        <div class="phone-field">
-                            <select id="g-phone-country" name="phoneCountry" required>
-                                <option value="+31" selected>NL +31</option>
-                                <option value="+32">BE +32</option>
-                                <option value="+49">DE +49</option>
-                                <option value="+44">UK +44</option>
-                                <option value="+33">FR +33</option>
-                                <option value="+34">ES +34</option>
-                                <option value="+39">IT +39</option>
-                                <option value="+43">AT +43</option>
-                                <option value="+41">CH +41</option>
-                                <option value="+48">PL +48</option>
-                                <option value="+1">US/CA +1</option>
-                            </select>
-                            <input type="tel" id="g-phone" name="phone" placeholder="6 12345678">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-street">Straat *</label>
-                        <input type="text" id="g-street" name="street" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-house-number">Huisnummer *</label>
-                        <input type="text" id="g-house-number" name="houseNumber" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-postcode">Postcode *</label>
-                        <input type="text" id="g-postcode" name="postcode" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-city">Plaats *</label>
-                        <input type="text" id="g-city" name="city" required>
-                    </div>
-                    <div class="form-group">
                         <label for="g-country">Land *</label>
-                        <input type="text" id="g-country" name="country" value="Nederland" required>
+                        <select id="g-country" name="country" required>
+                            <option value="Netherlands" selected>Nederland</option>
+                            <option value="Belgium">België</option>
+                            <option value="Germany">Duitsland</option>
+                            <option value="Other">Ander land</option>
+                        </select>
                     </div>
 
-                    <!-- Honeypot: hidden from real users, bots tend to fill it in -->
-                    <div class="gear-honeypot" aria-hidden="true">
-                        <label for="g-website">Website</label>
-                        <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <label for="g-message">Nog iets dat we moeten weten?</label>
-                        <textarea id="g-message" name="message" rows="4" placeholder="Type auto / trekhaak, aantal fietsen, e-bikes, etc."></textarea>
+                    <div id="g-other-country-message" style="display:none;background:var(--background);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;">
+                        <p style="margin:0;">We verwerken aanvragen automatisch alleen voor Nederland, België en Duitsland. Voor andere landen kun je rechtstreeks mailen naar <a href="mailto:info@justroam.nl">info@justroam.nl</a> met je data, dan regelen we de boeking handmatig.</p>
                     </div>
 
-                    <div class="form-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" name="agree_terms" value="yes" required>
-                            Ik heb de <a href="terms-gear.html" target="_blank">huurvoorwaarden</a> gelezen en ga hiermee akkoord. *
-                        </label>
+                    <div id="g-fields-wrapper">
+                        <div class="form-group">
+                            <label for="g-phone">Telefoon *</label>
+                            <div class="phone-field">
+                                <span class="phone-dial-code" id="g-phone-dial">+31</span>
+                                <input type="tel" id="g-phone" name="phone" placeholder="6 12345678" required>
+                            </div>
+                            <input type="hidden" id="g-phone-country" name="phoneCountry" value="+31">
+                            <p id="g-phone-error" class="form-error" style="display:none;color:#c62828;margin:4px 0 0;">Dit lijkt geen geldig telefoonnummer voor het geselecteerde land.</p>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="g-postcode">Postcode *</label>
+                                <input type="text" id="g-postcode" name="postcode" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="g-house-number">Huisnummer *</label>
+                                <input type="text" id="g-house-number" name="houseNumber" required>
+                            </div>
+                        </div>
+                        <p id="g-address-lookup-note" style="display:none;font-size:0.85rem;color:#666;margin:-0.5rem 0 1rem;">Adres opzoeken…</p>
+                        <div class="form-group">
+                            <label for="g-street">Straat *</label>
+                            <input type="text" id="g-street" name="street" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="g-city">Plaats *</label>
+                            <input type="text" id="g-city" name="city" required>
+                        </div>
+
+                        <!-- Honeypot: hidden from real users, bots tend to fill it in -->
+                        <div class="gear-honeypot" aria-hidden="true">
+                            <label for="g-website">Website</label>
+                            <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="g-message">Nog iets dat we moeten weten?</label>
+                            <textarea id="g-message" name="message" rows="4" placeholder="Type auto / trekhaak, aantal fietsen, e-bikes, etc."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="agree_terms" value="yes" required>
+                                Ik heb de <a href="terms-gear.html" target="_blank">huurvoorwaarden</a> gelezen en ga hiermee akkoord. *
+                            </label>
+                        </div>
+                        <p id="g-date-error" class="form-error" style="display:none;color:#c62828;margin:8px 0 0;">Selecteer hierboven een startdatum en einddatum voordat je je aanvraag verstuurt.</p>
+                        <button type="submit" class="btn btn-primary btn-large">Verstuur huuraanvraag</button>
                     </div>
-                    <p id="g-date-error" class="form-error" style="display:none;color:#c62828;margin:8px 0 0;">Selecteer hierboven een startdatum en einddatum voordat je je aanvraag verstuurt.</p>
-                    <button type="submit" class="btn btn-primary btn-large">Verstuur huuraanvraag</button>
                 </form>
             </div>
 

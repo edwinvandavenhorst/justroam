@@ -52,6 +52,18 @@ function itemKey(item) {
     return null;
 }
 
+// Display-only translation of the item name. The stored booking.item value
+// itself always stays English ('Roof box' / 'Bike carrier' / 'Bundle') since
+// itemKey() and admin tooling match against it literally.
+function localizedItem(item, locale) {
+    if (locale === 'nl') {
+        if (item === 'Roof box') return 'Dakkoffer';
+        if (item === 'Bike carrier') return 'Fietsendrager';
+        if (item === 'Bundle') return 'Bundel';
+    }
+    return item;
+}
+
 async function getRateCards(env) {
     const list = await env.BOOKINGS.list({ prefix: 'ratecard:' });
     const cards = [];
@@ -316,10 +328,19 @@ async function hasOverlappingBooking(env, item, startDate, endDate, excludeId) {
     return false;
 }
 
+// Length-based checks per country - not full carrier-pattern validation, just
+// enough to catch obvious typos. NL mobiles are reliably 9 digits; BE numbers
+// are 8 (landline) or 9 (mobile) digits; DE numbering is far less uniform
+// (area codes vary 2-5 digits), so it's kept deliberately lenient.
 function isValidPhone(countryCode, localNumber) {
     const digits = String(localNumber || '').replace(/\D/g, '');
+    if (countryCode === '+31') return digits.length === 9;
+    if (countryCode === '+32') return digits.length === 8 || digits.length === 9;
+    if (countryCode === '+49') return digits.length >= 6 && digits.length <= 11;
     return digits.length >= 6 && digits.length <= 12;
 }
+
+const SUPPORTED_COUNTRIES = ['Netherlands', 'Belgium', 'Germany'];
 
 async function findBookingByMolliePaymentId(env, paymentId) {
     const list = await env.BOOKINGS.list({ prefix: 'booking:' });
@@ -350,35 +371,51 @@ async function getNextBookingNumber(env, date) {
 // Pending: always free. Approved: free if >=7 days to pickup, 50% if 2-6 days,
 // 80% if <2 days. After the pickup date: not possible via self-service.
 function getCancellationPolicy(booking) {
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const startDate = new Date(booking.startDate);
     const daysUntil = Math.floor((startDate - today) / (1000 * 60 * 60 * 24));
 
     if (booking.status === 'pending') {
-        return { eligible: true, feePercent: 0, reason: 'Your request hasn\'t been approved yet, so cancelling is free.' };
+        return { eligible: true, feePercent: 0, reason: locale === 'nl' ? 'Je aanvraag is nog niet geaccepteerd, dus annuleren is gratis.' : 'Your request hasn\'t been approved yet, so cancelling is free.' };
     }
     if (booking.status !== 'approved') {
-        return { eligible: false, reason: 'This booking is not in a state that can be cancelled here.' };
+        return { eligible: false, reason: locale === 'nl' ? 'Deze boeking kan hier niet worden geannuleerd.' : 'This booking is not in a state that can be cancelled here.' };
     }
     if (daysUntil < 0) {
-        return { eligible: false, reason: 'The pickup date has already passed, so this can no longer be cancelled here.' };
+        return { eligible: false, reason: locale === 'nl' ? 'De ophaaldatum is al verstreken, dus dit kan hier niet meer worden geannuleerd.' : 'The pickup date has already passed, so this can no longer be cancelled here.' };
     }
     if (daysUntil >= 7) {
-        return { eligible: true, feePercent: 0, reason: 'More than a week before pickup, so cancelling is free.' };
+        return { eligible: true, feePercent: 0, reason: locale === 'nl' ? 'Meer dan een week voor het ophalen, dus annuleren is gratis.' : 'More than a week before pickup, so cancelling is free.' };
     }
     if (daysUntil >= 2) {
-        return { eligible: true, feePercent: 50, reason: 'Less than a week but more than 48 hours before pickup, so a 50% cancellation fee applies.' };
+        return { eligible: true, feePercent: 50, reason: locale === 'nl' ? 'Minder dan een week maar meer dan 48 uur voor het ophalen, dus er geldt een annuleringskosten van 50%.' : 'Less than a week but more than 48 hours before pickup, so a 50% cancellation fee applies.' };
     }
-    return { eligible: true, feePercent: 80, reason: 'Less than 48 hours before pickup, so an 80% cancellation fee applies.' };
+    return { eligible: true, feePercent: 80, reason: locale === 'nl' ? 'Minder dan 48 uur voor het ophalen, dus er geldt een annuleringskosten van 80%.' : 'Less than 48 hours before pickup, so an 80% cancellation fee applies.' };
 }
 
-function cancelSection(id, token, policy) {
+function cancelSection(id, token, policy, locale) {
     if (!policy.eligible) {
         return '<div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--gray-lighter);">' +
-            '<h2>Cancel this booking</h2>' +
+            '<h2>' + (locale === 'nl' ? 'Boeking annuleren' : 'Cancel this booking') + '</h2>' +
             '<p>' + escapeHtml(policy.reason) + '</p>' +
-            '<p>Please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a> if you need to cancel.</p>' +
+            '<p>' + (locale === 'nl' ? 'Neem contact op via' : 'Please contact') + ' <a href="mailto:info@justroam.nl">info@justroam.nl</a>' + (locale === 'nl' ? ' als je wilt annuleren.' : ' if you need to cancel.') + '</p>' +
+            '</div>';
+    }
+    if (locale === 'nl') {
+        const feeText = policy.feePercent === 0 ? 'gratis' : ('met <strong>' + policy.feePercent + '%</strong> annuleringskosten');
+        const confirmMsg = policy.feePercent === 0
+            ? 'Deze boeking annuleren?'
+            : 'Deze boeking annuleren? Er geldt ' + policy.feePercent + '% annuleringskosten volgens ons beleid.';
+        return '<div style="margin-top:24px;padding-top:16px;border-top:1px solid var(--gray-lighter);">' +
+            '<h2>Boeking annuleren</h2>' +
+            '<p>Volgens ons annuleringsbeleid kun je ' + feeText + ' annuleren.</p>' +
+            '<form method="POST" action="/booking/cancel" onsubmit="return confirm(&quot;' + confirmMsg + '&quot;);">' +
+            '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
+            '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
+            '<button type="submit" class="btn btn-primary" style="background:#c62828;">Boeking annuleren</button>' +
+            '</form>' +
             '</div>';
     }
     const feeText = policy.feePercent === 0 ? 'free of charge' : ('with a <strong>' + policy.feePercent + '%</strong> cancellation fee');
@@ -544,7 +581,9 @@ async function handleBookingRequest(request, env, corsHeaders) {
         return new Response(JSON.stringify({ ok: true, id: 'noop' }), { headers: jsonHeaders });
     }
 
-    const required = ['item', 'startDate', 'endDate', 'name', 'email', 'street', 'houseNumber', 'postcode', 'city', 'country'];
+    const locale = data.locale === 'nl' ? 'nl' : 'en';
+
+    const required = ['item', 'startDate', 'endDate', 'name', 'email', 'phone', 'street', 'houseNumber', 'postcode', 'city', 'country'];
     for (const field of required) {
         if (!data[field]) {
             return new Response(JSON.stringify({ error: 'Missing field: ' + field }), {
@@ -554,18 +593,30 @@ async function handleBookingRequest(request, env, corsHeaders) {
         }
     }
 
+    if (!SUPPORTED_COUNTRIES.includes(data.country)) {
+        const message = locale === 'nl'
+            ? 'We verwerken aanvragen automatisch alleen voor Nederland, België en Duitsland. Mail ons op info@justroam.nl voor een handmatige boeking.'
+            : 'We currently only process bookings automatically for the Netherlands, Belgium and Germany. Please email info@justroam.nl for a manual booking.';
+        return new Response(JSON.stringify({ error: message }), {
+            status: 400,
+            headers: jsonHeaders
+        });
+    }
+
     const fullAddress = data.street + ' ' + data.houseNumber + (data.addition ? '/' + data.addition : '') +
         ', ' + data.postcode + ' ' + data.city + ', ' + data.country;
 
     if (data.phone && !isValidPhone(data.phoneCountry, data.phone)) {
-        return new Response(JSON.stringify({ error: 'Please enter a valid phone number.' }), {
+        const message = locale === 'nl' ? 'Vul een geldig telefoonnummer in.' : 'Please enter a valid phone number.';
+        return new Response(JSON.stringify({ error: message }), {
             status: 400,
             headers: jsonHeaders
         });
     }
 
     if (new Date(data.endDate) < new Date(data.startDate)) {
-        return new Response(JSON.stringify({ error: 'End date must be on or after the start date.' }), {
+        const message = locale === 'nl' ? 'De einddatum moet op of na de startdatum liggen.' : 'End date must be on or after the start date.';
+        return new Response(JSON.stringify({ error: message }), {
             status: 400,
             headers: jsonHeaders
         });
@@ -573,7 +624,10 @@ async function handleBookingRequest(request, env, corsHeaders) {
 
     const conflict = await hasOverlappingBooking(env, data.item, data.startDate, data.endDate, null);
     if (conflict) {
-        return new Response(JSON.stringify({ error: 'overlap', message: 'Sorry, those dates overlap with an existing booking. Please pick different dates or contact info@justroam.nl.' }), {
+        const message = locale === 'nl'
+            ? 'Helaas overlappen deze data met een bestaande boeking. Kies andere data of neem contact op via info@justroam.nl.'
+            : 'Sorry, those dates overlap with an existing booking. Please pick different dates or contact info@justroam.nl.';
+        return new Response(JSON.stringify({ error: 'overlap', message: message }), {
             status: 409,
             headers: jsonHeaders
         });
@@ -604,6 +658,7 @@ async function handleBookingRequest(request, env, corsHeaders) {
         renterAddress: fullAddress,
         renterIdType: '',
         renterIdNumber: '',
+        locale: locale,
         message: data.message || '',
         createdAt: now.toISOString(),
         adminToken: adminToken,
@@ -633,8 +688,17 @@ async function handleBookingRequest(request, env, corsHeaders) {
         '<a href="' + rejectUrl + '" style="background:#c62828;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;">Reject</a>' +
         '</p>';
 
-    const renterHtml =
-        '<h2>We have received your request</h2>' +
+    const renterHtml = locale === 'nl'
+        ? '<h2>We hebben je aanvraag ontvangen</h2>' +
+        '<p>Hoi ' + escapeHtml(data.name) + ',</p>' +
+        '<p><strong>Boekingsnummer:</strong> ' + escapeHtml(bookingNumber) + '<br>' +
+        '<strong>Item:</strong> ' + escapeHtml(localizedItem(data.item, locale)) + '<br>' +
+        '<strong>Startdatum:</strong> ' + escapeHtml(data.startDate) + '<br>' +
+        '<strong>Einddatum:</strong> ' + escapeHtml(data.endDate) + '</p>' +
+        '<p>We bevestigen de beschikbaarheid en nemen snel contact met je op met de betaalgegevens.</p>' +
+        '<p><a href="' + manageUrl + '">Bekijk of beheer je boeking</a></p>' +
+        emailSignature(locale)
+        : '<h2>We have received your request</h2>' +
         '<p>Hi ' + escapeHtml(data.name) + ',</p>' +
         '<p><strong>Booking number:</strong> ' + escapeHtml(bookingNumber) + '<br>' +
         '<strong>Item:</strong> ' + escapeHtml(data.item) + '<br>' +
@@ -642,11 +706,11 @@ async function handleBookingRequest(request, env, corsHeaders) {
         '<strong>End date:</strong> ' + escapeHtml(data.endDate) + '</p>' +
         '<p>We will confirm availability and get back to you shortly with payment details.</p>' +
         '<p><a href="' + manageUrl + '">View or manage your booking</a></p>' +
-        emailSignature();
+        emailSignature(locale);
 
     await Promise.all([
         sendEmail(env, env.ADMIN_EMAIL, 'New gear rental request #' + bookingNumber, adminHtml),
-        sendEmail(env, data.email, 'We\'ve received your rental request', renterHtml)
+        sendEmail(env, data.email, locale === 'nl' ? 'We hebben je huuraanvraag ontvangen' : 'We\'ve received your rental request', renterHtml)
     ]);
 
     return new Response(JSON.stringify({ ok: true, id: id, bookingNumber: bookingNumber }), { headers: jsonHeaders });
@@ -734,25 +798,47 @@ async function applyBookingDecision(booking, key, env, newStatus, comment) {
     }
     await env.BOOKINGS.put(key, JSON.stringify(booking));
 
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
     let renterSubject, renterHtml;
 
     if (newStatus === 'approved') {
-        renterSubject = 'Your JustRoam rental request has been approved';
-        renterHtml =
-            '<h2>Good news!</h2>' +
-            '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
-            '<p>Your request for the <strong>' + escapeHtml(booking.item) + '</strong> from <strong>' + escapeHtml(booking.startDate) + '</strong> to <strong>' + escapeHtml(booking.endDate) + '</strong> has been approved.</p>' +
-            '<p>We will be in touch shortly with payment details to confirm your booking.</p>' +
-            emailSignature();
+        if (locale === 'nl') {
+            renterSubject = 'Je JustRoam huuraanvraag is geaccepteerd';
+            renterHtml =
+                '<h2>Goed nieuws!</h2>' +
+                '<p>Hoi ' + escapeHtml(booking.renterName) + ',</p>' +
+                '<p>Je aanvraag voor de <strong>' + escapeHtml(localizedItem(booking.item, locale)) + '</strong> van <strong>' + escapeHtml(booking.startDate) + '</strong> tot <strong>' + escapeHtml(booking.endDate) + '</strong> is geaccepteerd.</p>' +
+                '<p>We nemen snel contact met je op met de betaalgegevens om je boeking te bevestigen.</p>' +
+                emailSignature(locale);
+        } else {
+            renterSubject = 'Your JustRoam rental request has been approved';
+            renterHtml =
+                '<h2>Good news!</h2>' +
+                '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
+                '<p>Your request for the <strong>' + escapeHtml(booking.item) + '</strong> from <strong>' + escapeHtml(booking.startDate) + '</strong> to <strong>' + escapeHtml(booking.endDate) + '</strong> has been approved.</p>' +
+                '<p>We will be in touch shortly with payment details to confirm your booking.</p>' +
+                emailSignature(locale);
+        }
     } else {
-        renterSubject = 'About your JustRoam rental request';
-        renterHtml =
-            '<h2>Thank you for your request</h2>' +
-            '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
-            '<p>Unfortunately we are unable to accommodate the <strong>' + escapeHtml(booking.item) + '</strong> for <strong>' + escapeHtml(booking.startDate) + '</strong> to <strong>' + escapeHtml(booking.endDate) + '</strong>.</p>' +
-            (comment ? '<p>' + escapeHtml(comment).replace(/\n/g, '<br>') + '</p>' : '') +
-            '<p>Feel free to check other dates on our site, or get in touch if you have questions.</p>' +
-            emailSignature();
+        if (locale === 'nl') {
+            renterSubject = 'Over je JustRoam huuraanvraag';
+            renterHtml =
+                '<h2>Bedankt voor je aanvraag</h2>' +
+                '<p>Hoi ' + escapeHtml(booking.renterName) + ',</p>' +
+                '<p>Helaas kunnen we de <strong>' + escapeHtml(localizedItem(booking.item, locale)) + '</strong> niet beschikbaar stellen voor <strong>' + escapeHtml(booking.startDate) + '</strong> tot <strong>' + escapeHtml(booking.endDate) + '</strong>.</p>' +
+                (comment ? '<p>' + escapeHtml(comment).replace(/\n/g, '<br>') + '</p>' : '') +
+                '<p>Kijk gerust naar andere data op onze site, of neem contact op als je vragen hebt.</p>' +
+                emailSignature(locale);
+        } else {
+            renterSubject = 'About your JustRoam rental request';
+            renterHtml =
+                '<h2>Thank you for your request</h2>' +
+                '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
+                '<p>Unfortunately we are unable to accommodate the <strong>' + escapeHtml(booking.item) + '</strong> for <strong>' + escapeHtml(booking.startDate) + '</strong> to <strong>' + escapeHtml(booking.endDate) + '</strong>.</p>' +
+                (comment ? '<p>' + escapeHtml(comment).replace(/\n/g, '<br>') + '</p>' : '') +
+                '<p>Feel free to check other dates on our site, or get in touch if you have questions.</p>' +
+                emailSignature(locale);
+        }
     }
 
     await sendEmail(env, booking.renterEmail, renterSubject, renterHtml);
@@ -847,8 +933,12 @@ async function handleBookingAgreement(url, env, corsHeaders) {
         });
     }
 
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+
     if (typeof booking.quotedAmount !== 'number') {
-        return new Response(renderBrandedPage('Not available yet', '<p>The agreement for this booking is not available yet. It\'s generated once a payment request has been sent.</p>'), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Nog niet beschikbaar' : 'Not available yet', locale === 'nl'
+            ? '<p>De huurovereenkomst voor deze boeking is nog niet beschikbaar. Deze wordt gegenereerd zodra een betaalverzoek is verstuurd.</p>'
+            : '<p>The agreement for this booking is not available yet. It\'s generated once a payment request has been sent.</p>', locale), {
             headers: htmlHeaders
         });
     }
@@ -856,7 +946,7 @@ async function handleBookingAgreement(url, env, corsHeaders) {
     const total = Math.round((booking.quotedAmount + (booking.depositAmount || 0)) * 100) / 100;
     const body = buildAgreementBody(booking, booking.quotedAmount, booking.depositAmount || 0, total);
 
-    return new Response(renderBrandedPage('Rental Agreement #' + (booking.bookingNumber || booking.id), body), { headers: htmlHeaders });
+    return new Response(renderBrandedPage((locale === 'nl' ? 'Huurovereenkomst #' : 'Rental Agreement #') + (booking.bookingNumber || booking.id), body, locale), { headers: htmlHeaders });
 }
 
 async function handleBookingManage(url, env, corsHeaders) {
@@ -888,7 +978,15 @@ async function handleBookingManage(url, env, corsHeaders) {
         });
     }
 
-    const statusLabels = {
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+
+    const statusLabels = locale === 'nl' ? {
+        pending: 'In beoordeling',
+        approved: 'Geaccepteerd',
+        rejected: 'Niet beschikbaar',
+        cancelled: 'Geannuleerd',
+        completed: 'Afgerond'
+    } : {
         pending: 'Pending review',
         approved: 'Approved',
         rejected: 'Not available',
@@ -898,44 +996,84 @@ async function handleBookingManage(url, env, corsHeaders) {
 
     let statusText = statusLabels[booking.status] || booking.status;
     if (booking.status === 'approved') {
-        statusText += booking.paid ? ' - payment received' : (booking.molliePaymentId ? ' - awaiting payment' : '');
+        if (locale === 'nl') {
+            statusText += booking.paid ? ' - betaling ontvangen' : (booking.molliePaymentId ? ' - in afwachting van betaling' : '');
+        } else {
+            statusText += booking.paid ? ' - payment received' : (booking.molliePaymentId ? ' - awaiting payment' : '');
+        }
     }
 
-    let body =
-        '<p><strong>Booking number:</strong> ' + escapeHtml(booking.bookingNumber || '-') + '<br>' +
+    let body = locale === 'nl'
+        ? '<p><strong>Boekingsnummer:</strong> ' + escapeHtml(booking.bookingNumber || '-') + '<br>' +
+        '<strong>Item:</strong> ' + escapeHtml(localizedItem(booking.item, locale)) + '<br>' +
+        '<strong>Startdatum:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+        '<strong>Einddatum:</strong> ' + escapeHtml(booking.endDate) + '<br>' +
+        '<strong>Status:</strong> ' + escapeHtml(statusText) + '</p>'
+        : '<p><strong>Booking number:</strong> ' + escapeHtml(booking.bookingNumber || '-') + '<br>' +
         '<strong>Item:</strong> ' + escapeHtml(booking.item) + '<br>' +
         '<strong>Start date:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
         '<strong>End date:</strong> ' + escapeHtml(booking.endDate) + '<br>' +
         '<strong>Status:</strong> ' + escapeHtml(statusText) + '</p>';
 
     if (booking.paid && booking.depositRefunded) {
-        body += '<p><strong>Deposit refunded:</strong> &euro;' + Number(booking.depositRefundAmount || 0).toFixed(2) + '</p>';
+        body += locale === 'nl'
+            ? '<p><strong>Borg terugbetaald:</strong> &euro;' + Number(booking.depositRefundAmount || 0).toFixed(2) + '</p>'
+            : '<p><strong>Deposit refunded:</strong> &euro;' + Number(booking.depositRefundAmount || 0).toFixed(2) + '</p>';
     }
 
     if (booking.status === 'pending') {
-        body +=
-            '<h2>Edit your request</h2>' +
-            '<p>Your request hasn\'t been reviewed yet, so you can still change the details below.</p>' +
-            '<form method="POST" action="/booking/manage">' +
-            '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
-            '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
-            '<div class="form-group"><label for="item">Item</label>' +
-            '<select name="item" id="item">' +
-            itemOption('Roof box', booking.item) +
-            itemOption('Bike carrier', booking.item) +
-            itemOption('Bundle', booking.item) +
-            '</select></div>' +
-            '<div class="form-group"><label for="startDate">Start date</label>' +
-            '<input type="date" name="startDate" id="startDate" value="' + escapeHtml(booking.startDate) + '"></div>' +
-            '<div class="form-group"><label for="endDate">End date</label>' +
-            '<input type="date" name="endDate" id="endDate" value="' + escapeHtml(booking.endDate) + '"></div>' +
-            '<button type="submit" class="btn btn-primary">Save changes</button>' +
-            '</form>';
-        body += cancelSection(id, token, getCancellationPolicy(booking));
+        if (locale === 'nl') {
+            body +=
+                '<h2>Wijzig je aanvraag</h2>' +
+                '<p>Je aanvraag is nog niet beoordeeld, dus je kunt de gegevens hieronder nog aanpassen.</p>' +
+                '<form method="POST" action="/booking/manage">' +
+                '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
+                '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
+                '<div class="form-group"><label for="item">Item</label>' +
+                '<select name="item" id="item">' +
+                itemOption('Roof box', booking.item, locale) +
+                itemOption('Bike carrier', booking.item, locale) +
+                itemOption('Bundle', booking.item, locale) +
+                '</select></div>' +
+                '<div class="form-group"><label for="startDate">Startdatum</label>' +
+                '<input type="date" name="startDate" id="startDate" value="' + escapeHtml(booking.startDate) + '"></div>' +
+                '<div class="form-group"><label for="endDate">Einddatum</label>' +
+                '<input type="date" name="endDate" id="endDate" value="' + escapeHtml(booking.endDate) + '"></div>' +
+                '<button type="submit" class="btn btn-primary">Wijzigingen opslaan</button>' +
+                '</form>';
+        } else {
+            body +=
+                '<h2>Edit your request</h2>' +
+                '<p>Your request hasn\'t been reviewed yet, so you can still change the details below.</p>' +
+                '<form method="POST" action="/booking/manage">' +
+                '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
+                '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
+                '<div class="form-group"><label for="item">Item</label>' +
+                '<select name="item" id="item">' +
+                itemOption('Roof box', booking.item, locale) +
+                itemOption('Bike carrier', booking.item, locale) +
+                itemOption('Bundle', booking.item, locale) +
+                '</select></div>' +
+                '<div class="form-group"><label for="startDate">Start date</label>' +
+                '<input type="date" name="startDate" id="startDate" value="' + escapeHtml(booking.startDate) + '"></div>' +
+                '<div class="form-group"><label for="endDate">End date</label>' +
+                '<input type="date" name="endDate" id="endDate" value="' + escapeHtml(booking.endDate) + '"></div>' +
+                '<button type="submit" class="btn btn-primary">Save changes</button>' +
+                '</form>';
+        }
+        body += cancelSection(id, token, getCancellationPolicy(booking), locale);
     } else if (booking.status === 'approved') {
         if (!booking.paid && booking.molliePaymentId && typeof booking.quotedAmount === 'number') {
-            body +=
-                '<div style="margin-top:16px;">' +
+            body += locale === 'nl'
+                ? '<div style="margin-top:16px;">' +
+                '<form method="POST" action="/booking/retry-payment">' +
+                '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
+                '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
+                '<button type="submit" class="btn btn-primary">Nu betalen</button>' +
+                '</form>' +
+                '<p style="font-size:0.85rem;color:#666;">Als een eerdere betaalpoging niet is geslaagd, klik dan hierboven om het opnieuw te proberen.</p>' +
+                '</div>'
+                : '<div style="margin-top:16px;">' +
                 '<form method="POST" action="/booking/retry-payment">' +
                 '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
                 '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
@@ -944,12 +1082,14 @@ async function handleBookingManage(url, env, corsHeaders) {
                 '<p style="font-size:0.85rem;color:#666;">If a previous payment attempt did not go through, click above to try again.</p>' +
                 '</div>';
         }
-        body += cancelSection(id, token, getCancellationPolicy(booking));
+        body += cancelSection(id, token, getCancellationPolicy(booking), locale);
     } else {
-        body += '<p>Need to make a change? Reply to your confirmation email or contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>';
+        body += locale === 'nl'
+            ? '<p>Wil je iets wijzigen? Reageer op je bevestigingsmail of neem contact op via <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>'
+            : '<p>Need to make a change? Reply to your confirmation email or contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>';
     }
 
-    return new Response(renderBrandedPage('Your booking', body), { headers: htmlHeaders });
+    return new Response(renderBrandedPage(locale === 'nl' ? 'Je boeking' : 'Your booking', body, locale), { headers: htmlHeaders });
 }
 
 async function handleBookingManageSubmit(request, env, corsHeaders) {
@@ -994,21 +1134,29 @@ async function handleBookingManageSubmit(request, env, corsHeaders) {
         });
     }
 
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+
     if (booking.status !== 'pending') {
-        return new Response(renderBrandedPage('Cannot edit', '<p>This request has already been ' + escapeHtml(booking.status) + ' and can no longer be edited. Please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a> if you need to make changes.</p>'), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Kan niet wijzigen' : 'Cannot edit', locale === 'nl'
+            ? '<p>Deze aanvraag is al ' + escapeHtml(booking.status) + ' en kan niet meer worden gewijzigd. Neem contact op via <a href="mailto:info@justroam.nl">info@justroam.nl</a> als je iets moet aanpassen.</p>'
+            : '<p>This request has already been ' + escapeHtml(booking.status) + ' and can no longer be edited. Please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a> if you need to make changes.</p>', locale), {
             headers: htmlHeaders
         });
     }
 
     if (!item || !startDate || !endDate) {
-        return new Response(renderBrandedPage('Missing information', '<p>Please fill in the item and both dates.</p>'), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Informatie ontbreekt' : 'Missing information', locale === 'nl'
+            ? '<p>Vul het item en beide data in.</p>'
+            : '<p>Please fill in the item and both dates.</p>', locale), {
             status: 400,
             headers: htmlHeaders
         });
     }
 
     if (new Date(endDate) < new Date(startDate)) {
-        return new Response(renderBrandedPage('Invalid dates', '<p>The end date must be on or after the start date.</p>'), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Ongeldige data' : 'Invalid dates', locale === 'nl'
+            ? '<p>De einddatum moet op of na de startdatum liggen.</p>'
+            : '<p>The end date must be on or after the start date.</p>', locale), {
             status: 400,
             headers: htmlHeaders
         });
@@ -1016,7 +1164,9 @@ async function handleBookingManageSubmit(request, env, corsHeaders) {
 
     const conflict = await hasOverlappingBooking(env, item, startDate, endDate, id);
     if (conflict) {
-        return new Response(renderBrandedPage('Dates not available', '<p>Sorry, the new dates you selected overlap with another booking. We can\'t make this change automatically - please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a> so we can help directly.</p>'), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Data niet beschikbaar' : 'Dates not available', locale === 'nl'
+            ? '<p>Helaas overlappen de nieuwe data met een andere boeking. We kunnen deze wijziging niet automatisch doorvoeren. Neem contact op via <a href="mailto:info@justroam.nl">info@justroam.nl</a> zodat we je direct kunnen helpen.</p>'
+            : '<p>Sorry, the new dates you selected overlap with another booking. We can\'t make this change automatically - please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a> so we can help directly.</p>', locale), {
             status: 409,
             headers: htmlHeaders
         });
@@ -1045,14 +1195,19 @@ async function handleBookingManageSubmit(request, env, corsHeaders) {
 
     await sendEmail(env, env.ADMIN_EMAIL, 'Rental request updated', adminHtml);
 
-    const body =
-        '<p>Your booking request has been updated:</p>' +
+    const body = locale === 'nl'
+        ? '<p>Je boekingsaanvraag is bijgewerkt:</p>' +
+        '<p><strong>Item:</strong> ' + escapeHtml(localizedItem(booking.item, locale)) + '<br>' +
+        '<strong>Startdatum:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+        '<strong>Einddatum:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
+        '<p>We beoordelen je bijgewerkte aanvraag en nemen contact met je op.</p>'
+        : '<p>Your booking request has been updated:</p>' +
         '<p><strong>Item:</strong> ' + escapeHtml(booking.item) + '<br>' +
         '<strong>Start date:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
         '<strong>End date:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
         '<p>We will review your updated request and get back to you.</p>';
 
-    return new Response(renderBrandedPage('Changes saved', body), { headers: htmlHeaders });
+    return new Response(renderBrandedPage(locale === 'nl' ? 'Wijzigingen opgeslagen' : 'Changes saved', body, locale), { headers: htmlHeaders });
 }
 
 async function handleRetryPayment(request, env, corsHeaders) {
@@ -1086,8 +1241,12 @@ async function handleRetryPayment(request, env, corsHeaders) {
         });
     }
 
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+
     if (booking.status !== 'approved' || booking.paid || typeof booking.quotedAmount !== 'number') {
-        return new Response(renderBrandedPage('Cannot pay', '<p>This booking is not awaiting payment. Please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a> if you believe this is a mistake.</p>'), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Kan niet betalen' : 'Cannot pay', locale === 'nl'
+            ? '<p>Deze boeking is niet in afwachting van betaling. Neem contact op via <a href="mailto:info@justroam.nl">info@justroam.nl</a> als je denkt dat dit niet klopt.</p>'
+            : '<p>This booking is not awaiting payment. Please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a> if you believe this is a mistake.</p>', locale), {
             headers: htmlHeaders
         });
     }
@@ -1098,7 +1257,9 @@ async function handleRetryPayment(request, env, corsHeaders) {
         const detail = payment && payment.error
             ? '<p><strong>Mollie response (' + escapeHtml(String(payment.status)) + '):</strong></p><pre style="background:#f5f5f5;padding:10px;overflow:auto;">' + escapeHtml(payment.body) + '</pre>'
             : '';
-        return new Response(renderBrandedPage('Payment error', '<p>Could not start a new payment. Please try again later or contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>' + detail), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Betaalfout' : 'Payment error', (locale === 'nl'
+            ? '<p>Kon geen nieuwe betaling starten. Probeer het later opnieuw of neem contact op via <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>'
+            : '<p>Could not start a new payment. Please try again later or contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>') + detail, locale), {
             status: 502,
             headers: htmlHeaders
         });
@@ -1148,9 +1309,13 @@ async function handleRenterCancel(request, env, corsHeaders) {
         });
     }
 
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+
     const policy = getCancellationPolicy(booking);
     if (!policy.eligible) {
-        return new Response(renderBrandedPage('Cannot cancel', '<p>' + escapeHtml(policy.reason) + '</p><p>Please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>'), {
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Kan niet annuleren' : 'Cannot cancel', locale === 'nl'
+            ? '<p>' + escapeHtml(policy.reason) + '</p><p>Neem contact op via <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>'
+            : '<p>' + escapeHtml(policy.reason) + '</p><p>Please contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>', locale), {
             headers: htmlHeaders
         });
     }
@@ -1175,21 +1340,31 @@ async function handleRenterCancel(request, env, corsHeaders) {
         '<p>Please process any refund/charge manually based on the agreed price.</p>';
     await sendEmail(env, env.ADMIN_EMAIL, 'Booking #' + (booking.bookingNumber || '') + ' cancelled by requester', adminHtml);
 
-    const feeMessage = policy.feePercent === 0
-        ? '<p>No cancellation fee applies.</p>'
-        : '<p>Per our cancellation policy, a <strong>' + policy.feePercent + '%</strong> cancellation fee applies. We will follow up regarding any refund due.</p>';
+    let feeMessage, body;
+    if (locale === 'nl') {
+        feeMessage = policy.feePercent === 0
+            ? '<p>Er zijn geen annuleringskosten van toepassing.</p>'
+            : '<p>Volgens ons annuleringsbeleid geldt een <strong>' + policy.feePercent + '%</strong> annuleringskosten. We nemen contact met je op over een eventuele terugbetaling.</p>';
+        body =
+            '<p>Boekingsnummer ' + escapeHtml(booking.bookingNumber || '-') + ' voor de <strong>' + escapeHtml(localizedItem(booking.item, locale)) + '</strong> (' + escapeHtml(booking.startDate) + ' tot ' + escapeHtml(booking.endDate) + ') is geannuleerd.</p>' +
+            feeMessage +
+            '<p>Heb je vragen? Neem contact op via <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>';
+    } else {
+        feeMessage = policy.feePercent === 0
+            ? '<p>No cancellation fee applies.</p>'
+            : '<p>Per our cancellation policy, a <strong>' + policy.feePercent + '%</strong> cancellation fee applies. We will follow up regarding any refund due.</p>';
+        body =
+            '<p>Booking number ' + escapeHtml(booking.bookingNumber || '-') + ' for the <strong>' + escapeHtml(booking.item) + '</strong> (' + escapeHtml(booking.startDate) + ' to ' + escapeHtml(booking.endDate) + ') has been cancelled.</p>' +
+            feeMessage +
+            '<p>If you have any questions, contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>';
+    }
 
-    const body =
-        '<p>Booking number ' + escapeHtml(booking.bookingNumber || '-') + ' for the <strong>' + escapeHtml(booking.item) + '</strong> (' + escapeHtml(booking.startDate) + ' to ' + escapeHtml(booking.endDate) + ') has been cancelled.</p>' +
-        feeMessage +
-        '<p>If you have any questions, contact <a href="mailto:info@justroam.nl">info@justroam.nl</a>.</p>';
-
-    return new Response(renderBrandedPage('Booking cancelled', body), { headers: htmlHeaders });
+    return new Response(renderBrandedPage(locale === 'nl' ? 'Boeking geannuleerd' : 'Booking cancelled', body, locale), { headers: htmlHeaders });
 }
 
-function itemOption(value, current) {
+function itemOption(value, current, locale) {
     const selected = value === current ? ' selected' : '';
-    return '<option value="' + escapeHtml(value) + '"' + selected + '>' + escapeHtml(value) + '</option>';
+    return '<option value="' + escapeHtml(value) + '"' + selected + '>' + escapeHtml(localizedItem(value, locale)) + '</option>';
 }
 
 // ---- Admin: Mollie payment + deposit refund ----
@@ -1241,9 +1416,21 @@ async function handleAdminSendPayment(request, env, corsHeaders) {
 
     const checkoutUrl = payment._links.checkout.href;
     const agreementUrl = BASE_URL + '/booking/agreement?id=' + id + '&token=' + booking.renterToken;
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
 
-    const renterHtml =
-        '<h2>Payment request for your JustRoam booking</h2>' +
+    const renterHtml = locale === 'nl'
+        ? '<h2>Betaalverzoek voor je JustRoam boeking</h2>' +
+        '<p>Hoi ' + escapeHtml(booking.renterName) + ',</p>' +
+        '<p>Voltooi de betaling voor je boeking - <strong>' + escapeHtml(localizedItem(booking.item, locale)) + '</strong>, ' + escapeHtml(booking.startDate) + ' tot ' + escapeHtml(booking.endDate) + '.</p>' +
+        '<p><strong>Huurprijs:</strong> &euro;' + booking.quotedAmount.toFixed(2) + '<br>' +
+        (booking.depositAmount > 0 ? '<strong>Terugbetaalbare borg:</strong> &euro;' + booking.depositAmount.toFixed(2) + '<br>' : '') +
+        '<strong>Totaal te betalen:</strong> &euro;' + total.toFixed(2) + '</p>' +
+        (booking.depositAmount > 0 ? '<p>Je borg wordt na de huurperiode terugbetaald, eventueel verminderd met kosten voor schade.</p>' : '') +
+        '<p><a href="' + checkoutUrl + '" style="background:#2c5f2d;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;display:inline-block;">Nu betalen</a></p>' +
+        '<p style="font-size:0.85rem;color:#666;">Werkt de knop niet? Kopieer en plak deze link in je browser:<br>' + escapeHtml(checkoutUrl) + '</p>' +
+        '<p>Je kunt je <a href="' + agreementUrl + '">huurovereenkomst hier bekijken</a>. Door de betaling te voltooien, ga je hiermee akkoord.</p>' +
+        emailSignature(locale)
+        : '<h2>Payment request for your JustRoam booking</h2>' +
         '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
         '<p>Please complete payment for your booking - <strong>' + escapeHtml(booking.item) + '</strong>, ' + escapeHtml(booking.startDate) + ' to ' + escapeHtml(booking.endDate) + '.</p>' +
         '<p><strong>Rental fee:</strong> &euro;' + booking.quotedAmount.toFixed(2) + '<br>' +
@@ -1253,9 +1440,9 @@ async function handleAdminSendPayment(request, env, corsHeaders) {
         '<p><a href="' + checkoutUrl + '" style="background:#2c5f2d;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;display:inline-block;">Pay now</a></p>' +
         '<p style="font-size:0.85rem;color:#666;">If the button does not work, copy and paste this link into your browser:<br>' + escapeHtml(checkoutUrl) + '</p>' +
         '<p>You can view your <a href="' + agreementUrl + '">rental agreement here</a>. By completing payment, you accept it.</p>' +
-        emailSignature();
+        emailSignature(locale);
 
-    await sendEmail(env, booking.renterEmail, 'Payment request - JustRoam booking #' + (booking.bookingNumber || ''), renterHtml);
+    await sendEmail(env, booking.renterEmail, (locale === 'nl' ? 'Betaalverzoek - JustRoam boeking #' : 'Payment request - JustRoam booking #') + (booking.bookingNumber || ''), renterHtml);
 
     return adminRedirect(form);
 }
@@ -1303,13 +1490,19 @@ async function handleAdminRefundDeposit(request, env, corsHeaders) {
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
 
     if (refundAmount > 0) {
-        await sendEmail(env, booking.renterEmail, 'Your deposit has been refunded - JustRoam booking #' + (booking.bookingNumber || ''),
-            '<h2>Deposit refunded</h2>' +
+        const locale = booking.locale === 'nl' ? 'nl' : 'en';
+        const refundHtml = locale === 'nl'
+            ? '<h2>Borg terugbetaald</h2>' +
+            '<p>Hoi ' + escapeHtml(booking.renterName) + ',</p>' +
+            '<p>We hebben &euro;' + booking.depositRefundAmount.toFixed(2) + ' van je borg teruggestort voor boeking #' + escapeHtml(booking.bookingNumber || '') + '.</p>' +
+            '<p>Dit zou binnen een paar dagen op je rekening moeten staan, afhankelijk van je bank.</p>' +
+            emailSignature(locale)
+            : '<h2>Deposit refunded</h2>' +
             '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
             '<p>We have refunded &euro;' + booking.depositRefundAmount.toFixed(2) + ' of your deposit for booking #' + escapeHtml(booking.bookingNumber || '') + '.</p>' +
             '<p>It should appear back in your account within a few days, depending on your bank.</p>' +
-            emailSignature()
-        );
+            emailSignature(locale);
+        await sendEmail(env, booking.renterEmail, (locale === 'nl' ? 'Je borg is terugbetaald - JustRoam boeking #' : 'Your deposit has been refunded - JustRoam booking #') + (booking.bookingNumber || ''), refundHtml);
     }
 
     return adminRedirect(form);
@@ -1686,14 +1879,20 @@ async function handleAdminCancel(request, env, corsHeaders) {
     booking.cancelledBy = 'admin';
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
 
-    const renterHtml =
-        '<h2>Your booking has been cancelled</h2>' +
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+    const renterHtml = locale === 'nl'
+        ? '<h2>Je boeking is geannuleerd</h2>' +
+        '<p>Hoi ' + escapeHtml(booking.renterName) + ',</p>' +
+        '<p>Helaas moeten we je boeking voor de <strong>' + escapeHtml(localizedItem(booking.item, locale)) + '</strong> van <strong>' + escapeHtml(booking.startDate) + '</strong> tot <strong>' + escapeHtml(booking.endDate) + '</strong> annuleren. Dit ligt aan onze kant, niet aan jou, dus een volledige terugbetaling wordt geregeld als er al is betaald.</p>' +
+        '<p>Onze excuses voor het ongemak, we hopen je een andere keer te kunnen helpen.</p>' +
+        emailSignature(locale)
+        : '<h2>Your booking has been cancelled</h2>' +
         '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
         '<p>Unfortunately we need to cancel your booking for the <strong>' + escapeHtml(booking.item) + '</strong> from <strong>' + escapeHtml(booking.startDate) + '</strong> to <strong>' + escapeHtml(booking.endDate) + '</strong>. This is on our side, not yours, so a full refund will be arranged if any payment was made.</p>' +
         '<p>We are sorry for the inconvenience and hope to help you another time.</p>' +
-        emailSignature();
+        emailSignature(locale);
 
-    await sendEmail(env, booking.renterEmail, 'Your JustRoam booking has been cancelled', renterHtml);
+    await sendEmail(env, booking.renterEmail, locale === 'nl' ? 'Je JustRoam boeking is geannuleerd' : 'Your JustRoam booking has been cancelled', renterHtml);
 
     return adminRedirect(form);
 }
@@ -1772,16 +1971,25 @@ async function handleAdminEdit(request, env, corsHeaders) {
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
 
     if (changed) {
-        const renterHtml =
-            '<h2>Your booking has been updated</h2>' +
+        const locale = booking.locale === 'nl' ? 'nl' : 'en';
+        const renterHtml = locale === 'nl'
+            ? '<h2>Je boeking is aangepast</h2>' +
+            '<p>Hoi ' + escapeHtml(booking.renterName) + ',</p>' +
+            '<p>We hebben je boeking moeten aanpassen. Deze is nu:</p>' +
+            '<p><strong>Item:</strong> ' + escapeHtml(localizedItem(booking.item, locale)) + '<br>' +
+            '<strong>Startdatum:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+            '<strong>Einddatum:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
+            '<p>Als dit niet voor je werkt, reageer dan op deze e-mail of neem contact op via info@justroam.nl.</p>' +
+            emailSignature(locale)
+            : '<h2>Your booking has been updated</h2>' +
             '<p>Hi ' + escapeHtml(booking.renterName) + ',</p>' +
             '<p>We have had to adjust your booking. It is now:</p>' +
             '<p><strong>Item:</strong> ' + escapeHtml(booking.item) + '<br>' +
             '<strong>Start date:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
             '<strong>End date:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
             '<p>If this does not work for you, please reply to this email or contact info@justroam.nl.</p>' +
-            emailSignature();
-        await sendEmail(env, booking.renterEmail, 'Your JustRoam booking has been updated', renterHtml);
+            emailSignature(locale);
+        await sendEmail(env, booking.renterEmail, locale === 'nl' ? 'Je JustRoam boeking is aangepast' : 'Your JustRoam booking has been updated', renterHtml);
     }
 
     return adminRedirect(form);
@@ -1855,7 +2063,7 @@ async function sendEmail(env, toEmail, subject, htmlContent, attachments) {
     return response;
 }
 
-function emailSignature() {
+function emailSignature(locale) {
     return (
         '<div style="margin-top:24px;padding-top:16px;border-top:1px solid #e0e0e0;font-family:-apple-system,sans-serif;color:#333;">' +
         '<img src="https://justroam.nl/images/Logo_JustRoam_RearCar.png" alt="Just Roam" width="140" style="width:140px;height:auto;display:block;margin-bottom:8px;">' +
@@ -1863,7 +2071,7 @@ function emailSignature() {
         '<p style="margin:12px 0;">🚙 Custom Overland Builds &bull; Rentals &bull; Adventure Setups</p>' +
         '<p style="margin:0;">🌐 <a href="https://justroam.nl">justroam.nl</a><br>' +
         '📧 <a href="mailto:info@justroam.nl">info@justroam.nl</a></p>' +
-        '<p style="margin:12px 0 0;">Follow our builds &amp; trips:<br>📷 <a href="https://instagram.com/_justroam_">_justroam_</a></p>' +
+        '<p style="margin:12px 0 0;">' + (locale === 'nl' ? 'Volg onze bouwprojecten en reizen:' : 'Follow our builds &amp; trips:') + '<br>📷 <a href="https://instagram.com/_justroam_">_justroam_</a></p>' +
         '</div>'
     );
 }
@@ -1995,8 +2203,9 @@ function renderAdminPage(title, bodyHtml) {
 // Branded page - used for every screen a renter sees (manage/edit/cancel and
 // their error states). Reuses the real site's stylesheet and logo so it looks
 // like part of justroam.nl rather than a bare utility page.
-function renderBrandedPage(title, bodyHtml) {
-    return '<!DOCTYPE html><html lang="en"><head>' +
+function renderBrandedPage(title, bodyHtml, locale) {
+    const rights = locale === 'nl' ? 'Alle rechten voorbehouden.' : 'All rights reserved.';
+    return '<!DOCTYPE html><html lang="' + (locale === 'nl' ? 'nl' : 'en') + '"><head>' +
         '<meta charset="UTF-8">' +
         '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
         '<meta name="referrer" content="no-referrer">' +
@@ -2011,7 +2220,7 @@ function renderBrandedPage(title, bodyHtml) {
         '<section class="rent-content"><div class="container">' +
         '<div class="details-card" style="max-width:600px;margin:0 auto;">' + bodyHtml + '</div>' +
         '</div></section>' +
-        '<footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; JustRoam. All rights reserved.</p></div></div></footer>' +
+        '<footer class="footer"><div class="container"><div class="footer-bottom"><p>&copy; JustRoam. ' + rights + '</p></div></div></footer>' +
         '</body></html>';
 }
 
@@ -2029,7 +2238,13 @@ function escapeHtml(str) {
 // clients (Gmail included) don't render HTML attachments and show raw source
 // instead. Linked from the payment-request email; completing payment is
 // treated as accepting it, per the T&Cs.
-function describeEquipment(item) {
+function describeEquipment(item, locale) {
+    if (locale === 'nl') {
+        if (item === 'Roof box') return 'Dakkoffer (Hapro Traxer 6.6, 410 L)';
+        if (item === 'Bike carrier') return 'Fietsendrager (Thule VeloCompact 926, 3 fietsen / max 2 e-bikes)';
+        if (item === 'Bundle') return 'Bundel: Dakkoffer (Hapro Traxer 6.6, 410 L) en Fietsendrager (Thule VeloCompact 926, 3 fietsen / max 2 e-bikes)';
+        return item;
+    }
     if (item === 'Roof box') return 'Roof box (Hapro Traxer 6.6, 410 L)';
     if (item === 'Bike carrier') return 'Bike carrier (Thule VeloCompact 926, 3 bikes / max 2 e-bikes)';
     if (item === 'Bundle') return 'Bundle: Roof box (Hapro Traxer 6.6, 410 L) and Bike carrier (Thule VeloCompact 926, 3 bikes / max 2 e-bikes)';
@@ -2037,12 +2252,55 @@ function describeEquipment(item) {
 }
 
 function buildAgreementBody(booking, rentalFee, depositAmount, total) {
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
     const start = new Date(booking.startDate);
     const end = new Date(booking.endDate);
     const numDays = Math.round((end - start) / 86400000) + 1;
     const now = new Date();
-    const agreementDate = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    const sentAt = now.toLocaleString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    const dateLocale = locale === 'nl' ? 'nl-NL' : 'en-GB';
+    const agreementDate = now.toLocaleDateString(dateLocale, { day: 'numeric', month: 'long', year: 'numeric' });
+    const sentAt = now.toLocaleString(dateLocale, { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+    if (locale === 'nl') {
+        return '<p><strong>Huurovereenkomst nr.</strong> ' + escapeHtml(booking.bookingNumber || booking.id) + '<br>' +
+            '<strong>Datum:</strong> ' + escapeHtml(agreementDate) + '</p>' +
+            '<h2>Partijen</h2>' +
+            '<p><strong>Verhuurder:</strong> JustRoam, KVK 71621865, Populierendreef 850, Voorburg, NL. info@justroam.nl · +31 6 1133 4832<br>' +
+            '<strong>Huurder:</strong> ' + escapeHtml(booking.renterName) + ', ' + escapeHtml(booking.renterAddress || '') + ', ' + escapeHtml(booking.renterEmail) +
+            (booking.renterPhone ? ', ' + escapeHtml(booking.renterPhone) : '') + ', type/nr. identiteitsbewijs ' +
+            (booking.renterIdType || booking.renterIdNumber ? escapeHtml((booking.renterIdType || '') + ' ' + (booking.renterIdNumber || '')) : '(gecontroleerd bij het ophalen)') + '</p>' +
+            '<h2>Gehuurd materiaal</h2>' +
+            '<table class="rate-lines-table">' +
+            '<tr><td>Item(s)</td><td>' + escapeHtml(describeEquipment(booking.item, locale)) + '</td></tr>' +
+            '<tr><td>Huurperiode</td><td>' + escapeHtml(booking.startDate) + ' &rarr; ' + escapeHtml(booking.endDate) + ' (' + numDays + ' dagen)</td></tr>' +
+            '<tr><td>Ophalen / terugbrengen</td><td>Persoonlijk in Voorburg, op afgesproken tijdstippen</td></tr>' +
+            '</table>' +
+            '<h2>Kosten</h2>' +
+            '<table class="rate-lines-table">' +
+            '<tr><td>Huurprijs</td><td>&euro;' + rentalFee.toFixed(2) + '</td></tr>' +
+            '<tr><td>Borg (terugbetaalbaar)</td><td>&euro;' + depositAmount.toFixed(2) + '</td></tr>' +
+            '<tr><td><strong>Totaal verschuldigd</strong></td><td><strong>&euro;' + total.toFixed(2) + '</strong></td></tr>' +
+            '<tr><td>Betalen voor</td><td>Binnen 48 uur na deze overeenkomst (of minimaal 8 uur voor het ophalen bij last-minute boekingen)</td></tr>' +
+            '</table>' +
+            '<h2>Belangrijkste voorwaarden geaccepteerd door de Huurder</h2>' +
+            '<ol class="legal-list">' +
+            '<li>Ik heb de <strong>JustRoam Algemene Voorwaarden Verhuur Materiaal</strong> gelezen en geaccepteerd; deze maken onderdeel uit van deze overeenkomst.</li>' +
+            '<li>Ik betaal volledig binnen 48 uur na ontvangst van de betaallink (of minimaal 8 uur voor het ophalen bij last-minute boekingen); als de betaling niet op tijd wordt ontvangen, kan de boeking worden geannuleerd.</li>' +
+            '<li><strong>Terugbetaling bij annulering</strong> (van de huurprijs; de borg wordt bij annulering altijd volledig terugbetaald):' +
+            '<ol class="legal-list legal-sublist" type="a"><li>Tijdens beoordeling: 100%.</li><li>Geaccepteerd, meer dan 1 week voor ophalen: 100%.</li>' +
+            '<li>Geaccepteerd, minder dan 1 week maar meer dan 48 uur voor ophalen: 50%.</li>' +
+            '<li>Geaccepteerd, 48 uur of minder voor ophalen: 20%.</li>' +
+            '<li>Na de ophaaldatum: annuleren is hier niet meer mogelijk. Neem contact op via info@justroam.nl.</li></ol></li>' +
+            '<li>Ik ben 24 jaar of ouder en toon een geldig identiteitsbewijs bij het ophalen.</li>' +
+            '<li>Ik bevestig dat mijn voertuig geschikt is voor het Materiaal (een goedgekeurde trekhaak voor de fietsendrager; geschikte dakdragers voor de dakkoffer) en dat ik dit correct en wegwettelijk monteer en gebruik, binnen de maximale belading (dakkoffer 75 kg; fietsendrager 60 kg totaal / 25 kg per fiets). Voor de fietsendrager ben ik verantwoordelijk voor het bevestigen van een wegwettelijk kenteken en voor eventuele boetes die verband houden met het kenteken, het overschrijden van de kogeldruk van de trekhaak, te hard rijden, overbelasting, onjuist gebruik of onjuiste verlichting.</li>' +
+            '<li>Ik ben verantwoordelijk voor verlies, diefstal of schade die de normale slijtage overschrijdt tijdens de huurperiode, tot het bedrag van de borg, en voor schade aan mijn voertuig of aan derden die ontstaat door montage of gebruik. JustRoam is niet aansprakelijk voor gevolgschade. Het Materiaal is niet gedekt door een verzekering van JustRoam. Het wordt volledig op mijn risico verhuurd, met inachtneming van deze beperking.</li>' +
+            '<li>Ik gebruik het Materiaal alleen binnen de EU, het Verenigd Koninkrijk, Zwitserland en Noorwegen, voor normaal gebruik op de weg. Off-road gebruik, wedstrijdgebruik of commercieel gebruik is niet toegestaan.</li>' +
+            '<li>Ik breng het Materiaal schoon, compleet en op tijd terug. De borg wordt na inspectie terugbetaald, normaal gesproken binnen 2 werkdagen, verminderd met eventuele bedragen voor schade, verlies, schoonmaak of te laat terugbrengen.</li>' +
+            '</ol>' +
+            '<h2>Acceptatie</h2>' +
+            '<p>Door de betaling via de verstrekte link te voltooien, accepteert de Huurder deze overeenkomst elektronisch.</p>' +
+            '<p>Verhuurder: JustRoam, verstuurd ' + escapeHtml(sentAt) + '</p>';
+    }
 
     return '<p><strong>Rental Agreement no.</strong> ' + escapeHtml(booking.bookingNumber || booking.id) + '<br>' +
         '<strong>Date:</strong> ' + escapeHtml(agreementDate) + '</p>' +
@@ -2053,7 +2311,7 @@ function buildAgreementBody(booking, rentalFee, depositAmount, total) {
         (booking.renterIdType || booking.renterIdNumber ? escapeHtml((booking.renterIdType || '') + ' ' + (booking.renterIdNumber || '')) : '(checked at pickup)') + '</p>' +
         '<h2>Equipment rented</h2>' +
         '<table class="rate-lines-table">' +
-        '<tr><td>Item(s)</td><td>' + escapeHtml(describeEquipment(booking.item)) + '</td></tr>' +
+        '<tr><td>Item(s)</td><td>' + escapeHtml(describeEquipment(booking.item, locale)) + '</td></tr>' +
         '<tr><td>Rental period</td><td>' + escapeHtml(booking.startDate) + ' &rarr; ' + escapeHtml(booking.endDate) + ' (' + numDays + ' days)</td></tr>' +
         '<tr><td>Pickup / return</td><td>In person, Voorburg, at agreed times</td></tr>' +
         '</table>' +

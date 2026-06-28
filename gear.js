@@ -317,6 +317,96 @@ var GEAR_T = GEAR_IS_NL ? {
         var form = document.querySelector('#request form');
         if (!form) return;
 
+        // Country drives both the phone dial code and whether we even show
+        // the booking form - only NL/BE/DE are processed automatically, since
+        // address autofill and phone format checks only make sense for those.
+        var DIAL_CODES = { Netherlands: '+31', Belgium: '+32', Germany: '+49' };
+        var countrySelect = document.getElementById('g-country');
+        var phoneDial = document.getElementById('g-phone-dial');
+        var phoneCountryInput = document.getElementById('g-phone-country');
+        var otherCountryMessage = document.getElementById('g-other-country-message');
+        var fieldsWrapper = document.getElementById('g-fields-wrapper');
+
+        function onCountryChange() {
+            var country = countrySelect.value;
+            var isOther = country === 'Other';
+            if (otherCountryMessage) otherCountryMessage.style.display = isOther ? 'block' : 'none';
+            if (fieldsWrapper) fieldsWrapper.style.display = isOther ? 'none' : '';
+            if (!isOther) {
+                var dial = DIAL_CODES[country] || '+31';
+                if (phoneDial) phoneDial.textContent = dial;
+                if (phoneCountryInput) phoneCountryInput.value = dial;
+            }
+        }
+        if (countrySelect) {
+            countrySelect.addEventListener('change', onCountryChange);
+            onCountryChange();
+        }
+
+        // NL-only address autofill: a Dutch postcode + house number uniquely
+        // identifies one address, so we can look it up via PDOK's free,
+        // CORS-enabled government API. No equivalent exists for BE/DE - their
+        // postcodes cover much larger areas and don't map to a single street.
+        var postcodeInput = document.getElementById('g-postcode');
+        var houseNumberInput = document.getElementById('g-house-number');
+        var streetInput = document.getElementById('g-street');
+        var cityInput = document.getElementById('g-city');
+        var lookupNote = document.getElementById('g-address-lookup-note');
+        var NL_POSTCODE_RE = /^[1-9][0-9]{3}\s?[A-Za-z]{2}$/;
+
+        function tryAutofillAddress() {
+            if (!countrySelect || countrySelect.value !== 'Netherlands') return;
+            var postcode = (postcodeInput.value || '').trim();
+            var houseNumber = (houseNumberInput.value || '').trim();
+            if (!NL_POSTCODE_RE.test(postcode) || !houseNumber) return;
+
+            var houseNumberDigits = houseNumber.match(/\d+/);
+            if (!houseNumberDigits) return;
+
+            if (lookupNote) lookupNote.style.display = 'block';
+            var query = encodeURIComponent(postcode.replace(/\s/g, '') + ' ' + houseNumberDigits[0]);
+            fetch('https://api.pdok.nl/bzk/locatieserver/search/v3_1/free?q=' + query + '&rows=1&fl=straatnaam,woonplaatsnaam')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (lookupNote) lookupNote.style.display = 'none';
+                    var doc = data && data.response && data.response.docs && data.response.docs[0];
+                    if (!doc) return;
+                    if (doc.straatnaam) streetInput.value = doc.straatnaam;
+                    if (doc.woonplaatsnaam) cityInput.value = doc.woonplaatsnaam;
+                })
+                .catch(function () {
+                    if (lookupNote) lookupNote.style.display = 'none';
+                });
+        }
+        if (postcodeInput) postcodeInput.addEventListener('blur', tryAutofillAddress);
+        if (houseNumberInput) houseNumberInput.addEventListener('blur', tryAutofillAddress);
+
+        // Mirrors worker.js's isValidPhone() exactly, so the renter sees the
+        // same verdict here that the server would give - just instantly.
+        var phoneInput = document.getElementById('g-phone');
+        var phoneErrorEl = document.getElementById('g-phone-error');
+
+        function isValidPhoneClient(dialCode, number) {
+            var digits = String(number || '').replace(/\D/g, '');
+            if (dialCode === '+31') return digits.length === 9;
+            if (dialCode === '+32') return digits.length === 8 || digits.length === 9;
+            if (dialCode === '+49') return digits.length >= 6 && digits.length <= 11;
+            return digits.length >= 6 && digits.length <= 12;
+        }
+
+        function validatePhone() {
+            if (!phoneInput || !phoneInput.value) {
+                if (phoneErrorEl) phoneErrorEl.style.display = 'none';
+                return true;
+            }
+            var dialCode = phoneCountryInput ? phoneCountryInput.value : '+31';
+            var valid = isValidPhoneClient(dialCode, phoneInput.value);
+            if (phoneErrorEl) phoneErrorEl.style.display = valid ? 'none' : 'block';
+            return valid;
+        }
+        if (phoneInput) phoneInput.addEventListener('blur', validatePhone);
+        if (countrySelect) countrySelect.addEventListener('change', function () { if (phoneErrorEl) phoneErrorEl.style.display = 'none'; });
+
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -329,6 +419,11 @@ var GEAR_T = GEAR_IS_NL ? {
                 return;
             }
             if (errorEl) errorEl.style.display = 'none';
+
+            if (!validatePhone()) {
+                phoneInput.focus();
+                return;
+            }
 
             var submitBtn = form.querySelector('button[type="submit"]');
             var originalText = submitBtn.textContent;
