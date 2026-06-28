@@ -114,7 +114,9 @@ function getActiveLang() {
 const NAV_TEXT = {
   en: {
     home: 'Home',
-    rent: 'Rent a truck',
+    rental: 'Rental',
+    rentTruck: 'Rent a truck',
+    rentGear: 'Rent equipment',
     build: 'Build your truck',
     stories: 'Our stories',
     faq: 'FAQs',
@@ -122,7 +124,9 @@ const NAV_TEXT = {
   },
   nl: {
     home: 'Home',              // or "Start" if you prefer
-    rent: 'Huur een wagen',
+    rental: 'Verhuur',
+    rentTruck: 'Huur een wagen',
+    rentGear: 'Huur materiaal',
     build: 'Bouw je wagen',    // or "Truck ombouwen"
     stories: 'Onze verhalen',
     faq: 'Veelgestelde vragen',
@@ -154,7 +158,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <ul class="nav-menu">
         <li><a href="${pagePrefix}index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">${t.home}</a></li>
-        <li><a href="${pagePrefix}rent.html" class="nav-link ${currentPage === 'rent.html' ? 'active' : ''}">${t.rent}</a></li>
+        <li class="nav-dropdown">
+            <a href="#" class="nav-link nav-dropdown-toggle ${(currentPage === 'rent.html' || currentPage === 'rent-gear.html') ? 'active' : ''}">${t.rental}</a>
+            <ul class="nav-dropdown-menu">
+                <li><a href="${pagePrefix}rent.html" class="nav-dropdown-link ${currentPage === 'rent.html' ? 'active' : ''}">${t.rentTruck}</a></li>
+                <li><a href="${pagePrefix}rent-gear.html" class="nav-dropdown-link ${currentPage === 'rent-gear.html' ? 'active' : ''}">${t.rentGear}</a></li>
+            </ul>
+        </li>
         <li><a href="${pagePrefix}build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">${t.build}</a></li>
         <li><a href="${pagePrefix}stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">${t.stories}</a></li>
         <li><a href="${pagePrefix}faq.html" class="nav-link ${currentPage === 'faq.html' ? 'active' : ''}">${t.faq}</a></li>
@@ -196,6 +206,22 @@ document.addEventListener('DOMContentLoaded', function() {
     if (navElement) {
     navElement.innerHTML = navHTML;
     initLanguageSwitch(); // <-- IMPORTANT: after injection
+
+    // "Rental" dropdown - click to toggle (works on both desktop and mobile;
+    // desktop also gets hover via CSS), close when clicking elsewhere.
+    navElement.querySelectorAll('.nav-dropdown-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.closest('.nav-dropdown').classList.toggle('open');
+        });
+    });
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.nav-dropdown')) {
+            navElement.querySelectorAll('.nav-dropdown.open').forEach(function(d) {
+                d.classList.remove('open');
+            });
+        }
+    });
 }
 
 });
@@ -256,12 +282,14 @@ function getFooterText() {
     ? {
         contactTitle: 'Contactgegevens',
         instagram: 'Volg ons op Instagram',
-        rights: 'Alle rechten voorbehouden.'
+        rights: 'Alle rechten voorbehouden.',
+        privacyPolicy: 'Privacybeleid'
       }
     : {
         contactTitle: 'Contact details',
         instagram: 'Follow us on Instagram',
-        rights: 'All rights reserved.'
+        rights: 'All rights reserved.',
+        privacyPolicy: 'Privacy Policy'
       };
 }
 
@@ -313,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
 
       <div class="footer-bottom">
-        <p>&copy; JustRoam. ${t.rights}</p>
+        <p>&copy; JustRoam. ${t.rights} &nbsp;&bull;&nbsp; <a href="privacy.html" class="footer-bottom-link">${t.privacyPolicy}</a></p>
       </div>
     </div>
   `;
@@ -343,8 +371,9 @@ document.addEventListener('DOMContentLoaded', function() {
             hamburger.classList.toggle('active');
         });
         
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-link').forEach(link => {
+        // Close menu when clicking a link (but not the "Rental" dropdown
+        // toggle itself, which should open its submenu instead)
+        document.querySelectorAll('.nav-link:not(.nav-dropdown-toggle), .nav-dropdown-link').forEach(link => {
             link.addEventListener('click', function() {
                 navMenu.classList.remove('active');
                 hamburger.classList.remove('active');
@@ -498,7 +527,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let bookedDates = [];
     
     // iCal URL
-    const icalUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://calendar.justroam.nl/ranger');
+        // iCal URLs - own calendar + Goboony bookings, merged into one availability set
+    const icalUrlOwn = 'https://justroam-availability.edwinvandavenhorst.workers.dev/ranger';
+    const icalUrlGoboony = 'https://justroam-availability.edwinvandavenhorst.workers.dev/ranger-goboony';
     
     // Initialize calendar
     async function initCalendar() {
@@ -529,19 +560,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Load iCal data
+            // Load iCal data - own calendar + Goboony, merged into one booked-dates list
     async function loadICalData() {
+        const [ownDates, goboonyDates] = await Promise.all([
+            loadOneCalendar(icalUrlOwn, 'own calendar'),
+            loadOneCalendar(icalUrlGoboony, 'Goboony')
+        ]);
+        bookedDates = Array.from(new Set(ownDates.concat(goboonyDates)));
+        console.log('✅ Combined booked dates:', bookedDates.length);
+    }
+
+    async function loadOneCalendar(url, label) {
         try {
-            // Note: Direct iCal fetching might have CORS issues
-            // You may need a proxy or server-side solution
-            const response = await fetch(icalUrl);
+            const response = await fetch(url);
             const icalText = await response.text();
-            bookedDates = parseICalData(icalText);
-            console.log('✅ iCal loaded, found booked dates:', bookedDates.length);
+            const dates = parseICalData(icalText);
+            console.log('✅ ' + label + ' loaded, found booked dates:', dates.length);
+            return dates;
         } catch (error) {
-            console.error('❌ Could not load iCal (might be CORS):', error);
-            console.log('ℹ️ Calendar will show all dates as available');
-            bookedDates = [];
+            console.error('❌ Could not load ' + label + ' (might be CORS):', error);
+            console.log('ℹ️ ' + label + ' will show as available');
+            return [];
         }
     }
     
@@ -945,7 +984,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <h4>💡 Decision point</h4>
             <p>We needed a double-cab pickup (4 seats) to make sure we could use the truck for our family trips. Finding a truck that met these requirements was hard as most Dutch pickups have deleted backseats due to tax incentives. Add our budget and we could select from just a few trucks, ultimately landing on our Ford Ranger.</p>
             <h4>🌲 The bigger mission</h4>
-            <p>Beyond family travel, this truck enables nature disconnect retreats—small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
+            <p>Beyond family travel, this truck enables nature disconnect retreats: small group experiences where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>
         </div>
     `
   },
@@ -988,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', function () {
     richContent: `
         <div class="build-rich-content">
             <h4>💡 Decision point</h4>
-            <p>The snorkel provides security for water crossings—essential for remote travel. We went with a quality brand because it's constantly exposed to UV rays. Cheaping out might save a bit, but a cracked snorkel leading to water ingestion could cost thousands in engine damage.</p>
+            <p>The snorkel provides security for water crossings, essential for remote travel. We went with a quality brand because it's constantly exposed to UV rays. Cheaping out might save a bit, but a cracked snorkel leading to water ingestion could cost thousands in engine damage.</p>
         </div> 
     `
     },
@@ -1030,7 +1069,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="build-rich-content">    
             <h4>📚 Learnings</h4>
                 <p><b>✓ Decide what wood to use: </b>the type of wood used is essential in how strong the construction is and if it can withstand the weather.</p>
-                <p><b>✓ Measure everything twice (or three times): </b> I didn't have exact dimensions for the fridge, cooker, and drawer sliders before building. This meant rebuilding sections multiple times to get everything to fit—wasted wood and hours of work.</p>
+                <p><b>✓ Measure everything twice (or three times): </b> I didn't have exact dimensions for the fridge, cooker, and drawer sliders before building. This meant rebuilding sections multiple times to get everything to fit, wasting wood and hours of work.</p>
                 <p><b>✓ Get the right sliders: </b>I bought too light of sliders which resulted in broken sliders after the first offroad trip. After that trip, I had to make upgrades and modifications plus spend more money</p>
                 <p><b>✓ Test ergonomics before finalizing: </b>Solar panels under the kitchen seemed smart until the suspension lift made everything too high to reach comfortably. Learned this on the first trip and had to rebuild the entire layout. Lesson: mock up the full setup with actual heights before committing.</p>
         </div>
@@ -1049,7 +1088,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p><b>✓ Awning: </b>We wanted the full 270 degree awning with optional tent to create a large shaded cover. With that, we can cook in the rain or escape the sun without retreating into the tents.</p>
             <h4>📚 Learnings</h4>
                 <p><b>✓ Installation: </b>Having a roof tent specialist install them was essential. They knew exactly how to position and secure the tents for proper weight distribution and aerodynamics. Not something to DIY.</p>
-                <p><b>✓ Roof rack installation: </b>I initially planned to use standard roof bars for the front tent. The specialist strongly advised against this—the bars aren't designed for the weight and vibration of off-road driving and would likely fail or detach. Sold them and installed a proper fixed roof rack instead. Safety first.</p>
+                <p><b>✓ Roof rack installation: </b>I initially planned to use standard roof bars for the front tent. The specialist strongly advised against this. The bars aren't designed for the weight and vibration of off-road driving and would likely fail or detach. Sold them and installed a proper fixed roof rack instead. Safety first.</p>
         </div>
     `
   },
@@ -1063,9 +1102,9 @@ document.addEventListener('DOMContentLoaded', function () {
         <div class="build-rich-content">    
             <h4>💡 Decision points</h4>
                 <p><strong>✓ Upgraded suspension: </strong>No difficult decision at all. Once the roof tents were installed, I immediately noticed the impact of the weight and overall stability of the truck. The upgrade to heavy duty suspension enables us to safely travel on- and offroad with the full equipment and four people. </p>
-                <p><strong>✓ Upgraded clutch: </strong>On our first trip, we realized the stock clutch couldn't handle the increased weight and off-road driving. Frequent clutch slipping on steep terrain burned it up quickly. After returning home, we upgraded to a heavy-duty clutch—now the truck handles technical terrain without issue.</p>
+                <p><strong>✓ Upgraded clutch: </strong>On our first trip, we realized the stock clutch couldn't handle the increased weight and off-road driving. Frequent clutch slipping on steep terrain burned it up quickly. After returning home, we upgraded to a heavy-duty clutch. Now the truck handles technical terrain without issue.</p>
             <h4>📚 Learnings</h4>
-                <p><b>✓ Clutch: </b>Heavy-duty clutches cost €3500+. We tested the stock clutch first and it failed after one trip. Learned our lesson and upgraded. But this approach saved us from spending on upgrades we might not have needed—test first, then upgrade based on real-world performance.</p>
+                <p><b>✓ Clutch: </b>Heavy-duty clutches cost €3500+. We tested the stock clutch first and it failed after one trip. Learned our lesson and upgraded. But this approach saved us from spending on upgrades we might not have needed: test first, then upgrade based on real-world performance.</p>
         </div>
     `
   },
@@ -1222,7 +1261,7 @@ const BUILD_I18N = {
             <div class="build-rich-content">    
                 <h4>📚 Learnings</h4>
                     <p><b>✓ Decide what wood to use: </b>the type of wood used is essential in how strong the construction is and if it can withstand the weather.</p>
-                    <p><b>✓ Measure everything twice (or three times): </b> I didn't have exact dimensions for the fridge, cooker, and drawer sliders before building. This meant rebuilding sections multiple times to get everything to fit—wasted wood and hours of work.</p>
+                    <p><b>✓ Measure everything twice (or three times): </b> I didn't have exact dimensions for the fridge, cooker, and drawer sliders before building. This meant rebuilding sections multiple times to get everything to fit, wasting wood and hours of work.</p>
                     <p><b>✓ Get the right sliders: </b>I bought too light of sliders which resulted in broken sliders after the first offroad trip. After that trip, I had to make upgrades and modifications plus spend more money</p>
                     <p><b>✓ Test ergonomics before finalizing: </b>Solar panels under the kitchen seemed smart until the suspension lift made everything too high to reach comfortably. Learned this on the first trip and had to rebuild the entire layout. Lesson: mock up the full setup with actual heights before committing.</p>
             </div>`
@@ -1558,7 +1597,7 @@ const BUILD_PHASES = BUILD_PHASES_BASE.map(p => {
     const allImages = BUILD_PHASES.flatMap(p => p.images.map(n => ({
 /*        src: `images/build/IMG_${n}.jpeg`,*/
         src: `${assetPrefix}images/build/IMG_${n}.jpeg`,
-        caption: `${p.title}`,  // Removed — IMG_${n}
+        caption: `${p.title}`,  // Removed - IMG_${n}
         phaseId: p.id
     })));
 

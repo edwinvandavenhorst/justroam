@@ -216,7 +216,7 @@ img {
     display: block;
 }
 
-/* Hover-to-open is only for real mouse pointers — on touch devices a tap
+/* Hover-to-open is only for real mouse pointers - on touch devices a tap
    leaves a "stuck" :hover state that wouldn't clear when closing via JS. */
 @media (hover: hover) and (pointer: fine) {
     .nav-dropdown:hover .nav-dropdown-toggle::after {
