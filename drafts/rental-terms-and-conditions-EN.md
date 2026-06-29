@@ -58,7 +58,10 @@ The security deposit is always refunded in full on cancellation (less any amount
 
 ## 6. Deposit, damage & liability
 - The **security deposit** is taken before/at pickup and refunded after return once the Equipment is checked and found undamaged and complete, normally within **2 business days**.
-- The Renter is liable for **loss, theft or damage** beyond normal wear during the rental, **up to the amount of the security deposit** (€250 per item, €400 for the bundle). JustRoam's recovery for such loss, theft or damage is limited to the deposit amount and will not seek further compensation beyond it.
+- The Renter is liable for **accidental loss, theft or damage** beyond normal wear during the rental, **up to the amount of the security deposit** (€250 per item, €400 for the bundle).
+- This cap **does not apply** if the loss or theft results from the Renter's **negligence** (for example, failing to lock or secure the Equipment) or **wilful misconduct**, in which case the Renter can be held liable for the **full replacement value** (€550 for the roof box, €589 for the bike carrier).
+- If the Equipment is **stolen** during the rental period, the Renter must **report it to the local police immediately** and **notify JustRoam at info@justroam.nl within 24 hours** of discovering the theft.
+- If the **Renter themselves steals or wrongfully keeps** the Equipment, JustRoam will **press criminal charges directly**.
 - The Renter is responsible for any **damage to their vehicle or third parties** arising from fitment or use of the Equipment. The Renter's own motor insurance and liability cover apply. JustRoam is not liable for consequential loss (e.g. spoiled holidays, missed travel).
 - The Equipment is **not covered by any insurance held by JustRoam** during the rental period. It is rented entirely at the Renter's risk, subject to the liability cap above.
 
