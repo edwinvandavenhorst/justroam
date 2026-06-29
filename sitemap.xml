@@ -36,6 +36,14 @@
   </url>
 
   <url>
+    <loc>https://justroam.nl/rent-gear.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/rent-gear.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/rent-gear.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://justroam.nl/stories.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/stories.html"/>
     <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/stories.html"/>
@@ -88,6 +96,14 @@
     <loc>https://justroam.nl/nl/blog_build.html</loc>
     <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/blog_build.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/blog_build.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://justroam.nl/nl/rent-gear.html</loc>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://justroam.nl/nl/rent-gear.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://justroam.nl/rent-gear.html"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
