@@ -236,17 +236,6 @@
                         </select>
                     </div>
 
-                    <div class="booking-dates-display">
-                        <div class="booking-date-box">
-                            <span class="booking-date-label">Pickup</span>
-                            <span class="booking-date-value" id="bkCheckinValue">Add date</span>
-                        </div>
-                        <div class="booking-date-box">
-                            <span class="booking-date-label">Return</span>
-                            <span class="booking-date-value" id="bkCheckoutValue">Add date</span>
-                        </div>
-                    </div>
-
                     <div class="gcal" data-gcal>
                         <div class="calendar-container">
                             <div class="calendar-header">
@@ -273,6 +262,17 @@
                                 <div class="legend-item"><span class="legend-color available"></span> Available</div>
                                 <div class="legend-item"><span class="legend-color booked"></span> Unavailable for this selection</div>
                                 <div class="legend-item">A one-day gap is kept after each rental for cleaning and inspection</div>
+                            </div>
+                            <br>
+                            <div class="booking-dates-display">
+                                <div class="booking-date-box">
+                                    <span class="booking-date-label">Pickup</span>
+                                    <span class="booking-date-value" id="bkCheckinValue">Add date</span>
+                                </div>
+                                <div class="booking-date-box">
+                                    <span class="booking-date-label">Return</span>
+                                    <span class="booking-date-value" id="bkCheckoutValue">Add date</span>
+                                </div>
                             </div>
                             <button class="btn btn-primary btn-large gcal-request-btn" id="bkRequestBtn" disabled>Select your dates</button>
                         </div>

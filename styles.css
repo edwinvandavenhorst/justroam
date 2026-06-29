@@ -3508,7 +3508,7 @@ html {
     border: 1px solid var(--gray-dark);
     border-radius: var(--radius-lg);
     overflow: hidden;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
 }
 
 .booking-date-box {
