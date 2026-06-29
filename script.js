@@ -120,6 +120,8 @@ const NAV_TEXT = {
     build: 'Build your truck',
     stories: 'Our stories',
     faq: 'FAQs',
+    faqTruck: 'Rent a truck FAQs',
+    faqGear: 'Rent equipment FAQs',
     contact: 'Get in touch'
   },
   nl: {
@@ -130,6 +132,8 @@ const NAV_TEXT = {
     build: 'Bouw je wagen',    // or "Truck ombouwen"
     stories: 'Onze verhalen',
     faq: 'Veelgestelde vragen',
+    faqTruck: 'Huur een wagen FAQs',
+    faqGear: 'Huur materiaal FAQs',
     contact: 'Neem contact op'
   }
 };
@@ -167,7 +171,13 @@ document.addEventListener('DOMContentLoaded', function() {
         </li>
         <li><a href="${pagePrefix}build.html" class="nav-link ${currentPage === 'build.html' ? 'active' : ''}">${t.build}</a></li>
         <li><a href="${pagePrefix}stories.html" class="nav-link ${currentPage === 'stories.html' ? 'active' : ''}">${t.stories}</a></li>
-        <li><a href="${pagePrefix}faq.html" class="nav-link ${currentPage === 'faq.html' ? 'active' : ''}">${t.faq}</a></li>
+        <li class="nav-dropdown">
+            <a href="#" class="nav-link nav-dropdown-toggle ${(currentPage === 'faq.html' || currentPage === 'faq-gear.html') ? 'active' : ''}">${t.faq}</a>
+            <ul class="nav-dropdown-menu">
+                <li><a href="${pagePrefix}faq.html" class="nav-dropdown-link ${currentPage === 'faq.html' ? 'active' : ''}">${t.faqTruck}</a></li>
+                <li><a href="${pagePrefix}faq-gear.html" class="nav-dropdown-link ${currentPage === 'faq-gear.html' ? 'active' : ''}">${t.faqGear}</a></li>
+            </ul>
+        </li>
         <li><a href="${pagePrefix}contact.html" class="nav-link ${currentPage === 'contact.html' ? 'active' : ''}">${t.contact}</a></li>
 
         <li class="nav-lang-item">
