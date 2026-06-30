@@ -8,15 +8,75 @@ var GEAR_T = GEAR_IS_NL ? {
     requestToBook: 'Aanvraag versturen',
     sending: 'Verzenden…',
     success: 'Bedankt! We hebben je aanvraag ontvangen en nemen snel contact op om de beschikbaarheid en volgende stappen te bevestigen.',
-    genericError: 'Sorry, er ging iets mis bij het versturen van je aanvraag. Probeer het opnieuw of mail ons op info@justroam.nl.'
+    genericError: 'Sorry, er ging iets mis bij het versturen van je aanvraag. Probeer het opnieuw of mail ons op info@justroam.nl.',
+    priceDays: 'dag',
+    priceDaysPlural: 'dagen',
+    priceRentalFee: 'Huurprijs',
+    priceDeposit: 'Borg',
+    priceDepositNote: '(terugbetaalbaar na inspectie)',
+    priceTotal: 'Totaal'
 } : {
     addDate: 'Add date',
     selectDates: 'Select your dates',
     requestToBook: 'Request to book',
     sending: 'Sending…',
     success: 'Thanks! We have received your request and will be in touch shortly to confirm availability and next steps.',
-    genericError: 'Sorry, something went wrong sending your request. Please try again or email us directly at info@justroam.nl.'
+    genericError: 'Sorry, something went wrong sending your request. Please try again or email us directly at info@justroam.nl.',
+    priceDays: 'day',
+    priceDaysPlural: 'days',
+    priceRentalFee: 'Rental fee',
+    priceDeposit: 'Deposit',
+    priceDepositNote: '(refundable after inspection)',
+    priceTotal: 'Total'
 };
+
+// Mirrors cloudflare-worker/worker.js DEFAULT_RATE_CARD. This is an estimate
+// shown to the renter before submitting a request - the worker computes the
+// authoritative price (using whichever rate card is active at booking time)
+// once the request is reviewed and approved.
+var GEAR_RATE_CARD = {
+    roofbox: { day: 9, weekend: 20, deposit: 250, tiers: [{ days: 21, price: 110 }, { days: 14, price: 80 }, { days: 7, price: 45 }] },
+    carrier: { day: 8, weekend: 20, deposit: 250, tiers: [{ days: 7, price: 40 }] },
+    bundle: { day: 15, weekend: 40, deposit: 400, tiers: [{ days: 7, price: 75 }] }
+};
+
+function gearCalcSingleItemFee(itemCard, days, isWeekendPattern) {
+    if (isWeekendPattern) return itemCard.weekend;
+    var tiersDesc = itemCard.tiers.slice().sort(function (a, b) { return b.days - a.days; });
+    var remaining = days;
+    var total = 0;
+    tiersDesc.forEach(function (tier) {
+        while (remaining >= tier.days) {
+            total += tier.price;
+            remaining -= tier.days;
+        }
+    });
+    total += remaining * itemCard.day;
+    return total;
+}
+
+function gearCalcRentalFee(itemKey, startDate, endDate) {
+    var card = GEAR_RATE_CARD[itemKey];
+    if (!card) return null;
+    var start = new Date(startDate);
+    var end = new Date(endDate);
+    var days = Math.round((end - start) / 86400000) + 1;
+    if (days <= 0) return null;
+
+    var isWeekendPattern = days === 3 && start.getDay() === 5 && end.getDay() === 0;
+    var total = gearCalcSingleItemFee(card, days, isWeekendPattern);
+
+    if (itemKey === 'bundle') {
+        var separateTotal = gearCalcSingleItemFee(GEAR_RATE_CARD.roofbox, days, isWeekendPattern) + gearCalcSingleItemFee(GEAR_RATE_CARD.carrier, days, isWeekendPattern);
+        total = Math.min(total, separateTotal);
+    }
+
+    return { days: days, rentalFee: Math.round(total * 100) / 100, depositAmount: card.deposit };
+}
+
+function gearFormatEuro(amount) {
+    return '€' + amount.toFixed(2).replace('.', ',');
+}
 
 (function () {
     'use strict';
@@ -230,6 +290,35 @@ var GEAR_T = GEAR_IS_NL ? {
             if (formItem) formItem.value = labelMap[itemSelect.value] || 'Roof box';
             if (formStart) formStart.value = selStart ? iso(selStart) : '';
             if (formEnd) formEnd.value = selEnd ? iso(selEnd) : '';
+            updatePriceSummary();
+        }
+
+        function updatePriceSummary() {
+            var summary = document.getElementById('g-price-summary');
+            if (!summary) return;
+            if (!selStart || !selEnd || !itemSelect) {
+                summary.style.display = 'none';
+                return;
+            }
+            var key = itemSelect.value;
+            var fee = gearCalcRentalFee(key, iso(selStart), iso(selEnd));
+            if (!fee) {
+                summary.style.display = 'none';
+                return;
+            }
+            var itemLabel = itemSelect.options[itemSelect.selectedIndex].text.split(' - ')[0];
+            var dayWord = fee.days === 1 ? GEAR_T.priceDays : GEAR_T.priceDaysPlural;
+            var total = fee.rentalFee + fee.depositAmount;
+
+            document.getElementById('g-price-period').textContent = itemLabel + ' · ' + fmt(selStart) + ' – ' + fmt(selEnd) + ' (' + fee.days + ' ' + dayWord + ')';
+            document.getElementById('g-price-fee-label').textContent = GEAR_T.priceRentalFee + ' (' + fee.days + ' ' + dayWord + ')';
+            document.getElementById('g-price-fee-value').textContent = gearFormatEuro(fee.rentalFee);
+            document.getElementById('g-price-deposit-label').textContent = GEAR_T.priceDeposit;
+            document.getElementById('g-price-deposit-note').textContent = GEAR_T.priceDepositNote;
+            document.getElementById('g-price-deposit-value').textContent = gearFormatEuro(fee.depositAmount);
+            document.getElementById('g-price-total-label').textContent = GEAR_T.priceTotal;
+            document.getElementById('g-price-total-value').textContent = gearFormatEuro(total);
+            summary.style.display = '';
         }
 
         function updateDisplays() {

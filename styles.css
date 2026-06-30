@@ -3660,3 +3660,35 @@ html {
     left: -9999px;
     top: -9999px;
 }
+.gear-price-summary {
+    background: var(--background, #f8f8f6);
+    border-radius: var(--radius-md, 8px);
+    padding: 1rem 1.25rem;
+    margin: 16px 0;
+}
+.gear-price-period {
+    font-size: 0.85rem;
+    color: var(--text-muted, #777);
+    margin: 0 0 10px;
+}
+.gear-price-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border-color, #ddd);
+}
+.gear-price-line:last-of-type {
+    border-bottom: none;
+}
+.gear-price-note {
+    font-size: 0.8rem;
+    color: var(--text-muted, #777);
+}
+.gear-price-total {
+    margin-top: 8px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color, #ddd);
+    font-size: 1.1rem;
+    font-weight: 600;
+}

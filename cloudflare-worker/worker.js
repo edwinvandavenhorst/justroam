@@ -6,7 +6,17 @@
 //   ADMIN_USERNAME    (secret)      - admin dashboard sign-in username
 //   ADMIN_PASSWORD    (secret)      - admin dashboard sign-in password
 //   MOLLIE_API_KEY    (secret)      - Mollie payments API key
+//   ICLOUD_EMAIL      (plain text)  - Apple ID email for the roof-box/bike-carrier calendars
+//   ICLOUD_APP_PASSWORD (secret)    - app-specific password for that Apple ID (appleid.apple.com)
 //   BOOKINGS          (KV namespace binding)
+//
+// Calendar write-back: when a booking is approved, an all-day event (with
+// reminders 3 days and 1 day before) is created directly in the renter's
+// roof-box and/or bike-carrier iCloud calendar via CalDAV - the published
+// read-only links above can't accept writes, so this uses real CalDAV PUT
+// requests authenticated with the Apple ID credentials above. The calendar
+// collection URLs are discovered once (PROPFIND) and cached in KV under
+// 'caldav:calendar-urls'; cancelling a booking deletes the matching event(s).
 //
 // Note: amounts entered in the admin dashboard / paid via Mollie become part
 // of your income/VAT records. This Worker computes net/VAT/gross from what
@@ -32,6 +42,18 @@ const CALENDARS = {
 const BASE_URL = 'https://justroam-availability.edwinvandavenhorst.workers.dev';
 const MIN_FORM_FILL_MS = 3000; // reject submissions faster than this - likely a bot
 const VAT_RATE = 0.21;
+
+// Display names of the two writable iCloud calendars, exactly as they
+// appear in the Calendar app (used to find them via CalDAV PROPFIND).
+const CALDAV_CALENDAR_NAMES = ['roof-box', 'bike-carrier'];
+
+// Which calendar(s) a booking's item should be written to/removed from.
+function calendarTargetsForItem(item) {
+    if (item === 'Roof box') return ['roof-box'];
+    if (item === 'Bike carrier') return ['bike-carrier'];
+    if (item === 'Bundle') return ['roof-box', 'bike-carrier'];
+    return [];
+}
 
 // Fallback rate card, used only if no card has been added yet in the admin
 // dashboard (Rate cards page). Matches the rates published on rent-gear.html
@@ -119,6 +141,237 @@ function calcRentalFee(item, startDate, endDate, card) {
     }
 
     return { days: days, isWeekend: isWeekendPattern, rentalFee: Math.round(total * 100) / 100, depositAmount: itemCard.deposit };
+}
+
+// ---- iCloud CalDAV write-back ----
+// Writes/removes all-day events directly in Edwin's real iCloud calendars
+// (separate from the read-only "published" feeds used for availability).
+// No XML DOM is available in Workers, so multistatus responses are parsed
+// with small tag-matching helpers instead of a real parser - iCloud's CalDAV
+// responses are well-formed enough that this is reliable in practice.
+
+function caldavAuthHeader(env) {
+    return 'Basic ' + btoa(env.ICLOUD_EMAIL + ':' + env.ICLOUD_APP_PASSWORD);
+}
+
+async function caldavPropfind(env, url, body, depth) {
+    const response = await fetch(url, {
+        method: 'PROPFIND',
+        headers: {
+            'Authorization': caldavAuthHeader(env),
+            'Content-Type': 'application/xml; charset=utf-8',
+            'Depth': depth || '0'
+        },
+        body: body
+    });
+    if (!response.ok && response.status !== 207) {
+        console.error('CalDAV PROPFIND failed:', url, response.status, await response.text());
+        return null;
+    }
+    const text = await response.text();
+    return { text: text, url: response.url };
+}
+
+function xmlTag(xml, tagLocalName) {
+    const re = new RegExp('<(?:[a-zA-Z0-9]+:)?' + tagLocalName + '[^>]*>([\\s\\S]*?)<\\/(?:[a-zA-Z0-9]+:)?' + tagLocalName + '>', 'i');
+    const m = xml.match(re);
+    return m ? m[1].trim() : null;
+}
+
+function xmlTagBlocks(xml, tagLocalName) {
+    const re = new RegExp('<(?:[a-zA-Z0-9]+:)?' + tagLocalName + '[^>]*>([\\s\\S]*?)<\\/(?:[a-zA-Z0-9]+:)?' + tagLocalName + '>', 'gi');
+    const blocks = [];
+    let m;
+    while ((m = re.exec(xml)) !== null) blocks.push(m[1]);
+    return blocks;
+}
+
+function resolveUrl(base, href) {
+    try {
+        return new URL(href, base).toString();
+    } catch (err) {
+        return href;
+    }
+}
+
+// Finds the CalDAV collection URL for each calendar name via the standard
+// principal -> calendar-home-set -> collection-listing discovery dance, then
+// caches the result so this only has to run once.
+async function discoverCalendarUrls(env) {
+    const principalBody = '<?xml version="1.0" encoding="UTF-8"?>' +
+        '<D:propfind xmlns:D="DAV:"><D:prop><D:current-user-principal/></D:prop></D:propfind>';
+    const principalRes = await caldavPropfind(env, 'https://caldav.icloud.com/', principalBody);
+    if (!principalRes) return null;
+    const principalHref = xmlTag(xmlTag(principalRes.text, 'current-user-principal') || '', 'href');
+    if (!principalHref) {
+        console.error('CalDAV: no principal href found, raw response:', principalRes.text.slice(0, 1000));
+        return null;
+    }
+    const principalUrl = resolveUrl(principalRes.url, principalHref);
+
+    const homeBody = '<?xml version="1.0" encoding="UTF-8"?>' +
+        '<D:propfind xmlns:D="DAV:" xmlns:C="urn:ietf:params:xml:ns:caldav">' +
+        '<D:prop><C:calendar-home-set/></D:prop></D:propfind>';
+    const homeRes = await caldavPropfind(env, principalUrl, homeBody);
+    if (!homeRes) return null;
+    const homeHref = xmlTag(xmlTag(homeRes.text, 'calendar-home-set') || '', 'href');
+    if (!homeHref) {
+        console.error('CalDAV: no calendar-home-set href found, raw response:', homeRes.text.slice(0, 1000));
+        return null;
+    }
+    const homeUrl = resolveUrl(homeRes.url, homeHref);
+
+    const listBody = '<?xml version="1.0" encoding="UTF-8"?>' +
+        '<D:propfind xmlns:D="DAV:"><D:prop><D:displayname/><D:resourcetype/></D:prop></D:propfind>';
+    const listRes = await caldavPropfind(env, homeUrl, listBody, '1');
+    if (!listRes) return null;
+
+    const urls = {};
+    const seenDisplaynames = [];
+    xmlTagBlocks(listRes.text, 'response').forEach(function (block) {
+        const displayname = (xmlTag(block, 'displayname') || '').trim();
+        seenDisplaynames.push(displayname);
+        const href = xmlTag(block, 'href');
+        if (!href) return;
+        CALDAV_CALENDAR_NAMES.forEach(function (name) {
+            if (displayname.toLowerCase() === name.toLowerCase()) {
+                urls[name] = resolveUrl(listRes.url, href);
+            }
+        });
+    });
+
+    if (Object.keys(urls).length === 0) {
+        console.error('CalDAV: no matching calendars found, seen displaynames:', JSON.stringify(seenDisplaynames));
+        return null;
+    }
+    return urls;
+}
+
+async function getCalendarUrls(env, forceRefresh) {
+    if (!forceRefresh) {
+        const cached = await env.BOOKINGS.get('caldav:calendar-urls');
+        if (cached) return JSON.parse(cached);
+    }
+    const discovered = await discoverCalendarUrls(env);
+    if (discovered) {
+        await env.BOOKINGS.put('caldav:calendar-urls', JSON.stringify(discovered));
+    }
+    return discovered;
+}
+
+function icsDate(dateStr) {
+    return dateStr.replace(/-/g, '');
+}
+
+function icsEscape(str) {
+    return String(str || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+}
+
+function buildBookingIcs(booking, calendarName) {
+    const uid = 'justroam-' + booking.id + '-' + calendarName;
+    const dtStart = icsDate(booking.startDate);
+    const endExclusive = new Date(booking.endDate);
+    endExclusive.setDate(endExclusive.getDate() + 1);
+    const dtEnd = endExclusive.toISOString().slice(0, 10).replace(/-/g, '');
+    const dtStamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const summary = 'JustRoam #' + (booking.bookingNumber || booking.id) + ' - ' + booking.item + ' - ' + booking.renterName;
+    const description = 'Renter: ' + booking.renterName + ' (' + booking.renterEmail + (booking.renterPhone ? ', ' + booking.renterPhone : '') + ')';
+
+    return [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//JustRoam//Booking//EN',
+        'BEGIN:VEVENT',
+        'UID:' + uid,
+        'DTSTAMP:' + dtStamp,
+        'DTSTART;VALUE=DATE:' + dtStart,
+        'DTEND;VALUE=DATE:' + dtEnd,
+        'SUMMARY:' + icsEscape(summary),
+        'DESCRIPTION:' + icsEscape(description),
+        'BEGIN:VALARM',
+        'ACTION:DISPLAY',
+        'DESCRIPTION:Reminder',
+        'TRIGGER:-P2DT15H',
+        'END:VALARM',
+        'BEGIN:VALARM',
+        'ACTION:DISPLAY',
+        'DESCRIPTION:Reminder',
+        'TRIGGER:-PT15H',
+        'END:VALARM',
+        'END:VEVENT',
+        'END:VCALENDAR'
+    ].join('\r\n');
+}
+
+async function putCalendarEvent(env, calendarUrl, booking, calendarName) {
+    const uid = 'justroam-' + booking.id + '-' + calendarName;
+    const eventUrl = calendarUrl + uid + '.ics';
+    const response = await fetch(eventUrl, {
+        method: 'PUT',
+        headers: {
+            'Authorization': caldavAuthHeader(env),
+            'Content-Type': 'text/calendar; charset=utf-8'
+        },
+        body: buildBookingIcs(booking, calendarName)
+    });
+    if (!response.ok) {
+        console.error('CalDAV PUT failed:', eventUrl, response.status, await response.text());
+        return false;
+    }
+    return true;
+}
+
+async function deleteCalendarEvent(env, calendarUrl, booking, calendarName) {
+    const uid = 'justroam-' + booking.id + '-' + calendarName;
+    const eventUrl = calendarUrl + uid + '.ics';
+    const response = await fetch(eventUrl, {
+        method: 'DELETE',
+        headers: { 'Authorization': caldavAuthHeader(env) }
+    });
+    if (!response.ok && response.status !== 404) {
+        console.error('CalDAV DELETE failed:', eventUrl, response.status, await response.text());
+        return false;
+    }
+    return true;
+}
+
+// Creates (or updates, since PUT overwrites) the all-day event(s) for this
+// booking in the appropriate calendar(s) - both, for a Bundle. Failures are
+// logged but never block the booking flow itself; calendar visibility is a
+// convenience for Edwin, not something a renter's booking should fail on.
+async function syncBookingToCalendar(env, booking) {
+    const targets = calendarTargetsForItem(booking.item);
+    if (targets.length === 0) return;
+
+    let urls = await getCalendarUrls(env, false);
+    if (!urls || targets.some(function (t) { return !urls[t]; })) {
+        urls = await getCalendarUrls(env, true);
+    }
+    if (!urls) {
+        console.error('CalDAV: could not discover calendar URLs');
+        return;
+    }
+
+    for (const target of targets) {
+        if (!urls[target]) {
+            console.error('CalDAV: no calendar URL found for', target);
+            continue;
+        }
+        await putCalendarEvent(env, urls[target], booking, target);
+    }
+}
+
+async function removeBookingFromCalendar(env, booking) {
+    const targets = calendarTargetsForItem(booking.item);
+    if (targets.length === 0) return;
+
+    const urls = await getCalendarUrls(env, false);
+    if (!urls) return;
+
+    for (const target of targets) {
+        if (!urls[target]) continue;
+        await deleteCalendarEvent(env, urls[target], booking, target);
+    }
 }
 
 export default {
@@ -798,6 +1051,10 @@ async function applyBookingDecision(booking, key, env, newStatus, comment) {
     }
     await env.BOOKINGS.put(key, JSON.stringify(booking));
 
+    if (newStatus === 'approved') {
+        await syncBookingToCalendar(env, booking);
+    }
+
     const locale = booking.locale === 'nl' ? 'nl' : 'en';
     let renterSubject, renterHtml;
 
@@ -1325,6 +1582,7 @@ async function handleRenterCancel(request, env, corsHeaders) {
     booking.cancelledBy = 'renter';
     booking.cancellationFeePercent = policy.feePercent;
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
+    await removeBookingFromCalendar(env, booking);
 
     const paidNote = booking.paid
         ? '<p><strong>Note:</strong> this booking was already paid via Mollie (&euro;' + (Number(booking.quotedAmount || 0) + Number(booking.depositAmount || 0)).toFixed(2) + ' total, including a &euro;' + Number(booking.depositAmount || 0).toFixed(2) + ' deposit). Process any refund manually from the admin dashboard, applying the fee tier above.</p>'
@@ -1878,6 +2136,7 @@ async function handleAdminCancel(request, env, corsHeaders) {
     booking.cancelledAt = new Date().toISOString();
     booking.cancelledBy = 'admin';
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
+    await removeBookingFromCalendar(env, booking);
 
     const locale = booking.locale === 'nl' ? 'nl' : 'en';
     const renterHtml = locale === 'nl'
@@ -1953,6 +2212,7 @@ async function handleAdminEdit(request, env, corsHeaders) {
     }
 
     const changed = booking.startDate !== startDate || booking.endDate !== endDate || booking.item !== item;
+    const oldBookingForCalendar = changed && booking.status === 'approved' ? { ...booking } : null;
 
     booking.item = item;
     booking.startDate = startDate;
@@ -1969,6 +2229,11 @@ async function handleAdminEdit(request, env, corsHeaders) {
     }
 
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
+
+    if (oldBookingForCalendar) {
+        await removeBookingFromCalendar(env, oldBookingForCalendar);
+        await syncBookingToCalendar(env, booking);
+    }
 
     if (changed) {
         const locale = booking.locale === 'nl' ? 'nl' : 'en';
