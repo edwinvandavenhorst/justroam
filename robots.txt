@@ -5,4 +5,9 @@ Allow: /
 Disallow: /thank-you.html
 Disallow: /nl/thank-you.html
 
+# Block internal admin tool and blog placeholder template
+Disallow: /pricing-admin.html
+Disallow: /blog-template.html
+Disallow: /nl/blog-template.html
+
 Sitemap: https://justroam.nl/sitemap.xml
