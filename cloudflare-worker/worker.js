@@ -31,6 +31,14 @@
 // issued automatically - you always type the amount and click the button
 // yourself in this dashboard. Cancellation fees follow the same pattern:
 // you're notified of the policy tier and process any refund yourself.
+//
+// Manual bookings: /admin/booking/new lets you create a booking record for
+// requests you're fulfilling outside the normal flow (e.g. lending out a
+// substitute unit when the regular item is already booked). It skips the
+// availability check and starts the booking in an 'awaiting_details' status
+// with no renter info yet. You send the renter the resulting /booking/claim
+// link yourself; once they fill in their details there, the booking becomes
+// a normal 'pending' booking and joins the regular approve/reject queue.
 
 const CALENDARS = {
     roofbox: 'https://p149-caldav.icloud.com/published/2/MTEwOTM1MjI5NTExMDkzNY70qKIvNyg31YIFZnfGOz4ZqFztE59SUolnlYU9kiNQr0rvKpNBQwrSPXH4NyUlipVDUgkKwO2Rf1hdpkNtTi0',
@@ -40,6 +48,11 @@ const CALENDARS = {
 };
 
 const BASE_URL = 'https://justroam-availability.edwinvandavenhorst.workers.dev';
+// Manual booking claim links are shared over channels (marketplace chat,
+// WhatsApp) where a bare workers.dev link with a token looks like phishing
+// and can get auto-blocked. This justroam.nl page (booking/claim/index.html)
+// just bounces to the real handler above, keeping the visible link on-brand.
+const CLAIM_BASE_URL = 'https://justroam.nl/booking/claim/';
 const MIN_FORM_FILL_MS = 3000; // reject submissions faster than this - likely a bot
 const VAT_RATE = 0.21;
 
@@ -429,6 +442,14 @@ export default {
             return handleMollieWebhook(request, env, corsHeaders);
         }
 
+        if (request.method === 'GET' && path === '/booking/claim') {
+            return handleBookingClaim(url, env, corsHeaders);
+        }
+
+        if (request.method === 'POST' && path === '/booking/claim') {
+            return handleBookingClaimSubmit(request, env, corsHeaders);
+        }
+
         if (path === '/admin' || path.startsWith('/admin/')) {
             if (!checkAdminAuth(request, env)) {
                 return requireAdminAuth();
@@ -477,6 +498,12 @@ export default {
             }
             if (request.method === 'POST' && path === '/admin/save-id') {
                 return handleAdminSaveId(request, env, corsHeaders);
+            }
+            if (request.method === 'GET' && path === '/admin/booking/new') {
+                return handleAdminBookingNewForm(env, corsHeaders);
+            }
+            if (request.method === 'POST' && path === '/admin/booking/new') {
+                return handleAdminBookingCreate(request, env, corsHeaders);
             }
         }
 
@@ -1620,6 +1647,225 @@ async function handleRenterCancel(request, env, corsHeaders) {
     return new Response(renderBrandedPage(locale === 'nl' ? 'Boeking geannuleerd' : 'Booking cancelled', body, locale), { headers: htmlHeaders });
 }
 
+// ---- Manual booking claim ----
+// The counterpart to admin-created "awaiting_details" bookings: the renter
+// opens this link, sees the item/dates the admin already locked in, and
+// fills in their own contact details. On submit the booking becomes a normal
+// 'pending' booking and joins the regular approve/reject queue - no special
+// casing needed downstream (payment, calendar sync, cancellation all reuse
+// the same code paths as a public-form booking).
+
+async function handleBookingClaim(url, env, corsHeaders) {
+    const htmlHeaders = { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8', 'Referrer-Policy': 'no-referrer' };
+    const id = url.searchParams.get('id');
+    const token = url.searchParams.get('token');
+
+    if (!id || !token) {
+        return new Response(renderBrandedPage('Missing information', '<p>This link is missing required information.</p>'), {
+            status: 400,
+            headers: htmlHeaders
+        });
+    }
+
+    const raw = await env.BOOKINGS.get('booking:' + id);
+    if (!raw) {
+        return new Response(renderBrandedPage('Not found', '<p>This booking could not be found.</p>'), {
+            status: 404,
+            headers: htmlHeaders
+        });
+    }
+
+    const booking = JSON.parse(raw);
+    if (booking.renterToken !== token) {
+        return new Response(renderBrandedPage('Invalid link', '<p>This link is not valid.</p>'), {
+            status: 403,
+            headers: htmlHeaders
+        });
+    }
+
+    if (booking.status !== 'awaiting_details') {
+        return Response.redirect(BASE_URL + '/booking/manage?id=' + id + '&token=' + token, 302);
+    }
+
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+    const phoneOptions = '<option value="+31">+31 (NL)</option><option value="+32">+32 (BE)</option><option value="+49">+49 (DE)</option>';
+
+    const body = locale === 'nl'
+        ? '<p><strong>Item:</strong> ' + escapeHtml(localizedItem(booking.item, locale)) + '<br>' +
+        '<strong>Startdatum:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+        '<strong>Einddatum:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
+        '<p>Vul je gegevens hieronder in om je boeking af te ronden.</p>' +
+        '<form method="POST" action="/booking/claim">' +
+        '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
+        '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
+        '<div class="form-group"><label for="name">Naam</label><input type="text" name="name" id="name" required></div>' +
+        '<div class="form-group"><label for="email">E-mail</label><input type="email" name="email" id="email" required></div>' +
+        '<div class="form-group"><label for="phone">Telefoon</label>' +
+        '<select name="phoneCountry" style="width:auto;display:inline-block;margin-right:6px;">' + phoneOptions + '</select>' +
+        '<input type="tel" name="phone" id="phone" required style="width:auto;display:inline-block;"></div>' +
+        '<div class="form-group"><label for="street">Straat</label><input type="text" name="street" id="street" required></div>' +
+        '<div class="form-group"><label for="houseNumber">Huisnummer</label><input type="text" name="houseNumber" id="houseNumber" required></div>' +
+        '<div class="form-group"><label for="addition">Toevoeging</label><input type="text" name="addition" id="addition"></div>' +
+        '<div class="form-group"><label for="postcode">Postcode</label><input type="text" name="postcode" id="postcode" required></div>' +
+        '<div class="form-group"><label for="city">Plaats</label><input type="text" name="city" id="city" required></div>' +
+        '<div class="form-group"><label for="country">Land</label>' +
+        '<select name="country" id="country" required>' +
+        '<option value="Netherlands">Nederland</option><option value="Belgium">België</option><option value="Germany">Duitsland</option>' +
+        '</select></div>' +
+        '<div class="form-group"><label for="message">Bericht (optioneel)</label><textarea name="message" id="message"></textarea></div>' +
+        '<button type="submit" class="btn btn-primary">Versturen</button>' +
+        '</form>'
+        : '<p><strong>Item:</strong> ' + escapeHtml(booking.item) + '<br>' +
+        '<strong>Start date:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+        '<strong>End date:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
+        '<p>Fill in your details below to complete your booking.</p>' +
+        '<form method="POST" action="/booking/claim">' +
+        '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
+        '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
+        '<div class="form-group"><label for="name">Name</label><input type="text" name="name" id="name" required></div>' +
+        '<div class="form-group"><label for="email">Email</label><input type="email" name="email" id="email" required></div>' +
+        '<div class="form-group"><label for="phone">Phone</label>' +
+        '<select name="phoneCountry" style="width:auto;display:inline-block;margin-right:6px;">' + phoneOptions + '</select>' +
+        '<input type="tel" name="phone" id="phone" required style="width:auto;display:inline-block;"></div>' +
+        '<div class="form-group"><label for="street">Street</label><input type="text" name="street" id="street" required></div>' +
+        '<div class="form-group"><label for="houseNumber">House number</label><input type="text" name="houseNumber" id="houseNumber" required></div>' +
+        '<div class="form-group"><label for="addition">Addition</label><input type="text" name="addition" id="addition"></div>' +
+        '<div class="form-group"><label for="postcode">Postcode</label><input type="text" name="postcode" id="postcode" required></div>' +
+        '<div class="form-group"><label for="city">City</label><input type="text" name="city" id="city" required></div>' +
+        '<div class="form-group"><label for="country">Country</label>' +
+        '<select name="country" id="country" required>' +
+        '<option value="Netherlands">Netherlands</option><option value="Belgium">Belgium</option><option value="Germany">Germany</option>' +
+        '</select></div>' +
+        '<div class="form-group"><label for="message">Message (optional)</label><textarea name="message" id="message"></textarea></div>' +
+        '<button type="submit" class="btn btn-primary">Submit</button>' +
+        '</form>';
+
+    return new Response(renderBrandedPage(locale === 'nl' ? 'Rond je boeking af' : 'Complete your booking', body, locale), { headers: htmlHeaders });
+}
+
+async function handleBookingClaimSubmit(request, env, corsHeaders) {
+    const htmlHeaders = { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8', 'Referrer-Policy': 'no-referrer' };
+    let form;
+    try {
+        form = await request.formData();
+    } catch (err) {
+        return new Response('Invalid form submission', { status: 400, headers: corsHeaders });
+    }
+
+    const id = (form.get('id') || '').toString();
+    const token = (form.get('token') || '').toString();
+
+    const raw = id ? await env.BOOKINGS.get('booking:' + id) : null;
+    if (!raw) {
+        return new Response(renderBrandedPage('Not found', '<p>This booking could not be found.</p>'), { status: 404, headers: htmlHeaders });
+    }
+    const booking = JSON.parse(raw);
+    if (booking.renterToken !== token) {
+        return new Response(renderBrandedPage('Invalid link', '<p>This link is not valid.</p>'), { status: 403, headers: htmlHeaders });
+    }
+    if (booking.status !== 'awaiting_details') {
+        return Response.redirect(BASE_URL + '/booking/manage?id=' + id + '&token=' + token, 302);
+    }
+
+    const locale = booking.locale === 'nl' ? 'nl' : 'en';
+    const data = {
+        name: (form.get('name') || '').toString(),
+        email: (form.get('email') || '').toString(),
+        phoneCountry: (form.get('phoneCountry') || '+31').toString(),
+        phone: (form.get('phone') || '').toString(),
+        street: (form.get('street') || '').toString(),
+        houseNumber: (form.get('houseNumber') || '').toString(),
+        addition: (form.get('addition') || '').toString(),
+        postcode: (form.get('postcode') || '').toString(),
+        city: (form.get('city') || '').toString(),
+        country: (form.get('country') || '').toString(),
+        message: (form.get('message') || '').toString()
+    };
+
+    const required = ['name', 'email', 'phone', 'street', 'houseNumber', 'postcode', 'city', 'country'];
+    const backLink = '<p><a href="/booking/claim?id=' + escapeHtml(id) + '&token=' + escapeHtml(token) + '">' + (locale === 'nl' ? 'Terug' : 'Go back') + '</a></p>';
+    for (const field of required) {
+        if (!data[field]) {
+            const message = locale === 'nl' ? 'Verplicht veld ontbreekt: ' + field : 'Missing field: ' + field;
+            return new Response(renderBrandedPage(locale === 'nl' ? 'Ontbrekende gegevens' : 'Missing information', '<p>' + escapeHtml(message) + '</p>' + backLink, locale), { status: 400, headers: htmlHeaders });
+        }
+    }
+
+    if (!SUPPORTED_COUNTRIES.includes(data.country)) {
+        const message = locale === 'nl' ? 'Dit land wordt niet automatisch ondersteund. Neem contact op via info@justroam.nl.' : 'This country is not automatically supported. Please contact info@justroam.nl.';
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Niet ondersteund' : 'Not supported', '<p>' + escapeHtml(message) + '</p>', locale), { status: 400, headers: htmlHeaders });
+    }
+
+    if (!isValidPhone(data.phoneCountry, data.phone)) {
+        const message = locale === 'nl' ? 'Vul een geldig telefoonnummer in.' : 'Please enter a valid phone number.';
+        return new Response(renderBrandedPage(locale === 'nl' ? 'Ongeldig telefoonnummer' : 'Invalid phone number', '<p>' + escapeHtml(message) + '</p>' + backLink, locale), { status: 400, headers: htmlHeaders });
+    }
+
+    const fullAddress = data.street + ' ' + data.houseNumber + (data.addition ? '/' + data.addition : '') +
+        ', ' + data.postcode + ' ' + data.city + ', ' + data.country;
+    const fullPhone = data.phone ? data.phoneCountry + ' ' + data.phone : '';
+
+    booking.renterName = data.name;
+    booking.renterEmail = data.email;
+    booking.renterPhone = fullPhone;
+    booking.renterAddress = fullAddress;
+    booking.message = data.message;
+    booking.status = 'pending';
+    booking.claimedAt = new Date().toISOString();
+
+    await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
+
+    const approveUrl = BASE_URL + '/booking/approve?id=' + id + '&token=' + booking.adminToken;
+    const rejectUrl = BASE_URL + '/booking/reject?id=' + id + '&token=' + booking.adminToken;
+    const manageUrl = BASE_URL + '/booking/manage?id=' + id + '&token=' + token;
+
+    const adminHtml =
+        '<h2>Manual booking claimed - #' + escapeHtml(booking.bookingNumber) + '</h2>' +
+        (booking.internalNote ? '<p><strong>Note:</strong> ' + escapeHtml(booking.internalNote) + '</p>' : '') +
+        '<p><strong>Item:</strong> ' + escapeHtml(booking.item) + '</p>' +
+        '<p><strong>Dates:</strong> ' + escapeHtml(booking.startDate) + ' to ' + escapeHtml(booking.endDate) + '</p>' +
+        '<p><strong>Name:</strong> ' + escapeHtml(data.name) + '</p>' +
+        '<p><strong>Email:</strong> ' + escapeHtml(data.email) + '</p>' +
+        '<p><strong>Phone:</strong> ' + escapeHtml(fullPhone || '-') + '</p>' +
+        '<p><strong>Address:</strong> ' + escapeHtml(fullAddress) + '</p>' +
+        '<p><strong>Message:</strong> ' + escapeHtml(data.message || '-') + '</p>' +
+        '<p>' +
+        '<a href="' + approveUrl + '" style="background:#2c5f2d;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;margin-right:10px;">Approve</a>' +
+        '<a href="' + rejectUrl + '" style="background:#c62828;color:#fff;padding:10px 20px;text-decoration:none;border-radius:6px;">Reject</a>' +
+        '</p>';
+
+    const renterHtml = locale === 'nl'
+        ? '<h2>We hebben je gegevens ontvangen</h2>' +
+        '<p>Hoi ' + escapeHtml(data.name) + ',</p>' +
+        '<p><strong>Boekingsnummer:</strong> ' + escapeHtml(booking.bookingNumber) + '<br>' +
+        '<strong>Item:</strong> ' + escapeHtml(localizedItem(booking.item, locale)) + '<br>' +
+        '<strong>Startdatum:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+        '<strong>Einddatum:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
+        '<p>We bevestigen dit snel en nemen contact met je op met de betaalgegevens.</p>' +
+        '<p><a href="' + manageUrl + '">Bekijk of beheer je boeking</a></p>' +
+        emailSignature(locale)
+        : '<h2>We have received your details</h2>' +
+        '<p>Hi ' + escapeHtml(data.name) + ',</p>' +
+        '<p><strong>Booking number:</strong> ' + escapeHtml(booking.bookingNumber) + '<br>' +
+        '<strong>Item:</strong> ' + escapeHtml(booking.item) + '<br>' +
+        '<strong>Start date:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+        '<strong>End date:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
+        '<p>We will confirm shortly and follow up with payment details.</p>' +
+        '<p><a href="' + manageUrl + '">View or manage your booking</a></p>' +
+        emailSignature(locale);
+
+    await Promise.all([
+        sendEmail(env, env.ADMIN_EMAIL, 'Manual booking claimed - #' + booking.bookingNumber, adminHtml),
+        sendEmail(env, data.email, locale === 'nl' ? 'We hebben je gegevens ontvangen' : 'We\'ve received your details', renterHtml)
+    ]);
+
+    const confirmBody = locale === 'nl'
+        ? '<p>Bedankt! We hebben je gegevens ontvangen en bevestigen je boeking zo snel mogelijk.</p>'
+        : '<p>Thanks! We\'ve received your details and will confirm your booking shortly.</p>';
+
+    return new Response(renderBrandedPage(locale === 'nl' ? 'Bedankt' : 'Thank you', confirmBody, locale), { headers: htmlHeaders });
+}
+
 function itemOption(value, current, locale) {
     const selected = value === current ? ' selected' : '';
     return '<option value="' + escapeHtml(value) + '"' + selected + '>' + escapeHtml(localizedItem(value, locale)) + '</option>';
@@ -1863,6 +2109,30 @@ function renderNewBookingsSection(pendingBookings, params) {
     return html;
 }
 
+function renderAwaitingDetailsSection(awaitingBookings, params) {
+    if (awaitingBookings.length === 0) return '';
+    const qs = buildAdminQuery(params);
+    const hiddenRedirect = '<input type="hidden" name="redirect" value="' + escapeHtml(qs) + '">';
+    let html = '<div style="background:#eef4fb;border:1px solid #a9c6e8;padding:16px;border-radius:8px;margin-bottom:24px;">' +
+        '<h2 style="margin-top:0;">Awaiting renter details (' + awaitingBookings.length + ')</h2>';
+    awaitingBookings.forEach(function (b) {
+        const claimUrl = CLAIM_BASE_URL + '?id=' + b.id + '&token=' + b.renterToken;
+        html += '<div style="background:#fff;border-radius:6px;padding:12px;margin-bottom:10px;">' +
+            '<p style="margin:0 0 6px;"><strong>#' + escapeHtml(b.bookingNumber || '') + '</strong> &mdash; ' +
+            escapeHtml(b.item || '') + ' &mdash; ' + escapeHtml(b.startDate || '') + ' to ' + escapeHtml(b.endDate || '') + '</p>' +
+            (b.internalNote ? '<p style="margin:0 0 6px;font-size:0.85rem;color:#555;">"' + escapeHtml(b.internalNote) + '"</p>' : '') +
+            '<input type="text" readonly value="' + escapeHtml(claimUrl) + '" onclick="this.select()" style="width:100%;padding:6px;font-size:0.8rem;margin-bottom:8px;">' +
+            '<form method="POST" action="/admin/delete" style="display:inline;" onsubmit="return confirm(&quot;Delete this manual booking?&quot;);">' +
+            '<input type="hidden" name="id" value="' + escapeHtml(b.id) + '">' +
+            hiddenRedirect +
+            '<button type="submit" style="font-size:0.8rem;background:#444;color:#fff;border:none;padding:4px 8px;border-radius:4px;">Delete</button>' +
+            '</form>' +
+            '</div>';
+    });
+    html += '</div>';
+    return html;
+}
+
 async function handleAdminDashboard(url, env, corsHeaders) {
     const htmlHeaders = { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8', 'Referrer-Policy': 'no-referrer' };
     const yearParam = url.searchParams.get('year');
@@ -1923,9 +2193,10 @@ async function handleAdminDashboard(url, env, corsHeaders) {
 
     const currentParams = { year: selectedYear, archived: includeArchived ? 'include' : '', q: query };
     const pendingBookings = allBookings.filter(function (b) { return b.status === 'pending'; });
+    const awaitingBookings = allBookings.filter(function (b) { return b.status === 'awaiting_details'; });
 
     let html = '<h1>JustRoam admin</h1>';
-    html += '<p><a href="/admin/rate-cards">Manage rate cards &rarr;</a></p>';
+    html += '<p><a href="/admin/rate-cards">Manage rate cards &rarr;</a> &nbsp; <a href="/admin/booking/new">Create manual booking &rarr;</a></p>';
 
     html += '<div style="background:#f5f5f5;padding:16px;border-radius:8px;margin-bottom:24px;">' +
         '<h2 style="margin-top:0;">Income summary - ' + selectedYear + '</h2>' +
@@ -1937,6 +2208,7 @@ async function handleAdminDashboard(url, env, corsHeaders) {
         '</p>' +
         '</div>';
 
+    html += renderAwaitingDetailsSection(awaitingBookings, currentParams);
     html += renderNewBookingsSection(pendingBookings, currentParams);
 
     html += '<form method="GET" action="/admin" style="margin-bottom:16px;">' +
@@ -2052,23 +2324,28 @@ function renderAdminRow(b, params) {
         '<button type="submit" style="font-size:0.8rem;background:#444;color:#fff;border:none;padding:4px 8px;border-radius:4px;">Delete</button>' +
         '</form>';
 
-    var statusLabel = escapeHtml(b.status) + (b.archived ? ' <span style="color:#999;">(archived)</span>' : '');
+    var statusDisplay = b.status === 'awaiting_details' ? 'awaiting renter details' : b.status;
+    var statusLabel = escapeHtml(statusDisplay) + (b.archived ? ' <span style="color:#999;">(archived)</span>' : '');
     if (b.status === 'cancelled' && b.cancelledBy) {
         statusLabel += '<br><span style="font-size:0.75rem;color:#999;">by ' + escapeHtml(b.cancelledBy) + (typeof b.cancellationFeePercent === 'number' ? ', ' + b.cancellationFeePercent + '% fee' : '') + '</span>';
     }
 
-    return '<tr style="border-bottom:1px solid #e0e0e0;vertical-align:top;' + (b.archived ? 'opacity:0.6;' : '') + '">' +
-        '<td style="padding:8px;font-weight:600;">' + escapeHtml(b.bookingNumber || '-') + '</td>' +
-        '<td style="padding:8px;">' + escapeHtml(b.startDate) + '<br>to ' + escapeHtml(b.endDate) + '</td>' +
-        '<td style="padding:8px;">' + escapeHtml(b.item) + '</td>' +
-        '<td style="padding:8px;">' + escapeHtml(b.renterName) + '<br><span style="color:#666;font-size:0.8rem;">' + escapeHtml(b.renterEmail) + (b.renterPhone ? '<br>' + escapeHtml(b.renterPhone) : '') + (b.renterAddress ? '<br>' + escapeHtml(b.renterAddress) : '') + '</span>' +
+    var renterCell = b.status === 'awaiting_details'
+        ? '<span style="color:#666;font-size:0.85rem;">Waiting for renter to fill in details' + (b.internalNote ? '<br>"' + escapeHtml(b.internalNote) + '"' : '') + '</span>'
+        : escapeHtml(b.renterName) + '<br><span style="color:#666;font-size:0.8rem;">' + escapeHtml(b.renterEmail) + (b.renterPhone ? '<br>' + escapeHtml(b.renterPhone) : '') + (b.renterAddress ? '<br>' + escapeHtml(b.renterAddress) : '') + '</span>' +
             '<form method="POST" action="/admin/save-id" style="margin-top:6px;">' +
             '<input type="hidden" name="id" value="' + escapeHtml(b.id) + '">' +
             hiddenRedirect +
             '<input type="text" name="idType" placeholder="ID type" value="' + escapeHtml(b.renterIdType || '') + '" style="font-size:0.75rem;width:80px;"> ' +
             '<input type="text" name="idNumber" placeholder="ID number" value="' + escapeHtml(b.renterIdNumber || '') + '" style="font-size:0.75rem;width:90px;"> ' +
             '<button type="submit" style="font-size:0.75rem;">Save ID</button>' +
-            '</form></td>' +
+            '</form>';
+
+    return '<tr style="border-bottom:1px solid #e0e0e0;vertical-align:top;' + (b.archived ? 'opacity:0.6;' : '') + '">' +
+        '<td style="padding:8px;font-weight:600;">' + escapeHtml(b.bookingNumber || '-') + '</td>' +
+        '<td style="padding:8px;">' + escapeHtml(b.startDate) + '<br>to ' + escapeHtml(b.endDate) + '</td>' +
+        '<td style="padding:8px;">' + escapeHtml(b.item) + (b.manualBooking ? ' <span style="font-size:0.7rem;color:#888;">(manual)</span>' : '') + '</td>' +
+        '<td style="padding:8px;">' + renterCell + '</td>' +
         '<td style="padding:8px;">' + statusLabel + '</td>' +
         '<td style="padding:8px;">' + amountCell + '</td>' +
         '<td style="padding:8px;">' + actions + '</td>' +
@@ -2176,6 +2453,110 @@ async function handleAdminSaveId(request, env, corsHeaders) {
     booking.renterIdNumber = (form.get('idNumber') || '').toString();
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
     return adminRedirect(form);
+}
+
+// ---- Admin: manual/substitute booking creation ----
+// For requests fulfilled outside the normal flow (e.g. lending out a
+// substitute unit when the regular item is already booked). Deliberately
+// skips hasOverlappingBooking, since you're the one confirming availability
+// here rather than the system. You set item/dates; the renter gets a link to
+// fill in their own details, which then joins the normal approval queue.
+
+async function handleAdminBookingNewForm(env, corsHeaders) {
+    const htmlHeaders = { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' };
+    const html =
+        '<h1>Create manual booking</h1>' +
+        '<p style="color:#666;max-width:520px;">Use this when you are fulfilling a request outside the normal flow - for example lending out a substitute unit when the regular item is already booked. This skips the normal availability check. You pick the item and dates; the renter gets a link to fill in their own details, which then drops into the normal approval queue below.</p>' +
+        '<form method="POST" action="/admin/booking/new" style="max-width:420px;">' +
+        '<div style="margin-bottom:12px;"><label>Item<br>' +
+        '<select name="item" style="width:100%;padding:6px;">' +
+        '<option value="Roof box">Roof box</option>' +
+        '<option value="Bike carrier" selected>Bike carrier</option>' +
+        '<option value="Bundle">Bundle</option>' +
+        '</select></label></div>' +
+        '<div style="margin-bottom:12px;"><label>Start date<br><input type="date" name="startDate" required style="width:100%;padding:6px;"></label></div>' +
+        '<div style="margin-bottom:12px;"><label>End date<br><input type="date" name="endDate" required style="width:100%;padding:6px;"></label></div>' +
+        '<div style="margin-bottom:12px;"><label>Renter\'s language<br>' +
+        '<select name="locale" style="width:100%;padding:6px;">' +
+        '<option value="en">English</option>' +
+        '<option value="nl">Nederlands</option>' +
+        '</select></label></div>' +
+        '<div style="margin-bottom:12px;"><label>Internal note (not shown to renter)<br>' +
+        '<input type="text" name="internalNote" placeholder="e.g. friend\'s spare Thule carrier" style="width:100%;padding:6px;"></label></div>' +
+        '<button type="submit" style="background:#2c5f2d;color:#fff;border:none;padding:8px 16px;border-radius:4px;">Create &amp; get invite link</button>' +
+        '</form>' +
+        '<p style="margin-top:16px;"><a href="/admin">&larr; Back to dashboard</a></p>';
+    return new Response(renderAdminPage('Create manual booking', html), { headers: htmlHeaders });
+}
+
+async function handleAdminBookingCreate(request, env, corsHeaders) {
+    let form;
+    try {
+        form = await request.formData();
+    } catch (err) {
+        return new Response('Invalid form submission', { status: 400, headers: corsHeaders });
+    }
+    const item = (form.get('item') || '').toString();
+    const startDate = (form.get('startDate') || '').toString();
+    const endDate = (form.get('endDate') || '').toString();
+    const locale = form.get('locale') === 'nl' ? 'nl' : 'en';
+    const internalNote = (form.get('internalNote') || '').toString();
+
+    if (!item || !startDate || !endDate) {
+        return new Response('Missing fields', { status: 400, headers: corsHeaders });
+    }
+    if (new Date(endDate) < new Date(startDate)) {
+        return new Response('End date must be on or after the start date', { status: 400, headers: corsHeaders });
+    }
+
+    const id = crypto.randomUUID();
+    const adminToken = crypto.randomUUID();
+    const renterToken = crypto.randomUUID();
+    const now = new Date();
+    const bookingNumber = await getNextBookingNumber(env, now);
+
+    const rateCard = await getActiveRateCard(env, startDate);
+    const fee = calcRentalFee(item, startDate, endDate, rateCard);
+
+    const booking = {
+        id: id,
+        bookingNumber: bookingNumber,
+        status: 'awaiting_details',
+        archived: false,
+        paid: false,
+        manualBooking: true,
+        internalNote: internalNote,
+        item: item,
+        startDate: startDate,
+        endDate: endDate,
+        renterName: '',
+        renterEmail: '',
+        renterPhone: '',
+        renterAddress: '',
+        renterIdType: '',
+        renterIdNumber: '',
+        locale: locale,
+        message: '',
+        createdAt: now.toISOString(),
+        adminToken: adminToken,
+        renterToken: renterToken,
+        rateCardEffectiveFrom: rateCard.effectiveFrom,
+        suggestedRentalFee: fee ? fee.rentalFee : null,
+        suggestedDepositAmount: fee ? fee.depositAmount : null
+    };
+
+    await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
+
+    const claimUrl = CLAIM_BASE_URL + '?id=' + id + '&token=' + renterToken;
+
+    const html =
+        '<h1>Invite link ready</h1>' +
+        '<p>Booking <strong>#' + escapeHtml(bookingNumber) + '</strong> - ' + escapeHtml(item) + ' - ' + escapeHtml(startDate) + ' to ' + escapeHtml(endDate) + '</p>' +
+        '<p>Send this link to the renter yourself (email, WhatsApp, whatever you already used to reach them). They will fill in their own details, and it will show up in your normal approval queue once submitted.</p>' +
+        '<input type="text" readonly value="' + escapeHtml(claimUrl) + '" onclick="this.select()" style="width:100%;padding:8px;font-size:0.9rem;">' +
+        '<p style="margin-top:16px;"><a href="/admin">&larr; Back to dashboard</a> &nbsp; <a href="/admin/booking/new">Create another</a></p>';
+
+    return new Response(renderAdminPage('Invite link ready', html), { headers: { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' } });
 }
 
 async function handleAdminEdit(request, env, corsHeaders) {
