@@ -36,9 +36,12 @@
 // requests you're fulfilling outside the normal flow (e.g. lending out a
 // substitute unit when the regular item is already booked). It skips the
 // availability check and starts the booking in an 'awaiting_details' status
-// with no renter info yet. You send the renter the resulting /booking/claim
-// link yourself; once they fill in their details there, the booking becomes
-// a normal 'pending' booking and joins the regular approve/reject queue.
+// with no renter info yet. Dates are optional at this point - leave them
+// blank if the renter hasn't shared them, and the claim page below will ask
+// the renter to fill in (and effectively confirm) their own dates. You send
+// the renter the resulting /booking/claim link yourself; once they fill in
+// their details there, the booking becomes a normal 'pending' booking and
+// joins the regular approve/reject queue.
 
 const CALENDARS = {
     roofbox: 'https://p149-caldav.icloud.com/published/2/MTEwOTM1MjI5NTExMDkzNY70qKIvNyg31YIFZnfGOz4ZqFztE59SUolnlYU9kiNQr0rvKpNBQwrSPXH4NyUlipVDUgkKwO2Rf1hdpkNtTi0',
@@ -1689,12 +1692,30 @@ async function handleBookingClaim(url, env, corsHeaders) {
 
     const locale = booking.locale === 'nl' ? 'nl' : 'en';
     const phoneOptions = '<option value="+31">+31 (NL)</option><option value="+32">+32 (BE)</option><option value="+49">+49 (DE)</option>';
+    const datesKnown = !!(booking.startDate && booking.endDate);
 
-    const body = locale === 'nl'
+    const datesSectionNl = datesKnown
         ? '<p><strong>Item:</strong> ' + escapeHtml(localizedItem(booking.item, locale)) + '<br>' +
         '<strong>Startdatum:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
         '<strong>Einddatum:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
-        '<p>Vul je gegevens hieronder in om je boeking af te ronden.</p>' +
+        '<p>Vul je gegevens hieronder in om je boeking af te ronden.</p>'
+        : '<p><strong>Item:</strong> ' + escapeHtml(localizedItem(booking.item, locale)) + '</p>' +
+        '<p>Vul hieronder je gewenste data en je gegevens in om je boeking af te ronden.</p>' +
+        '<div class="form-group"><label for="startDate">Startdatum</label><input type="date" name="startDate" id="startDate" required></div>' +
+        '<div class="form-group"><label for="endDate">Einddatum</label><input type="date" name="endDate" id="endDate" required></div>';
+
+    const datesSectionEn = datesKnown
+        ? '<p><strong>Item:</strong> ' + escapeHtml(booking.item) + '<br>' +
+        '<strong>Start date:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
+        '<strong>End date:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
+        '<p>Fill in your details below to complete your booking.</p>'
+        : '<p><strong>Item:</strong> ' + escapeHtml(booking.item) + '</p>' +
+        '<p>Fill in your desired dates and your details below to complete your booking.</p>' +
+        '<div class="form-group"><label for="startDate">Start date</label><input type="date" name="startDate" id="startDate" required></div>' +
+        '<div class="form-group"><label for="endDate">End date</label><input type="date" name="endDate" id="endDate" required></div>';
+
+    const body = locale === 'nl'
+        ? datesSectionNl +
         '<form method="POST" action="/booking/claim">' +
         '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
         '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
@@ -1715,10 +1736,7 @@ async function handleBookingClaim(url, env, corsHeaders) {
         '<div class="form-group"><label for="message">Bericht (optioneel)</label><textarea name="message" id="message"></textarea></div>' +
         '<button type="submit" class="btn btn-primary">Versturen</button>' +
         '</form>'
-        : '<p><strong>Item:</strong> ' + escapeHtml(booking.item) + '<br>' +
-        '<strong>Start date:</strong> ' + escapeHtml(booking.startDate) + '<br>' +
-        '<strong>End date:</strong> ' + escapeHtml(booking.endDate) + '</p>' +
-        '<p>Fill in your details below to complete your booking.</p>' +
+        : datesSectionEn +
         '<form method="POST" action="/booking/claim">' +
         '<input type="hidden" name="id" value="' + escapeHtml(id) + '">' +
         '<input type="hidden" name="token" value="' + escapeHtml(token) + '">' +
@@ -1782,8 +1800,31 @@ async function handleBookingClaimSubmit(request, env, corsHeaders) {
         message: (form.get('message') || '').toString()
     };
 
-    const required = ['name', 'email', 'phone', 'street', 'houseNumber', 'postcode', 'city', 'country'];
     const backLink = '<p><a href="/booking/claim?id=' + escapeHtml(id) + '&token=' + escapeHtml(token) + '">' + (locale === 'nl' ? 'Terug' : 'Go back') + '</a></p>';
+
+    // Dates are only editable here when the admin didn't set them at creation
+    // time - otherwise they're locked to what the admin already confirmed.
+    if (!booking.startDate || !booking.endDate) {
+        const submittedStart = (form.get('startDate') || '').toString();
+        const submittedEnd = (form.get('endDate') || '').toString();
+        if (!submittedStart || !submittedEnd) {
+            const message = locale === 'nl' ? 'Vul een start- en einddatum in.' : 'Please enter a start and end date.';
+            return new Response(renderBrandedPage(locale === 'nl' ? 'Ontbrekende gegevens' : 'Missing information', '<p>' + escapeHtml(message) + '</p>' + backLink, locale), { status: 400, headers: htmlHeaders });
+        }
+        if (new Date(submittedEnd) < new Date(submittedStart)) {
+            const message = locale === 'nl' ? 'De einddatum moet op of na de startdatum liggen.' : 'End date must be on or after the start date.';
+            return new Response(renderBrandedPage(locale === 'nl' ? 'Ongeldige data' : 'Invalid dates', '<p>' + escapeHtml(message) + '</p>' + backLink, locale), { status: 400, headers: htmlHeaders });
+        }
+        booking.startDate = submittedStart;
+        booking.endDate = submittedEnd;
+        const rateCard = await getActiveRateCard(env, submittedStart);
+        const fee = calcRentalFee(booking.item, submittedStart, submittedEnd, rateCard);
+        booking.rateCardEffectiveFrom = rateCard.effectiveFrom;
+        booking.suggestedRentalFee = fee ? fee.rentalFee : null;
+        booking.suggestedDepositAmount = fee ? fee.depositAmount : null;
+    }
+
+    const required = ['name', 'email', 'phone', 'street', 'houseNumber', 'postcode', 'city', 'country'];
     for (const field of required) {
         if (!data[field]) {
             const message = locale === 'nl' ? 'Verplicht veld ontbreekt: ' + field : 'Missing field: ' + field;
@@ -2117,9 +2158,10 @@ function renderAwaitingDetailsSection(awaitingBookings, params) {
         '<h2 style="margin-top:0;">Awaiting renter details (' + awaitingBookings.length + ')</h2>';
     awaitingBookings.forEach(function (b) {
         const claimUrl = CLAIM_BASE_URL + '?id=' + b.id + '&token=' + b.renterToken;
+        const datesText = (b.startDate && b.endDate) ? (escapeHtml(b.startDate) + ' to ' + escapeHtml(b.endDate)) : 'dates to be confirmed by renter';
         html += '<div style="background:#fff;border-radius:6px;padding:12px;margin-bottom:10px;">' +
             '<p style="margin:0 0 6px;"><strong>#' + escapeHtml(b.bookingNumber || '') + '</strong> &mdash; ' +
-            escapeHtml(b.item || '') + ' &mdash; ' + escapeHtml(b.startDate || '') + ' to ' + escapeHtml(b.endDate || '') + '</p>' +
+            escapeHtml(b.item || '') + ' &mdash; ' + datesText + '</p>' +
             (b.internalNote ? '<p style="margin:0 0 6px;font-size:0.85rem;color:#555;">"' + escapeHtml(b.internalNote) + '"</p>' : '') +
             '<input type="text" readonly value="' + escapeHtml(claimUrl) + '" onclick="this.select()" style="width:100%;padding:6px;font-size:0.8rem;margin-bottom:8px;">' +
             '<form method="POST" action="/admin/delete" style="display:inline;" onsubmit="return confirm(&quot;Delete this manual booking?&quot;);">' +
@@ -2341,9 +2383,11 @@ function renderAdminRow(b, params) {
             '<button type="submit" style="font-size:0.75rem;">Save ID</button>' +
             '</form>';
 
+    var datesCell = (b.startDate && b.endDate) ? (escapeHtml(b.startDate) + '<br>to ' + escapeHtml(b.endDate)) : '<span style="color:#999;">TBD by renter</span>';
+
     return '<tr style="border-bottom:1px solid #e0e0e0;vertical-align:top;' + (b.archived ? 'opacity:0.6;' : '') + '">' +
         '<td style="padding:8px;font-weight:600;">' + escapeHtml(b.bookingNumber || '-') + '</td>' +
-        '<td style="padding:8px;">' + escapeHtml(b.startDate) + '<br>to ' + escapeHtml(b.endDate) + '</td>' +
+        '<td style="padding:8px;">' + datesCell + '</td>' +
         '<td style="padding:8px;">' + escapeHtml(b.item) + (b.manualBooking ? ' <span style="font-size:0.7rem;color:#888;">(manual)</span>' : '') + '</td>' +
         '<td style="padding:8px;">' + renterCell + '</td>' +
         '<td style="padding:8px;">' + statusLabel + '</td>' +
@@ -2466,7 +2510,7 @@ async function handleAdminBookingNewForm(env, corsHeaders) {
     const htmlHeaders = { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' };
     const html =
         '<h1>Create manual booking</h1>' +
-        '<p style="color:#666;max-width:520px;">Use this when you are fulfilling a request outside the normal flow - for example lending out a substitute unit when the regular item is already booked. This skips the normal availability check. You pick the item and dates; the renter gets a link to fill in their own details, which then drops into the normal approval queue below.</p>' +
+        '<p style="color:#666;max-width:520px;">Use this when you are fulfilling a request outside the normal flow - for example lending out a substitute unit when the regular item is already booked. This skips the normal availability check. You pick the item; dates are optional - leave them blank if the renter hasn\'t told you yet, and they\'ll be asked to fill in (and confirm) their own dates as part of the invite link. The renter gets a link to fill in their own details, which then drops into the normal approval queue below.</p>' +
         '<form method="POST" action="/admin/booking/new" style="max-width:420px;">' +
         '<div style="margin-bottom:12px;"><label>Item<br>' +
         '<select name="item" style="width:100%;padding:6px;">' +
@@ -2474,8 +2518,8 @@ async function handleAdminBookingNewForm(env, corsHeaders) {
         '<option value="Bike carrier" selected>Bike carrier</option>' +
         '<option value="Bundle">Bundle</option>' +
         '</select></label></div>' +
-        '<div style="margin-bottom:12px;"><label>Start date<br><input type="date" name="startDate" required style="width:100%;padding:6px;"></label></div>' +
-        '<div style="margin-bottom:12px;"><label>End date<br><input type="date" name="endDate" required style="width:100%;padding:6px;"></label></div>' +
+        '<div style="margin-bottom:12px;"><label>Start date (leave blank if not yet known)<br><input type="date" name="startDate" style="width:100%;padding:6px;"></label></div>' +
+        '<div style="margin-bottom:12px;"><label>End date (leave blank if not yet known)<br><input type="date" name="endDate" style="width:100%;padding:6px;"></label></div>' +
         '<div style="margin-bottom:12px;"><label>Renter\'s language<br>' +
         '<select name="locale" style="width:100%;padding:6px;">' +
         '<option value="en">English</option>' +
@@ -2502,10 +2546,15 @@ async function handleAdminBookingCreate(request, env, corsHeaders) {
     const locale = form.get('locale') === 'nl' ? 'nl' : 'en';
     const internalNote = (form.get('internalNote') || '').toString();
 
-    if (!item || !startDate || !endDate) {
+    if (!item) {
         return new Response('Missing fields', { status: 400, headers: corsHeaders });
     }
-    if (new Date(endDate) < new Date(startDate)) {
+    // Dates are optional here - leave both blank if the renter hasn't shared
+    // them yet, and the claim page will ask the renter to fill them in.
+    if ((startDate && !endDate) || (!startDate && endDate)) {
+        return new Response('Provide both dates, or leave both blank for the renter to fill in', { status: 400, headers: corsHeaders });
+    }
+    if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
         return new Response('End date must be on or after the start date', { status: 400, headers: corsHeaders });
     }
 
@@ -2515,8 +2564,16 @@ async function handleAdminBookingCreate(request, env, corsHeaders) {
     const now = new Date();
     const bookingNumber = await getNextBookingNumber(env, now);
 
-    const rateCard = await getActiveRateCard(env, startDate);
-    const fee = calcRentalFee(item, startDate, endDate, rateCard);
+    let rateCardEffectiveFrom = null;
+    let suggestedRentalFee = null;
+    let suggestedDepositAmount = null;
+    if (startDate && endDate) {
+        const rateCard = await getActiveRateCard(env, startDate);
+        const fee = calcRentalFee(item, startDate, endDate, rateCard);
+        rateCardEffectiveFrom = rateCard.effectiveFrom;
+        suggestedRentalFee = fee ? fee.rentalFee : null;
+        suggestedDepositAmount = fee ? fee.depositAmount : null;
+    }
 
     const booking = {
         id: id,
@@ -2540,9 +2597,9 @@ async function handleAdminBookingCreate(request, env, corsHeaders) {
         createdAt: now.toISOString(),
         adminToken: adminToken,
         renterToken: renterToken,
-        rateCardEffectiveFrom: rateCard.effectiveFrom,
-        suggestedRentalFee: fee ? fee.rentalFee : null,
-        suggestedDepositAmount: fee ? fee.depositAmount : null
+        rateCardEffectiveFrom: rateCardEffectiveFrom,
+        suggestedRentalFee: suggestedRentalFee,
+        suggestedDepositAmount: suggestedDepositAmount
     };
 
     await env.BOOKINGS.put('booking:' + id, JSON.stringify(booking));
