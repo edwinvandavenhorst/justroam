@@ -5,6 +5,9 @@
 //   ADMIN_EMAIL       (plain text)  - where new-request notifications are sent
 //   ADMIN_USERNAME    (secret)      - admin dashboard sign-in username
 //   ADMIN_PASSWORD    (secret)      - admin dashboard sign-in password
+//   ADMIN_SESSION_SECRET (secret)   - random string used to sign the admin login session
+//                                     cookie (e.g. `openssl rand -hex 32`). Not a login
+//                                     credential itself - just needs to be long and random.
 //   MOLLIE_API_KEY    (secret)      - Mollie payments API key
 //   ICLOUD_EMAIL      (plain text)  - Apple ID email for the roof-box/bike-carrier calendars
 //   ICLOUD_APP_PASSWORD (secret)    - app-specific password for that Apple ID (appleid.apple.com)
@@ -453,8 +456,20 @@ export default {
             return handleBookingClaimSubmit(request, env, corsHeaders);
         }
 
+        if (request.method === 'GET' && path === '/admin/login') {
+            return handleAdminLoginForm(url, corsHeaders);
+        }
+
+        if (request.method === 'POST' && path === '/admin/login') {
+            return handleAdminLoginSubmit(request, env, corsHeaders);
+        }
+
+        if (request.method === 'POST' && path === '/admin/logout') {
+            return handleAdminLogout(corsHeaders);
+        }
+
         if (path === '/admin' || path.startsWith('/admin/')) {
-            if (!checkAdminAuth(request, env)) {
+            if (!(await checkAdminAuth(request, env))) {
                 return requireAdminAuth();
             }
             if (request.method === 'GET' && path === '/admin') {
@@ -814,27 +829,129 @@ async function handleMollieWebhook(request, env, corsHeaders) {
 
 // ---- Admin auth ----
 
-function checkAdminAuth(request, env) {
-    const auth = request.headers.get('Authorization');
-    if (!auth || !auth.startsWith('Basic ')) return false;
-    let decoded;
+// ---- Admin session auth ----
+// Replaces HTTP Basic Auth: a native browser Basic-Auth prompt isn't a real
+// HTML form, so password managers (1Password etc.) can't see it to offer
+// autofill, and browsers cache it inconsistently, causing frequent re-logins.
+// This is a real login page (/admin/login) whose form fields autofill
+// normally, backed by a signed, long-lived session cookie so login persists
+// across browser restarts. The cookie is a "<expiry>.<HMAC signature>" pair
+// signed with ADMIN_SESSION_SECRET - stateless, no session storage needed.
+const ADMIN_SESSION_COOKIE = 'admin_session';
+const ADMIN_SESSION_MAX_AGE_SECONDS = 60 * 24 * 60 * 60; // 60 days
+
+function base64UrlEncode(bytes) {
+    let str = '';
+    for (const b of bytes) str += String.fromCharCode(b);
+    return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function base64UrlDecode(str) {
+    str = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (str.length % 4) str += '=';
+    const bin = atob(str);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+}
+
+async function getSessionKey(env) {
+    return crypto.subtle.importKey(
+        'raw',
+        new TextEncoder().encode(env.ADMIN_SESSION_SECRET),
+        { name: 'HMAC', hash: 'SHA-256' },
+        false,
+        ['sign', 'verify']
+    );
+}
+
+async function createSessionToken(env) {
+    const exp = String(Date.now() + ADMIN_SESSION_MAX_AGE_SECONDS * 1000);
+    const key = await getSessionKey(env);
+    const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(exp));
+    return exp + '.' + base64UrlEncode(new Uint8Array(sig));
+}
+
+async function verifySessionToken(token, env) {
+    if (!token) return false;
+    const idx = token.indexOf('.');
+    if (idx === -1) return false;
+    const exp = token.slice(0, idx);
+    const sigB64 = token.slice(idx + 1);
+    if (!exp || Date.now() > Number(exp)) return false;
+    let sigBytes;
     try {
-        decoded = atob(auth.slice(6));
+        sigBytes = base64UrlDecode(sigB64);
     } catch (err) {
         return false;
     }
-    const idx = decoded.indexOf(':');
-    if (idx === -1) return false;
-    const user = decoded.slice(0, idx);
-    const pass = decoded.slice(idx + 1);
-    return user === env.ADMIN_USERNAME && pass === env.ADMIN_PASSWORD;
+    const key = await getSessionKey(env);
+    return crypto.subtle.verify('HMAC', key, sigBytes, new TextEncoder().encode(exp));
+}
+
+function getCookie(request, name) {
+    const header = request.headers.get('Cookie') || '';
+    const match = header.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+}
+
+async function checkAdminAuth(request, env) {
+    return verifySessionToken(getCookie(request, ADMIN_SESSION_COOKIE), env);
 }
 
 function requireAdminAuth() {
-    return new Response('Authentication required', {
-        status: 401,
-        headers: { 'WWW-Authenticate': 'Basic realm="JustRoam Admin"' }
-    });
+    return Response.redirect(BASE_URL + '/admin/login', 302);
+}
+
+async function handleAdminLoginForm(url, corsHeaders) {
+    const htmlHeaders = { ...corsHeaders, 'Content-Type': 'text/html; charset=utf-8' };
+    const failed = url.searchParams.get('error') === '1';
+    const html =
+        '<!DOCTYPE html><html><head><meta charset="UTF-8">' +
+        '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+        '<title>Admin login | JustRoam</title>' +
+        '<style>body{font-family:-apple-system,sans-serif;max-width:340px;margin:100px auto;padding:0 20px;color:#333;}' +
+        'h1{color:#2c5f2d;font-size:1.4rem;}label{display:block;margin-top:14px;font-size:0.9rem;}' +
+        'input{width:100%;padding:8px;margin-top:4px;box-sizing:border-box;font-size:1rem;border:1px solid #ccc;border-radius:4px;}' +
+        'button{margin-top:20px;width:100%;padding:10px;background:#2c5f2d;color:#fff;border:none;border-radius:4px;font-size:1rem;cursor:pointer;}' +
+        '.error{color:#c62828;font-size:0.9rem;margin-top:10px;}</style>' +
+        '</head><body>' +
+        '<h1>JustRoam admin</h1>' +
+        '<form method="POST" action="/admin/login">' +
+        '<label for="username">Username<input type="text" name="username" id="username" autocomplete="username" required autofocus></label>' +
+        '<label for="password">Password<input type="password" name="password" id="password" autocomplete="current-password" required></label>' +
+        (failed ? '<p class="error">Incorrect username or password.</p>' : '') +
+        '<button type="submit">Log in</button>' +
+        '</form>' +
+        '</body></html>';
+    return new Response(html, { headers: htmlHeaders });
+}
+
+async function handleAdminLoginSubmit(request, env, corsHeaders) {
+    let form;
+    try {
+        form = await request.formData();
+    } catch (err) {
+        return new Response('Invalid form submission', { status: 400, headers: corsHeaders });
+    }
+    const username = (form.get('username') || '').toString();
+    const password = (form.get('password') || '').toString();
+
+    if (username !== env.ADMIN_USERNAME || password !== env.ADMIN_PASSWORD) {
+        return Response.redirect(BASE_URL + '/admin/login?error=1', 302);
+    }
+
+    const token = await createSessionToken(env);
+    const headers = new Headers({ 'Location': BASE_URL + '/admin' });
+    headers.append('Set-Cookie', ADMIN_SESSION_COOKIE + '=' + encodeURIComponent(token) +
+        '; Path=/; Max-Age=' + ADMIN_SESSION_MAX_AGE_SECONDS + '; HttpOnly; Secure; SameSite=Lax');
+    return new Response(null, { status: 302, headers });
+}
+
+async function handleAdminLogout(corsHeaders) {
+    const headers = new Headers({ 'Location': BASE_URL + '/admin/login' });
+    headers.append('Set-Cookie', ADMIN_SESSION_COOKIE + '=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax');
+    return new Response(null, { status: 302, headers });
 }
 
 // ---- Booking request (new submission) ----
@@ -2055,7 +2172,7 @@ async function handleAdminRefundDeposit(request, env, corsHeaders) {
 
 // ---- Admin: one-click approve/reject from the New Bookings section ----
 // No adminToken check here - the dashboard route itself is already gated by
-// Basic Auth, which is the authorization for these.
+// the admin session cookie, which is the authorization for these.
 
 async function handleAdminApprove(request, env, corsHeaders) {
     let form;
@@ -2238,7 +2355,8 @@ async function handleAdminDashboard(url, env, corsHeaders) {
     const awaitingBookings = allBookings.filter(function (b) { return b.status === 'awaiting_details'; });
 
     let html = '<h1>JustRoam admin</h1>';
-    html += '<p><a href="/admin/rate-cards">Manage rate cards &rarr;</a> &nbsp; <a href="/admin/booking/new">Create manual booking &rarr;</a></p>';
+    html += '<p><a href="/admin/rate-cards">Manage rate cards &rarr;</a> &nbsp; <a href="/admin/booking/new">Create manual booking &rarr;</a>' +
+        ' &nbsp; <form method="POST" action="/admin/logout" style="display:inline;"><button type="submit" style="background:none;border:none;color:#2c5f2d;text-decoration:underline;cursor:pointer;padding:0;font-size:1em;">Log out</button></form></p>';
 
     html += '<div style="background:#f5f5f5;padding:16px;border-radius:8px;margin-bottom:24px;">' +
         '<h2 style="margin-top:0;">Income summary - ' + selectedYear + '</h2>' +
