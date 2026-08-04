@@ -39,121 +39,39 @@
     <script src="../cookie-consent.js" defer></script>
 
     <!-- Schema.org Structured Data -->
+    <!-- Boeken gebeurt via Gearhive, niet op justroam.nl - offers.url wijst
+         daarheen, en de prijzen hieronder komen van de live Gearhive-
+         advertenties (gecontroleerd 2026-07-27), niet van de oude tariefkaart. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Service",
-          "serviceType": "Equipment Rental",
-          "name": "Dakkoffer Huur: Hapro Traxer 6.6",
-          "description": "Hapro Traxer 6.6 dakkoffer, 410 liter, te huur in Voorburg. Dag-, week- en weekendtarieven. Persoonlijk afhalen en terugbrengen.",
-          "image": "https://justroam.nl/images/rent-gear/roofbox1.png",
-          "provider": {
-            "@type": "Organization",
-            "name": "JustRoam",
-            "url": "https://justroam.nl"
-          },
-          "areaServed": { "@type": "City", "name": "Voorburg" },
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": "9",
-              "maxPrice": "110",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
-            },
-            "seller": { "@type": "Organization", "name": "JustRoam" }
-          },
-          "additionalProperty": [
-            { "@type": "PropertyValue", "name": "Capaciteit", "value": "410 liter" },
-            { "@type": "PropertyValue", "name": "Buitenmaten", "value": "191 x 81 x 42 cm" },
-            { "@type": "PropertyValue", "name": "Max. belading", "value": "75 kg" },
-            { "@type": "PropertyValue", "name": "Leeggewicht", "value": "18 kg" }
-          ]
-        },
-        {
-          "@type": "Service",
-          "serviceType": "Equipment Rental",
-          "name": "Fietsendrager Huur: Thule VeloCompact 926",
-          "description": "Thule VeloCompact 926 trekhaak-fietsendrager, 3 fietsen (max 2 e-bikes), te huur in Voorburg. Dag-, week- en weekendtarieven. Persoonlijk afhalen en terugbrengen.",
-          "image": "https://justroam.nl/images/rent-gear/bike-carrier1.png",
-          "provider": {
-            "@type": "Organization",
-            "name": "JustRoam",
-            "url": "https://justroam.nl"
-          },
-          "areaServed": { "@type": "City", "name": "Voorburg" },
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": "8",
-              "maxPrice": "40",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
-            },
-            "seller": { "@type": "Organization", "name": "JustRoam" }
-          },
-          "additionalProperty": [
-            { "@type": "PropertyValue", "name": "Capaciteit", "value": "3 fietsen, max 2 e-bikes" },
-            { "@type": "PropertyValue", "name": "Belasting", "value": "60 kg totaal, max 25 kg per fiets" },
-            { "@type": "PropertyValue", "name": "Montage", "value": "Trekhaak, 13-polige stekker" },
-            { "@type": "PropertyValue", "name": "Leeggewicht", "value": "19 kg" }
-          ]
-        },
-        {
-          "@type": "Service",
-          "serviceType": "Equipment Rental",
-          "name": "Dakkoffer en Fietsendrager Bundel Huur",
-          "description": "Hapro Traxer 6.6 dakkoffer en Thule VeloCompact 926 fietsendrager samen, te huur in Voorburg. Dag-, week- en weekend bundeltarieven. Persoonlijk afhalen en terugbrengen.",
-          "image": "https://justroam.nl/images/rent-gear/roofbox1.png",
-          "provider": {
-            "@type": "Organization",
-            "name": "JustRoam",
-            "url": "https://justroam.nl"
-          },
-          "areaServed": { "@type": "City", "name": "Voorburg" },
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": "15",
-              "maxPrice": "75",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
-            },
-            "seller": { "@type": "Organization", "name": "JustRoam" }
-          }
-        },
-        {
           "@type": "Product",
           "name": "Hapro Traxer 6.6 Dakkoffer",
           "brand": { "@type": "Brand", "name": "Hapro" },
           "model": "Traxer 6.6",
-          "description": "410 liter dakkoffer, te huur in Voorburg.",
+          "description": "410 liter dakkoffer, te huur in Voorburg via Gearhive.",
           "image": "https://justroam.nl/images/rent-gear/roofbox1.png",
           "additionalProperty": [
             { "@type": "PropertyValue", "name": "Capaciteit", "value": "410 liter" },
             { "@type": "PropertyValue", "name": "Buitenmaten", "value": "191 x 81 x 42 cm" },
             { "@type": "PropertyValue", "name": "Max. belading", "value": "75 kg" },
-            { "@type": "PropertyValue", "name": "Leeggewicht", "value": "18 kg" }
+            { "@type": "PropertyValue", "name": "Leeggewicht", "value": "18 kg" },
+            { "@type": "PropertyValue", "name": "Borg", "value": "EUR 150, terugbetaalbaar" }
           ],
           "offers": {
-            "@type": "AggregateOffer",
+            "@type": "Offer",
+            "url": "https://gearhive.nl/advertentie/hapro-dakkoffer-van-410l-voorburg-096b796a-3205-4700-b45c-bfb84f6d5ef6",
             "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
             "availability": "https://schema.org/InStock",
             "priceCurrency": "EUR",
-            "lowPrice": "9",
-            "highPrice": "110",
-            "offerCount": "3",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "7",
+              "priceCurrency": "EUR",
+              "unitCode": "DAY"
+            },
             "seller": { "@type": "Organization", "name": "JustRoam" }
           }
         },
@@ -162,22 +80,27 @@
           "name": "Thule VeloCompact 926 Fietsendrager",
           "brand": { "@type": "Brand", "name": "Thule" },
           "model": "VeloCompact 926",
-          "description": "Trekhaak-fietsendrager voor 3 fietsen (max 2 e-bikes), te huur in Voorburg.",
+          "description": "Trekhaak-fietsendrager voor 3 fietsen (max 2 e-bikes), te huur in Voorburg via Gearhive.",
           "image": "https://justroam.nl/images/rent-gear/bike-carrier1.png",
           "additionalProperty": [
             { "@type": "PropertyValue", "name": "Capaciteit", "value": "3 fietsen, max 2 e-bikes" },
             { "@type": "PropertyValue", "name": "Belasting", "value": "60 kg totaal, max 25 kg per fiets" },
             { "@type": "PropertyValue", "name": "Montage", "value": "Trekhaak, 13-polige stekker" },
-            { "@type": "PropertyValue", "name": "Leeggewicht", "value": "19 kg" }
+            { "@type": "PropertyValue", "name": "Leeggewicht", "value": "19 kg" },
+            { "@type": "PropertyValue", "name": "Borg", "value": "EUR 250, terugbetaalbaar" }
           ],
           "offers": {
-            "@type": "AggregateOffer",
+            "@type": "Offer",
+            "url": "https://gearhive.nl/advertentie/thule-fietsendrager-voor-3-fietsen-voorburg-e999812e-33ff-4475-b900-3f0d99e6d361",
             "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
             "availability": "https://schema.org/InStock",
             "priceCurrency": "EUR",
-            "lowPrice": "8",
-            "highPrice": "40",
-            "offerCount": "3",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "8",
+              "priceCurrency": "EUR",
+              "unitCode": "DAY"
+            },
             "seller": { "@type": "Organization", "name": "JustRoam" }
           }
         }
@@ -209,7 +132,7 @@
             </p></div>
 
             <div class="gear-cta">
-                <a href="#availability" class="btn btn-primary">Bekijk beschikbaarheid</a>
+                <a href="#listings" class="btn btn-primary">Bekijk aanbod</a>
             </div>
 
             <!-- RENTAL ITEMS -->
@@ -268,240 +191,13 @@
                 </div>
             </div>
 
-            <!-- AVAILABILITY + RATES (side by side on desktop) -->
-            <div class="gear-cal-rate">
-
-                                <!-- BOOK YOUR DATES -->
-                <div class="details-card" id="availability">
-                    <h2>Boek je data</h2>
-
-                    <div class="booking-item-select">
-                        <label for="bk-item">Ik wil huren</label>
-                        <select id="bk-item">
-                            <option value="roofbox">Dakkoffer - Hapro Traxer 6.6</option>
-                            <option value="carrier">Fietsendrager - Thule VeloCompact 926</option>
-                            <option value="bundle">Bundel - allebei</option>
-                        </select>
-                    </div>
-
-                    <div class="gcal" data-gcal>
-                        <div class="calendar-container">
-                            <div class="calendar-header">
-                                <button class="calendar-nav-btn gcal-prev" aria-label="Vorige maand">‹</button>
-                                <button class="calendar-nav-btn gcal-next" aria-label="Volgende maand">›</button>
-                            </div>
-                            <div class="gcal-months">
-                                <div class="gcal-month-panel">
-                                    <h3 class="cal-month gcal-month-0">Laden…</h3>
-                                    <div class="calendar-weekdays">
-                                        <div>Ma</div><div>Di</div><div>Wo</div><div>Do</div><div>Vr</div><div>Za</div><div>Zo</div>
-                                    </div>
-                                    <div class="calendar-days gcal-days-0"></div>
-                                </div>
-                                <div class="gcal-month-panel gcal-month-panel-1">
-                                    <h3 class="cal-month gcal-month-1">Laden…</h3>
-                                    <div class="calendar-weekdays">
-                                        <div>Ma</div><div>Di</div><div>Wo</div><div>Do</div><div>Vr</div><div>Za</div><div>Zo</div>
-                                    </div>
-                                    <div class="calendar-days gcal-days-1"></div>
-                                </div>
-                            </div>
-                            <div class="calendar-legend">
-                                <div class="legend-item"><span class="legend-color available"></span> Beschikbaar</div>
-                                <div class="legend-item"><span class="legend-color booked"></span> Niet beschikbaar voor deze selectie</div>
-                                <div class="legend-item">Na elke verhuur houden we 1 dag vrij voor schoonmaak en inspectie</div>
-                            </div>
-                            <br>
-                            <div class="booking-dates-display">
-                                <div class="booking-date-box">
-                                    <span class="booking-date-label">Ophalen</span>
-                                    <span class="booking-date-value" id="bkCheckinValue">Datum toevoegen</span>
-                                </div>
-                                <div class="booking-date-box">
-                                    <span class="booking-date-label">Terugbrengen</span>
-                                    <span class="booking-date-value" id="bkCheckoutValue">Datum toevoegen</span>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary btn-large gcal-request-btn" id="bkRequestBtn" disabled>Selecteer je data</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RATE CARD (vertical) -->
-                <div class="details-card">
-                    <h2>Tarieven</h2>
-                    <div class="rate-block">
-                        <h3>Dakkoffer - Hapro Traxer 6.6</h3>
-                        <ul class="rate-lines">
-                            <li><span>Per dag</span><span>€9</span></li>
-                            <li><span>1 week</span><span>€45</span></li>
-                            <li><span>2 weken</span><span>€80</span></li>
-                            <li><span>3 weken</span><span>€110</span></li>
-                            <li><span>Weekend (vr–zo)</span><span>€20</span></li>
-                        </ul>
-                    </div>
-                    <div class="rate-block">
-                        <h3>Fietsendrager - Thule VeloCompact 926</h3>
-                        <ul class="rate-lines">
-                            <li><span>Per dag</span><span>€8</span></li>
-                            <li><span>1 week</span><span>€40</span></li>
-                            <li><span>Weekend (vr–zo)</span><span>€20</span></li>
-                        </ul>
-                    </div>
-                    <div class="rate-block rate-block-bundle">
-                        <h3>Bundel - allebei samen</h3>
-                        <ul class="rate-lines">
-                            <li><span>Per dag</span><span>€15</span></li>
-                            <li><span>1 week</span><span>€75</span></li>
-                            <li><span>Weekend (vr–zo)</span><span>€40</span></li>
-                        </ul>
-                    </div>
-                    <p class="rate-note">
-                        Prijzen in EUR. Een terugbetaalbare borg is van toepassing: <strong>€250</strong> per item, <strong>€400</strong> voor de bundel.
-                        Minimale huurperiode 1 dag · minimaal 24 uur van tevoren aanvragen. Ophalen &amp; terugbrengen persoonlijk in Voorburg. Langere periode? Vraag naar de prijs.
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- REQUEST FORM -->
-            <div class="details-card" id="request">
-                <h2>Vraag een verhuur aan</h2>
-                <p class="rate-note">Stuur een aanvraag met je data. We bevestigen de beschikbaarheid en nemen contact op met de betaalgegevens. Dit is een aanvraag, geen bevestigde boeking, totdat we deze accepteren.</p>
-                <br>
-                <form class="contact-form" action="https://formspree.io/f/mdaobadz" method="POST" novalidate>
-                    <input type="hidden" name="_next" value="https://justroam.nl/thank-you.html">
-                    <input type="hidden" name="_subject" value="New gear rental request">
-                    <input type="hidden" name="form" value="gear-rental-request">
-
-                    <div class="form-group gear-form-prefilled">
-                        <label for="g-item">Wat wil je huren? *</label>
-                        <select id="g-item" name="item" required>
-                            <option value="">Selecteer…</option>
-                            <option value="Roof box">Dakkoffer - Hapro Traxer 6.6</option>
-                            <option value="Bike carrier">Fietsendrager - Thule VeloCompact 926</option>
-                            <option value="Bundle">Bundel - allebei</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group gear-form-prefilled">
-                        <label for="g-start">Startdatum *</label>
-                        <input type="date" id="g-start" name="start_date" required>
-                    </div>
-                    <div class="form-group gear-form-prefilled">
-                        <label for="g-end">Einddatum *</label>
-                        <input type="date" id="g-end" name="end_date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="g-name">Naam *</label>
-                        <input type="text" id="g-name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-email">E-mail *</label>
-                        <input type="email" id="g-email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-country">Land *</label>
-                        <select id="g-country" name="country" required>
-                            <option value="Netherlands" selected>Nederland</option>
-                            <option value="Belgium">België</option>
-                            <option value="Germany">Duitsland</option>
-                            <option value="Other">Ander land</option>
-                        </select>
-                    </div>
-
-                    <div id="g-other-country-message" style="display:none;background:var(--background);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;">
-                        <p style="margin:0;">We verwerken aanvragen automatisch alleen voor Nederland, België en Duitsland. Voor andere landen kun je rechtstreeks mailen naar <a href="mailto:info@justroam.nl">info@justroam.nl</a> met je data, dan regelen we de boeking handmatig.</p>
-                    </div>
-
-                    <div id="g-fields-wrapper">
-                        <div class="form-group">
-                            <label for="g-phone">Telefoon *</label>
-                            <div class="phone-field">
-                                <span class="phone-dial-code" id="g-phone-dial">+31</span>
-                                <input type="tel" id="g-phone" name="phone" placeholder="6 12345678" required>
-                            </div>
-                            <input type="hidden" id="g-phone-country" name="phoneCountry" value="+31">
-                            <p id="g-phone-error" class="form-error" style="display:none;color:#c62828;margin:4px 0 0;">Dit lijkt geen geldig telefoonnummer voor het geselecteerde land.</p>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="g-postcode">Postcode *</label>
-                                <input type="text" id="g-postcode" name="postcode" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="g-house-number">Huisnummer *</label>
-                                <input type="text" id="g-house-number" name="houseNumber" required>
-                            </div>
-                        </div>
-                        <p id="g-address-lookup-note" style="display:none;font-size:0.85rem;color:#666;margin:-0.5rem 0 1rem;">Adres opzoeken…</p>
-                        <div class="form-group">
-                            <label for="g-street">Straat *</label>
-                            <input type="text" id="g-street" name="street" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="g-city">Plaats *</label>
-                            <input type="text" id="g-city" name="city" required>
-                        </div>
-
-                        <!-- Honeypot: hidden from real users, bots tend to fill it in -->
-                        <div class="gear-honeypot" aria-hidden="true">
-                            <label for="g-website">Website</label>
-                            <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off">
-                        </div>
-                        <div class="form-group">
-                            <label for="g-message">Nog iets dat we moeten weten?</label>
-                            <textarea id="g-message" name="message" rows="4" placeholder="Type auto / trekhaak, aantal fietsen, e-bikes, etc."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="agree_terms" value="yes" required>
-                                Ik heb de <a href="terms-gear.html" target="_blank">huurvoorwaarden</a> gelezen en ga hiermee akkoord. *
-                            </label>
-                        </div>
-
-                <div id="g-price-summary" class="gear-price-summary" style="display:none;">
-                    <p id="g-price-period" class="gear-price-period"></p>
-                    <div class="gear-price-line">
-                        <span id="g-price-fee-label"></span><span id="g-price-fee-value"></span>
-                    </div>
-                    <div class="gear-price-line">
-                        <span><span id="g-price-deposit-label"></span> <span id="g-price-deposit-note" class="gear-price-note"></span></span>
-                        <span id="g-price-deposit-value"></span>
-                    </div>
-                    <div class="gear-price-line gear-price-total">
-                        <span id="g-price-total-label"></span><span id="g-price-total-value"></span>
-                    </div>
-                </div>
-
-                        <p id="g-date-error" class="form-error" style="display:none;color:#c62828;margin:8px 0 0;">Selecteer hierboven een startdatum en einddatum voordat je je aanvraag verstuurt.</p>
-                        <button type="submit" class="btn btn-primary btn-large">Verstuur huuraanvraag</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- POLICY SUMMARY -->
-            <div class="info-sections policy-grid">
-                <div class="info-card">
-                    <h3>Hoe het werkt 📝</h3>
-                    <p>Stuur een aanvraag met je data. Wij bevestigen de beschikbaarheid en accepteren de aanvraag, en sturen daarna een betaalverzoek. Betaal volledig binnen 48 uur na ontvangst van de betaallink (of minimaal 8 uur voor het ophalen bij last-minute boekingen), anders kan de boeking worden geannuleerd.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Annulering &amp; terugbetaling ↩️</h3>
-                    <ul class="info-card-list">
-                        <li>Tijdens beoordeling: gratis</li>
-                        <li>Meer dan 1 week voor ophalen: gratis</li>
-                        <li>Minder dan 1 week maar meer dan 48 uur voor ophalen: 50% kosten</li>
-                        <li>48 uur of minder voor ophalen: 80% kosten</li>
-                        <li>Na de ophaaldatum: neem contact op via info@justroam.nl</li>
-                    </ul>
-                    <p>Je borg wordt bij annulering altijd volledig terugbetaald.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Ophalen &amp; borg 🔑</h3>
-                    <p>Ophalen en terugbrengen persoonlijk in Voorburg op een afgesproken tijdstip. Neem een geldig ID mee (24+). Terugbetaalbare borg van €250 per item (€400 bundel), terugbetaald nadat de spullen zijn gecontroleerd.</p>
+            <!-- GEARHIVE LISTINGS -->
+            <div class="details-card" id="listings">
+                <h2>Boek via Gearhive</h2>
+                <p class="rate-note">Beschikbaarheid, tarieven en boeken van beide items verloopt via onze Gearhive-advertenties.</p>
+                <div class="gear-gearhive-buttons">
+                    <a href="https://gearhive.nl/advertentie/hapro-dakkoffer-van-410l-voorburg-096b796a-3205-4700-b45c-bfb84f6d5ef6" class="btn btn-primary btn-large" target="_blank" rel="noopener">Bekijk advertentie dakkoffer</a>
+                    <a href="https://gearhive.nl/advertentie/thule-fietsendrager-voor-3-fietsen-voorburg-e999812e-33ff-4475-b900-3f0d99e6d361" class="btn btn-primary btn-large" target="_blank" rel="noopener">Bekijk advertentie fietsendrager</a>
                 </div>
             </div>
 

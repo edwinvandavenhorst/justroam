@@ -39,121 +39,39 @@
     <script src="cookie-consent.js" defer></script>
 
     <!-- Schema.org Structured Data -->
+    <!-- Booking happens on Gearhive, not on justroam.nl - offers.url points there,
+         and prices below are pulled from the live Gearhive listings (checked
+         2026-07-27), not the old direct-booking rate card. -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Service",
-          "serviceType": "Equipment Rental",
-          "name": "Roof Box Rental: Hapro Traxer 6.6",
-          "description": "Hapro Traxer 6.6 roof box, 410 litres, for rent in Voorburg. Daily, weekly and weekend rates. Pickup and return in person.",
-          "image": "https://justroam.nl/images/rent-gear/roofbox1.png",
-          "provider": {
-            "@type": "Organization",
-            "name": "JustRoam",
-            "url": "https://justroam.nl"
-          },
-          "areaServed": { "@type": "City", "name": "Voorburg" },
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": "9",
-              "maxPrice": "110",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
-            },
-            "seller": { "@type": "Organization", "name": "JustRoam" }
-          },
-          "additionalProperty": [
-            { "@type": "PropertyValue", "name": "Capacity", "value": "410 litres" },
-            { "@type": "PropertyValue", "name": "Outer dimensions", "value": "191 x 81 x 42 cm" },
-            { "@type": "PropertyValue", "name": "Max load", "value": "75 kg" },
-            { "@type": "PropertyValue", "name": "Empty weight", "value": "18 kg" }
-          ]
-        },
-        {
-          "@type": "Service",
-          "serviceType": "Equipment Rental",
-          "name": "Bike Carrier Rental: Thule VeloCompact 926",
-          "description": "Thule VeloCompact 926 towbar-mounted bike carrier, 3 bikes (max 2 e-bikes), for rent in Voorburg. Daily, weekly and weekend rates. Pickup and return in person.",
-          "image": "https://justroam.nl/images/rent-gear/bike-carrier1.png",
-          "provider": {
-            "@type": "Organization",
-            "name": "JustRoam",
-            "url": "https://justroam.nl"
-          },
-          "areaServed": { "@type": "City", "name": "Voorburg" },
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": "8",
-              "maxPrice": "40",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
-            },
-            "seller": { "@type": "Organization", "name": "JustRoam" }
-          },
-          "additionalProperty": [
-            { "@type": "PropertyValue", "name": "Capacity", "value": "3 bikes, max 2 e-bikes" },
-            { "@type": "PropertyValue", "name": "Payload", "value": "60 kg total, max 25 kg per bike" },
-            { "@type": "PropertyValue", "name": "Mounting", "value": "Towbar, 13-pin plug" },
-            { "@type": "PropertyValue", "name": "Empty weight", "value": "19 kg" }
-          ]
-        },
-        {
-          "@type": "Service",
-          "serviceType": "Equipment Rental",
-          "name": "Roof Box and Bike Carrier Bundle Rental",
-          "description": "Hapro Traxer 6.6 roof box and Thule VeloCompact 926 bike carrier together, for rent in Voorburg. Daily, weekly and weekend bundle rates. Pickup and return in person.",
-          "image": "https://justroam.nl/images/rent-gear/roofbox1.png",
-          "provider": {
-            "@type": "Organization",
-            "name": "JustRoam",
-            "url": "https://justroam.nl"
-          },
-          "areaServed": { "@type": "City", "name": "Voorburg" },
-          "offers": {
-            "@type": "Offer",
-            "availability": "https://schema.org/InStock",
-            "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": "15",
-              "maxPrice": "75",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
-            },
-            "seller": { "@type": "Organization", "name": "JustRoam" }
-          }
-        },
-        {
           "@type": "Product",
           "name": "Hapro Traxer 6.6 Roof Box",
           "brand": { "@type": "Brand", "name": "Hapro" },
           "model": "Traxer 6.6",
-          "description": "410 litre roof box, available for rent in Voorburg.",
+          "description": "410 litre roof box, available for rent in Voorburg via Gearhive.",
           "image": "https://justroam.nl/images/rent-gear/roofbox1.png",
           "additionalProperty": [
             { "@type": "PropertyValue", "name": "Capacity", "value": "410 litres" },
             { "@type": "PropertyValue", "name": "Outer dimensions", "value": "191 x 81 x 42 cm" },
             { "@type": "PropertyValue", "name": "Max load", "value": "75 kg" },
-            { "@type": "PropertyValue", "name": "Empty weight", "value": "18 kg" }
+            { "@type": "PropertyValue", "name": "Empty weight", "value": "18 kg" },
+            { "@type": "PropertyValue", "name": "Deposit", "value": "EUR 150, refundable" }
           ],
           "offers": {
-            "@type": "AggregateOffer",
+            "@type": "Offer",
+            "url": "https://gearhive.nl/advertentie/hapro-dakkoffer-van-410l-voorburg-096b796a-3205-4700-b45c-bfb84f6d5ef6",
             "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
             "availability": "https://schema.org/InStock",
             "priceCurrency": "EUR",
-            "lowPrice": "9",
-            "highPrice": "110",
-            "offerCount": "3",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "7",
+              "priceCurrency": "EUR",
+              "unitCode": "DAY"
+            },
             "seller": { "@type": "Organization", "name": "JustRoam" }
           }
         },
@@ -162,22 +80,27 @@
           "name": "Thule VeloCompact 926 Bike Carrier",
           "brand": { "@type": "Brand", "name": "Thule" },
           "model": "VeloCompact 926",
-          "description": "Towbar-mounted bike carrier for 3 bikes (max 2 e-bikes), available for rent in Voorburg.",
+          "description": "Towbar-mounted bike carrier for 3 bikes (max 2 e-bikes), available for rent in Voorburg via Gearhive.",
           "image": "https://justroam.nl/images/rent-gear/bike-carrier1.png",
           "additionalProperty": [
             { "@type": "PropertyValue", "name": "Capacity", "value": "3 bikes, max 2 e-bikes" },
             { "@type": "PropertyValue", "name": "Payload", "value": "60 kg total, max 25 kg per bike" },
             { "@type": "PropertyValue", "name": "Mounting", "value": "Towbar, 13-pin plug" },
-            { "@type": "PropertyValue", "name": "Empty weight", "value": "19 kg" }
+            { "@type": "PropertyValue", "name": "Empty weight", "value": "19 kg" },
+            { "@type": "PropertyValue", "name": "Deposit", "value": "EUR 250, refundable" }
           ],
           "offers": {
-            "@type": "AggregateOffer",
+            "@type": "Offer",
+            "url": "https://gearhive.nl/advertentie/thule-fietsendrager-voor-3-fietsen-voorburg-e999812e-33ff-4475-b900-3f0d99e6d361",
             "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
             "availability": "https://schema.org/InStock",
             "priceCurrency": "EUR",
-            "lowPrice": "8",
-            "highPrice": "40",
-            "offerCount": "3",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "8",
+              "priceCurrency": "EUR",
+              "unitCode": "DAY"
+            },
             "seller": { "@type": "Organization", "name": "JustRoam" }
           }
         }
@@ -209,7 +132,7 @@
             </p></div>
 
             <div class="gear-cta">
-                <a href="#availability" class="btn btn-primary">Check availability</a>
+                <a href="#listings" class="btn btn-primary">View listings</a>
             </div>
 
             <!-- RENTAL ITEMS -->
@@ -268,239 +191,13 @@
                 </div>
             </div>
 
-            <!-- AVAILABILITY + RATES (side by side on desktop) -->
-            <div class="gear-cal-rate">
-
-                                <!-- BOOK YOUR DATES -->
-                <div class="details-card" id="availability">
-                    <h2>Book your dates</h2>
-
-                    <div class="booking-item-select">
-                        <label for="bk-item">I want to rent</label>
-                        <select id="bk-item">
-                            <option value="roofbox">Roof box - Hapro Traxer 6.6</option>
-                            <option value="carrier">Bike carrier - Thule VeloCompact 926</option>
-                            <option value="bundle">Bundle - both</option>
-                        </select>
-                    </div>
-
-                    <div class="gcal" data-gcal>
-                        <div class="calendar-container">
-                            <div class="calendar-header">
-                                <button class="calendar-nav-btn gcal-prev" aria-label="Previous month">‹</button>
-                                <button class="calendar-nav-btn gcal-next" aria-label="Next month">›</button>
-                            </div>
-                            <div class="gcal-months">
-                                <div class="gcal-month-panel">
-                                    <h3 class="cal-month gcal-month-0">Loading…</h3>
-                                    <div class="calendar-weekdays">
-                                        <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
-                                    </div>
-                                    <div class="calendar-days gcal-days-0"></div>
-                                </div>
-                                <div class="gcal-month-panel gcal-month-panel-1">
-                                    <h3 class="cal-month gcal-month-1">Loading…</h3>
-                                    <div class="calendar-weekdays">
-                                        <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
-                                    </div>
-                                    <div class="calendar-days gcal-days-1"></div>
-                                </div>
-                            </div>
-                            <div class="calendar-legend">
-                                <div class="legend-item"><span class="legend-color available"></span> Available</div>
-                                <div class="legend-item"><span class="legend-color booked"></span> Unavailable for this selection</div>
-                                <div class="legend-item">A one-day gap is kept after each rental for cleaning and inspection</div>
-                            </div>
-                            <br>
-                            <div class="booking-dates-display">
-                                <div class="booking-date-box">
-                                    <span class="booking-date-label">Pickup</span>
-                                    <span class="booking-date-value" id="bkCheckinValue">Add date</span>
-                                </div>
-                                <div class="booking-date-box">
-                                    <span class="booking-date-label">Return</span>
-                                    <span class="booking-date-value" id="bkCheckoutValue">Add date</span>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary btn-large gcal-request-btn" id="bkRequestBtn" disabled>Select your dates</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RATE CARD (vertical) -->
-                <div class="details-card">
-                    <h2>Rates</h2>
-                    <div class="rate-block">
-                        <h3>Roof box - Hapro Traxer 6.6</h3>
-                        <ul class="rate-lines">
-                            <li><span>Per day</span><span>€9</span></li>
-                            <li><span>1 week</span><span>€45</span></li>
-                            <li><span>2 weeks</span><span>€80</span></li>
-                            <li><span>3 weeks</span><span>€110</span></li>
-                            <li><span>Weekend (Fri–Sun)</span><span>€20</span></li>
-                        </ul>
-                    </div>
-                    <div class="rate-block">
-                        <h3>Bike carrier - Thule VeloCompact 926</h3>
-                        <ul class="rate-lines">
-                            <li><span>Per day</span><span>€8</span></li>
-                            <li><span>1 week</span><span>€40</span></li>
-                            <li><span>Weekend (Fri–Sun)</span><span>€20</span></li>
-                        </ul>
-                    </div>
-                    <div class="rate-block rate-block-bundle">
-                        <h3>Bundle - both together</h3>
-                        <ul class="rate-lines">
-                            <li><span>Per day</span><span>€15</span></li>
-                            <li><span>1 week</span><span>€75</span></li>
-                            <li><span>Weekend (Fri–Sun)</span><span>€40</span></li>
-                        </ul>
-                    </div>
-                    <p class="rate-note">
-                        Prices in EUR. A refundable deposit applies: <strong>€250</strong> per item, <strong>€400</strong> for the bundle.
-                        Minimum rental 1 day · minimum 24 hours' notice. Pickup &amp; return in person in Voorburg. Longer period? Price on request.
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- REQUEST FORM -->
-            <div class="details-card" id="request">
-                <h2>Request a rental</h2>
-                <p class="rate-note">Send a request with your dates. We'll confirm availability and follow up with the payment details. This is a request, not a confirmed booking, until we accept it.</p>
-                <br>
-                <form class="contact-form" action="https://formspree.io/f/mdaobadz" method="POST" novalidate>
-                    <input type="hidden" name="_next" value="https://justroam.nl/thank-you.html">
-                    <input type="hidden" name="_subject" value="New gear rental request">
-                    <input type="hidden" name="form" value="gear-rental-request">
-
-                    <div class="form-group gear-form-prefilled">
-                        <label for="g-item">What would you like to rent? *</label>
-                        <select id="g-item" name="item" required>
-                            <option value="">Select…</option>
-                            <option value="Roof box">Roof box - Hapro Traxer 6.6</option>
-                            <option value="Bike carrier">Bike carrier - Thule VeloCompact 926</option>
-                            <option value="Bundle">Bundle - both</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group gear-form-prefilled">
-                        <label for="g-start">Start date *</label>
-                        <input type="date" id="g-start" name="start_date" required>
-                    </div>
-                    <div class="form-group gear-form-prefilled">
-                        <label for="g-end">End date *</label>
-                        <input type="date" id="g-end" name="end_date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="g-name">Name *</label>
-                        <input type="text" id="g-name" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-email">Email *</label>
-                        <input type="email" id="g-email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-country">Country *</label>
-                        <select id="g-country" name="country" required>
-                            <option value="Netherlands" selected>Netherlands</option>
-                            <option value="Belgium">Belgium</option>
-                            <option value="Germany">Germany</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div id="g-other-country-message" style="display:none;background:var(--background);border-radius:var(--radius);padding:1rem;margin-bottom:1rem;">
-                        <p style="margin:0;">We currently only process bookings automatically for the Netherlands, Belgium and Germany. For other countries, please email us directly at <a href="mailto:info@justroam.nl">info@justroam.nl</a> with your dates and we'll arrange a booking manually.</p>
-                    </div>
-
-                    <div id="g-fields-wrapper">
-                        <div class="form-group">
-                            <label for="g-phone">Phone *</label>
-                            <div class="phone-field">
-                                <span class="phone-dial-code" id="g-phone-dial">+31</span>
-                                <input type="tel" id="g-phone" name="phone" placeholder="6 12345678" required>
-                            </div>
-                            <input type="hidden" id="g-phone-country" name="phoneCountry" value="+31">
-                            <p id="g-phone-error" class="form-error" style="display:none;color:#c62828;margin:4px 0 0;">That doesn't look like a valid phone number for the selected country.</p>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="g-postcode">Postal code *</label>
-                                <input type="text" id="g-postcode" name="postcode" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="g-house-number">House number *</label>
-                                <input type="text" id="g-house-number" name="houseNumber" required>
-                            </div>
-                        </div>
-                        <p id="g-address-lookup-note" style="display:none;font-size:0.85rem;color:#666;margin:-0.5rem 0 1rem;">Looking up address…</p>
-                        <div class="form-group">
-                            <label for="g-street">Street *</label>
-                            <input type="text" id="g-street" name="street" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="g-city">City *</label>
-                            <input type="text" id="g-city" name="city" required>
-                        </div>
-
-                        <!-- Honeypot: hidden from real users, bots tend to fill it in -->
-                        <div class="gear-honeypot" aria-hidden="true">
-                            <label for="g-website">Website</label>
-                            <input type="text" id="g-website" name="website" tabindex="-1" autocomplete="off">
-                        </div>
-                        <div class="form-group">
-                            <label for="g-message">Anything we should know?</label>
-                            <textarea id="g-message" name="message" rows="4" placeholder="Car / towbar type, number of bikes, e-bikes, etc."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="agree_terms" value="yes" required>
-                                I have read and agree to the <a href="terms-gear.html" target="_blank">rental terms &amp; conditions</a>. *
-                            </label>
-                        </div>
-                <div id="g-price-summary" class="gear-price-summary" style="display:none;">
-                    <p id="g-price-period" class="gear-price-period"></p>
-                    <div class="gear-price-line">
-                        <span id="g-price-fee-label"></span><span id="g-price-fee-value"></span>
-                    </div>
-                    <div class="gear-price-line">
-                        <span><span id="g-price-deposit-label"></span> <span id="g-price-deposit-note" class="gear-price-note"></span></span>
-                        <span id="g-price-deposit-value"></span>
-                    </div>
-                    <div class="gear-price-line gear-price-total">
-                        <span id="g-price-total-label"></span><span id="g-price-total-value"></span>
-                    </div>
-                </div>
-
-                        <p id="g-date-error" class="form-error" style="display:none;color:#c62828;margin:8px 0 0;">Please select a start and end date above before sending your request.</p>
-                        <button type="submit" class="btn btn-primary btn-large">Send rental request</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- POLICY SUMMARY -->
-            <div class="info-sections policy-grid">
-                <div class="info-card">
-                    <h3>How it works 📝</h3>
-                    <p>Send a request with your dates. We confirm availability and accept it, then send a payment request. Pay in full within 48 hours of receiving the payment link (or at least 8 hours before pickup for last-minute bookings), or the booking may be cancelled.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Cancellation &amp; refunds ↩️</h3>
-                    <ul class="info-card-list">
-                        <li>While pending approval: free</li>
-                        <li>More than 1 week before pickup: free</li>
-                        <li>Less than 1 week but more than 48 hours before pickup: 50% fee</li>
-                        <li>48 hours or less before pickup: 80% fee</li>
-                        <li>After the pickup date: contact info@justroam.nl</li>
-                    </ul>
-                    <p>Your deposit is always refunded in full on cancellation.</p>
-                </div>
-                <div class="info-card">
-                    <h3>Pickup &amp; deposit 🔑</h3>
-                    <p>Pickup and return in person in Voorburg at an agreed time. Bring valid ID (24+). Refundable deposit of €250 per item (€400 bundle), returned after the gear is checked back in.</p>
+            <!-- GEARHIVE LISTINGS -->
+            <div class="details-card" id="listings">
+                <h2>Book on Gearhive</h2>
+                <p class="rate-note">Availability, rates and booking for both items are handled through our Gearhive listings.</p>
+                <div class="gear-gearhive-buttons">
+                    <a href="https://gearhive.nl/advertentie/hapro-dakkoffer-van-410l-voorburg-096b796a-3205-4700-b45c-bfb84f6d5ef6" class="btn btn-primary btn-large" target="_blank" rel="noopener">View roof box listing</a>
+                    <a href="https://gearhive.nl/advertentie/thule-fietsendrager-voor-3-fietsen-voorburg-e999812e-33ff-4475-b900-3f0d99e6d361" class="btn btn-primary btn-large" target="_blank" rel="noopener">View bike carrier listing</a>
                 </div>
             </div>
 

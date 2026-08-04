@@ -3441,7 +3441,7 @@ html {
     scroll-behavior: smooth;
 }
 
-#availability {
+#listings {
     scroll-margin-top: 100px;
 }
 
@@ -3453,6 +3453,13 @@ html {
 
 .gear-cta-inline {
     display: inline-block;
+    margin-top: var(--spacing-md);
+}
+
+.gear-gearhive-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
     margin-top: var(--spacing-md);
 }
 /* Two-month booking calendar */
