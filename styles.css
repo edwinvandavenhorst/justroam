@@ -3455,13 +3455,6 @@ html {
     display: inline-block;
     margin-top: var(--spacing-md);
 }
-
-.gear-gearhive-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
-}
 /* Two-month booking calendar */
 .gcal-months {
     display: grid;
