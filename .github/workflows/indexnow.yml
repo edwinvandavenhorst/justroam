@@ -1,0 +1,32 @@
+name: IndexNow
+
+# After GitHub Pages publishes the site, tell IndexNow (Bing and friends) about
+# its pages, but only when this build changed one of them.
+on: page_build
+
+jobs:
+  submit:
+    if: github.event.build.status == 'built'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.build.commit }}
+          fetch-depth: 20
+      - name: Did a page change?
+        id: changed
+        run: |
+          # Compare with the commit of the previous successful Pages build.
+          prev=$(gh api "repos/${{ github.repository }}/pages/builds?per_page=10" \
+            --jq '[.[] | select(.status == "built" and .commit != "${{ github.event.build.commit }}")][0].commit' 2>/dev/null || true)
+          git cat-file -e "$prev" 2>/dev/null || prev=HEAD~1
+          files=$(git diff --name-only "$prev" HEAD)
+          echo "$files"
+          if echo "$files" | grep -qE '(\.html$|^sitemap\.xml$|^llms\.txt$|^robots\.txt$)'; then
+            echo "public=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Submit to IndexNow
+        if: steps.changed.outputs.public == 'true'
+        run: node .github/scripts/indexnow.mjs
