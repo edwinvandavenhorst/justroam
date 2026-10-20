@@ -1,4 +1,26 @@
 // ============================================
+// STAGING GUARD (staging.justroam.nl)
+// ============================================
+// Everything except justroam.nl itself counts as a test copy. A test copy
+// must never send a real booking request, contact form or payment: those
+// go to the live Worker, Mollie and Formspree. Harmless on the live site.
+window.JR_STAGING = !/^(www\.)?justroam\.nl$/.test(location.hostname);
+if (window.JR_STAGING) {
+    document.addEventListener('DOMContentLoaded', function () {
+        var bar = document.createElement('div');
+        bar.textContent = 'Testomgeving: formulieren en boekingen worden hier niet verstuurd.';
+        bar.setAttribute('style', 'position:sticky;top:0;z-index:99999;background:#b45309;color:#fff;font:600 13px/1.4 system-ui,sans-serif;text-align:center;padding:6px 12px;');
+        document.body.insertBefore(bar, document.body.firstChild);
+    });
+    document.addEventListener('submit', function (e) {
+        if (e.target && e.target.closest && e.target.closest('#gearhive-embed')) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        alert('Dit is de testomgeving: dit formulier wordt niet verstuurd.');
+    }, true);
+}
+
+// ============================================
 // CENTRALIZED LINK MANAGEMENT
 // ============================================
 // Update all your links in ONE place - right here!

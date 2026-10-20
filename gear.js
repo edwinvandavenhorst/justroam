@@ -538,6 +538,12 @@ function gearFormatEuro(amount) {
                 locale: GEAR_IS_NL ? 'nl' : 'en'
             };
 
+                        if (window.JR_STAGING) {
+                            alert('Dit is de testomgeving: deze aanvraag wordt niet verstuurd.');
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = originalText;
+                            return;
+                        }
                         fetch(REQUEST_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
