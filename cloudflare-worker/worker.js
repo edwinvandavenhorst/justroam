@@ -525,6 +525,10 @@ export default {
             }
         }
 
+        if (request.method === 'GET' && path === '/ranger-prices') {
+            return handleRangerPrices(corsHeaders);
+        }
+
         if (request.method === 'GET') {
             const key = path.replace(/^\//, '');
             const target = CALENDARS[key];
@@ -599,6 +603,60 @@ async function fetchCalendar(target, corsHeaders, calendarKey, env) {
             status: 502,
             headers: corsHeaders
         });
+    }
+}
+
+// ---- Ranger day prices, read from the public Goboony listing ----
+//
+// Goboony has no price feed, but the public listing page carries the price a
+// renter actually pays (owner rate plus Goboony's service fee) in its inline
+// script: a base_rate for every day, and a custom_rate for each day that
+// falls in a season you configured. Changing a rate in the Goboony dashboard
+// therefore shows up here within an hour. This reads page markup, so it
+// breaks quietly if Goboony restructures the page - the endpoint answers 502
+// then, and the calendar on the site falls back to showing no prices.
+
+const GOBOONY_LISTING_URL = 'https://www.goboony.nl/campers/nederland/zuid-holland/voorburg/92756';
+
+function parseGoboonyPrices(html) {
+    const baseMatch = html.match(/base_rate\s*=\s*([\d.]+)/);
+    if (!baseMatch) return null;
+    const base = Math.round(parseFloat(baseMatch[1]));
+    if (!isFinite(base) || base < 1 || base > 5000) return null;
+
+    const days = {};
+    const re = /custom_rate\s*=\s*([\d.]+);[\s\S]*?data-date="(\d{4}-\d{2}-\d{2})"/g;
+    let m;
+    while ((m = re.exec(html)) !== null) {
+        const rate = Math.round(parseFloat(m[1]));
+        if (isFinite(rate) && rate >= 1 && rate <= 5000) days[m[2]] = rate;
+    }
+    return { base: base, days: days };
+}
+
+async function handleRangerPrices(corsHeaders) {
+    try {
+        const upstream = await fetch(GOBOONY_LISTING_URL, {
+            headers: { 'User-Agent': 'JustRoam-Availability-Worker' },
+            cf: { cacheTtl: 3600, cacheEverything: true }
+        });
+        if (!upstream.ok) {
+            return new Response('Upstream error: ' + upstream.status, { status: 502, headers: corsHeaders });
+        }
+        const prices = parseGoboonyPrices(await upstream.text());
+        if (!prices) {
+            console.error('Goboony prices: base_rate not found on listing page');
+            return new Response('Prices not found', { status: 502, headers: corsHeaders });
+        }
+        return new Response(JSON.stringify(prices), {
+            headers: {
+                ...corsHeaders,
+                'Content-Type': 'application/json; charset=utf-8',
+                'Cache-Control': 'public, max-age=3600'
+            }
+        });
+    } catch (err) {
+        return new Response('Fetch failed: ' + err.message, { status: 502, headers: corsHeaders });
     }
 }
 
