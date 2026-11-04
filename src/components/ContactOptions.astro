@@ -9,8 +9,8 @@ const { lang, topic = 'general' } = Astro.props;
 const nl = lang === 'nl';
 
 const text = topic === 'build'
-    ? (nl ? 'Hoi JustRoam, ik wil graag een ombouw bespreken voor mijn ' : "Hi JustRoam, I'd like to talk about a build for my ")
-    : (nl ? 'Hoi JustRoam, ' : 'Hi JustRoam, ');
+    ? (nl ? 'Hoi Edwin, ik wil graag een ombouw bespreken voor mijn ' : "Hi Edwin, I'd like to talk about a build for my ")
+    : (nl ? 'Hoi Edwin, ik wil graag ' : "Hi Edwin, I'd like to ");
 const subject = topic === 'build' ? (nl ? 'Aanvraag ombouw' : 'Build request') : (nl ? 'Vraag via justroam.nl' : 'Question via justroam.nl');
 
 const opts = [
