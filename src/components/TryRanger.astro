@@ -1,0 +1,28 @@
+---
+// Renting the Ranger as the step before a build
+import Photo from './Photo.astro';
+import { href, type Lang } from '../i18n';
+import { ranger } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+---
+<div class="try">
+    <div class="txt">
+        <span class="kicker">{nl ? 'Twijfel je nog?' : 'Not sure yet?'}</span>
+        <h2>{nl ? 'Rij eerst in de onze' : 'Drive ours before you build yours'}</h2>
+        <p>{nl
+            ? 'Neem onze eigen Ranger mee voor een weekend of een paar weken. Ontdek wat je onmisbaar vindt, en bouw dat daarna in jouw auto.'
+            : 'Take our own Ranger out for a weekend or a few weeks. Find out which parts you love, then build them into your truck.'}</p>
+        <ul>
+            <li>{nl ? `Twee daktenten, slaapt ${ranger.sleeps}` : `Two rooftop tents, sleeps ${ranger.sleeps}`}</li>
+            <li>{nl ? 'Keuken, 45 L koelkast, 50 L water' : 'Kitchen, 45 L fridge, 50 L water'}</li>
+            <li>{nl ? `Vanaf €${ranger.fromPerDay} per dag, te boeken via Goboony` : `From €${ranger.fromPerDay} a day, booked via Goboony`}</li>
+        </ul>
+        <a class="btn sand" href={href(lang, 'rent.html')}>{nl ? 'Bekijk data en prijzen' : 'See dates and prices'} <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+    <div class="ph">
+        <Photo class="cover" src="/images/rent/IMG_4254.jpeg" width={1960} height={1470} alt={nl ? 'De Ranger op een strand aan een meer' : 'The Ranger on a lakeside beach'} />
+    </div>
+</div>

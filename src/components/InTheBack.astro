@@ -1,0 +1,33 @@
+---
+// "What is in the back": the open canopy with numbered pins and a legend.
+// Pin positions are percentages of the photo.
+import Photo from './Photo.astro';
+import { href, type Lang } from '../i18n';
+
+interface Props { lang: Lang; title?: string; photoRight?: boolean; cta?: boolean }
+const { lang, title, photoRight = false, cta = true } = Astro.props;
+const nl = lang === 'nl';
+
+const pins = [
+    { x: 50, y: 15, en: ['Rooftop tents', 'Sheepie Yuna, 140 and 160 cm, on top of the canopy'], nl: ['Daktenten', 'Sheepie Yuna, 140 en 160 cm, op de opbouw'] },
+    { x: 31, y: 46, en: ['Gas bottle', 'Refillable, feeds the two-burner stove'], nl: ['Gasfles', 'Navulbaar, voor het tweepits gasstel'] },
+    { x: 66, y: 47, en: ['Fire extinguisher', 'Within reach from the back'], nl: ['Brandblusser', 'Binnen handbereik vanaf achteren'] },
+    { x: 55, y: 57, en: ['45 L fridge', 'On its own slide'], nl: ['45 L koelkast', 'Op een eigen uitschuifplaat'] },
+    { x: 38, y: 68, en: ['Drawer system', 'Kitchen slide, cutlery and tools, axe at hand'], nl: ['Ladesysteem', 'Uitschuifkeuken, bestek en gereedschap, bijl bij de hand'] }
+];
+const heading = title ?? (nl ? 'Alles heeft een plek' : 'Everything has a place');
+---
+<div class="annot-wrap">
+    <div class="annot" style={photoRight ? 'order:2' : undefined}>
+        <Photo src="/images/rent/IMG_4829.jpeg" width={1960} height={1938} alt={nl ? 'Open laadbak van de Ranger met ladesysteem' : 'Open canopy of the Ranger with drawer system'} sizes="(max-width: 960px) 100vw, 60vw" />
+        {pins.map((p, i) => <span class="pin" style={`left:${p.x}%;top:${p.y}%`} aria-hidden="true">{i + 1}</span>)}
+    </div>
+    <div>
+        <span class="kicker">{nl ? 'Wat zit er achterin' : 'What is in the back'}</span>
+        <h2>{heading}</h2>
+        <ol class="legend">
+            {pins.map((p) => <li><div><b>{p[lang][0]}</b><span>{p[lang][1]}</span></div></li>)}
+        </ol>
+        {cta && <a class="btn" href={href(lang, 'build.html#plan')}>{nl ? 'Dit in jouw auto' : 'Build this into your truck'} <span class="ar" aria-hidden="true">→</span></a>}
+    </div>
+</div>

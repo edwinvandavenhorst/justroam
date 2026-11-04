@@ -1,0 +1,24 @@
+---
+// The three build packages side by side, one row per feature
+import { packages, sheetRows } from '../data/site';
+import type { Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const yes = lang === 'nl' ? 'Ja' : 'Yes';
+---
+<div class="sheet" role="table" aria-label={lang === 'nl' ? 'Bouwpakketten vergeleken' : 'Build packages compared'}>
+    <div class="rowh" role="columnheader"></div>
+    {packages.map((p, i) => (
+        <div class={i === 1 ? 'colh mid' : 'colh'} role="columnheader"><h3>{p.name}</h3><span>{p.months[lang]}</span></div>
+    ))}
+    {sheetRows.map((row, r) => {
+        const last = r === sheetRows.length - 1 ? ' last' : '';
+        return (
+            <>
+                <div class={'rowh' + last} role="rowheader">{row[lang]}</div>
+                {row.has.map((h) => <div class={(h ? 'y' : 'n') + last} role="cell">{h ? yes : '-'}</div>)}
+            </>
+        );
+    })}
+</div>

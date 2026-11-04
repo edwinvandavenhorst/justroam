@@ -1,14 +1,15 @@
 ---
-import { nav, ui, href, type Lang } from '../i18n';
+import { ui, href, type Lang } from '../i18n';
 import { business, links } from '../data/site';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const t = ui[lang];
+const nl = lang === 'nl';
 ---
 <footer class="site-footer">
     <div class="wrap">
-        <div class="footer-grid">
+        <div class="grid">
             <div>
                 <h4>JustRoam</h4>
                 <p>{t.footerTagline}</p>
@@ -19,23 +20,31 @@ const t = ui[lang];
                 </p>
             </div>
             <div>
+                <h4>{t.footerBuild}</h4>
+                <ul>
+                    <li><a href={href(lang, 'build.html')}>{t.packages}</a></li>
+                    <li><a href={href(lang, 'build.html#plan')}>{t.plan}</a></li>
+                    <li><a href={href(lang, 'blog_build.html')}>{t.buildStory}</a></li>
+                </ul>
+            </div>
+            <div>
                 <h4>{t.footerRent}</h4>
                 <ul>
-                    <li><a href={href(lang, 'rent.html')}>{nav[lang][0].label}</a></li>
-                    <li><a href={links.goboony} rel="noopener">Goboony</a></li>
-                    <li><a href={href(lang, 'rent-gear.html')}>{nav[lang][1].label}</a></li>
+                    <li><a href={href(lang, 'rent.html')}>{nl ? 'Ranger huren' : 'Rent the Ranger'}</a></li>
+                    <li><a href={href(lang, 'rent-gear.html')}>{nl ? 'Dakkoffer & fietsendrager' : 'Roof box & bike carrier'}</a></li>
+                    <li><a href={links.gearhive} rel="noopener">Gearhive</a></li>
                 </ul>
             </div>
             <div>
                 <h4>{t.footerMore}</h4>
                 <ul>
-                    {nav[lang].slice(2).map((item) => <li><a href={href(lang, item.page)}>{item.label}</a></li>)}
+                    <li><a href={href(lang, 'stories.html')}>{nl ? 'Verhalen' : 'Stories'}</a></li>
+                    <li><a href={href(lang, 'faq.html')}>{t.faq}</a></li>
+                    <li><a href={href(lang, 'contact.html')}>Contact</a></li>
                     <li><a href={href(lang, 'privacy.html')}>{t.privacy}</a></li>
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            © JustRoam · KVK {business.kvk} · {business.locality}, {business.region}
-        </div>
+        <div class="bottom">© JustRoam · KVK {business.kvk} · {business.locality}, {business.region}</div>
     </div>
 </footer>

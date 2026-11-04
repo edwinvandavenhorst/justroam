@@ -1,10 +1,14 @@
 ---
-import '@fontsource-variable/inter';
-import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource/barlow/400.css';
+import '@fontsource/barlow/500.css';
+import '@fontsource/barlow/600.css';
+import '@fontsource/barlow/700.css';
+import '@fontsource/barlow-condensed/700.css';
+import '@fontsource/barlow-condensed/800.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { alternatePath, type Lang } from '../i18n';
+import { alternatePath, pageUrl, type Lang } from '../i18n';
 
 interface Props {
     lang: Lang;
@@ -16,7 +20,7 @@ interface Props {
 
 const { lang, title, description, ogImage = '/images/hero.jpg', jsonLd } = Astro.props;
 const site = Astro.site!;
-const path = Astro.url.pathname;
+const path = pageUrl(Astro.url.pathname);
 const canonical = new URL(path, site).href;
 const enUrl = new URL(alternatePath(path, 'en'), site).href;
 const nlUrl = new URL(alternatePath(path, 'nl'), site).href;

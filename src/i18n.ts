@@ -7,28 +7,35 @@ export function href(lang: Lang, page: string): string {
     return '/nl/' + clean;
 }
 
+// The public URL of a page. The build writes pages as /rent/ but serves
+// them as /rent.html (see scripts/flatten-pages.mjs), so links, canonical
+// and hreflang use the .html form.
+export function pageUrl(pathname: string): string {
+    if (pathname === '/' || pathname === '/nl/' || pathname === '/nl' || pathname.endsWith('.html')) return pathname === '/nl' ? '/nl/' : pathname;
+    return pathname.replace(/\/$/, '') + '.html';
+}
+
 // The other-language version of the current path, for the switcher and hreflang
 export function alternatePath(pathname: string, to: Lang): string {
-    const bare = pathname.replace(/^\/nl(\/|$)/, '/');
+    const bare = pageUrl(pathname).replace(/^\/nl(\/|$)/, '/');
     if (to === 'en') return bare;
     return bare === '/' ? '/nl/' : '/nl' + bare;
 }
 
+// Order follows what we want people to do: builds first
 export const nav = {
     en: [
-        { page: 'rent.html', label: 'Rent the Ranger' },
-        { page: 'rent-gear.html', label: 'Roof box & bike carrier' },
         { page: 'build.html', label: 'Builds' },
+        { page: 'rent.html', label: 'Rent the Ranger' },
+        { page: 'rent-gear.html', label: 'Roof box & bikes' },
         { page: 'stories.html', label: 'Stories' },
-        { page: 'faq.html', label: 'FAQ' },
         { page: 'contact.html', label: 'Contact' }
     ],
     nl: [
-        { page: 'rent.html', label: 'Ranger huren' },
-        { page: 'rent-gear.html', label: 'Dakkoffer & fietsendrager' },
         { page: 'build.html', label: 'Ombouw' },
+        { page: 'rent.html', label: 'Ranger huren' },
+        { page: 'rent-gear.html', label: 'Dakkoffer & fietsen' },
         { page: 'stories.html', label: 'Verhalen' },
-        { page: 'faq.html', label: 'Vragen' },
         { page: 'contact.html', label: 'Contact' }
     ]
 };
@@ -36,19 +43,29 @@ export const nav = {
 export const ui = {
     en: {
         menu: 'Menu',
-        switchLabel: 'Nederlands',
-        footerTagline: 'Overland Ford Ranger rental and custom 4x4 builds from Voorburg.',
+        switchLabel: 'NL',
+        plan: 'Plan your build',
+        footerTagline: 'Overland builds and Ford Ranger rental from Voorburg.',
+        footerBuild: 'Build',
         footerRent: 'Rent',
         footerMore: 'More',
+        packages: 'Packages',
+        buildStory: 'Our build story',
+        faq: 'FAQ',
         privacy: 'Privacy',
         skip: 'Skip to content'
     },
     nl: {
         menu: 'Menu',
-        switchLabel: 'English',
-        footerTagline: 'Overland Ford Ranger verhuur en maatwerk 4x4-ombouw vanuit Voorburg.',
+        switchLabel: 'EN',
+        plan: 'Plan je ombouw',
+        footerTagline: 'Overland-ombouw en Ford Ranger verhuur vanuit Voorburg.',
+        footerBuild: 'Ombouw',
         footerRent: 'Huren',
         footerMore: 'Meer',
+        packages: 'Pakketten',
+        buildStory: 'Ons bouwverhaal',
+        faq: 'Vragen',
         privacy: 'Privacy',
         skip: 'Naar de inhoud'
     }

@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import InTheBack from './InTheBack.astro';
+import BuildSheet from './BuildSheet.astro';
+import TryRanger from './TryRanger.astro';
+import { href, type Lang } from '../i18n';
+import { business, packages } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+
+const copy = {
+    en: {
+        title: 'Overland Truck Builds in NL, DE & BE | JustRoam',
+        description: 'Three build packages for your own pickup: canopy, dual battery and solar, kitchen, water, rooftop tents and recovery gear. Built in 1 to 4 months, from Voorburg.',
+        kicker: 'Overland builds',
+        h1: 'Your pickup, built for the road',
+        lede: 'We took a standard Ford Ranger and built everything we needed for trips with the kids and the dog. Now we build yours, in three clear packages.',
+        plan: 'Plan your build',
+        seePk: 'See the packages',
+        day1: 'Day 1',
+        month7: 'Month 7',
+        sheetKicker: 'Build sheet',
+        sheetT: 'Three packages',
+        sheetNote: 'You supply the vehicle, we handle the build. Build times depend on parts availability.',
+        howKicker: 'How we built ours',
+        howT: 'Step by step',
+        howMore: 'Read the full build story',
+        steps: [
+            { img: '/images/build/IMG_6.jpeg', t: 'Canopy', d: 'Aluminium, with lighting' },
+            { img: '/images/build/IMG_52.jpeg', t: 'Power', d: 'Planned on paper first', w: 1960, h: 1225 },
+            { img: '/images/build/IMG_19.jpeg', t: 'Front and winch', d: 'Lights, winch, protection' },
+            { img: '/images/build/IMG_35.jpeg', t: 'Suspension', d: 'Carries the extra weight' },
+            { img: '/images/build/IMG_42.jpeg', t: 'Interior', d: 'Drawers, kitchen, fridge', w: 1960, h: 1470 },
+            { img: '/images/build/IMG_29.jpeg', t: 'Tents', d: 'Two rooftop tents, awning' }
+        ],
+        backT: 'Built around how you travel',
+        planKicker: 'Plan your build',
+        planT: 'Tell us about your truck',
+        planP: 'Send us a message with the points below and we will come back with advice and a quote.',
+        planList: ['Make, model and year of your pickup', 'How you travel: weekends, weeks, with whom', 'Which package appeals to you, or what you are unsure about', 'When you would like the truck to be ready'],
+        mail: 'Email us',
+        mailSubject: 'Build request',
+        call: 'Call us',
+        insta: 'Message us on Instagram',
+        faqT: 'Questions about a build',
+        faq: [
+            { q: 'What is the difference between the packages?', a: 'Getting started adds an aluminium canopy plus a dual-battery system with solar charging (± 1 month). Getting serious adds a custom interior, kitchen, fridge-ready installation and water system on top of that (± 2 months). Going all-in adds roof tent(s), a 270-degree awning, upgraded suspension and recovery equipment (± 3-4 months).' },
+            { q: 'How long does a build take?', a: 'Roughly 1 month for Getting started, 2 months for Getting serious and 3-4 months for Going all-in. Build times also depend on parts availability.' },
+            { q: 'Do I supply my own vehicle?', a: 'Yes. We convert a truck you own into an overland-ready vehicle, for vehicles in the Netherlands, Germany and Belgium.' },
+            { q: 'Can I try a build before I commit?', a: 'Yes, by renting our own Ranger. It has a canopy, kitchen, water, two rooftop tents and recovery gear, so a weekend away shows you what you want in your own truck.' }
+        ]
+    },
+    nl: {
+        title: 'Overland-ombouw voor je pickup in NL, DE en BE | JustRoam',
+        description: 'Drie ombouwpakketten voor je eigen pickup: opbouw, tweede accu en zonnepaneel, keuken, water, daktenten en bergingsuitrusting. Klaar in 1 tot 4 maanden, vanuit Voorburg.',
+        kicker: 'Overland-ombouw',
+        h1: 'Jouw pickup, klaar voor onderweg',
+        lede: 'We namen een standaard Ford Ranger en bouwden alles wat we nodig hadden voor reizen met de kinderen en de hond. Nu bouwen we de jouwe, in drie duidelijke pakketten.',
+        plan: 'Plan je ombouw',
+        seePk: 'Bekijk de pakketten',
+        day1: 'Dag 1',
+        month7: 'Maand 7',
+        sheetKicker: 'Bouwtabel',
+        sheetT: 'Drie pakketten',
+        sheetNote: 'Jij levert de auto aan, wij doen de ombouw. De bouwtijd hangt af van de beschikbaarheid van onderdelen.',
+        howKicker: 'Zo bouwden we de onze',
+        howT: 'Stap voor stap',
+        howMore: 'Lees het hele bouwverhaal',
+        steps: [
+            { img: '/images/build/IMG_6.jpeg', t: 'Opbouw', d: 'Aluminium, met verlichting' },
+            { img: '/images/build/IMG_52.jpeg', t: 'Stroom', d: 'Eerst op papier uitgetekend', w: 1960, h: 1225 },
+            { img: '/images/build/IMG_19.jpeg', t: 'Voorkant en lier', d: 'Verlichting, lier, bescherming' },
+            { img: '/images/build/IMG_35.jpeg', t: 'Vering', d: 'Draagt het extra gewicht' },
+            { img: '/images/build/IMG_42.jpeg', t: 'Interieur', d: 'Lades, keuken, koelkast', w: 1960, h: 1470 },
+            { img: '/images/build/IMG_29.jpeg', t: 'Tenten', d: 'Twee daktenten, luifel' }
+        ],
+        backT: 'Gebouwd rond hoe jij reist',
+        planKicker: 'Plan je ombouw',
+        planT: 'Vertel ons over je auto',
+        planP: 'Stuur ons een bericht met de punten hieronder, dan komen we terug met advies en een offerte.',
+        planList: ['Merk, model en bouwjaar van je pickup', 'Hoe je reist: weekenden, weken, met wie', 'Welk pakket je aanspreekt, of waar je over twijfelt', 'Wanneer je de auto klaar wilt hebben'],
+        mail: 'Mail ons',
+        mailSubject: 'Aanvraag ombouw',
+        call: 'Bel ons',
+        insta: 'Stuur een bericht via Instagram',
+        faqT: 'Vragen over ombouw',
+        faq: [
+            { q: 'Wat is het verschil tussen de pakketten?', a: 'Getting started voegt een aluminium opbouw toe plus een tweede accu met zonnepaneel (± 1 maand). Getting serious voegt daar een interieur op maat, keuken, koelkastvoorbereiding en watersysteem aan toe (± 2 maanden). Going all-in voegt daktent(en), een 270-graden luifel, verbeterde vering en bergingsuitrusting toe (± 3-4 maanden).' },
+            { q: 'Hoe lang duurt een ombouw?', a: 'Ongeveer 1 maand voor Getting started, 2 maanden voor Getting serious en 3-4 maanden voor Going all-in. De bouwtijd hangt ook af van de beschikbaarheid van onderdelen.' },
+            { q: 'Lever ik mijn eigen auto aan?', a: 'Ja. We bouwen een auto die van jou is om tot overland-auto, voor voertuigen in Nederland, Duitsland en België.' },
+            { q: 'Kan ik een ombouw eerst uitproberen?', a: 'Ja, door onze eigen Ranger te huren. Die heeft een opbouw, keuken, water, twee daktenten en bergingsuitrusting, dus na een weekend weet je wat je in je eigen auto wilt.' }
+        ]
+    }
+}[lang];
+
+const jsonLd = [
+    {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: nl ? 'Overland-ombouw voor pickups' : 'Overland truck builds',
+        serviceType: nl ? 'Voertuigombouw' : 'Vehicle conversion',
+        provider: { '@type': 'LocalBusiness', name: business.name, url: business.url, telephone: business.phone, address: { '@type': 'PostalAddress', addressLocality: business.locality, addressCountry: business.country } },
+        areaServed: ['Netherlands', 'Germany', 'Belgium'].map((name) => ({ '@type': 'Country', name })),
+        hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: nl ? 'Ombouwpakketten' : 'Build packages',
+            itemListElement: packages.map((p) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: p.name, description: `${p.months[lang]}` } }))
+        }
+    },
+    { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: copy.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }
+];
+---
+<Base lang={lang} title={copy.title} description={copy.description} ogImage="/images/build/IMG_29.jpeg" jsonLd={jsonLd}>
+    <div class="wrap intro-split">
+        <div>
+            <span class="kicker">{copy.kicker}</span>
+            <h1 style="font-size:clamp(48px,6.4vw,92px);margin:6px 0 16px">{copy.h1}</h1>
+            <p class="lead">{copy.lede}</p>
+            <div class="row">
+                <a class="btn" href="#plan">{copy.plan} <span class="ar" aria-hidden="true">→</span></a>
+                <a class="link" href="#packages">{copy.seePk}</a>
+            </div>
+        </div>
+        <div class="ba">
+            <div class="frame"><Photo class="cover" src="/images/build/IMG_1.jpeg" width={1960} height={1470} alt={nl ? 'Onze Ranger zoals we hem kochten' : 'Our Ranger as we bought it'} sizes="(max-width: 960px) 50vw, 30vw" eager /><span class="tag">{copy.day1}</span></div>
+            <div class="frame"><Photo class="cover" src="/images/rent/IMG_3679.jpeg" width={1960} height={2613} alt={nl ? 'Onze Ranger met beide daktenten open' : 'Our Ranger with both rooftop tents open'} sizes="(max-width: 960px) 50vw, 30vw" eager /><span class="tag">{copy.month7}</span></div>
+        </div>
+    </div>
+
+    <section class="wrap" id="packages" style="padding-bottom: clamp(56px, 8vw, 90px); scroll-margin-top: 100px">
+        <div class="sheet-wrap topo">
+            <div class="head-row"><div><span class="kicker">{copy.sheetKicker}</span><h2>{copy.sheetT}</h2></div></div>
+            <BuildSheet lang={lang} />
+            <p style="margin:18px 0 0;color:var(--muted)">{copy.sheetNote}</p>
+            <p style="margin:22px 0 0"><a class="btn" href="#plan">{copy.plan} <span class="ar" aria-hidden="true">→</span></a></p>
+        </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <div class="head-row"><div><span class="kicker">{copy.howKicker}</span><h2>{copy.howT}</h2></div><a class="link" href={href(lang, 'blog_build.html')}>{copy.howMore}</a></div>
+        <ol class="steps6">
+            {copy.steps.map((s) => (
+                <li><div class="frame"><Photo class="cover" src={s.img} width={s.w ?? 1960} height={s.h ?? 2614} alt={s.t} sizes="(max-width: 960px) 50vw, 16vw" /></div><b>{s.t}</b><span>{s.d}</span></li>
+            ))}
+        </ol>
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <InTheBack lang={lang} title={copy.backT} cta={false} />
+    </section>
+
+    <section class="wrap" id="plan" style="padding-bottom: clamp(56px, 8vw, 90px); scroll-margin-top: 100px">
+        <div class="plan">
+            <div>
+                <span class="kicker">{copy.planKicker}</span>
+                <h2>{copy.planT}</h2>
+                <p class="lead" style="margin-top:14px">{copy.planP}</p>
+                <ol>{copy.planList.map((l) => <li>{l}</li>)}</ol>
+            </div>
+            <div class="contact-opts">
+                <a href={`mailto:${business.email}?subject=${encodeURIComponent(copy.mailSubject)}`}><i>@</i><div><b>{copy.mail}</b><small>{business.email}</small></div></a>
+                <a href={`tel:${business.phone}`}><i>☎</i><div><b>{copy.call}</b><small>{business.phoneDisplay}</small></div></a>
+                <a href={business.instagram} rel="noopener"><i>IG</i><div><b>{copy.insta}</b><small>@_justroam_</small></div></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <TryRanger lang={lang} />
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <h2 style="margin-bottom:22px">{copy.faqT}</h2>
+        <div class="faq">{copy.faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+    </section>
+</Base>

@@ -1,0 +1,111 @@
+---
+// Live availability with Goboony day prices, from our own API routes.
+// Without prices it still shows availability; if a calendar fails it says so
+// instead of showing booked days as free.
+import type { Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+const t = {
+    locale: nl ? 'nl-NL' : 'en-GB',
+    dows: nl ? ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'] : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    prev: nl ? 'Vorige maand' : 'Previous month',
+    next: nl ? 'Volgende maand' : 'Next month',
+    free: nl ? 'Beschikbaar' : 'Available',
+    booked: nl ? 'Geboekt / niet beschikbaar' : 'Booked / unavailable',
+    failed: nl
+        ? 'De beschikbaarheid kon niet volledig worden geladen. Controleer de data op Goboony.'
+        : 'Availability could not be fully loaded. Please check the dates on Goboony.',
+    loading: nl ? 'Laden...' : 'Loading...'
+};
+---
+<div class="cal" id="ranger-cal" data-locale={t.locale} data-failed={t.failed}>
+    <div class="cal-head">
+        <button class="cal-nav" type="button" data-step="-1" aria-label={t.prev}>‹</button>
+        <h3 aria-live="polite">{t.loading}</h3>
+        <button class="cal-nav" type="button" data-step="1" aria-label={t.next}>›</button>
+    </div>
+    <div class="cal-grid">{t.dows.map((d) => <div class="cal-dow">{d}</div>)}</div>
+    <div class="cal-grid" data-days></div>
+    <div class="cal-legend"><span><i style="background:#edf4ea"></i>{t.free}</span><span><i style="background:#ecdfcf"></i>{t.booked}</span></div>
+</div>
+
+<script>
+    type Prices = { base: number; days: Record<string, number> };
+
+    const root = document.getElementById('ranger-cal');
+    if (root) {
+        const daysEl = root.querySelector<HTMLElement>('[data-days]')!;
+        const title = root.querySelector('h3')!;
+        const locale = root.dataset.locale || 'en-GB';
+        const now = new Date();
+        let year = now.getFullYear();
+        let month = now.getMonth();
+        let booked = new Set<string>();
+        let prices: Prices | null = null;
+
+        const key = (d: Date) =>
+            `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        const todayKey = key(now);
+
+        function render() {
+            title.textContent = new Date(year, month, 1).toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+            daysEl.innerHTML = '';
+            const first = new Date(year, month, 1);
+            const lead = (first.getDay() + 6) % 7; // Monday first
+            for (let i = 0; i < lead; i++) daysEl.appendChild(document.createElement('div'));
+            const last = new Date(year, month + 1, 0).getDate();
+            for (let d = 1; d <= last; d++) {
+                const date = new Date(year, month, d);
+                const k = key(date);
+                const cell = document.createElement('div');
+                cell.className = 'cal-day';
+                cell.textContent = String(d);
+                if (k === todayKey) cell.classList.add('today');
+                if (k >= todayKey) {
+                    if (booked.has(k)) cell.classList.add('booked');
+                    else {
+                        cell.classList.add('free');
+                        if (prices) {
+                            const p = document.createElement('small');
+                            p.textContent = '€' + (prices.days[k] ?? prices.base);
+                            cell.appendChild(p);
+                        }
+                    }
+                }
+                daysEl.appendChild(cell);
+            }
+        }
+
+        function warn() {
+            if (root!.querySelector('.cal-note')) return;
+            const note = document.createElement('p');
+            note.className = 'cal-note';
+            note.textContent = root!.dataset.failed || '';
+            root!.appendChild(note);
+        }
+
+        root.querySelectorAll<HTMLButtonElement>('.cal-nav').forEach((btn) =>
+            btn.addEventListener('click', () => {
+                month += Number(btn.dataset.step);
+                if (month < 0) { month = 11; year--; }
+                if (month > 11) { month = 0; year++; }
+                render();
+            })
+        );
+
+        render();
+        Promise.allSettled([
+            fetch('/api/ranger-availability').then((r) => (r.ok ? r.json() : Promise.reject(r.status))),
+            fetch('/api/ranger-prices').then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
+        ]).then(([avail, pr]) => {
+            if (avail.status === 'fulfilled') {
+                booked = new Set(avail.value.booked);
+                if (!avail.value.complete) warn();
+            } else warn();
+            if (pr.status === 'fulfilled' && typeof pr.value.base === 'number') prices = pr.value;
+            render();
+        });
+    }
+</script>

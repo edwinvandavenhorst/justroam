@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import { href, type Lang } from '../i18n';
+import { business } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+
+const copy = {
+    en: {
+        title: 'Overland Build Story & Trips | JustRoam Stories',
+        description: 'How we built our own Ford Ranger for overland trips, and the trips we took with it: Bosnia and Slovenia, Elba and, next, Norway.',
+        kicker: 'Stories',
+        h1: 'From the driveway to the road',
+        lede: 'How we built our own Ranger, and where it took us. Real trips with the kids and the dog, with the routes and the lessons.',
+        pc1: 'Lakeside stop',
+        pc2: 'Camp between the trees',
+        featKicker: 'Build story',
+        featT: 'Building a family-ready overland truck',
+        featP: 'Seven months, step by step: canopy, electrics, interior, roof tents, recovery and suspension, including what we learned along the way.',
+        featCta: 'Read the build story',
+        tripKicker: 'Trip no. 1',
+        tripT: 'Planned Norway. Ended up in Bosnia.',
+        tripStops: ['A hill above the Slovenian vineyards, two nights', 'Una park: rafting and the clearest water', 'Wild horses, off-trail', 'Into Montenegro on foot, dog and all', 'A detour to the Weissee in Austria'],
+        soonFull: 'Story coming soon',
+        mapNote: 'Sketch, not to scale. The real map comes with the story.',
+        moreT: 'Trips',
+        trips: [
+            { t: 'Maiden trip: Bosnia and Slovenia', d: 'Summer, almost two weeks in Bosnia', img: '/images/rent/IMG_5025.jpeg' },
+            { t: 'Autumn on Elba', d: 'Sun and island in the autumn break', img: '/images/rent/IMG_4254.jpeg' },
+            { t: 'Norway', d: 'The trip we postponed', img: '/images/rent/image_forrest_1.jpeg', h: 1103 }
+        ],
+        soon: 'Coming soon',
+        ctaT: 'Want a truck like this?',
+        ctaP: 'We build yours in three clear packages, or you can rent ours first.',
+        ctaBuild: 'Explore builds',
+        ctaRent: 'Rent the Ranger'
+    },
+    nl: {
+        title: 'Bouwverhaal en reizen met onze overland-Ranger | JustRoam',
+        description: 'Hoe we onze eigen Ford Ranger ombouwden voor overland reizen, en de reizen die we ermee maakten: Bosnië en Slovenië, Elba en straks Noorwegen.',
+        kicker: 'Verhalen',
+        h1: 'Van de oprit naar onderweg',
+        lede: 'Hoe we onze eigen Ranger bouwden, en waar hij ons bracht. Echte reizen met de kinderen en de hond, met de routes en wat we leerden.',
+        pc1: 'Stop aan het meer',
+        pc2: 'Kamp tussen de bomen',
+        featKicker: 'Bouwverhaal',
+        featT: 'Een overland-auto bouwen voor het hele gezin',
+        featP: 'Zeven maanden, stap voor stap: opbouw, elektra, interieur, daktenten, berging en vering, inclusief wat we onderweg leerden.',
+        featCta: 'Lees het bouwverhaal',
+        tripKicker: 'Reis nr. 1',
+        tripT: 'Noorwegen gepland. In Bosnië beland.',
+        tripStops: ['Een heuvel boven de Sloveense wijngaarden, twee nachten', 'Una-park: raften en het helderste water', 'Wilde paarden, buiten de paden', 'Te voet Montenegro in, hond en al', 'Een omweg naar de Weissee in Oostenrijk'],
+        soonFull: 'Verhaal volgt binnenkort',
+        mapNote: 'Schets, niet op schaal. De echte kaart komt bij het verhaal.',
+        moreT: 'Reizen',
+        trips: [
+            { t: 'Eerste reis: Bosnië en Slovenië', d: 'Zomer, bijna twee weken in Bosnië', img: '/images/rent/IMG_5025.jpeg' },
+            { t: 'Herfst op Elba', d: 'Zon en eiland in de herfstvakantie', img: '/images/rent/IMG_4254.jpeg' },
+            { t: 'Noorwegen', d: 'De reis die we uitstelden', img: '/images/rent/image_forrest_1.jpeg', h: 1103 }
+        ],
+        soon: 'Binnenkort',
+        ctaT: 'Ook zo\'n auto?',
+        ctaP: 'We bouwen de jouwe in drie duidelijke pakketten, of je huurt eerst de onze.',
+        ctaBuild: 'Bekijk de ombouw',
+        ctaRent: 'Ranger huren'
+    }
+}[lang];
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: nl ? 'JustRoam verhalen' : 'JustRoam stories',
+    url: business.url + href(lang, 'stories.html'),
+    publisher: { '@type': 'Organization', name: business.name, url: business.url },
+    blogPost: [{ '@type': 'BlogPosting', headline: copy.featT, url: business.url + href(lang, 'blog_build.html') }]
+};
+---
+<Base lang={lang} title={copy.title} description={copy.description} ogImage="/images/build/IMG_29.jpeg" jsonLd={jsonLd}>
+    <div class="wrap stories-hero">
+        <div>
+            <span class="kicker">{copy.kicker}</span>
+            <h1 style="font-size:clamp(48px,6.4vw,92px);margin:6px 0 16px">{copy.h1}</h1>
+            <p class="lead">{copy.lede}</p>
+        </div>
+        <div class="postcards" aria-hidden="true">
+            <div class="postcard one"><Photo src="/images/rent/IMG_4254.jpeg" width={1960} height={1470} alt="" sizes="40vw" eager /><span>{copy.pc1}</span></div>
+            <div class="postcard two"><Photo src="/images/rent/IMG_5025.jpeg" width={1960} height={1470} alt="" sizes="35vw" eager /><span>{copy.pc2}</span></div>
+        </div>
+    </div>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <a class="featured" href={href(lang, 'blog_build.html')}>
+            <div class="ph"><Photo class="cover" src="/images/build/IMG_29.jpeg" width={1960} height={2614} alt={copy.featT} sizes="(max-width: 860px) 100vw, 55vw" /></div>
+            <div class="txt">
+                <span class="kicker">{copy.featKicker}</span>
+                <h2>{copy.featT}</h2>
+                <p>{copy.featP}</p>
+                <span class="btn">{copy.featCta} <span class="ar" aria-hidden="true">→</span></span>
+            </div>
+        </a>
+    </section>
+
+    <section class="route-band">
+        <div class="wrap">
+            <div>
+                <span class="kicker">{copy.tripKicker}</span>
+                <h2>{copy.tripT}</h2>
+                <ol>{copy.tripStops.map((s, i) => <li><b>{i + 1}</b>{s}</li>)}</ol>
+                <span class="soon">{copy.soonFull}</span>
+            </div>
+            <div class="map">
+                <svg viewBox="0 0 600 420" role="img" aria-label={copy.tripT}>
+                    <rect width="600" height="420" fill="#2f1503" />
+                    <g fill="none" stroke="#5a3418" stroke-width="1">
+                        <path d="M0 80 Q150 60 300 90 T600 70" /><path d="M0 200 Q160 180 320 210 T600 190" /><path d="M0 320 Q180 300 330 330 T600 310" />
+                        <path d="M120 0 Q100 140 140 260 T120 420" /><path d="M300 0 Q330 160 290 280 T320 420" /><path d="M470 0 Q450 120 490 250 T460 420" />
+                    </g>
+                    <path d="M90 70 C 160 120, 220 170, 270 215 S 360 260, 395 290 S 450 330, 470 350 M470 350 C 430 300, 380 260, 330 230 S 250 190, 230 175 S 150 110, 90 70" fill="none" stroke="#f1dfbd" stroke-width="3" stroke-dasharray="8 7" stroke-linecap="round" />
+                    <g font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="15" fill="#2b1d12" text-anchor="middle">
+                        <circle cx="90" cy="70" r="13" fill="#d4a76a" /><text x="90" y="75">H</text>
+                        <circle cx="270" cy="215" r="13" fill="#d4a76a" /><text x="270" y="220">1</text>
+                        <circle cx="355" cy="262" r="13" fill="#d4a76a" /><text x="355" y="267">2</text>
+                        <circle cx="410" cy="300" r="13" fill="#d4a76a" /><text x="410" y="305">3</text>
+                        <circle cx="470" cy="350" r="13" fill="#d4a76a" /><text x="470" y="355">4</text>
+                        <circle cx="230" cy="175" r="13" fill="#d4a76a" /><text x="230" y="180">5</text>
+                    </g>
+                    <g font-family="Barlow, sans-serif" font-size="13" fill="#f1dfbd">
+                        <text x="108" y="66">Voorburg</text><text x="24" y="404">{copy.mapNote}</text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <section class="wrap section">
+        <h2 style="margin-bottom:26px">{copy.moreT}</h2>
+        <div class="cards3">
+            {copy.trips.map((s) => (
+                <div class="scard">
+                    <div class="frame"><Photo class="cover" src={s.img} width={1960} height={s.h ?? 1470} alt={s.t} sizes="(max-width: 860px) 100vw, 33vw" /></div>
+                    <b>{s.t}</b><span>{s.d}</span><br><span class="soon">{copy.soon}</span>
+                </div>
+            ))}
+        </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <div class="try" style="grid-template-columns:1fr">
+            <div class="txt" style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+                <div><h2>{copy.ctaT}</h2><p>{copy.ctaP}</p></div>
+                <div style="display:flex;gap:12px;flex-wrap:wrap">
+                    <a class="btn sand" href={href(lang, 'build.html')}>{copy.ctaBuild} <span class="ar" aria-hidden="true">→</span></a>
+                    <a class="btn light" href={href(lang, 'rent.html')}>{copy.ctaRent} <span class="ar" aria-hidden="true">→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</Base>

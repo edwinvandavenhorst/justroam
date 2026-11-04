@@ -1,149 +1,75 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
+import InTheBack from './InTheBack.astro';
+import BuildSheet from './BuildSheet.astro';
+import TryRanger from './TryRanger.astro';
+import GearBand from './GearBand.astro';
 import { href, type Lang } from '../i18n';
-import { business, links, ranger } from '../data/site';
+import { business, links } from '../data/site';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
-const r = ranger;
+const nl = lang === 'nl';
 
 const copy = {
     en: {
-        title: 'JustRoam | Overland Ranger Rental & 4x4 Builds, Voorburg',
-        description: `Rent our fully equipped Ford Ranger with two rooftop tents from €${r.fromPerDay} a day, or have your own truck built for overlanding. Based in Voorburg, Netherlands.`,
-        heroAlt: 'Our Ford Ranger at night with both rooftop tents open and lit',
-        h1: 'Overland Ranger rental and custom 4x4 builds',
-        lede: 'Rent our fully equipped Ford Ranger with two rooftop tents, or let us turn your own truck into an overland rig. From Voorburg into the wild.',
-        ctaRent: 'Check availability',
-        ctaBuild: 'Explore builds',
-        facts: [`Sleeps ${r.sleeps}`, `From €${r.fromPerDay} a day`, 'Insurance and breakdown cover included', 'Pickup in Voorburg'],
-        pathsEyebrow: 'Two ways to go',
-        pathsTitle: 'Try it, or build your own',
-        rentTitle: 'Rent the Ranger',
-        rentAlt: 'The Ranger parked on a lakeside beach with mountains behind',
-        rentPoints: ['Two rooftop tents (140 and 160 cm), sleeps 4', 'Kitchen with 45 L fridge, gas stove and 50 L water', '4WD, diesel, manual, winch and recovery boards', `10% off from ${r.discounts[0].weeks} weeks, 15% from ${r.discounts[1].weeks} weeks`],
-        rentPrice: `From €${r.fromPerDay}`,
-        rentPriceNote: `a day, plus €${r.cleaningFee} cleaning`,
-        rentCta: 'See dates and prices',
-        buildTitle: 'Build your truck',
-        buildAlt: 'Canopy with custom drawers and storage built into a Ranger',
-        buildPoints: ['Getting started: canopy, dual battery and solar, ± 1 month', 'Getting serious: plus interior, kitchen and water, ± 2 months', 'Going all-in: full overland build, ± 3-4 months', 'For trucks in the Netherlands, Germany and Belgium'],
-        buildPrice: '3 packages',
-        buildPriceNote: 'built around how you travel',
-        buildCta: 'Compare the packages',
-        onboardEyebrow: 'Everything on board',
-        onboardTitle: 'Pack your clothes, the rest is in the truck',
-        onboard: [
-            { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, t: 'Slide-out kitchen', d: 'Dual-burner gas stove, pans and cutlery' },
-            { src: '/images/rent/IMG_4841.jpeg', w: 1960, h: 2614, t: '45 L fridge', d: 'Food and drinks stay cold on the road' },
-            { src: '/images/rent/IMG_4843.jpeg', w: 1960, h: 2613, t: 'Power on board', d: 'USB-A, USB-C and outlets for laptops' },
-            { src: '/images/rent/IMG_4866.jpeg', w: 1960, h: 2613, t: 'Two rooftop tents', d: '250 cm mattresses, even for tall people' }
-        ],
-        stepsEyebrow: 'How renting works',
-        stepsTitle: 'From calendar to campfire',
-        steps: [
-            { t: 'Pick your dates', d: 'The calendar shows live availability and the day prices from Goboony.' },
-            { t: 'Book on Goboony', d: 'You pay through Goboony. Insurance and breakdown cover are included.' },
-            { t: 'Collect in Voorburg', d: 'We walk you through every system before you leave.' },
-            { t: 'Go', d: 'Weekend away or weeks across Europe and North Africa.' }
-        ],
-        stepsCta: 'Check availability',
-        gearEyebrow: 'Just need more space?',
-        gearTitle: 'Rent our roof box or bike carrier',
-        gearText: 'A 410 litre Hapro roof box and a Thule carrier for three bikes, to pick up in Voorburg. Booked through Gearhive.',
-        gearAlt: 'Hapro Traxer roof box on a car roof',
-        gearCta: 'Roof box and bike carrier',
-        storiesEyebrow: 'Stories',
-        storiesTitle: 'Where the truck has been',
-        storiesText: 'How we built our own Ranger, and the trips we took with it.',
-        storiesAlt: 'The Ranger with its rooftop tent set up between the trees on a campsite',
+        title: 'JustRoam | Overland Truck Builds & Ranger Rental, Voorburg',
+        description: 'We turn your pickup into an overland truck in three clear packages: canopy, power, kitchen, water and tents. Or rent our own Ford Ranger first. Voorburg, NL.',
+        kicker: 'Overland builds from Voorburg',
+        h1: 'From pickup to overland truck',
+        lede: 'Canopy, power, kitchen, water, tents. We build your truck in three clear packages, the same way we built our own Ranger.',
+        cta: 'Explore builds',
+        try: 'Or try ours first',
+        chips: ['1. Canopy & power', '2. Kitchen & water', '3. Tents & recovery'],
+        sheetKicker: 'Build sheet',
+        sheetTitle: 'Three packages',
+        sheetMore: 'Compare every detail',
+        sheetCta: 'Plan your build',
+        storiesKicker: 'Stories',
+        storiesTitle: 'Built, then taken out',
+        storiesMore: 'All stories',
         stories: [
-            { t: 'Building a family-ready overland truck', d: 'Seven months, step by step', page: 'blog_build.html', soon: false },
-            { t: 'Maiden trip: Bosnia and Slovenia', d: 'Wild horses and a dog who could not cross the border', page: '', soon: true },
-            { t: 'Autumn on Elba', d: 'Sun and island in the autumn break', page: '', soon: true }
+            { t: 'Building a family-ready overland truck', d: 'Seven months, step by step', img: '/images/build/IMG_29.jpeg', w: 1960, h: 2614, page: 'blog_build.html' },
+            { t: 'Maiden trip: Bosnia and Slovenia', d: 'Wild horses, and a dog who could not cross the border', img: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, page: '' },
+            { t: 'Autumn on Elba', d: 'Sun and island in the autumn break', img: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, page: '' }
         ],
-        soon: 'coming soon',
-        storiesCta: 'All stories',
-        faqTitle: 'Good to know',
+        soon: 'Coming soon',
+        faqTitle: 'Questions about a build',
         faq: [
-            { q: 'Who can rent the Ranger?', a: `Drivers aged ${r.minAge} or older who have held their licence for at least ${r.licenceYears} years. It is not available for parties or festivals.` },
-            { q: 'What does it cost?', a: `From €${r.fromPerDay} a day as shown on Goboony, higher in spring and summer, plus €${r.cleaningFee} cleaning once. Longer trips get 10% (2 weeks) or 15% (3 weeks) off.` },
-            { q: 'Where do I pick it up?', a: 'In Voorburg, next to The Hague. We give you a full handover so you know every system before you leave.' }
-        ],
-        faqMore: 'All questions',
-        ctaTitle: 'Plans, questions, or a truck to build?',
-        ctaText: 'Tell us what you have in mind and we will point you in the right direction.',
-        ctaMail: 'Email us',
-        ctaCall: 'Call'
+            { q: 'What is the difference between the packages?', a: "Getting started adds an aluminium canopy plus a dual-battery system with solar charging (± 1 month). Getting serious adds a custom interior, kitchen, fridge-ready installation and water system on top of that (± 2 months). Going all-in adds roof tent(s), a 270-degree awning, upgraded suspension and recovery equipment (± 3-4 months)." },
+            { q: 'How long does a build take?', a: 'Roughly 1 month for Getting started, 2 months for Getting serious and 3-4 months for Going all-in. Build times also depend on parts availability.' },
+            { q: 'Do I supply my own vehicle?', a: 'Yes. We convert a truck you own into an overland-ready vehicle, for vehicles in the Netherlands, Germany and Belgium.' }
+        ]
     },
     nl: {
-        title: 'JustRoam | Overland Ranger huren en 4x4-ombouw, Voorburg',
-        description: `Huur onze volledig uitgeruste Ford Ranger met twee daktenten vanaf €${r.fromPerDay} per dag, of laat je eigen auto ombouwen voor overland reizen. Vanuit Voorburg.`,
-        heroAlt: 'Onze Ford Ranger in het donker met beide daktenten open en verlicht',
-        h1: 'Overland Ranger huren en 4x4-ombouw op maat',
-        lede: 'Huur onze volledig uitgeruste Ford Ranger met twee daktenten, of laat ons je eigen auto ombouwen tot overlander. Vanuit Voorburg de wildernis in.',
-        ctaRent: 'Bekijk beschikbaarheid',
-        ctaBuild: 'Bekijk de ombouw',
-        facts: [`Slaapt ${r.sleeps} personen`, `Vanaf €${r.fromPerDay} per dag`, 'Verzekering en pechhulp inbegrepen', 'Ophalen in Voorburg'],
-        pathsEyebrow: 'Twee manieren',
-        pathsTitle: 'Eerst proberen, of zelf bouwen',
-        rentTitle: 'Huur de Ranger',
-        rentAlt: 'De Ranger op een strand aan een meer met bergen op de achtergrond',
-        rentPoints: ['Twee daktenten (140 en 160 cm), slaapt 4', 'Keuken met 45 L koelkast, gasstel en 50 L water', '4WD, diesel, handgeschakeld, lier en zandplaten', `10% korting vanaf ${r.discounts[0].weeks} weken, 15% vanaf ${r.discounts[1].weeks} weken`],
-        rentPrice: `Vanaf €${r.fromPerDay}`,
-        rentPriceNote: `per dag, plus €${r.cleaningFee} schoonmaak`,
-        rentCta: 'Bekijk data en prijzen',
-        buildTitle: 'Laat je auto ombouwen',
-        buildAlt: 'Opbouw met zelfgemaakte lades en opslag in een Ranger',
-        buildPoints: ['Getting started: opbouw, tweede accu en zonnepaneel, ± 1 maand', 'Getting serious: plus interieur, keuken en water, ± 2 maanden', 'Going all-in: volledige overland-ombouw, ± 3-4 maanden', 'Voor auto\'s in Nederland, Duitsland en België'],
-        buildPrice: '3 pakketten',
-        buildPriceNote: 'afgestemd op hoe jij reist',
-        buildCta: 'Vergelijk de pakketten',
-        onboardEyebrow: 'Alles aan boord',
-        onboardTitle: 'Neem je kleren mee, de rest zit in de auto',
-        onboard: [
-            { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, t: 'Uitschuifkeuken', d: 'Tweepits gasstel, pannen en bestek' },
-            { src: '/images/rent/IMG_4841.jpeg', w: 1960, h: 2614, t: '45 L koelkast', d: 'Eten en drinken blijft koel onderweg' },
-            { src: '/images/rent/IMG_4843.jpeg', w: 1960, h: 2613, t: 'Stroom aan boord', d: 'USB-A, USB-C en stopcontacten voor laptops' },
-            { src: '/images/rent/IMG_4866.jpeg', w: 1960, h: 2613, t: 'Twee daktenten', d: 'Matrassen van 250 cm, ook voor lange mensen' }
-        ],
-        stepsEyebrow: 'Zo werkt huren',
-        stepsTitle: 'Van agenda naar kampvuur',
-        steps: [
-            { t: 'Kies je data', d: 'De kalender toont live beschikbaarheid en de dagprijzen van Goboony.' },
-            { t: 'Boek via Goboony', d: 'Je betaalt via Goboony. Verzekering en pechhulp zijn inbegrepen.' },
-            { t: 'Ophalen in Voorburg', d: 'We lopen samen alle systemen door voordat je vertrekt.' },
-            { t: 'Op pad', d: 'Een weekend weg of weken door Europa en Noord-Afrika.' }
-        ],
-        stepsCta: 'Bekijk beschikbaarheid',
-        gearEyebrow: 'Alleen meer ruimte nodig?',
-        gearTitle: 'Huur onze dakkoffer of fietsendrager',
-        gearText: 'Een Hapro-dakkoffer van 410 liter en een Thule-drager voor drie fietsen, op te halen in Voorburg. Te boeken via Gearhive.',
-        gearAlt: 'Hapro Traxer dakkoffer op het dak van een auto',
-        gearCta: 'Dakkoffer en fietsendrager',
-        storiesEyebrow: 'Verhalen',
-        storiesTitle: 'Waar de auto is geweest',
-        storiesText: 'Hoe we onze eigen Ranger bouwden, en de reizen die we ermee maakten.',
-        storiesAlt: 'De Ranger met opgezette daktent tussen de bomen op een camping',
+        title: 'JustRoam | Overland-ombouw en Ranger huren, Voorburg',
+        description: 'Wij bouwen je pickup om tot overland-auto in drie duidelijke pakketten: opbouw, stroom, keuken, water en tenten. Of huur eerst onze eigen Ford Ranger. Voorburg.',
+        kicker: 'Overland-ombouw vanuit Voorburg',
+        h1: 'Van pickup naar overland-auto',
+        lede: 'Opbouw, stroom, keuken, water, tenten. We bouwen jouw auto om in drie duidelijke pakketten, zoals we onze eigen Ranger bouwden.',
+        cta: 'Bekijk de ombouw',
+        try: 'Of probeer eerst de onze',
+        chips: ['1. Opbouw & stroom', '2. Keuken & water', '3. Tenten & berging'],
+        sheetKicker: 'Bouwtabel',
+        sheetTitle: 'Drie pakketten',
+        sheetMore: 'Vergelijk alle details',
+        sheetCta: 'Plan je ombouw',
+        storiesKicker: 'Verhalen',
+        storiesTitle: 'Gebouwd, en dan op pad',
+        storiesMore: 'Alle verhalen',
         stories: [
-            { t: 'Een overland-auto bouwen voor het hele gezin', d: 'Zeven maanden, stap voor stap', page: 'blog_build.html', soon: false },
-            { t: 'Eerste reis: Bosnië en Slovenië', d: 'Wilde paarden en een hond die de grens niet over mocht', page: '', soon: true },
-            { t: 'Herfst op Elba', d: 'Zon en eiland in de herfstvakantie', page: '', soon: true }
+            { t: 'Een overland-auto bouwen voor het hele gezin', d: 'Zeven maanden, stap voor stap', img: '/images/build/IMG_29.jpeg', w: 1960, h: 2614, page: 'blog_build.html' },
+            { t: 'Eerste reis: Bosnië en Slovenië', d: 'Wilde paarden, en een hond die de grens niet over mocht', img: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, page: '' },
+            { t: 'Herfst op Elba', d: 'Zon en eiland in de herfstvakantie', img: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, page: '' }
         ],
-        soon: 'binnenkort',
-        storiesCta: 'Alle verhalen',
-        faqTitle: 'Goed om te weten',
+        soon: 'Binnenkort',
+        faqTitle: 'Vragen over ombouw',
         faq: [
-            { q: 'Wie kan de Ranger huren?', a: `Bestuurders van ${r.minAge} jaar of ouder die minstens ${r.licenceYears} jaar hun rijbewijs hebben. Niet beschikbaar voor feesten of festivals.` },
-            { q: 'Wat kost het?', a: `Vanaf €${r.fromPerDay} per dag zoals getoond op Goboony, hoger in voorjaar en zomer, plus eenmalig €${r.cleaningFee} schoonmaak. Langere reizen krijgen 10% (2 weken) of 15% (3 weken) korting.` },
-            { q: 'Waar haal ik hem op?', a: 'In Voorburg, naast Den Haag. We lopen alles uitgebreid met je door, zodat je alle systemen kent voordat je vertrekt.' }
-        ],
-        faqMore: 'Alle vragen',
-        ctaTitle: 'Plannen, vragen, of een auto om te bouwen?',
-        ctaText: 'Vertel wat je in gedachten hebt, dan wijzen we je de weg.',
-        ctaMail: 'Mail ons',
-        ctaCall: 'Bel'
+            { q: 'Wat is het verschil tussen de pakketten?', a: 'Getting started voegt een aluminium opbouw toe plus een tweede accu met zonnepaneel (± 1 maand). Getting serious voegt daar een interieur op maat, keuken, koelkastvoorbereiding en watersysteem aan toe (± 2 maanden). Going all-in voegt daktent(en), een 270-graden luifel, verbeterde vering en bergingsuitrusting toe (± 3-4 maanden).' },
+            { q: 'Hoe lang duurt een ombouw?', a: 'Ongeveer 1 maand voor Getting started, 2 maanden voor Getting serious en 3-4 maanden voor Going all-in. De bouwtijd hangt ook af van de beschikbaarheid van onderdelen.' },
+            { q: 'Lever ik mijn eigen auto aan?', a: 'Ja. We bouwen een auto die van jou is om tot overland-auto, voor voertuigen in Nederland, Duitsland en België.' }
+        ]
     }
 }[lang];
 
@@ -152,8 +78,8 @@ const jsonLd = [
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
         name: business.name,
-        url: business.url + (lang === 'nl' ? '/nl/' : '/'),
-        image: business.url + '/images/rent/IMG_4042.jpeg',
+        url: business.url + (nl ? '/nl/' : '/'),
+        image: business.url + '/images/hero.jpg',
         telephone: business.phone,
         email: business.email,
         address: { '@type': 'PostalAddress', addressLocality: business.locality, addressRegion: business.region, addressCountry: business.country },
@@ -168,130 +94,69 @@ const jsonLd = [
     }
 ];
 ---
-<Base lang={lang} title={copy.title} description={copy.description} ogImage="/images/rent/IMG_4042.jpeg" jsonLd={jsonLd}>
-    <section class="hero">
-        <Photo class="hero-img" src="/images/rent/IMG_4042.jpeg" width={1920} height={1440} alt={copy.heroAlt} sizes="100vw" eager />
-        <div class="wrap">
-            <h1>{copy.h1}</h1>
-            <p class="lede">{copy.lede}</p>
-            <div class="hero-actions">
-                <a class="btn btn-sand" href={href(lang, 'rent.html')}>{copy.ctaRent}</a>
-                <a class="btn btn-light" href={href(lang, 'build.html')}>{copy.ctaBuild}</a>
-            </div>
-            <ul class="facts">{copy.facts.map((f) => <li>{f}</li>)}</ul>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="wrap">
-            <span class="eyebrow">{copy.pathsEyebrow}</span>
-            <h2>{copy.pathsTitle}</h2>
-            <div class="paths">
-                <article class="path">
-                    <Photo src="/images/rent/IMG_4254.jpeg" width={1960} height={1470} alt={copy.rentAlt} />
-                    <div class="path-body">
-                        <h3>{copy.rentTitle}</h3>
-                        <p class="price">{copy.rentPrice} <small>{copy.rentPriceNote}</small></p>
-                        <ul>{copy.rentPoints.map((p) => <li>{p}</li>)}</ul>
-                        <a class="btn btn-primary" href={href(lang, 'rent.html')}>{copy.rentCta}</a>
-                    </div>
-                </article>
-                <article class="path">
-                    <Photo src="/images/rent/IMG_4829.jpeg" width={1960} height={1938} alt={copy.buildAlt} />
-                    <div class="path-body">
-                        <h3>{copy.buildTitle}</h3>
-                        <p class="price">{copy.buildPrice} <small>{copy.buildPriceNote}</small></p>
-                        <ul>{copy.buildPoints.map((p) => <li>{p}</li>)}</ul>
-                        <a class="btn btn-primary" href={href(lang, 'build.html')}>{copy.buildCta}</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section class="section tint">
-        <div class="wrap">
-            <span class="eyebrow">{copy.onboardEyebrow}</span>
-            <h2>{copy.onboardTitle}</h2>
-            <div class="onboard">
-                {copy.onboard.map((o) => (
-                    <figure>
-                        <Photo src={o.src} width={o.w} height={o.h} alt={o.t} sizes="(max-width: 860px) 50vw, 25vw" />
-                        <figcaption><b>{o.t}</b>{o.d}</figcaption>
-                    </figure>
-                ))}
-            </div>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="wrap">
-            <span class="eyebrow">{copy.stepsEyebrow}</span>
-            <h2>{copy.stepsTitle}</h2>
-            <ol class="steps">
-                {copy.steps.map((s) => <li><h3>{s.t}</h3><p>{s.d}</p></li>)}
-            </ol>
-            <p style="margin-top:28px"><a class="btn btn-primary" href={href(lang, 'rent.html')}>{copy.stepsCta}</a></p>
-        </div>
-    </section>
-
-    <section class="section tint">
-        <div class="wrap split">
-            <div>
-                <span class="eyebrow">{copy.storiesEyebrow}</span>
-                <h2>{copy.storiesTitle}</h2>
-                <p class="lede">{copy.storiesText}</p>
-                <ul class="story-list">
-                    {copy.stories.map((s) => (
-                        <li>
-                            {s.soon
-                                ? <b>{s.t}</b>
-                                : <a href={href(lang, s.page)}><b>{s.t}</b></a>}
-                            {s.soon && <span class="badge">{copy.soon}</span>}
-                            <span>{s.d}</span>
-                        </li>
-                    ))}
-                </ul>
-                <a class="btn btn-outline" href={href(lang, 'stories.html')}>{copy.storiesCta}</a>
-            </div>
-            <Photo src="/images/rent/IMG_5025.jpeg" width={1960} height={1470} alt={copy.storiesAlt} />
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="wrap split">
-            <Photo src="/images/rent-gear/roofbox1.png" width={640} height={480} alt={copy.gearAlt} />
-            <div>
-                <span class="eyebrow">{copy.gearEyebrow}</span>
-                <h2>{copy.gearTitle}</h2>
-                <p class="lede">{copy.gearText}</p>
-                <a class="btn btn-outline" href={href(lang, 'rent-gear.html')}>{copy.gearCta}</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="section tint">
-        <div class="wrap">
-            <h2>{copy.faqTitle}</h2>
-            <div class="faq">
-                {copy.faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
-            </div>
-            <p style="margin-top:20px"><a href={href(lang, 'faq.html')}>{copy.faqMore} →</a></p>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="wrap">
-            <div class="cta-band">
-                <div>
-                    <h2>{copy.ctaTitle}</h2>
-                    <p>{copy.ctaText}</p>
-                </div>
-                <div class="actions">
-                    <a class="btn btn-sand" href={`mailto:${business.email}`}>{copy.ctaMail}</a>
-                    <a class="btn btn-light" href={`tel:${business.phone}`}>{copy.ctaCall} {business.phoneDisplay}</a>
+<Base lang={lang} title={copy.title} description={copy.description} jsonLd={jsonLd}>
+    <section class="wrap hero">
+        <div class="frame">
+            <Photo class="cover" src="/images/hero.jpg" width={1960} height={1470} alt={nl ? 'Onze Ranger met twee daktenten in het bos' : 'Our Ranger with two rooftop tents in a forest'} sizes="(max-width: 1240px) 100vw, 1240px" eager />
+            <div class="txt">
+                <span class="kicker">{copy.kicker}</span>
+                <h1>{copy.h1}</h1>
+                <p>{copy.lede}</p>
+                <div class="row">
+                    <a class="btn sand" href={href(lang, 'build.html')}>{copy.cta} <span class="ar" aria-hidden="true">→</span></a>
+                    <a class="link" href="#try">{copy.try}</a>
                 </div>
             </div>
+            <ul class="chips">{copy.chips.map((c) => <li>{c}</li>)}</ul>
+        </div>
+    </section>
+
+    <section class="wrap section">
+        <InTheBack lang={lang} />
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <div class="sheet-wrap topo">
+            <div class="head-row">
+                <div><span class="kicker">{copy.sheetKicker}</span><h2>{copy.sheetTitle}</h2></div>
+                <a class="link" href={href(lang, 'build.html')}>{copy.sheetMore}</a>
+            </div>
+            <BuildSheet lang={lang} />
+            <p style="margin:26px 0 0"><a class="btn" href={href(lang, 'build.html#plan')}>{copy.sheetCta} <span class="ar" aria-hidden="true">→</span></a></p>
+        </div>
+    </section>
+
+    <section class="wrap" id="try" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <TryRanger lang={lang} />
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <GearBand lang={lang} />
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <div class="head-row">
+            <div><span class="kicker">{copy.storiesKicker}</span><h2>{copy.storiesTitle}</h2></div>
+            <a class="link" href={href(lang, 'stories.html')}>{copy.storiesMore}</a>
+        </div>
+        <div class="cards3">
+            {copy.stories.map((s) => {
+                const inner = (
+                    <>
+                        <div class="frame"><Photo class="cover" src={s.img} width={s.w} height={s.h} alt={s.t} sizes="(max-width: 860px) 100vw, 33vw" /></div>
+                        <b>{s.t}</b><span>{s.d}</span>
+                        {!s.page && <><br><span class="soon">{copy.soon}</span></>}
+                    </>
+                );
+                return s.page ? <a class="scard" href={href(lang, s.page)}>{inner}</a> : <div class="scard">{inner}</div>;
+            })}
+        </div>
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <h2 style="margin-bottom:22px">{copy.faqTitle}</h2>
+        <div class="faq">
+            {copy.faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}
         </div>
     </section>
 </Base>

@@ -1,0 +1,27 @@
+---
+// Roof box and bike carrier: our own gear and everyone else's on Gearhive
+import Photo from './Photo.astro';
+import { href, type Lang } from '../i18n';
+import { links } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+---
+<div class="gear">
+    <div class="ph">
+        <Photo class="cover" src="/images/rent-gear/roofbox1.png" width={640} height={480} alt={nl ? 'Hapro dakkoffer op een auto' : 'Hapro roof box on a car'} />
+    </div>
+    <div class="txt">
+        <span class="kicker">{nl ? 'Alleen meer ruimte nodig?' : 'Just need more space?'}</span>
+        <h2>{nl ? 'Huur een dakkoffer of fietsendrager' : 'Rent a roof box or bike carrier'}</h2>
+        <p>{nl
+            ? 'Die van ons staan op Gearhive, net als spullen van mensen bij jou in de buurt.'
+            : 'Ours are on Gearhive, and so is gear from people near you.'}</p>
+        <div class="chips">
+            {links.gearhiveCategories.map((c) => <a href={c.url} rel="noopener">{c[lang]}</a>)}
+            <a href={href(lang, 'rent-gear.html')}>{nl ? 'Onze dakkoffer en drager' : 'Our roof box and carrier'}</a>
+        </div>
+        <a class="btn" href={links.gearhive} rel="noopener">{nl ? 'Bekijk op Gearhive' : 'Find gear on Gearhive'} <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+</div>

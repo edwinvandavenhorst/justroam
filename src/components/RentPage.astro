@@ -1,0 +1,234 @@
+---
+import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import RangerCalendar from './RangerCalendar.astro';
+import InTheBack from './InTheBack.astro';
+import GearBand from './GearBand.astro';
+import { href, type Lang } from '../i18n';
+import { business, links, ranger, packages } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+const r = ranger;
+
+const icons: Record<string, string> = {
+    tent: 'M3 20h18M5 20 12 5l7 15M12 5v15',
+    key: 'M8 19a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM11 12l9-9M17 6l3 3M15 8l2 2',
+    shield: 'M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM8.5 12l2.5 2.5 4.5-5',
+    cal: 'M3 5h18v16H3zM3 10h18M8 3v4M16 3v4',
+    fire: 'M12 3c2 4 6 5 6 10a6 6 0 0 1-12 0c0-3 2-4 3-6 1 2 2 2 3 1-1-2 0-4 0-5z',
+    snow: 'M12 2v20M4 7l16 10M20 7 4 17',
+    drop: 'M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z',
+    plug: 'M9 3v5M15 3v5M6 8h12v4a6 6 0 0 1-12 0zM12 18v3',
+    car: 'M3 15l2-6h14l2 6v4H3zM7.5 17h.01M16.5 17h.01',
+    hook: 'M12 3v9a4 4 0 1 1-4 4',
+    sun: 'M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM12 1v3M12 20v3M1 12h3M20 12h3'
+};
+
+const copy = {
+    en: {
+        title: 'Rent a Ford Ranger with Rooftop Tents | Voorburg | JustRoam',
+        description: `Rent our fully equipped Ford Ranger with two rooftop tents (sleeps 4), kitchen and recovery gear from €${r.fromPerDay} a day. Pick up in Voorburg, book via Goboony.`,
+        kicker: 'Rent the Ranger',
+        h1: 'Ford Ranger with two rooftop tents, fully equipped',
+        spec: `${r.sleeps} sleeping spots · 2 rooftop tents · 4WD · diesel, manual`,
+        hostT: 'Hosted by Edwin and family',
+        hostD: 'We built this Ranger ourselves over seven months, for our own trips',
+        highlights: [
+            ['key', 'Full handover in Voorburg', 'We walk you through every system before you leave.'],
+            ['shield', 'Insurance and breakdown cover included', 'You book and pay through Goboony. A deposit applies.'],
+            ['cal', 'Longer trips cost less', `${r.discounts[0].percent}% off from ${r.discounts[0].weeks} weeks, ${r.discounts[1].percent}% off from ${r.discounts[1].weeks} weeks.`]
+        ],
+        onboardT: 'What is on board',
+        onboard: [
+            ['tent', 'Two rooftop tents, 140 and 160 cm, 250 cm mattresses'],
+            ['fire', 'Two-burner gas stove, pans, cutlery, coffee maker'],
+            ['snow', '45 L fridge'],
+            ['drop', '50 L water tank with pump'],
+            ['plug', 'USB-A, USB-C and power outlets'],
+            ['car', 'Upgraded suspension, 4WD'],
+            ['hook', 'Winch, recovery boards, compressor'],
+            ['sun', 'Awning with LED lights, table and chairs']
+        ],
+        availT: 'Availability and day prices',
+        availNote: 'Prices per day as shown on Goboony, including the Goboony service fee.',
+        knowT: 'Things to know',
+        know: [
+            ['Drivers', `Age ${r.minAge} or older, licence held for at least ${r.licenceYears} years.`],
+            ['Trips', 'A weekend away or weeks across Europe and North Africa.'],
+            ['House rules', 'Not available for parties or festivals.']
+        ],
+        backTitle: 'Everything has a place',
+        faqT: 'Questions about renting',
+        priceFrom: 'per day, from',
+        rows: [['Cleaning, once', `€${r.cleaningFee}`], [`${r.discounts[0].weeks}+ weeks`, `-${r.discounts[0].percent}%`], [`${r.discounts[1].weeks}+ weeks`, `-${r.discounts[1].percent}%`], ['Insurance, breakdown cover', 'included']],
+        checkDates: 'Check the dates',
+        book: 'Book on Goboony',
+        bookNote: 'You book and pay on Goboony',
+        bandT: 'Like the setup? We build it into your truck.',
+        bandP: 'The Ranger you are looking at is our own build. Three packages, from the basics to fully overland ready.',
+        bandCta: 'Plan your build',
+        pkDesc: ['Canopy, power, solar', 'Plus kitchen and water', 'Tents, awning, recovery']
+    },
+    nl: {
+        title: 'Ford Ranger met daktenten huren | Voorburg | JustRoam',
+        description: `Huur onze volledig uitgeruste Ford Ranger met twee daktenten (slaapt 4), keuken en bergingsuitrusting vanaf €${r.fromPerDay} per dag. Ophalen in Voorburg, boeken via Goboony.`,
+        kicker: 'Ranger huren',
+        h1: 'Ford Ranger met twee daktenten, volledig uitgerust',
+        spec: `${r.sleeps} slaapplekken · 2 daktenten · 4WD · diesel, handgeschakeld`,
+        hostT: 'Verhuurd door Edwin en gezin',
+        hostD: 'We bouwden deze Ranger zelf in zeven maanden, voor onze eigen reizen',
+        highlights: [
+            ['key', 'Uitgebreide overdracht in Voorburg', 'We lopen alle systemen met je door voordat je vertrekt.'],
+            ['shield', 'Verzekering en pechhulp inbegrepen', 'Je boekt en betaalt via Goboony. Er geldt een borg.'],
+            ['cal', 'Langer weg is goedkoper', `${r.discounts[0].percent}% korting vanaf ${r.discounts[0].weeks} weken, ${r.discounts[1].percent}% vanaf ${r.discounts[1].weeks} weken.`]
+        ],
+        onboardT: 'Wat zit erin',
+        onboard: [
+            ['tent', 'Twee daktenten, 140 en 160 cm, matrassen van 250 cm'],
+            ['fire', 'Tweepits gasstel, pannen, bestek, koffiezetter'],
+            ['snow', '45 L koelkast'],
+            ['drop', '50 L watertank met pomp'],
+            ['plug', 'USB-A, USB-C en stopcontacten'],
+            ['car', 'Verbeterde vering, 4WD'],
+            ['hook', 'Lier, zandplaten, compressor'],
+            ['sun', 'Luifel met LED-verlichting, tafel en stoelen']
+        ],
+        availT: 'Beschikbaarheid en dagprijzen',
+        availNote: 'Prijzen per dag zoals getoond op Goboony, inclusief Goboony servicekosten.',
+        knowT: 'Goed om te weten',
+        know: [
+            ['Bestuurders', `${r.minAge} jaar of ouder, rijbewijs minstens ${r.licenceYears} jaar.`],
+            ['Reizen', 'Een weekend weg of weken door Europa en Noord-Afrika.'],
+            ['Huisregels', 'Niet beschikbaar voor feesten of festivals.']
+        ],
+        backTitle: 'Alles heeft een plek',
+        faqT: 'Vragen over huren',
+        priceFrom: 'per dag, vanaf',
+        rows: [['Schoonmaak, eenmalig', `€${r.cleaningFee}`], [`${r.discounts[0].weeks}+ weken`, `-${r.discounts[0].percent}%`], [`${r.discounts[1].weeks}+ weken`, `-${r.discounts[1].percent}%`], ['Verzekering, pechhulp', 'inbegrepen']],
+        checkDates: 'Bekijk de data',
+        book: 'Boek via Goboony',
+        bookNote: 'Je boekt en betaalt op Goboony',
+        bandT: 'Mooi zo? Wij bouwen het in jouw auto.',
+        bandP: 'De Ranger die je hier ziet is onze eigen ombouw. Drie pakketten, van de basis tot volledig overland-klaar.',
+        bandCta: 'Plan je ombouw',
+        pkDesc: ['Opbouw, stroom, zonnepaneel', 'Plus keuken en water', 'Tenten, luifel, berging']
+    }
+}[lang];
+
+// Same answers as before, kept for search engines and AI answers
+const faq = nl ? [
+    { q: 'Wat is inbegrepen bij het huren van de Ford Ranger?', a: 'Een volledig uitgeruste Ford Ranger met twee daktenten (slaapplek voor 4), basiskampeeruitrusting, keukenbenodigdheden (50 L watertank, 45 L koelkast, tweepits gasstel, kookgerei, koffiezetter), een luifel met LED-verlichting, kampeermeubilair en bergingsuitrusting (lier, zandplaten, compressor). Voor vertrek krijg je een uitgebreide overdracht.' },
+    { q: 'Wat zijn de voorwaarden?', a: `Je bent minimaal ${r.minAge} jaar en hebt minstens ${r.licenceYears} jaar een geldig rijbewijs. Verzekering en pechhulp zijn inbegrepen en er geldt een borg. Niet beschikbaar voor feesten of festivals.` },
+    { q: 'Voor hoeveel personen is er slaapplek?', a: 'Voor 4 personen, in twee daktenten van 140 en 160 cm, beide met matrassen van 250 cm lang.' },
+    { q: 'Wat kost het?', a: `Vanaf €${r.fromPerDay} per dag zoals getoond op Goboony (inclusief servicekosten), plus eenmalig €${r.cleaningFee} schoonmaakkosten. 10% korting vanaf 2 weken en 15% vanaf 3 weken. Actuele prijzen en beschikbaarheid staan op Goboony.` }
+] : [
+    { q: 'What is included when I rent the Ford Ranger?', a: 'A fully equipped Ford Ranger with two rooftop tents (sleeps 4), basic camping equipment, kitchen supplies (50 L water tank, 45 L fridge, two-burner gas stove, cookware, coffee maker), an awning with LED lighting, camp furniture and recovery gear (winch, recovery boards, compressor). You get a full handover before you leave.' },
+    { q: 'What are the requirements?', a: `You are at least ${r.minAge} and have held a valid licence for at least ${r.licenceYears} years. Insurance and breakdown cover are included and a deposit applies. Not available for parties or festivals.` },
+    { q: 'How many people does it sleep?', a: 'Four, in two rooftop tents of 140 and 160 cm, both with 250 cm long mattresses.' },
+    { q: 'How much does it cost?', a: `From €${r.fromPerDay} a day as shown on Goboony (service fee included), plus a one-time €${r.cleaningFee} cleaning fee. 10% off from 2 weeks and 15% from 3 weeks. Live prices and availability are on Goboony.` }
+];
+
+const jsonLd = [
+    {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: nl ? 'Ford Ranger met twee daktenten huren' : 'Ford Ranger rental with two rooftop tents',
+        serviceType: nl ? 'Overland camper verhuur' : 'Overland camper rental',
+        provider: { '@type': 'LocalBusiness', name: business.name, url: business.url, telephone: business.phone, address: { '@type': 'PostalAddress', addressLocality: business.locality, addressCountry: business.country } },
+        areaServed: { '@type': 'Continent', name: 'Europe' },
+        image: business.url + '/images/rent/IMG_4042.jpeg',
+        offers: {
+            '@type': 'Offer',
+            url: links.goboony,
+            availability: 'https://schema.org/InStock',
+            priceCurrency: 'EUR',
+            priceSpecification: { '@type': 'UnitPriceSpecification', minPrice: r.fromPerDay, maxPrice: r.maxPerDay, priceCurrency: 'EUR', unitCode: 'DAY' }
+        }
+    },
+    { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }
+];
+
+const mosaic = [
+    { src: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, en: 'The Ranger at night with both tents lit', nl: 'De Ranger in het donker met beide tenten verlicht' },
+    { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, en: 'Slide-out kitchen', nl: 'Uitschuifkeuken' },
+    { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, en: 'The Ranger by a lake', nl: 'De Ranger bij een meer' },
+    { src: '/images/rent/IMG_4866.jpeg', w: 1960, h: 2613, en: 'Ladder up to the tent', nl: 'Ladder naar de tent' },
+    { src: '/images/rent/IMG_4841.jpeg', w: 1960, h: 2614, en: '45 litre fridge', nl: '45 liter koelkast' }
+];
+---
+<Base lang={lang} title={copy.title} description={copy.description} ogImage="/images/rent/IMG_4042.jpeg" jsonLd={jsonLd}>
+    <div class="wrap">
+        <div class="intro">
+            <span class="kicker">{copy.kicker}</span>
+            <h1>{copy.h1}</h1>
+        </div>
+        <div class="mosaic">
+            {mosaic.map((m, i) => <Photo class="cover" src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes={i === 0 ? '(max-width: 860px) 100vw, 50vw' : '25vw'} eager={i === 0} />)}
+        </div>
+
+        <div class="listing">
+            <div>
+                <p class="spec"><b>{copy.spec}</b></p>
+                <div class="host"><span class="avatar">E</span><div><b>{copy.hostT}</b><br><span>{copy.hostD}</span></div></div>
+                <ul class="highlights">
+                    {copy.highlights.map(([ic, t, d]) => (
+                        <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d={icons[ic]} /></svg><div><b>{t}</b><span>{d}</span></div></li>
+                    ))}
+                </ul>
+                <div class="block">
+                    <h2>{copy.onboardT}</h2>
+                    <ul class="amenities">
+                        {copy.onboard.map(([ic, t]) => <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d={icons[ic]} /></svg><span>{t}</span></li>)}
+                    </ul>
+                </div>
+                <div class="block" id="availability">
+                    <h2>{copy.availT}</h2>
+                    <RangerCalendar lang={lang} />
+                    <p style="color:var(--muted);font-size:14px;margin-top:12px">{copy.availNote}</p>
+                </div>
+                <div class="block">
+                    <h2>{copy.knowT}</h2>
+                    <div class="know">{copy.know.map(([t, d]) => <div><b>{t}</b>{d}</div>)}</div>
+                </div>
+            </div>
+
+            <aside>
+                <div class="book">
+                    <div class="price">€{r.fromPerDay} <small>{copy.priceFrom}</small></div>
+                    <div class="rows">{copy.rows.map(([a, b]) => <div class="row"><span>{a}</span><b>{b}</b></div>)}</div>
+                    <a class="btn" href={links.goboony} rel="noopener">{copy.book} <span class="ar" aria-hidden="true">→</span></a>
+                    <span class="note">{copy.bookNote}</span>
+                    <a class="link second" href="#availability">{copy.checkDates}</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <InTheBack lang={lang} title={copy.backTitle} photoRight />
+    </section>
+
+    <section class="build-band">
+        <div class="wrap">
+            <div>
+                <h2>{copy.bandT}</h2>
+                <p>{copy.bandP}</p>
+                <a class="btn sand" href={href(lang, 'build.html#plan')}>{copy.bandCta} <span class="ar" aria-hidden="true">→</span></a>
+            </div>
+            <div class="pk-links">
+                {packages.map((p, i) => <a href={href(lang, 'build.html')}><b>{p.name}</b><span>{copy.pkDesc[i]} · {p.months[lang]}</span></a>)}
+            </div>
+        </div>
+    </section>
+
+    <section class="wrap section">
+        <h2 style="margin-bottom:22px">{copy.faqT}</h2>
+        <div class="faq">{faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+    </section>
+
+    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+        <GearBand lang={lang} />
+    </section>
+</Base>
