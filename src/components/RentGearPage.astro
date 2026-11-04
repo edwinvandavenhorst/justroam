@@ -1,0 +1,219 @@
+---
+// Roof box and bike carrier, booked through the Gearhive booking module.
+// The page doubles as a showcase: other rental companies can see the module
+// working on a normal website and copy the three lines that put it there.
+import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import { href, type Lang } from '../i18n';
+import { gearFaq } from '../data/faq';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+
+// Gearhive ids: one per listing, and one for everything we rent out.
+const gearhive = {
+    embed: 'https://gearhive.nl/embed.js',
+    host: 'ac1e36bb-58c0-46d4-b191-f7f058dc0f2a',
+    signup: 'https://gearhive.nl/signup'
+};
+
+const items = [
+    {
+        id: 'roofbox',
+        listing: '096b796a-3205-4700-b45c-bfb84f6d5ef6',
+        url: 'https://gearhive.nl/advertentie/hapro-dakkoffer-van-410l-voorburg-096b796a-3205-4700-b45c-bfb84f6d5ef6',
+        photos: ['/images/rent-gear/roofbox1.png', '/images/rent-gear/roofbox2.png', '/images/rent-gear/roofbox3.png'],
+        en: {
+            kicker: 'Roof box', name: 'Hapro Traxer 6.6',
+            specs: [['Capacity', '410 litres'], ['Outer size', '191 × 81 × 42 cm'], ['Inner size', '186 × 76 × 41 cm'], ['Empty weight', '18 kg'], ['Max. load', '75 kg'], ['Opens', 'both sides'], ['Colour', 'anthracite']],
+            good: ['Fits about 6 pairs of skis, or bulky holiday luggage', 'You need load-rated roof bars on your car (not included)', 'We put the box on your roof, as long as the bars are fitted'],
+            more: ['Need a different size, or is it booked?', 'Rent a roof box nearby on Gearhive', 'https://gearhive.nl/categorie/dakkoffers_kist']
+        },
+        nl: {
+            kicker: 'Dakkoffer', name: 'Hapro Traxer 6.6',
+            specs: [['Inhoud', '410 liter'], ['Buitenmaten', '191 × 81 × 42 cm'], ['Binnenmaten', '186 × 76 × 41 cm'], ['Leeggewicht', '18 kg'], ['Max. belading', '75 kg'], ['Opent', 'aan beide kanten'], ['Kleur', 'antraciet']],
+            good: ["Past ongeveer 6 paar ski's, of volumineuze vakantiebagage", 'Je hebt belastbare dakdragers op je auto nodig (niet inbegrepen)', 'Wij zetten de koffer op je dak, als de dragers erop zitten'],
+            more: ['Andere maat nodig, of al bezet?', 'Dakkoffer huren in de buurt via Gearhive', 'https://gearhive.nl/categorie/dakkoffers_kist']
+        }
+    },
+    {
+        id: 'carrier',
+        listing: 'e999812e-33ff-4475-b900-3f0d99e6d361',
+        url: 'https://gearhive.nl/advertentie/thule-fietsendrager-voor-3-fietsen-voorburg-e999812e-33ff-4475-b900-3f0d99e6d361',
+        photos: ['/images/rent-gear/bike-carrier1.png', '/images/rent-gear/bike-carrier2.png'],
+        en: {
+            kicker: 'Bike carrier', name: 'Thule VeloCompact 926',
+            specs: [['Capacity', '3 bikes (max. 2 e-bikes)'], ['Mounting', 'towbar, 13-pin plug'], ['Payload', '60 kg total, max. 25 kg per bike'], ['Empty weight', '19 kg'], ['Folds and tilts', 'for boot access'], ['Fits', 'frames 22–80 mm, wheels from 18"']],
+            good: ['Your car needs a type-approved towbar with a 13-pin socket', 'Tilts away from the car, so you can still open the boot', 'Wide wheel trays: mountain bikes welcome'],
+            more: ['Need room for more bikes, or is it booked?', 'Rent a bike carrier nearby on Gearhive', 'https://gearhive.nl/categorie/fietsendragers']
+        },
+        nl: {
+            kicker: 'Fietsendrager', name: 'Thule VeloCompact 926',
+            specs: [['Capaciteit', '3 fietsen (max. 2 e-bikes)'], ['Montage', 'trekhaak, 13-polige stekker'], ['Belasting', '60 kg totaal, max. 25 kg per fiets'], ['Leeggewicht', '19 kg'], ['Inklap- en kantelbaar', 'voor toegang tot de achterklep'], ['Geschikt voor', 'frames 22–80 mm, wielen vanaf 18"']],
+            good: ['Je auto heeft een goedgekeurde trekhaak met 13-polige aansluiting nodig', 'Kantelt weg van de auto, zodat je de achterklep nog open krijgt', 'Brede wielgoten: mountainbikes welkom'],
+            more: ['Meer fietsen mee, of al bezet?', 'Fietsendrager huren in de buurt via Gearhive', 'https://gearhive.nl/categorie/fietsendragers']
+        }
+    }
+];
+
+const copy = nl ? {
+    title: 'Huur een Dakkoffer & Fietsendrager | Voorburg | JustRoam',
+    description: 'Huur een Hapro Traxer 6.6 dakkoffer (410 L) en een Thule VeloCompact 926 fietsendrager (3 fietsen, 2 e-bikes) in Voorburg. Direct boeken, persoonlijk ophalen.',
+    kicker: 'Dakkoffer en fietsendrager',
+    h1: 'Meer ruimte voor je reis',
+    lead: 'Huur onze Hapro dakkoffer voor 410 liter extra bagageruimte, of onze Thule fietsendrager voor drie fietsen. Los of samen, op te halen in Voorburg.',
+    book: 'Kies en boek', faqLink: 'Vragen over huren',
+    goodT: 'Goed om te weten', bookT: 'Prijs, data en boeken', openListing: 'Open op Gearhive',
+    bothT: 'Beide tegelijk?', bothP: 'Kies je spullen en je data en boek in een keer. Je hebt geen account nodig.',
+    showKicker: 'Voor verhuurders',
+    showT: 'Deze boekingsmodule is Gearhive',
+    showP: 'Verhuur je zelf materiaal? Zet dezelfde module op je eigen website. Ze neemt de kleur van je knoppen, je tekstkleur en je lettertype over. Wat je op Gearhive aanpast, zoals prijzen of beschikbaarheid, staat meteen ook op je site.',
+    showSteps: ['Zet je spullen op Gearhive', 'Plak deze drie regels op je site, met je eigen ID', 'Bezoekers boeken direct, zonder je site te verlaten'],
+    showCta: 'Begin met verhuren op Gearhive',
+    snippetNote: 'Alles van één verhuurder, of één advertentie:',
+    faqT: 'Veelgestelde vragen', faqAll: 'Alle vragen over de dakkoffer en fietsendrager'
+} : {
+    title: 'Rent a Roof Box & Bike Carrier | Voorburg | JustRoam',
+    description: 'Rent a Hapro Traxer 6.6 roof box (410 L) and a Thule VeloCompact 926 bike carrier (3 bikes, 2 e-bikes) in Voorburg. Book directly, collect in person.',
+    kicker: 'Roof box and bike carrier',
+    h1: 'More room for your trip',
+    lead: 'Rent our Hapro roof box for 410 litres of extra luggage space, or our Thule bike carrier for three bikes. Separately or together, collected in Voorburg.',
+    book: 'Choose and book', faqLink: 'Rental questions',
+    goodT: 'Good to know', bookT: 'Price, dates and booking', openListing: 'Open on Gearhive',
+    bothT: 'Both at once?', bothP: 'Choose your gear and dates and book in one go. No account needed.',
+    showKicker: 'For rental companies',
+    showT: 'This booking module is Gearhive',
+    showP: 'Do you rent out gear yourself? Put the same module on your own website. It takes on your button colour, text colour and font. Whatever you change on Gearhive, like prices or availability, shows on your site straight away.',
+    showSteps: ['List your gear on Gearhive', 'Paste these three lines into your site, with your own ID', 'Visitors book right there, without leaving your site'],
+    showCta: 'Start renting out on Gearhive',
+    snippetNote: 'Everything from one renter, or a single listing:',
+    faqT: 'Frequently asked questions', faqAll: 'All questions about the roof box and bike carrier'
+};
+
+const snippet = `<div data-gearhive-verhuurder="${nl ? 'JOUW-ID' : 'YOUR-ID'}"></div>
+<div data-gearhive-advertentie="${nl ? 'ADVERTENTIE-ID' : 'LISTING-ID'}"></div>
+<script src="https://gearhive.nl/embed.js" async></script>`;
+
+const faqPreview = gearFaq[lang].flatMap((g) => g.items).slice(0, 4);
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+        {
+            '@type': 'Product', name: 'Hapro Traxer 6.6 Roof Box', brand: { '@type': 'Brand', name: 'Hapro' }, model: 'Traxer 6.6',
+            description: '410 litre roof box, available for rent in Voorburg via Gearhive.',
+            image: 'https://justroam.nl/images/rent-gear/roofbox1.png',
+            additionalProperty: [
+                { '@type': 'PropertyValue', name: 'Capacity', value: '410 litres' },
+                { '@type': 'PropertyValue', name: 'Outer dimensions', value: '191 x 81 x 42 cm' },
+                { '@type': 'PropertyValue', name: 'Max load', value: '75 kg' },
+                { '@type': 'PropertyValue', name: 'Empty weight', value: '18 kg' },
+                { '@type': 'PropertyValue', name: 'Deposit', value: 'EUR 150, refundable' }
+            ],
+            offers: {
+                '@type': 'Offer', url: items[0].url, businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
+                availability: 'https://schema.org/InStock', priceCurrency: 'EUR', price: '7',
+                hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted' },
+                seller: { '@type': 'Organization', name: 'JustRoam' }
+            }
+        },
+        {
+            '@type': 'Product', name: 'Thule VeloCompact 926 Bike Carrier', brand: { '@type': 'Brand', name: 'Thule' }, model: 'VeloCompact 926',
+            description: 'Towbar-mounted bike carrier for 3 bikes (max 2 e-bikes), available for rent in Voorburg via Gearhive.',
+            image: 'https://justroam.nl/images/rent-gear/bike-carrier1.png',
+            additionalProperty: [
+                { '@type': 'PropertyValue', name: 'Capacity', value: '3 bikes, max 2 e-bikes' },
+                { '@type': 'PropertyValue', name: 'Payload', value: '60 kg total, max 25 kg per bike' },
+                { '@type': 'PropertyValue', name: 'Mounting', value: 'Towbar, 13-pin plug' },
+                { '@type': 'PropertyValue', name: 'Empty weight', value: '19 kg' },
+                { '@type': 'PropertyValue', name: 'Deposit', value: 'EUR 250, refundable' }
+            ],
+            offers: {
+                '@type': 'Offer', url: items[1].url, businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
+                availability: 'https://schema.org/InStock', priceCurrency: 'EUR', price: '8',
+                hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted' },
+                seller: { '@type': 'Organization', name: 'JustRoam' }
+            }
+        }
+    ]
+};
+---
+<Base lang={lang} title={copy.title} description={copy.description} ogImage="/images/rent-gear/roofbox1.png" jsonLd={jsonLd}>
+    <section class="wrap intro-split gear-intro">
+        <div>
+            <span class="kicker">{copy.kicker}</span>
+            <h1>{copy.h1}</h1>
+            <p class="lead">{copy.lead}</p>
+            <div class="row">
+                <a class="btn" href="#roofbox">{copy.book} <span class="ar" aria-hidden="true">→</span></a>
+                <a class="link" href={href(lang, 'faq-gear.html')}>{copy.faqLink}</a>
+            </div>
+        </div>
+        <div class="gear-pair">
+            <div class="ph"><Photo class="cover" src="/images/rent-gear/roofbox3.png" width={640} height={480} alt={nl ? 'Hapro dakkoffer' : 'Hapro roof box'} eager sizes="(max-width: 860px) 100vw, 30vw" /></div>
+            <div class="ph"><Photo class="cover" src="/images/rent-gear/bike-carrier2.png" width={480} height={640} alt={nl ? 'Thule fietsendrager op de trekhaak' : 'Thule bike carrier on a towbar'} eager sizes="(max-width: 860px) 100vw, 30vw" /></div>
+        </div>
+    </section>
+
+    <section class="wrap gear-items">
+        {items.map((it) => {
+            const c = it[lang];
+            return (
+                <article class="gear-item" id={it.id}>
+                    <div class="gear-photos">
+                        {it.photos.map((p, i) => (
+                            <div class={i === 0 ? 'ph main' : 'ph'}><Photo class="cover" src={p} width={p.includes('bike-carrier2') ? 480 : 640} height={p.includes('bike-carrier2') ? 640 : 480} alt={`${c.kicker} ${c.name}, ${nl ? 'foto' : 'photo'} ${i + 1}`} sizes={i === 0 ? '(max-width: 960px) 100vw, 45vw' : '15vw'} /></div>
+                        ))}
+                    </div>
+                    <span class="kicker">{c.kicker}</span>
+                    <h2>{c.name}</h2>
+                    <dl class="gear-specs">
+                        {c.specs.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+                    </dl>
+                    <h3>{copy.goodT}</h3>
+                    <ul class="checks">{c.good.map((g) => <li>{g}</li>)}</ul>
+                    <h3>{copy.bookT}</h3>
+                    <div class="gh-module" data-gearhive-advertentie={it.listing}>
+                        <a class="btn" href={it.url} rel="noopener">{copy.openListing} <span class="ar" aria-hidden="true">→</span></a>
+                    </div>
+                    <p class="gear-more">{c.more[0]} <a href={c.more[2]} rel="noopener">{c.more[1]}</a></p>
+                </article>
+            );
+        })}
+    </section>
+
+    <section class="wrap section gear-both" id="book">
+        <div class="gear-both-head">
+            <h2>{copy.bothT}</h2>
+            <p class="lead">{copy.bothP}</p>
+        </div>
+        <div class="gh-module" data-gearhive-verhuurder={gearhive.host}></div>
+    </section>
+
+    <section class="showcase">
+        <div class="wrap">
+            <div>
+                <span class="kicker">{copy.showKicker}</span>
+                <h2>{copy.showT}</h2>
+                <p>{copy.showP}</p>
+                <ol class="show-steps">{copy.showSteps.map((s) => <li>{s}</li>)}</ol>
+                <a class="btn sand" href={gearhive.signup} rel="noopener">{copy.showCta} <span class="ar" aria-hidden="true">→</span></a>
+            </div>
+            <div class="snippet">
+                <p>{copy.snippetNote}</p>
+                <pre><code>{snippet}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section class="wrap section">
+        <h2 style="margin-bottom:22px">{copy.faqT}</h2>
+        <div class="faq">
+            {faqPreview.map((f) => <details><summary>{f.q}</summary><p set:html={f.a} /></details>)}
+        </div>
+        <p style="margin-top:18px"><a class="link" href={href(lang, 'faq-gear.html')}>{copy.faqAll}</a></p>
+    </section>
+
+    <script is:inline src="https://gearhive.nl/embed.js" async></script>
+</Base>

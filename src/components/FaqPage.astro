@@ -1,0 +1,94 @@
+---
+// Full FAQ page: the Ranger and builds, or the roof box and bike carrier.
+// The questions live in src/data/faq.ts.
+import Base from '../layouts/Base.astro';
+import { href, type Lang } from '../i18n';
+import { business } from '../data/site';
+import { rangerFaq, gearFaq, plain } from '../data/faq';
+
+interface Props { lang: Lang; kind: 'ranger' | 'gear' }
+const { lang, kind } = Astro.props;
+const nl = lang === 'nl';
+const groups = (kind === 'ranger' ? rangerFaq : gearFaq)[lang];
+
+const copy = kind === 'ranger'
+    ? (nl ? {
+        title: 'Veelgestelde vragen over huren en ombouw | JustRoam',
+        description: 'Veelgestelde vragen over het huren van onze Ford Ranger met daktenten en over een overland-ombouw. Voorwaarden, verzekering, uitrusting en doorlooptijden.',
+        kicker: 'Veelgestelde vragen',
+        h1: 'Huren en ombouwen, alles wat je wilt weten',
+        lead: 'Over het huren van onze Ranger en het ombouwen van je eigen auto. Staat je vraag er niet bij? Mail of bel ons gerust.',
+        other: ['Vragen over de dakkoffer of fietsendrager?', 'faq-gear.html'],
+        cta: ['Bekijk data en prijzen', 'rent.html']
+    } : {
+        title: 'Overland Rental & Build FAQ | JustRoam | Netherlands',
+        description: 'Frequently asked questions about renting our Ford Ranger with rooftop tents and about overland builds. Requirements, insurance, equipment and build timelines.',
+        kicker: 'Frequently asked questions',
+        h1: 'Renting and building, all you need to know',
+        lead: "About renting our Ranger and building out your own vehicle. Can't find your question? Just email or call us.",
+        other: ['Questions about the roof box or bike carrier?', 'faq-gear.html'],
+        cta: ['See dates and prices', 'rent.html']
+    })
+    : (nl ? {
+        title: 'Dakkoffer & Fietsendrager Huur FAQ | JustRoam | Voorburg',
+        description: 'Veelgestelde vragen over het huren van de Hapro Traxer 6.6 dakkoffer en de Thule VeloCompact 926 fietsendrager. Boeken, voertuigeisen, borg en annuleren.',
+        kicker: 'Dakkoffer en fietsendrager',
+        h1: 'Veelgestelde vragen over ons materiaal',
+        lead: 'Alles over het huren van onze dakkoffer en fietsendrager in Voorburg.',
+        other: ['Vragen over de Ranger of een ombouw?', 'faq.html'],
+        cta: ['Bekijk de dakkoffer en drager', 'rent-gear.html']
+    } : {
+        title: 'Roof Box & Bike Carrier Rental FAQ | JustRoam | Voorburg',
+        description: 'Frequently asked questions about renting the Hapro Traxer 6.6 roof box and Thule VeloCompact 926 bike carrier. Booking, vehicle requirements, deposit and cancellation.',
+        kicker: 'Roof box and bike carrier',
+        h1: 'Questions about our gear',
+        lead: 'Everything about renting our roof box and bike carrier in Voorburg.',
+        other: ['Questions about the Ranger or a build?', 'faq.html'],
+        cta: ['See the roof box and carrier', 'rent-gear.html']
+    });
+
+const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: groups.flatMap((g) => g.items).map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: plain(f.a) }
+    }))
+};
+---
+<Base lang={lang} title={copy.title} description={copy.description} jsonLd={jsonLd}>
+    <section class="wrap faq-page">
+        <div class="faq-head">
+            <span class="kicker">{copy.kicker}</span>
+            <h1>{copy.h1}</h1>
+            <p class="lead">{copy.lead}</p>
+            <nav class="faq-jump" aria-label={nl ? 'Onderwerpen' : 'Topics'}>
+                {groups.map((g) => <a href={`#${g.id}`}>{g.title}</a>)}
+            </nav>
+        </div>
+
+        <div class="faq-body">
+            <div>
+                {groups.map((g) => (
+                    <section class="faq-group" id={g.id}>
+                        <h2>{g.title}</h2>
+                        <div class="faq">
+                            {g.items.map((f) => <details><summary>{f.q}</summary><p set:html={f.a} /></details>)}
+                        </div>
+                    </section>
+                ))}
+            </div>
+            <aside class="faq-side">
+                <div class="faq-ask">
+                    <h3>{nl ? 'Nog een vraag?' : 'Still have a question?'}</h3>
+                    <p>{nl ? 'We reageren meestal binnen een dag.' : 'We usually reply within a day.'}</p>
+                    <a class="btn" href={`mailto:${business.email}`}>{nl ? 'Mail ons' : 'Email us'} <span class="ar" aria-hidden="true">→</span></a>
+                    <a class="link" href={`tel:${business.phone}`}>{business.phoneDisplay}</a>
+                </div>
+                <a class="faq-other" href={href(lang, copy.other[1])}>{copy.other[0]} <span aria-hidden="true">→</span></a>
+                <a class="faq-other" href={href(lang, copy.cta[1])}>{copy.cta[0]} <span aria-hidden="true">→</span></a>
+            </aside>
+        </div>
+    </section>
+</Base>
