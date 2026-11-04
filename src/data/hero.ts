@@ -25,7 +25,7 @@ export type HeroPhoto = {
 };
 
 export const heroPhotos: HeroPhoto[] = [
-    { img: '/images/hero.jpg', w: 1960, h: 1470, focus: '50% 35%', focusMobile: '28% 50%', side: 'right' },
-    { img: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, focus: '50% 25%', focusMobile: '52% 50%', side: 'left' },
-    { img: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, focus: '50% 25%', focusMobile: '50% 50%', side: 'right' }
+    { img: '/images/hero.jpg', w: 1960, h: 1470, focus: '50% 63%', focusMobile: '28% 50%', side: 'right' },
+    { img: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, focus: '41% 29%', focusMobile: '52% 50%', side: 'left' },
+    { img: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, focus: '50% 28%', focusMobile: '50% 50%', side: 'right' }
 ];
