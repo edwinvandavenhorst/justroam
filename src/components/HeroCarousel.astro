@@ -5,31 +5,33 @@
 import Photo from './Photo.astro';
 import { href, type Lang } from '../i18n';
 import { ranger } from '../data/site';
+import { heroPhotos } from '../data/hero';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const nl = lang === 'nl';
 
 const slides = nl ? [
-    { img: '/images/hero.jpg', w: 1960, h: 1470, alt: 'Onze Ranger met twee daktenten in het bos', kicker: 'Overland-ombouw vanuit Voorburg', title: 'Van pickup naar overland-auto', text: 'Opbouw, stroom, keuken, water, tenten. We bouwen jouw auto om in drie duidelijke pakketten, zoals we onze eigen Ranger bouwden.', cta: ['Bekijk de ombouw', 'build.html'], link: ['Plan je ombouw', 'build.html#plan'] },
-    { img: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, alt: 'De Ranger in het donker met beide daktenten verlicht', kicker: 'Ranger huren', title: 'Probeer het overland-leven eerst', text: `Onze eigen Ranger met twee daktenten en een volledige keuken. Vanaf €${ranger.fromPerDay} per dag, te boeken via Goboony.`, cta: ['Bekijk data en prijzen', 'rent.html'], link: ['Waarom eerst huren?', '#try'] },
-    { img: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, alt: 'Uitschuifkeuken achterin de Ranger', kicker: 'Wat zit er achterin', title: 'Keuken, water en stroom, ingebouwd', text: 'Lades, een uitschuifkeuken, koelkast en water met buitendouche: het pakket Getting serious, in jouw eigen auto.', cta: ['Vergelijk de pakketten', 'build.html#packages'], link: ['Plan je ombouw', 'build.html#plan'] }
+    { alt: 'Onze Ranger met twee daktenten in het bos', kicker: 'Overland-ombouw vanuit Voorburg', title: 'Van pickup naar overland-auto', text: 'Opbouw, stroom, keuken, water, tenten. We bouwen jouw auto om in drie duidelijke pakketten, zoals we onze eigen Ranger bouwden.', cta: ['Bekijk de ombouw', 'build.html'], link: ['Plan je ombouw', 'build.html#plan'] },
+    { alt: 'De Ranger in het donker met beide daktenten verlicht', kicker: 'Ranger huren', title: 'Probeer het overland-leven eerst', text: `Onze eigen Ranger met twee daktenten en een volledige keuken. Vanaf €${ranger.fromPerDay} per dag, te boeken via Goboony.`, cta: ['Bekijk data en prijzen', 'rent.html'], link: ['Waarom eerst huren?', '#try'] },
+    { alt: 'Uitschuifkeuken achterin de Ranger', kicker: 'Wat zit er achterin', title: 'Keuken, water en stroom, ingebouwd', text: 'Lades, een uitschuifkeuken, koelkast en water met buitendouche: het pakket Getting serious, in jouw eigen auto.', cta: ['Vergelijk de pakketten', 'build.html#packages'], link: ['Plan je ombouw', 'build.html#plan'] }
 ] : [
-    { img: '/images/hero.jpg', w: 1960, h: 1470, alt: 'Our Ranger with two rooftop tents in a forest', kicker: 'Overland builds from Voorburg', title: 'From pickup to overland truck', text: 'Canopy, power, kitchen, water, tents. We build your truck in three clear packages, the same way we built our own Ranger.', cta: ['Explore builds', 'build.html'], link: ['Plan your build', 'build.html#plan'] },
-    { img: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, alt: 'The Ranger at night with both rooftop tents lit', kicker: 'Rent the Ranger', title: 'Try the overland life first', text: `Our own Ranger with two rooftop tents and a full kitchen. From €${ranger.fromPerDay} a day, booked via Goboony.`, cta: ['See dates and prices', 'rent.html'], link: ['Why rent first?', '#try'] },
-    { img: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, alt: 'Slide-out kitchen in the back of the Ranger', kicker: 'What is in the back', title: 'Kitchen, water and power, built in', text: 'Drawers, a slide-out kitchen, fridge and water with an outside shower: the Getting serious package, in your own truck.', cta: ['Compare the packages', 'build.html#packages'], link: ['Plan your build', 'build.html#plan'] }
+    { alt: 'Our Ranger with two rooftop tents in a forest', kicker: 'Overland builds from Voorburg', title: 'From pickup to overland truck', text: 'Canopy, power, kitchen, water, tents. We build your truck in three clear packages, the same way we built our own Ranger.', cta: ['Explore builds', 'build.html'], link: ['Plan your build', 'build.html#plan'] },
+    { alt: 'The Ranger at night with both rooftop tents lit', kicker: 'Rent the Ranger', title: 'Try the overland life first', text: `Our own Ranger with two rooftop tents and a full kitchen. From €${ranger.fromPerDay} a day, booked via Goboony.`, cta: ['See dates and prices', 'rent.html'], link: ['Why rent first?', '#try'] },
+    { alt: 'Slide-out kitchen in the back of the Ranger', kicker: 'What is in the back', title: 'Kitchen, water and power, built in', text: 'Drawers, a slide-out kitchen, fridge and water with an outside shower: the Getting serious package, in your own truck.', cta: ['Compare the packages', 'build.html#packages'], link: ['Plan your build', 'build.html#plan'] }
 ];
 const t = nl
     ? { label: 'Uitgelicht', prev: 'Vorige', next: 'Volgende', of: 'van', slide: 'Dia' }
     : { label: 'Highlights', prev: 'Previous', next: 'Next', of: 'of', slide: 'Slide' };
+const photos = heroPhotos;
 const to = (target: string) => (target.startsWith('#') ? target : href(lang, target));
 ---
 <section class="hero-full" id="hero" aria-roledescription="carousel" aria-label={t.label}>
     {slides.map((s, i) => (
-        <article class={i === 0 ? 'slide is-active' : 'slide'} aria-roledescription="slide" aria-label={`${i + 1} ${t.of} ${slides.length}`} aria-hidden={i === 0 ? undefined : 'true'}>
-            <Photo src={s.img} width={s.w} height={s.h} alt={s.alt} sizes="100vw" eager={i === 0} />
+        <article class={`slide side-${photos[i].side}${i === 0 ? ' is-active' : ''}`} style={`--focus: ${photos[i].focus}; --focus-m: ${photos[i].focusMobile}`} aria-roledescription="slide" aria-label={`${i + 1} ${t.of} ${slides.length}`} aria-hidden={i === 0 ? undefined : 'true'}>
+            <Photo src={photos[i].img} width={photos[i].w} height={photos[i].h} alt={s.alt} sizes="100vw" eager={i === 0} />
             <div class="slide-txt">
-                <div class="wrap">
+                <div class="wrap"><div class="slide-copy">
                     <span class="kicker">{s.kicker}</span>
                     {i === 0 ? <h1>{s.title}</h1> : <p class="h1">{s.title}</p>}
                     <p>{s.text}</p>
@@ -37,7 +39,7 @@ const to = (target: string) => (target.startsWith('#') ? target : href(lang, tar
                         <a class="btn sand" href={to(s.cta[1])} tabindex={i === 0 ? undefined : '-1'}>{s.cta[0]} <span class="ar" aria-hidden="true">→</span></a>
                         <a class="link" href={to(s.link[1])} tabindex={i === 0 ? undefined : '-1'}>{s.link[0]}</a>
                     </div>
-                </div>
+                </div></div>
             </div>
         </article>
     ))}
@@ -54,6 +56,7 @@ const to = (target: string) => (target.startsWith('#') ? target : href(lang, tar
         const slides = [...hero.querySelectorAll<HTMLElement>('.slide')];
         const dots = [...hero.querySelectorAll<HTMLButtonElement>('.hero-dots button')];
         const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const tuning = new URLSearchParams(location.search).has('tune');
         let current = 0;
         let timer: number | undefined;
 
@@ -69,7 +72,7 @@ const to = (target: string) => (target.startsWith('#') ? target : href(lang, tar
         };
         const stop = () => window.clearInterval(timer);
         const start = () => {
-            if (still) return;
+            if (still || tuning) return;
             stop();
             timer = window.setInterval(() => show(current + 1), 7000);
         };
@@ -92,5 +95,10 @@ const to = (target: string) => (target.startsWith('#') ? target : href(lang, tar
         });
 
         start();
+
+        // Photo tuning panel, only loaded when the address ends in ?tune.
+        if (tuning) {
+            import('../lib/hero-tuner').then((m) => m.mountTuner(hero, show, () => current));
+        }
     }
 </script>
