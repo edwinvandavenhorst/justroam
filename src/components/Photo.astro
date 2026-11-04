@@ -23,6 +23,7 @@ const { src, alt, width, height, sizes = '(max-width: 860px) 100vw, 50vw', class
     height={height}
     sizes={sizes}
     widths={[480, 800, 1200, 1600, 2000].filter((w) => w <= width)}
+    quality={75}
     class={className}
     loading={eager ? 'eager' : 'lazy'}
     fetchpriority={eager ? 'high' : 'auto'}
