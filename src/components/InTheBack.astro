@@ -9,11 +9,11 @@ const { lang, title, photoRight = false, cta = true } = Astro.props;
 const nl = lang === 'nl';
 
 const pins = [
-    { x: 50, y: 15, en: ['Rooftop tents', 'Sheepie Yuna, 140 and 160 cm, on top of the canopy'], nl: ['Daktenten', 'Sheepie Yuna, 140 en 160 cm, op de opbouw'] },
-    { x: 31, y: 46, en: ['Gas bottle', 'Refillable, feeds the two-burner stove'], nl: ['Gasfles', 'Navulbaar, voor het tweepits gasstel'] },
-    { x: 66, y: 47, en: ['Fire extinguisher', 'Within reach from the back'], nl: ['Brandblusser', 'Binnen handbereik vanaf achteren'] },
-    { x: 55, y: 57, en: ['45 L fridge', 'On its own slide'], nl: ['45 L koelkast', 'Op een eigen uitschuifplaat'] },
-    { x: 38, y: 68, en: ['Drawer system', 'Kitchen slide, cutlery and tools, axe at hand'], nl: ['Ladesysteem', 'Uitschuifkeuken, bestek en gereedschap, bijl bij de hand'] }
+    { x: 50, y: 15, en: ['Rooftop tents', 'Comfortable sleeping with a great view'], nl: ['Daktenten', 'Comfortabel slapen met een mooi uitzicht'] },
+    { x: 37, y: 56, en: ['Kitchen', 'Slide-out gas stove with pans and cutlery, to cook a good meal'], nl: ['Keuken', 'Uitschuifbaar gasstel met pannen en bestek, voor een goede maaltijd'] },
+    { x: 55, y: 58, en: ['Fridge', 'Keeps your drinks cold and your food fresh'], nl: ['Koelkast', 'Houdt je drinken koud en je eten vers'] },
+    { x: 38, y: 70, en: ['Storage', 'Room for your essentials, from recovery gear to dry food'], nl: ['Opbergruimte', 'Ruimte voor je spullen, van bergingsmateriaal tot houdbaar eten'] },
+    { x: 71, y: 63, en: ['Table and chairs', 'Set up camp, anywhere'], nl: ['Tafel en stoelen', 'Zet je kamp op, waar je maar wilt'] }
 ];
 const heading = title ?? (nl ? 'Alles heeft een plek' : 'Everything has a place');
 ---
