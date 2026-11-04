@@ -5,7 +5,24 @@
   "headers": [
     {
       "source": "/(.*)",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/:page(build|rent|stories|rent-gear|faq|faq-gear|contact|privacy|terms-gear|blog_build|thank-you)",
+      "destination": "/:page.html",
+      "permanent": true
+    },
+    {
+      "source": "/nl/:page(build|rent|stories|rent-gear|faq|faq-gear|contact|privacy|terms-gear|blog_build|thank-you)",
+      "destination": "/nl/:page.html",
+      "permanent": true
     }
   ]
 }
