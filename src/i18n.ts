@@ -27,16 +27,16 @@ export const nav = {
     en: [
         { page: 'build.html', label: 'Builds' },
         { page: 'rent.html', label: 'Rent the Ranger' },
-        { page: 'rent-gear.html', label: 'Roof box & bikes' },
+        { page: 'rent-gear.html', label: 'Rent gear' },
         { page: 'stories.html', label: 'Stories' },
-        { page: 'contact.html', label: 'Contact' }
+        { page: 'faq.html', label: 'FAQ' }
     ],
     nl: [
         { page: 'build.html', label: 'Ombouw' },
         { page: 'rent.html', label: 'Ranger huren' },
-        { page: 'rent-gear.html', label: 'Dakkoffer & fietsen' },
+        { page: 'rent-gear.html', label: 'Uitrusting huren' },
         { page: 'stories.html', label: 'Verhalen' },
-        { page: 'contact.html', label: 'Contact' }
+        { page: 'faq.html', label: 'FAQ' }
     ]
 };
 
