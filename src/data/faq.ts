@@ -50,7 +50,7 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
                 { q: 'What if I need help with the tents, the awning or the equipment?', a: 'No panic, using it for the first time is new for everyone. Call us and we will talk you through it or help you get going again.' },
                 { q: 'What if the Ranger breaks down?', a: "Breakdown cover (Europe only) is included. Call ANWB roadside assistance on <b>+31 88 269 2100</b>, and please let us know as well." },
                 { q: 'Can I extend my rental?', a: "If the Ranger isn't booked after your rental, an extension is usually possible. Contact us as soon as you know, and we'll check availability and arrange it." },
-                { q: 'What happens if I damage the Ranger?', a: "Insurance covers most damage, but you're responsible for the deductible (€1,250). We inspect the Ranger together before and after your rental to record its condition. Always report incidents straight away." },
+                { q: 'What happens if I damage the Ranger?', a: `Insurance covers most damage, but you're responsible for the deductible. The amount is shown in your ${goboony} booking. We inspect the Ranger together before and after your rental to record its condition. Always report incidents straight away.` },
                 { q: 'Is camping equipment included?', a: 'Yes: camping chairs, a table, cooking gear and basic kitchen supplies. You bring sleeping bags, pillows, food, personal items and your sense of adventure.' },
                 { q: 'What should I do at the end of my rental?', a: "Return the Ranger with a full tank of diesel, a clean interior and all equipment present. We'll walk around it together, check for damage and release your deposit if everything is in order." }
             ]
@@ -89,7 +89,7 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
             items: [
                 { q: 'Waar haal ik de Ranger op?', a: 'In Voorburg, bij Den Haag. Het precieze adres en de route krijg je zodra je boeking is bevestigd.' },
                 { q: 'Wat moet ik meenemen?', a: 'Je geldige rijbewijs. Betalen en de borg zijn al geregeld via Goboony. Bij het ophalen lopen we samen alles door, van de tenten tot de rest van de auto.' },
-                { q: 'Hoe zit het met de verzekering?', a: 'De verzekering loopt via Goboony. Pechhulp binnen Europa is standaard inbegrepen.' },
+                { q: 'Hoe zit het met de verzekering?', a: 'De verzekering loopt via Goboony; daar zie je ook het eigen risico. Pechhulp binnen Europa is standaard inbegrepen.' },
                 { q: 'Brengen jullie de Ranger ook?', a: 'Nee, je haalt hem op bij ons in Voorburg.' },
                 { q: 'Hoe lang duurt het ophalen?', a: 'Reken op ongeveer 30 tot 45 minuten. We laten je alles van de auto zien en hebben tijd voor je vragen. We willen dat je met een goed gevoel vertrekt.' }
             ]
@@ -104,7 +104,7 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
                 { q: 'Wat als ik hulp nodig heb met de tent, de luifel of de uitrusting?', a: 'Geen paniek, de eerste keer is alles nieuw. Bel ons, dan helpen we je telefonisch verder.' },
                 { q: 'Wat als ik pech krijg?', a: 'Pechhulp binnen Europa is inbegrepen. Bel de ANWB Wegenwacht op <b>+31 88 269 2100</b> en laat het ons ook even weten.' },
                 { q: 'Kan ik mijn huur verlengen?', a: 'Als de Ranger daarna nog vrij is, kan dat meestal. Neem zo snel mogelijk contact op, dan kijken we naar de beschikbaarheid.' },
-                { q: 'Wat als ik schade maak?', a: 'De verzekering dekt de meeste schade, maar het eigen risico (€1.250) is voor jou. We controleren de Ranger samen voor en na de huur en leggen de staat vast. Gebeurt er iets, laat het ons dan zo snel mogelijk weten.' },
+                { q: 'Wat als ik schade maak?', a: `De verzekering dekt de meeste schade, maar het eigen risico is voor jou. Het bedrag zie je in je boeking op ${goboony}. We controleren de Ranger samen voor en na de huur en leggen de staat vast. Gebeurt er iets, laat het ons dan zo snel mogelijk weten.` },
                 { q: 'Is kampeeruitrusting inbegrepen?', a: 'Ja: vier campingstoelen, een tafel, kookgerei, borden en bestek. Jij neemt een slaapzak, kussen, eten, je eigen spullen en zin in avontuur mee.' },
                 { q: 'Wat moet ik doen bij het terugbrengen?', a: 'Lever de Ranger volgetankt in, met een schoon interieur en alle uitrusting. We lopen samen een rondje om te zien of er schade is of iets ontbreekt.' }
             ]
