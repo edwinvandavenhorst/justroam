@@ -1,0 +1,35 @@
+---
+import { nav, ui, href, alternatePath, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const path = Astro.url.pathname;
+const other: Lang = lang === 'en' ? 'nl' : 'en';
+const isCurrent = (page: string) => path.replace(/\.html$/, '') === href(lang, page).replace(/\.html$/, '');
+---
+<header class="site-header">
+    <div class="wrap">
+        <a class="brand" href={href(lang, '')}>
+            <img src="/images/Logo_JustRoam_notext.svg" alt="" width="46" height="46">
+            JustRoam
+        </a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">{ui[lang].menu}</button>
+        <nav class="main-nav" id="main-nav" aria-label="Main">
+            <ul>
+                {nav[lang].map((item) => (
+                    <li><a href={href(lang, item.page)} aria-current={isCurrent(item.page) ? 'page' : undefined}>{item.label}</a></li>
+                ))}
+            </ul>
+        </nav>
+        <a class="lang-switch" href={alternatePath(path, other)} hreflang={other} lang={other}>{ui[lang].switchLabel}</a>
+    </div>
+</header>
+
+<script>
+    const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+    const menu = document.getElementById('main-nav');
+    toggle?.addEventListener('click', () => {
+        const open = menu?.classList.toggle('open') ?? false;
+        toggle.setAttribute('aria-expanded', String(open));
+    });
+</script>

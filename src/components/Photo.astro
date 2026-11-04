@@ -1,0 +1,29 @@
+---
+// A photo from /public/images, served resized and in AVIF/WebP by Vercel.
+// Width and height are the original pixel size, so the browser reserves
+// the right space before the image arrives.
+import { Image } from 'astro:assets';
+
+interface Props {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    sizes?: string;
+    class?: string;
+    eager?: boolean;
+}
+
+const { src, alt, width, height, sizes = '(max-width: 860px) 100vw, 50vw', class: className, eager = false } = Astro.props;
+---
+<Image
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    sizes={sizes}
+    widths={[480, 800, 1200, 1600, 2000].filter((w) => w <= width)}
+    class={className}
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : 'auto'}
+/>

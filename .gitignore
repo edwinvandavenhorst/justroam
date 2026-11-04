@@ -3,3 +3,7 @@
 .env.*.local
 .DS_Store
 LAPTOP-MIGRATION.md
+node_modules/
+dist/
+.astro/
+.vercel/

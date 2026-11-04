@@ -1,0 +1,55 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/archivo/wdth.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { alternatePath, type Lang } from '../i18n';
+
+interface Props {
+    lang: Lang;
+    title: string;
+    description: string;
+    ogImage?: string;
+    jsonLd?: object | object[];
+}
+
+const { lang, title, description, ogImage = '/images/hero.jpg', jsonLd } = Astro.props;
+const site = Astro.site!;
+const path = Astro.url.pathname;
+const canonical = new URL(path, site).href;
+const enUrl = new URL(alternatePath(path, 'en'), site).href;
+const nlUrl = new URL(alternatePath(path, 'nl'), site).href;
+const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <link rel="canonical" href={canonical}>
+    <link rel="alternate" hreflang="en" href={enUrl}>
+    <link rel="alternate" hreflang="nl" href={nlUrl}>
+    <link rel="alternate" hreflang="x-default" href={enUrl}>
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="JustRoam">
+    <meta property="og:url" content={canonical}>
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content={new URL(ogImage, site).href}>
+    <meta property="og:locale" content={lang === 'nl' ? 'nl_NL' : 'en_GB'}>
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+</head>
+<body>
+    <a class="skip" href="#main">{lang === 'nl' ? 'Naar de inhoud' : 'Skip to content'}</a>
+    <Header lang={lang} />
+    <main id="main">
+        <slot />
+    </main>
+    <Footer lang={lang} />
+</body>
+</html>

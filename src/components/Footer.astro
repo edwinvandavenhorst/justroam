@@ -1,0 +1,41 @@
+---
+import { nav, ui, href, type Lang } from '../i18n';
+import { business, links } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = ui[lang];
+---
+<footer class="site-footer">
+    <div class="wrap">
+        <div class="footer-grid">
+            <div>
+                <h4>JustRoam</h4>
+                <p>{t.footerTagline}</p>
+                <p>
+                    <a href={`mailto:${business.email}`}>{business.email}</a><br>
+                    <a href={`tel:${business.phone}`}>{business.phoneDisplay}</a><br>
+                    <a href={business.instagram} rel="noopener">Instagram</a>
+                </p>
+            </div>
+            <div>
+                <h4>{t.footerRent}</h4>
+                <ul>
+                    <li><a href={href(lang, 'rent.html')}>{nav[lang][0].label}</a></li>
+                    <li><a href={links.goboony} rel="noopener">Goboony</a></li>
+                    <li><a href={href(lang, 'rent-gear.html')}>{nav[lang][1].label}</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>{t.footerMore}</h4>
+                <ul>
+                    {nav[lang].slice(2).map((item) => <li><a href={href(lang, item.page)}>{item.label}</a></li>)}
+                    <li><a href={href(lang, 'privacy.html')}>{t.privacy}</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © JustRoam · KVK {business.kvk} · {business.locality}, {business.region}
+        </div>
+    </div>
+</footer>
