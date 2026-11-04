@@ -165,7 +165,7 @@ const mosaic = [
             <h1>{copy.h1}</h1>
         </div>
         <div class="mosaic">
-            {mosaic.map((m, i) => <Photo class="cover" src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes={i === 0 ? '(max-width: 860px) 100vw, 50vw' : '25vw'} eager={i === 0} />)}
+            {mosaic.map((m, i) => <Photo class="cover" src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes={i === 0 ? '(max-width: 860px) 100vw, 50vw' : '25vw'} eager />)}
         </div>
 
         <div class="listing">

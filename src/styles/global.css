@@ -297,3 +297,7 @@ p { margin: 0 0 1em; }
 .route-band .map { background: #2f1503; border-radius: 22px; padding: 12px; }
 .route-band .map svg { display: block; width: 100%; height: auto; border-radius: 14px; }
 @media (max-width: 860px) { .route-band .wrap { grid-template-columns: 1fr; } }
+
+/* photo halves of split cards fill their box without stretching it */
+.ph { position: relative; }
+.ph > img.cover { position: absolute; inset: 0; }
