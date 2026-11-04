@@ -1,7 +1,7 @@
 // Questions and answers for the two FAQ pages, in English and Dutch.
 // Answers may hold simple HTML (links, <b>). Change a text here and the page
 // and its Google FAQ data follow.
-import { business, links } from './site';
+import { business, links, ranger } from './site';
 
 export type Qa = { q: string; a: string };
 export type FaqGroup = { id: string; title: string; items: Qa[] };
@@ -9,6 +9,8 @@ export type FaqGroup = { id: string; title: string; items: Qa[] };
 const mail = `<a href="mailto:${business.email}">${business.email}</a>`;
 const gh = `<a href="${links.gearhive}" rel="noopener">Gearhive</a>`;
 const goboony = `<a href="${links.goboony}" rel="noopener">Goboony</a>`;
+const discEn = ranger.discounts.map((d) => `${d.percent}% from ${d.weeks} weeks`).join(', ');
+const discNl = ranger.discounts.map((d) => `${d.percent}% vanaf ${d.weeks} weken`).join(', ');
 
 export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
     en: [
@@ -17,13 +19,13 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
             title: 'Before you rent',
             items: [
                 { q: 'What are the rental requirements?', a: "You need a valid driving licence that you have held for at least 2 years, and you must be 25 or older. Please show your licence at pickup." },
-                { q: 'How do I book the Ranger?', a: `Through our ${goboony} page. For longer rentals (3+ weeks), contact us directly so we can discuss options and pricing.` },
+                { q: 'How do I book the Ranger?', a: `Through our ${goboony} page. Longer stays get a discount there: ${discEn}.` },
                 { q: "What's included in the rental?", a: 'The fully equipped Ford Ranger with two rooftop tents, basic camping equipment, kitchen supplies, mattress covers and recovery gear. Insurance and breakdown cover are included too. Sleeping bags and pillows are not.' },
                 { q: 'Is there a minimum rental period?', a: 'Yes, the minimum rental period is 2 days.' },
                 { q: 'Can I take the Ranger outside the Netherlands?', a: 'Yes. The Ranger is insured within Europe. Other international trips are possible: let us know your destination when booking, so we can make sure you have the right documents.' },
                 { q: 'What about tolls?', a: "Tolls are your responsibility. We'll let you know if there's a valid toll vignette on the car at the time of rental." },
                 { q: 'Can I bring pets?', a: 'Maybe! Let us know in advance so we can arrange proper cleaning afterwards. An extra cleaning fee may apply.' },
-                { q: 'Is there a security deposit?', a: 'Yes, a deposit of €1,200. It is released within 48 hours after we have inspected the Ranger on return.' },
+                { q: 'Is there a security deposit?', a: `Yes. The deposit is arranged through your ${goboony} booking, where you also see the amount. It is released after we have inspected the Ranger on return.` },
                 { q: 'Can I drive the Ranger to another country and leave it there?', a: 'No, the Ranger always comes back to the pickup location. All costs of recovering the car are charged to the renter, plus €1,000 per day of travel.' }
             ]
         },
@@ -32,7 +34,7 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
             title: 'Collecting the Ranger',
             items: [
                 { q: 'Where do I collect the Ranger?', a: "In Voorburg, near The Hague. We'll send the exact address and directions once your booking is confirmed." },
-                { q: 'What do I need to bring?', a: "Your valid driving licence and a payment method for the security deposit. We'll give you a full handover of all the equipment." },
+                { q: 'What do I need to bring?', a: "Your valid driving licence. Payment and the deposit are already handled through Goboony. We'll give you a full handover of all the equipment." },
                 { q: 'What about insurance?', a: "Insurance and breakdown cover are included in your rental through Goboony. You're responsible for the deductible in case of damage. We'll explain all the details at pickup." },
                 { q: 'Do you offer delivery?', a: 'No, pickup is from our location in Voorburg.' },
                 { q: 'How long does the handover take?', a: "Plan for about 30 to 45 minutes. We'll walk you through the Ranger, the camping gear, how to set up the tents and the awning, and answer your questions. We want you to feel confident before you hit the road." }
@@ -71,13 +73,13 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
             title: 'Voordat je huurt',
             items: [
                 { q: 'Wat zijn de huurvoorwaarden?', a: 'Je hebt een geldig rijbewijs nodig dat je minimaal 2 jaar hebt, en je bent minimaal 25 jaar. Je laat je rijbewijs zien bij het ophalen.' },
-                { q: 'Hoe boek ik de Ranger?', a: `Via onze ${goboony}-pagina. Wil je langer huren (3 weken of meer), neem dan direct contact op, dan bespreken we de mogelijkheden.` },
+                { q: 'Hoe boek ik de Ranger?', a: `Via onze ${goboony}-pagina. Langer huren levert daar korting op: ${discNl}.` },
                 { q: 'Wat is inbegrepen bij de huur?', a: 'De volledig uitgeruste Ford Ranger met twee daktenten, kampeeruitrusting, keukengerei, matrashoezen en bergingsuitrusting. Verzekering en pechhulp zijn ook inbegrepen. Slaapzakken en kussens niet.' },
                 { q: 'Is er een minimale huurperiode?', a: 'Ja, je huurt minimaal 2 dagen.' },
                 { q: 'Mag ik met de Ranger buiten Nederland rijden?', a: 'Ja. De Ranger is verzekerd binnen Europa. Verder weg kan ook: laat ons weten waar je heen gaat, dan zorgen we voor de juiste papieren.' },
                 { q: 'Hoe zit het met tol?', a: 'Tol is voor je eigen rekening. Zit er nog een geldig vignet op de auto, dan laten we je dat weten na het boeken.' },
                 { q: 'Mag ik huisdieren meenemen?', a: 'Misschien! Neem vooraf contact op, dan maken we goede afspraken. Er kan een extra schoonmaaktoeslag gelden.' },
-                { q: 'Is er een borg?', a: 'Ja, we vragen een borg van €1.200. Die geven we binnen 48 uur vrij nadat we de Ranger bij terugkomst hebben gecontroleerd.' },
+                { q: 'Is er een borg?', a: `Ja. De borg loopt via je boeking op ${goboony}, daar zie je ook het bedrag. Je krijgt hem terug nadat we de Ranger bij terugkomst hebben gecontroleerd.` },
                 { q: 'Kan ik de Ranger in een ander land achterlaten?', a: 'Nee, de Ranger gaat altijd terug naar de ophaallocatie. Laat je hem elders achter, dan betaal je alle kosten om hem terug te halen, plus €1.000 per reisdag.' }
             ]
         },
@@ -86,7 +88,7 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
             title: 'Ophalen',
             items: [
                 { q: 'Waar haal ik de Ranger op?', a: 'In Voorburg, bij Den Haag. Het precieze adres en de route krijg je zodra je boeking is bevestigd.' },
-                { q: 'Wat moet ik meenemen?', a: 'Je geldige rijbewijs en een creditcard. Bij het ophalen lopen we samen alles door, van de tenten tot de rest van de auto.' },
+                { q: 'Wat moet ik meenemen?', a: 'Je geldige rijbewijs. Betalen en de borg zijn al geregeld via Goboony. Bij het ophalen lopen we samen alles door, van de tenten tot de rest van de auto.' },
                 { q: 'Hoe zit het met de verzekering?', a: 'De verzekering loopt via Goboony. Pechhulp binnen Europa is standaard inbegrepen.' },
                 { q: 'Brengen jullie de Ranger ook?', a: 'Nee, je haalt hem op bij ons in Voorburg.' },
                 { q: 'Hoe lang duurt het ophalen?', a: 'Reken op ongeveer 30 tot 45 minuten. We laten je alles van de auto zien en hebben tijd voor je vragen. We willen dat je met een goed gevoel vertrekt.' }
