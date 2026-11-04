@@ -725,6 +725,15 @@ img {
     box-shadow: var(--shadow-sm);
 }
 
+.calendar-notice {
+    margin-top: var(--spacing-sm);
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radius);
+    background: #fff8e1;
+    border: 1px solid #f9a825;
+    font-size: 0.9rem;
+}
+
 .calendar-day.other-month {
     color: var(--gray);
     background: var(--background);

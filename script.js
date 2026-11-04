@@ -1,26 +1,4 @@
 // ============================================
-// STAGING GUARD (staging.justroam.nl)
-// ============================================
-// Everything except justroam.nl itself counts as a test copy. A test copy
-// must never send a real booking request, contact form or payment: those
-// go to the live Worker, Mollie and Formspree. Harmless on the live site.
-window.JR_STAGING = !/^(www\.)?justroam\.nl$/.test(location.hostname);
-if (window.JR_STAGING) {
-    document.addEventListener('DOMContentLoaded', function () {
-        var bar = document.createElement('div');
-        bar.textContent = 'Testomgeving: formulieren en boekingen worden hier niet verstuurd.';
-        bar.setAttribute('style', 'position:sticky;top:0;z-index:99999;background:#b45309;color:#fff;font:600 13px/1.4 system-ui,sans-serif;text-align:center;padding:6px 12px;');
-        document.body.insertBefore(bar, document.body.firstChild);
-    });
-    document.addEventListener('submit', function (e) {
-        if (e.target && e.target.closest && e.target.closest('#gearhive-embed')) return;
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        alert('Dit is de testomgeving: dit formulier wordt niet verstuurd.');
-    }, true);
-}
-
-// ============================================
 // CENTRALIZED LINK MANAGEMENT
 // ============================================
 // Update all your links in ONE place - right here!
@@ -555,43 +533,54 @@ document.addEventListener('DOMContentLoaded', function() {
     let displayYear = currentDate.getFullYear();
     
     // Data storage
-    let pricingData = null;
+    let priceData = null;
     let bookedDates = [];
-    
+    let feedFailed = false;
+
     // iCal URL
         // iCal URLs - own calendar + Goboony bookings, merged into one availability set
     const icalUrlOwn = 'https://justroam-availability.edwinvandavenhorst.workers.dev/ranger';
     const icalUrlGoboony = 'https://justroam-availability.edwinvandavenhorst.workers.dev/ranger-goboony';
-    
+    // Day prices as shown on the Goboony listing (read by the Worker)
+    const pricesUrl = 'https://justroam-availability.edwinvandavenhorst.workers.dev/ranger-prices';
+
     // Initialize calendar
     async function initCalendar() {
-        await loadPricingData();
-        await loadICalData();
+        await Promise.all([loadPriceData(), loadICalData()]);
         renderCalendar();
+        showFeedNotice();
     }
-    
-    // Load pricing from JSON
-    // Load pricing from JSON
-    async function loadPricingData() {
+
+    // Load the day prices from the Worker. Without them the calendar shows
+    // availability only, never a guessed price.
+    async function loadPriceData() {
         try {
-            // Detect if we're in a subdirectory (like /nl/)
-            const isSubdirectory = window.location.pathname.includes('/nl/');
-            const pricingPath = isSubdirectory ? '../pricing.json' : 'pricing.json';
-            
-            const response = await fetch(pricingPath);
-            pricingData = await response.json();
-            console.log('✅ Pricing loaded from:', pricingPath, pricingData);
+            const response = await fetch(pricesUrl);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            const data = await response.json();
+            if (typeof data.base !== 'number' || !data.days) throw new Error('unexpected format');
+            priceData = data;
         } catch (error) {
-            console.error('❌ Could not load pricing.json:', error);
-            // Fallback pricing
-            pricingData = {
-                seasons: [
-                    { name: 'Default', startDate: '2020-01-01', endDate: '2030-12-31', dailyRate: 125 }
-                ]
-            };
+            console.error('❌ Could not load Goboony prices:', error);
+            priceData = null;
         }
     }
-    
+
+    // A feed that fails to load must not look like "everything is free"
+    function showFeedNotice() {
+        if (!feedFailed) return;
+        let notice = document.getElementById('calendarNotice');
+        if (!notice) {
+            notice = document.createElement('p');
+            notice.id = 'calendarNotice';
+            notice.className = 'calendar-notice';
+            calendarDays.parentElement.insertBefore(notice, calendarDays.nextSibling);
+        }
+        notice.textContent = locale === 'nl-NL'
+            ? 'De beschikbaarheid kon niet volledig worden geladen. Controleer de beschikbaarheid daarom op Goboony.'
+            : 'Availability could not be fully loaded. Please check availability on Goboony.';
+    }
+
             // Load iCal data - own calendar + Goboony, merged into one booked-dates list
     async function loadICalData() {
         const [ownDates, goboonyDates] = await Promise.all([
@@ -605,15 +594,25 @@ document.addEventListener('DOMContentLoaded', function() {
     async function loadOneCalendar(url, label) {
         try {
             const response = await fetch(url);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
             const icalText = await response.text();
+            if (!icalText.includes('BEGIN:VCALENDAR')) throw new Error('not an iCal feed');
             const dates = parseICalData(icalText);
             console.log('✅ ' + label + ' loaded, found booked dates:', dates.length);
             return dates;
         } catch (error) {
-            console.error('❌ Could not load ' + label + ' (might be CORS):', error);
-            console.log('ℹ️ ' + label + ' will show as available');
+            console.error('❌ Could not load ' + label + ':', error);
+            feedFailed = true;
             return [];
         }
+    }
+
+    // YYYY-MM-DD of a local date. toISOString() would shift it to UTC and,
+    // for visitors east of Greenwich, land on the previous day.
+    function dateKey(date) {
+        const mm = String(date.getMonth() + 1).padStart(2, '0');
+        const dd = String(date.getDate()).padStart(2, '0');
+        return date.getFullYear() + '-' + mm + '-' + dd;
     }
     
     // Simple iCal parser - extracts booked date ranges
@@ -635,7 +634,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Add all dates in range
                 const current = new Date(startDate);
                 while (current <= endDate) {
-                    booked.push(current.toISOString().split('T')[0]);
+                    booked.push(dateKey(current));
                     current.setDate(current.getDate() + 1);
                 }
             }
@@ -652,27 +651,16 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Date(year, month, day);
     }
     
-    // Get price for a specific date from pricing.json
+    // Day price as shown on Goboony, or null when the prices did not load
     function getPrice(date) {
-        if (!pricingData || !pricingData.seasons) return 125;
-        
-        const dateStr = date.toISOString().split('T')[0];
-        
-        // Check each season
-        for (const season of pricingData.seasons) {
-            if (dateStr >= season.startDate && dateStr <= season.endDate) {
-                return season.dailyRate;
-            }
-        }
-        
-        // Default to first season's rate if no match
-        return pricingData.seasons[0]?.dailyRate || 125;
+        if (!priceData) return null;
+        const rate = priceData.days[dateKey(date)];
+        return rate !== undefined ? rate : priceData.base;
     }
-    
+
     // Check if date is booked (from iCal)
     function isBooked(date) {
-        const dateStr = date.toISOString().split('T')[0];
-        return bookedDates.includes(dateStr);
+        return bookedDates.includes(dateKey(date));
     }
     
     // Check if date is today
@@ -773,10 +761,13 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Add price (only for available future dates in current month)
         if (!booked && !past && !isOtherMonth) {
-            const price = document.createElement('div');
-            price.className = 'day-price';
-            price.textContent = `€${getPrice(date)}`;
-            dayElement.appendChild(price);
+            const rate = getPrice(date);
+            if (rate !== null) {
+                const price = document.createElement('div');
+                price.className = 'day-price';
+                price.textContent = `€${rate}`;
+                dayElement.appendChild(price);
+            }
         }
         
         return dayElement;

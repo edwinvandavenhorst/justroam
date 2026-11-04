@@ -66,11 +66,11 @@
             "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
             "availability": "https://schema.org/InStock",
             "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "price": "7",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
+            "price": "7",
+            "priceCurrency": "EUR",
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
             },
             "seller": { "@type": "Organization", "name": "JustRoam" }
           }
@@ -95,11 +95,11 @@
             "businessFunction": "http://purl.org/goodrelations/v1#LeaseOut",
             "availability": "https://schema.org/InStock",
             "priceCurrency": "EUR",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "price": "8",
-              "priceCurrency": "EUR",
-              "unitCode": "DAY"
+            "price": "8",
+            "priceCurrency": "EUR",
+            "hasMerchantReturnPolicy": {
+              "@type": "MerchantReturnPolicy",
+              "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
             },
             "seller": { "@type": "Organization", "name": "JustRoam" }
           }
@@ -162,10 +162,8 @@
                         <img class="gear-thumb" src="../images/rent-gear/roofbox2.png" alt="Hapro Traxer 6.6 dakkoffer - foto 2" data-group="roofbox">
                         <img class="gear-thumb" src="../images/rent-gear/roofbox3.png" alt="Hapro Traxer 6.6 dakkoffer - foto 3" data-group="roofbox">
                     </div>
-                    <!-- Gearhive-boekingsmodule, een advertentie (test op staging) -->
-                    <div data-gearhive-advertentie="f6ea53ad-6adc-4960-b743-25b99295425e" style="margin-top:20px"></div>
-                    <!-- Gewone tekstlink met de zoekterm naar de categorie op Gearhive (2026-11):
-                         wat in de module staat telt Google niet als link vanaf deze site, dit wel. -->
+                    <a href="https://gearhive.nl/advertentie/hapro-dakkoffer-van-410l-voorburg-096b796a-3205-4700-b45c-bfb84f6d5ef6" class="btn btn-primary btn-large gear-cta-inline" target="_blank" rel="noopener">Bekijk advertentie dakkoffer</a>
+                    <!-- Tekstlink met de zoekterm naar de categorie op Gearhive (2026-11), voor Google. -->
                     <p class="gear-more" style="margin-top:12px;font-size:0.95rem">Andere maat nodig, of al bezet? <a href="https://gearhive.nl/categorie/dakkoffers_kist">Dakkoffer huren in de buurt via Gearhive</a></p>
                 </div>
 
@@ -191,19 +189,10 @@
                         <img class="gear-thumb" src="../images/rent-gear/bike-carrier1.png" alt="Thule VeloCompact 926 fietsendrager - foto 1" data-group="carrier">
                         <img class="gear-thumb" src="../images/rent-gear/bike-carrier2.png" alt="Thule VeloCompact 926 fietsendrager - foto 2" data-group="carrier">
                     </div>
-                    <!-- Gearhive-boekingsmodule, een advertentie (test op staging) -->
-                    <div data-gearhive-advertentie="a353344d-1dcd-40cd-b4f6-6166e2e15e6a" style="margin-top:20px"></div>
-                    <!-- Gewone tekstlink met de zoekterm naar de categorie op Gearhive (2026-11):
-                         wat in de module staat telt Google niet als link vanaf deze site, dit wel. -->
+                    <a href="https://gearhive.nl/advertentie/thule-fietsendrager-voor-3-fietsen-voorburg-e999812e-33ff-4475-b900-3f0d99e6d361" class="btn btn-primary btn-large gear-cta-inline" target="_blank" rel="noopener">Bekijk advertentie fietsendrager</a>
+                    <!-- Tekstlink met de zoekterm naar de categorie op Gearhive (2026-11), voor Google. -->
                     <p class="gear-more" style="margin-top:12px;font-size:0.95rem">Meer fietsen mee, of al bezet? <a href="https://gearhive.nl/categorie/fietsendragers">Fietsendrager huren in de buurt via Gearhive</a></p>
                 </div>
-            </div>
-
-            <!-- Gearhive-boekingsmodule, het hele aanbod (test op staging) -->
-            <div class="feature-card" style="margin-top:40px">
-                <h2>Direct reserveren</h2>
-                <p>Kies je spullen, je datums en reserveer meteen. Je hebt geen account nodig.</p>
-                <div data-gearhive-verhuurder="effc9d5f-2854-4525-926d-5107c11d6f15" style="margin-top:16px"></div>
             </div>
 
         </div>
@@ -223,6 +212,5 @@
 
     <script src="../script.js"></script>
     <script src="../gear.js"></script>
-    <script src="https://staging.gearhive.nl/embed.js" async></script>
 </body>
 </html>

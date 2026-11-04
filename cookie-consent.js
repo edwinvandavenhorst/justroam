@@ -142,8 +142,6 @@
     
     // Initialize Google Analytics if consented
     function initializeGoogleAnalytics() {
-        // A test copy must not pollute the live site's statistics.
-        if (!/^(www\.)?justroam\.nl$/.test(location.hostname)) return;
         if (!cookiePreferences.analytics) {
             console.log('ℹ️ Google Analytics not initialized (no consent)');
             return;
