@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
+import HeroCarousel from './HeroCarousel.astro';
 import InTheBack from './InTheBack.astro';
 import BuildSheet from './BuildSheet.astro';
 import TryRanger from './TryRanger.astro';
@@ -16,12 +17,6 @@ const copy = {
     en: {
         title: 'JustRoam | Overland Truck Builds & Ranger Rental, Voorburg',
         description: 'We turn your pickup into an overland truck in three clear packages: canopy, power, kitchen, water and tents. Or rent our own Ford Ranger first. Voorburg, NL.',
-        kicker: 'Overland builds from Voorburg',
-        h1: 'From pickup to overland truck',
-        lede: 'Canopy, power, kitchen, water, tents. We build your truck in three clear packages, the same way we built our own Ranger.',
-        cta: 'Explore builds',
-        try: 'Or try ours first',
-        chips: ['1. Canopy & power', '2. Kitchen & water', '3. Tents & recovery'],
         sheetKicker: 'Build sheet',
         sheetTitle: 'Three packages',
         sheetMore: 'Compare every detail',
@@ -45,12 +40,6 @@ const copy = {
     nl: {
         title: 'JustRoam | Overland-ombouw en Ranger huren, Voorburg',
         description: 'Wij bouwen je pickup om tot overland-auto in drie duidelijke pakketten: opbouw, stroom, keuken, water en tenten. Of huur eerst onze eigen Ford Ranger. Voorburg.',
-        kicker: 'Overland-ombouw vanuit Voorburg',
-        h1: 'Van pickup naar overland-auto',
-        lede: 'Opbouw, stroom, keuken, water, tenten. We bouwen jouw auto om in drie duidelijke pakketten, zoals we onze eigen Ranger bouwden.',
-        cta: 'Bekijk de ombouw',
-        try: 'Of probeer eerst de onze',
-        chips: ['1. Opbouw & stroom', '2. Keuken & water', '3. Tenten & berging'],
         sheetKicker: 'Bouwtabel',
         sheetTitle: 'Drie pakketten',
         sheetMore: 'Vergelijk alle details',
@@ -95,21 +84,7 @@ const jsonLd = [
 ];
 ---
 <Base lang={lang} title={copy.title} description={copy.description} jsonLd={jsonLd}>
-    <section class="wrap hero">
-        <div class="frame">
-            <Photo class="cover" src="/images/hero.jpg" width={1960} height={1470} alt={nl ? 'Onze Ranger met twee daktenten in het bos' : 'Our Ranger with two rooftop tents in a forest'} sizes="(max-width: 1240px) 100vw, 1240px" eager />
-            <div class="txt">
-                <span class="kicker">{copy.kicker}</span>
-                <h1>{copy.h1}</h1>
-                <p>{copy.lede}</p>
-                <div class="row">
-                    <a class="btn sand" href={href(lang, 'build.html')}>{copy.cta} <span class="ar" aria-hidden="true">→</span></a>
-                    <a class="link" href="#try">{copy.try}</a>
-                </div>
-            </div>
-            <ul class="chips">{copy.chips.map((c) => <li>{c}</li>)}</ul>
-        </div>
-    </section>
+    <HeroCarousel lang={lang} />
 
     <section class="wrap section">
         <InTheBack lang={lang} />

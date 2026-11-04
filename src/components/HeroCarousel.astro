@@ -1,0 +1,96 @@
+---
+// Full-width hero that cycles between builds and renting. Autoplays every
+// 7 seconds, pauses on hover and focus, and stays still for visitors who
+// prefer reduced motion. Only the first slide carries the page's h1.
+import Photo from './Photo.astro';
+import { href, type Lang } from '../i18n';
+import { ranger } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+
+const slides = nl ? [
+    { img: '/images/hero.jpg', w: 1960, h: 1470, alt: 'Onze Ranger met twee daktenten in het bos', kicker: 'Overland-ombouw vanuit Voorburg', title: 'Van pickup naar overland-auto', text: 'Opbouw, stroom, keuken, water, tenten. We bouwen jouw auto om in drie duidelijke pakketten, zoals we onze eigen Ranger bouwden.', cta: ['Bekijk de ombouw', 'build.html'], link: ['Plan je ombouw', 'build.html#plan'] },
+    { img: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, alt: 'De Ranger in het donker met beide daktenten verlicht', kicker: 'Ranger huren', title: 'Probeer het overland-leven eerst', text: `Onze eigen Ranger met twee daktenten en een volledige keuken. Vanaf €${ranger.fromPerDay} per dag, te boeken via Goboony.`, cta: ['Bekijk data en prijzen', 'rent.html'], link: ['Waarom eerst huren?', '#try'] },
+    { img: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, alt: 'Uitschuifkeuken achterin de Ranger', kicker: 'Wat zit er achterin', title: 'Keuken, water en stroom, ingebouwd', text: 'Lades, een uitschuifkeuken, koelkast en water met buitendouche: het pakket Getting serious, in jouw eigen auto.', cta: ['Vergelijk de pakketten', 'build.html#packages'], link: ['Plan je ombouw', 'build.html#plan'] }
+] : [
+    { img: '/images/hero.jpg', w: 1960, h: 1470, alt: 'Our Ranger with two rooftop tents in a forest', kicker: 'Overland builds from Voorburg', title: 'From pickup to overland truck', text: 'Canopy, power, kitchen, water, tents. We build your truck in three clear packages, the same way we built our own Ranger.', cta: ['Explore builds', 'build.html'], link: ['Plan your build', 'build.html#plan'] },
+    { img: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, alt: 'The Ranger at night with both rooftop tents lit', kicker: 'Rent the Ranger', title: 'Try the overland life first', text: `Our own Ranger with two rooftop tents and a full kitchen. From €${ranger.fromPerDay} a day, booked via Goboony.`, cta: ['See dates and prices', 'rent.html'], link: ['Why rent first?', '#try'] },
+    { img: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, alt: 'Slide-out kitchen in the back of the Ranger', kicker: 'What is in the back', title: 'Kitchen, water and power, built in', text: 'Drawers, a slide-out kitchen, fridge and water with an outside shower: the Getting serious package, in your own truck.', cta: ['Compare the packages', 'build.html#packages'], link: ['Plan your build', 'build.html#plan'] }
+];
+const t = nl
+    ? { label: 'Uitgelicht', prev: 'Vorige', next: 'Volgende', of: 'van', slide: 'Dia' }
+    : { label: 'Highlights', prev: 'Previous', next: 'Next', of: 'of', slide: 'Slide' };
+const to = (target: string) => (target.startsWith('#') ? target : href(lang, target));
+---
+<section class="hero-full" id="hero" aria-roledescription="carousel" aria-label={t.label}>
+    {slides.map((s, i) => (
+        <article class={i === 0 ? 'slide is-active' : 'slide'} aria-roledescription="slide" aria-label={`${i + 1} ${t.of} ${slides.length}`} aria-hidden={i === 0 ? undefined : 'true'}>
+            <Photo src={s.img} width={s.w} height={s.h} alt={s.alt} sizes="100vw" eager={i === 0} />
+            <div class="slide-txt">
+                <div class="wrap">
+                    <span class="kicker">{s.kicker}</span>
+                    {i === 0 ? <h1>{s.title}</h1> : <p class="h1">{s.title}</p>}
+                    <p>{s.text}</p>
+                    <div class="row">
+                        <a class="btn sand" href={to(s.cta[1])} tabindex={i === 0 ? undefined : '-1'}>{s.cta[0]} <span class="ar" aria-hidden="true">→</span></a>
+                        <a class="link" href={to(s.link[1])} tabindex={i === 0 ? undefined : '-1'}>{s.link[0]}</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    ))}
+    <button class="hero-arrow prev" type="button" aria-label={t.prev}>←</button>
+    <button class="hero-arrow next" type="button" aria-label={t.next}>→</button>
+    <div class="hero-dots">
+        {slides.map((_, i) => <button type="button" aria-label={`${t.slide} ${i + 1}`} aria-current={i === 0 ? 'true' : undefined}></button>)}
+    </div>
+</section>
+
+<script>
+    const hero = document.getElementById('hero');
+    if (hero) {
+        const slides = [...hero.querySelectorAll<HTMLElement>('.slide')];
+        const dots = [...hero.querySelectorAll<HTMLButtonElement>('.hero-dots button')];
+        const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        let current = 0;
+        let timer: number | undefined;
+
+        const show = (n: number) => {
+            current = (n + slides.length) % slides.length;
+            slides.forEach((s, i) => {
+                const on = i === current;
+                s.classList.toggle('is-active', on);
+                s.toggleAttribute('aria-hidden', !on);
+                s.querySelectorAll('a').forEach((a) => (on ? a.removeAttribute('tabindex') : a.setAttribute('tabindex', '-1')));
+            });
+            dots.forEach((d, i) => (i === current ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+        };
+        const stop = () => window.clearInterval(timer);
+        const start = () => {
+            if (still) return;
+            stop();
+            timer = window.setInterval(() => show(current + 1), 7000);
+        };
+
+        hero.querySelector('.prev')?.addEventListener('click', () => { show(current - 1); start(); });
+        hero.querySelector('.next')?.addEventListener('click', () => { show(current + 1); start(); });
+        dots.forEach((d, i) => d.addEventListener('click', () => { show(i); start(); }));
+        hero.addEventListener('mouseenter', stop);
+        hero.addEventListener('mouseleave', start);
+        hero.addEventListener('focusin', stop);
+        hero.addEventListener('focusout', start);
+
+        let x0: number | null = null;
+        hero.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+        hero.addEventListener('touchend', (e) => {
+            if (x0 === null) return;
+            const dx = e.changedTouches[0].clientX - x0;
+            if (Math.abs(dx) > 40) { show(current + (dx < 0 ? 1 : -1)); start(); }
+            x0 = null;
+        });
+
+        start();
+    }
+</script>
