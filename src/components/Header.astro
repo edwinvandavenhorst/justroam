@@ -1,17 +1,16 @@
 ---
 import { nav, ui, href, alternatePath, pageUrl, type Lang } from '../i18n';
+import { business } from '../data/site';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const path = pageUrl(Astro.url.pathname);
-const other: Lang = lang === 'en' ? 'nl' : 'en';
 const isCurrent = (page: string) => path === href(lang, page);
 ---
 <header class="site-header">
     <div class="wrap">
         <a class="brand" href={href(lang, '')}>
-            <img src="/images/Logo_JustRoam_notext.svg" alt="" width="52" height="52">
-            JustRoam
+            <img src="/images/Logo_JustRoam.svg" alt="JustRoam, rent & custom builds" width="982" height="505">
         </a>
         <nav class="main-nav" id="main-nav" aria-label="Main">
             <ul>
@@ -20,13 +19,31 @@ const isCurrent = (page: string) => path === href(lang, page);
                 ))}
             </ul>
         </nav>
-        <a class="lang-switch" href={alternatePath(path, other)} hreflang={other} lang={other}>{ui[lang].switchLabel}</a>
+        <a class="insta" href={business.instagram} rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4.2" /><circle cx="17.4" cy="6.6" r="1.1" class="dot" /></svg>
+        </a>
+        <div class="lang-switch">
+            {(['en', 'nl'] as Lang[]).map((l, i) => (
+                <>
+                    {i > 0 && <span class="sep" aria-hidden="true">|</span>}
+                    {l === lang
+                        ? <span class="on" aria-current="true">{l.toUpperCase()}</span>
+                        : <a href={alternatePath(path, l)} hreflang={l} lang={l} aria-label={l === 'nl' ? 'Nederlands' : 'English'}>{l.toUpperCase()}</a>}
+                </>
+            ))}
+        </div>
         <a class="btn" href={href(lang, 'build.html#plan')}>{ui[lang].plan} <span class="ar" aria-hidden="true">→</span></a>
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav">{ui[lang].menu}</button>
     </div>
 </header>
 
 <script>
+    // a slimmer header once the page has scrolled
+    const header = document.querySelector('.site-header');
+    const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
     const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
     const menu = document.getElementById('main-nav');
     toggle?.addEventListener('click', () => {
