@@ -11,7 +11,10 @@ export const business = {
     locality: 'Voorburg',
     region: 'Zuid-Holland',
     country: 'NL',
-    instagram: 'https://www.instagram.com/_justroam_/'
+    instagram: 'https://www.instagram.com/_justroam_/',
+    instagramHandle: '@_justroam_',
+    // WhatsApp click-to-chat on the normal (private) WhatsApp number
+    whatsapp: 'https://wa.me/31611334832'
 };
 
 export const links = {

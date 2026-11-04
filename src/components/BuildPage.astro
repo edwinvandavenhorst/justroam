@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
 import InTheBack from './InTheBack.astro';
+import ContactOptions from './ContactOptions.astro';
 import BuildSheet from './BuildSheet.astro';
 import TryRanger from './TryRanger.astro';
 import { href, type Lang } from '../i18n';
@@ -40,7 +41,7 @@ const copy = {
         planKicker: 'Plan your build',
         planT: 'Tell us about your truck',
         planP: 'Send us a message with the points below and we will come back with advice and a quote.',
-        planList: ['Make, model and year of your pickup', 'How you travel: weekends, weeks, with whom', 'Which package appeals to you, or what you are unsure about', 'When you would like the truck to be ready'],
+        planList: ['Make, model and year of your vehicle', 'How you travel: weekends, weeks, with whom', 'Which package appeals to you, or what you are unsure about', 'When you would like the truck to be ready'],
         mail: 'Email us',
         mailSubject: 'Build request',
         call: 'Call us',
@@ -81,7 +82,7 @@ const copy = {
         planKicker: 'Plan je ombouw',
         planT: 'Vertel ons over je auto',
         planP: 'Stuur ons een bericht met de punten hieronder, dan komen we terug met advies en een offerte.',
-        planList: ['Merk, model en bouwjaar van je pickup', 'Hoe je reist: weekenden, weken, met wie', 'Welk pakket je aanspreekt, of waar je over twijfelt', 'Wanneer je de auto klaar wilt hebben'],
+        planList: ['Merk, model en bouwjaar van je auto', 'Hoe je reist: weekenden, weken, met wie', 'Welk pakket je aanspreekt, of waar je over twijfelt', 'Wanneer je de auto klaar wilt hebben'],
         mail: 'Mail ons',
         mailSubject: 'Aanvraag ombouw',
         call: 'Bel ons',
@@ -160,11 +161,7 @@ const jsonLd = [
                 <p class="lead" style="margin-top:14px">{copy.planP}</p>
                 <ol>{copy.planList.map((l) => <li>{l}</li>)}</ol>
             </div>
-            <div class="contact-opts">
-                <a href={`mailto:${business.email}?subject=${encodeURIComponent(copy.mailSubject)}`}><i>@</i><div><b>{copy.mail}</b><small>{business.email}</small></div></a>
-                <a href={`tel:${business.phone}`}><i>☎</i><div><b>{copy.call}</b><small>{business.phoneDisplay}</small></div></a>
-                <a href={business.instagram} rel="noopener"><i>IG</i><div><b>{copy.insta}</b><small>@_justroam_</small></div></a>
-            </div>
+            <ContactOptions lang={lang} topic="build" />
         </div>
     </section>
 

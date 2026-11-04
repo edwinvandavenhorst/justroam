@@ -28,6 +28,6 @@ const heading = title ?? (nl ? 'Alles heeft een plek' : 'Everything has a place'
         <ol class="legend">
             {pins.map((p) => <li><div><b>{p[lang][0]}</b><span>{p[lang][1]}</span></div></li>)}
         </ol>
-        {cta && <a class="btn" href={href(lang, 'build.html#plan')}>{nl ? 'Dit in jouw auto' : 'Build this into your truck'} <span class="ar" aria-hidden="true">→</span></a>}
+        {cta && <a class="btn" href={href(lang, 'contact.html')}>{nl ? 'Dit in jouw auto' : 'Build this into your truck'} <span class="ar" aria-hidden="true">→</span></a>}
     </div>
 </div>
