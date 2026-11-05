@@ -48,7 +48,7 @@ const opts = [
 ---
 <div class="contact-opts">
     {opts.map((o) => (
-        <a href={o.href} class={o.primary ? 'primary' : undefined} rel={o.href.startsWith('http') ? 'noopener' : undefined}>
+        <a href={o.href} class={o.primary ? 'primary' : undefined} target={o.href.startsWith('http') ? '_blank' : undefined} rel={o.href.startsWith('http') ? 'noopener' : undefined}>
             <i aria-hidden="true"><svg viewBox="0 0 24 24" class={o.fill ? 'fill' : undefined}><path d={o.icon} /></svg></i>
             <div><b>{o.title}</b><small>{o.sub}</small></div>
         </a>
