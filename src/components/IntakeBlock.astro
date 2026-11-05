@@ -1,0 +1,42 @@
+---
+// "Plan your intake": the free 45-minute call that starts every build.
+// Visitors request it (WhatsApp or email with a template); Edwin picks the
+// moment, so nothing lands in the calendar by itself. Used on the contact
+// page and the build page.
+import ContactOptions from './ContactOptions.astro';
+import { href, type Lang } from '../i18n';
+
+interface Props { lang: Lang; packagesLink?: boolean }
+const { lang, packagesLink = false } = Astro.props;
+const nl = lang === 'nl';
+
+const copy = nl ? {
+    kicker: 'Plan je ombouw',
+    title: 'Plan je intake',
+    intro: 'Een gratis en vrijblijvend gesprek van 45 minuten, telefonisch of via video. We lopen samen door:',
+    list: ['Je auto: merk, model en bouwjaar', 'Hoe je reist: weekenden of weken, met wie', 'Wat je wilt, en waar je over twijfelt', 'Je budget, en wanneer de auto klaar moet zijn'],
+    after: 'Daarna weet je wat er kan, wat het ongeveer kost en hoe lang het duurt.',
+    how: 'Vraag de intake aan via WhatsApp of mail, dan spreken we samen een moment af.',
+    packages: 'Bekijk eerst de pakketten'
+} : {
+    kicker: 'Plan your build',
+    title: 'Plan your intake',
+    intro: 'A free, no-obligation 45-minute call, by phone or video. Together we go through:',
+    list: ['Your vehicle: make, model and year', 'How you travel: weekends or weeks, with whom', 'What you want, and what you are unsure about', 'Your budget, and when the vehicle should be ready'],
+    after: 'Afterwards you know what is possible, roughly what it costs and how long it takes.',
+    how: 'Request the intake via WhatsApp or email, and we will agree on a time together.',
+    packages: 'See the packages first'
+};
+---
+<div class="plan">
+    <div>
+        <span class="kicker">{copy.kicker}</span>
+        <h2>{copy.title}</h2>
+        <p class="lead" style="margin-top:14px">{copy.intro}</p>
+        <ol>{copy.list.map((l) => <li>{l}</li>)}</ol>
+        <p class="plan-after">{copy.after}</p>
+        <p class="plan-how">{copy.how}</p>
+        {packagesLink && <p style="margin-top:16px"><a class="link" href={href(lang, 'build.html#packages')}>{copy.packages}</a></p>}
+    </div>
+    <ContactOptions lang={lang} topic="intake" />
+</div>

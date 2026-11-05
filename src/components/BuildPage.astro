@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
 import InTheBack from './InTheBack.astro';
-import ContactOptions from './ContactOptions.astro';
+import IntakeBlock from './IntakeBlock.astro';
 import BuildSheet from './BuildSheet.astro';
 import TryRanger from './TryRanger.astro';
 import { href, type Lang } from '../i18n';
@@ -38,14 +38,6 @@ const copy = {
             { img: '/images/build/IMG_29.jpeg', t: 'Tents', d: 'Two rooftop tents, awning' }
         ],
         backT: 'Built around how you travel',
-        planKicker: 'Plan your build',
-        planT: 'Tell us about your truck',
-        planP: 'Send us a message with the points below and we will come back with advice and a quote.',
-        planList: ['Make, model and year of your vehicle', 'How you travel: weekends, weeks, with whom', 'Which package appeals to you, or what you are unsure about', 'When you would like the truck to be ready'],
-        mail: 'Email us',
-        mailSubject: 'Build request',
-        call: 'Call us',
-        insta: 'Message us on Instagram',
         faqT: 'Questions about a build',
         faq: [
             { q: 'What is the difference between the packages?', a: 'Getting started adds an aluminium canopy plus a dual-battery system with solar charging (± 1 month). Getting serious adds a custom interior, kitchen, fridge-ready installation and water system on top of that (± 2 months). Going all-in adds roof tent(s), a 270-degree awning, upgraded suspension and recovery equipment (± 3-4 months).' },
@@ -79,14 +71,6 @@ const copy = {
             { img: '/images/build/IMG_29.jpeg', t: 'Tenten', d: 'Twee daktenten, luifel' }
         ],
         backT: 'Gebouwd rond hoe jij reist',
-        planKicker: 'Plan je ombouw',
-        planT: 'Vertel ons over je auto',
-        planP: 'Stuur ons een bericht met de punten hieronder, dan komen we terug met advies en een offerte.',
-        planList: ['Merk, model en bouwjaar van je auto', 'Hoe je reist: weekenden, weken, met wie', 'Welk pakket je aanspreekt, of waar je over twijfelt', 'Wanneer je de auto klaar wilt hebben'],
-        mail: 'Mail ons',
-        mailSubject: 'Aanvraag ombouw',
-        call: 'Bel ons',
-        insta: 'Stuur een bericht via Instagram',
         faqT: 'Vragen over ombouw',
         faq: [
             { q: 'Wat is het verschil tussen de pakketten?', a: 'Getting started voegt een aluminium opbouw toe plus een tweede accu met zonnepaneel (± 1 maand). Getting serious voegt daar een interieur op maat, keuken, koelkastvoorbereiding en watersysteem aan toe (± 2 maanden). Going all-in voegt daktent(en), een 270-graden luifel, verbeterde vering en bergingsuitrusting toe (± 3-4 maanden).' },
@@ -154,15 +138,7 @@ const jsonLd = [
     </section>
 
     <section class="wrap" id="plan" style="padding-bottom: clamp(56px, 8vw, 90px); scroll-margin-top: 100px">
-        <div class="plan">
-            <div>
-                <span class="kicker">{copy.planKicker}</span>
-                <h2>{copy.planT}</h2>
-                <p class="lead" style="margin-top:14px">{copy.planP}</p>
-                <ol>{copy.planList.map((l) => <li>{l}</li>)}</ol>
-            </div>
-            <ContactOptions lang={lang} topic="build" />
-        </div>
+        <IntakeBlock lang={lang} />
     </section>
 
     <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">

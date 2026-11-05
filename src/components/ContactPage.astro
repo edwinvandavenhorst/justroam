@@ -2,7 +2,7 @@
 // Contact: mostly for builds, since renting goes through Goboony and gear
 // through Gearhive. No form: WhatsApp, phone, email and Instagram.
 import Base from '../layouts/Base.astro';
-import ContactOptions from './ContactOptions.astro';
+import IntakeBlock from './IntakeBlock.astro';
 import { href, type Lang } from '../i18n';
 import { business, links } from '../data/site';
 
@@ -15,11 +15,7 @@ const copy = nl ? {
     description: 'Neem contact op met JustRoam in Voorburg over een overland-ombouw, het huren van onze Ford Ranger of een dakkoffer en fietsendrager. App, bel of mail ons.',
     kicker: 'Contact',
     h1: 'Plan je ombouw, of stel je vraag',
-    lead: 'App, bel of mail ons. We reageren meestal binnen een dag.',
-    planT: 'Een ombouw plannen?',
-    planP: 'Stuur ons deze punten mee, dan komen we terug met advies en een offerte:',
-    planList: ['Merk, model en bouwjaar van je auto', 'Hoe je reist: weekenden, weken, met wie', 'Welk pakket je aanspreekt, of waar je over twijfelt', 'Wanneer je de auto klaar wilt hebben'],
-    planLink: 'Bekijk eerst de pakketten',
+    lead: 'Elke ombouw begint met een intake. Voor andere vragen: app, mail of bel ons, we reageren meestal binnen een dag.',
     rentT: 'De Ranger huren?', rentP: 'Data, prijzen, boeken, betalen en de borg lopen via Goboony.', rentCta: 'Bekijk data en prijzen',
     gearT: 'Uitrusting huren?', gearP: 'De dakkoffer en fietsendrager boek je direct via Gearhive.', gearCta: 'Naar uitrusting huren',
     faqT: 'Eerst zelf zoeken?', faqP: 'De meeste vragen over huren en ombouw staan in de FAQ.', faqCta: 'Naar de FAQ',
@@ -29,11 +25,7 @@ const copy = nl ? {
     description: 'Get in touch with JustRoam in Voorburg about an overland build, renting our Ford Ranger, or a roof box and bike carrier. WhatsApp, call or email us.',
     kicker: 'Contact',
     h1: 'Plan your build, or just ask',
-    lead: 'WhatsApp, call or email us. We usually reply within a day.',
-    planT: 'Planning a build?',
-    planP: 'Send us these points and we will come back with advice and a quote:',
-    planList: ['Make, model and year of your vehicle', 'How you travel: weekends, weeks, with whom', 'Which package appeals to you, or what you are unsure about', 'When you would like the vehicle to be ready'],
-    planLink: 'See the packages first',
+    lead: 'Every build starts with an intake. For anything else: WhatsApp, email or call us, we usually reply within a day.',
     rentT: 'Renting the Ranger?', rentP: 'Dates, prices, booking, payment and the deposit all go through Goboony.', rentCta: 'See dates and prices',
     gearT: 'Renting gear?', gearP: 'Book the roof box and bike carrier directly through Gearhive.', gearCta: 'Go to rent gear',
     faqT: 'Rather look it up?', faqP: 'Most questions about renting and builds are answered in the FAQ.', faqCta: 'Go to the FAQ',
@@ -72,15 +64,7 @@ const jsonLd = {
             <p class="lead">{copy.lead}</p>
         </div>
 
-        <div class="plan">
-            <div>
-                <h2>{copy.planT}</h2>
-                <p class="lead" style="margin-top:14px">{copy.planP}</p>
-                <ol>{copy.planList.map((l) => <li>{l}</li>)}</ol>
-                <p style="margin-top:18px"><a class="link" href={href(lang, 'build.html#packages')}>{copy.planLink}</a></p>
-            </div>
-            <ContactOptions lang={lang} topic="build" />
-        </div>
+        <IntakeBlock lang={lang} packagesLink />
 
         <div class="contact-routes">
             <div>
