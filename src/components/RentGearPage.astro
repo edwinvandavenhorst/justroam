@@ -12,17 +12,35 @@ const { lang } = Astro.props;
 const nl = lang === 'nl';
 
 // Gearhive ids: one per listing, and one for everything we rent out.
+//
+// staging.justroam.nl (Vercel) talks to staging.gearhive.nl, with the test
+// listings in the staging database; justroam.nl (GitHub Pages) to the real
+// Gearhive. A test booking on staging must never land in production.
+const isStaging = !!process.env.VERCEL;
+const gh = isStaging
+    ? {
+          base: 'https://staging.gearhive.nl',
+          host: 'effc9d5f-2854-4525-926d-5107c11d6f15',
+          roofbox: 'f6ea53ad-6adc-4960-b743-25b99295425e',
+          carrier: 'a353344d-1dcd-40cd-b4f6-6166e2e15e6a'
+      }
+    : {
+          base: 'https://gearhive.nl',
+          host: 'ac1e36bb-58c0-46d4-b191-f7f058dc0f2a',
+          roofbox: '096b796a-3205-4700-b45c-bfb84f6d5ef6',
+          carrier: 'e999812e-33ff-4475-b900-3f0d99e6d361'
+      };
 const gearhive = {
-    embed: 'https://gearhive.nl/embed.js',
-    host: 'ac1e36bb-58c0-46d4-b191-f7f058dc0f2a',
-    signup: 'https://gearhive.nl/signup'
+    embed: `${gh.base}/embed.js`,
+    host: gh.host,
+    signup: `${gh.base}/signup`
 };
 
 const items = [
     {
         id: 'roofbox',
-        listing: '096b796a-3205-4700-b45c-bfb84f6d5ef6',
-        url: 'https://gearhive.nl/advertentie/hapro-dakkoffer-van-410l-voorburg-096b796a-3205-4700-b45c-bfb84f6d5ef6',
+        listing: gh.roofbox,
+        url: `${gh.base}/advertentie/${gh.roofbox}`,
         photos: ['/images/rent-gear/roofbox1.png', '/images/rent-gear/roofbox2.png', '/images/rent-gear/roofbox3.png'],
         en: {
             kicker: 'Roof box', name: 'Hapro Traxer 6.6',
@@ -39,8 +57,8 @@ const items = [
     },
     {
         id: 'carrier',
-        listing: 'e999812e-33ff-4475-b900-3f0d99e6d361',
-        url: 'https://gearhive.nl/advertentie/thule-fietsendrager-voor-3-fietsen-voorburg-e999812e-33ff-4475-b900-3f0d99e6d361',
+        listing: gh.carrier,
+        url: `${gh.base}/advertentie/${gh.carrier}`,
         photos: ['/images/rent-gear/bike-carrier1.png', '/images/rent-gear/bike-carrier2.png'],
         en: {
             kicker: 'Bike carrier', name: 'Thule VeloCompact 926',
@@ -215,5 +233,5 @@ const jsonLd = {
         <p style="margin-top:18px"><a class="link" href={href(lang, 'faq-gear.html')}>{copy.faqAll}</a></p>
     </section>
 
-    <script is:inline src="https://gearhive.nl/embed.js" async></script>
+    <script is:inline src={gearhive.embed} async></script>
 </Base>
