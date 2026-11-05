@@ -19,9 +19,9 @@ const nl = lang === 'nl';
             ? 'Die van ons staan op Gearhive, net als spullen van mensen bij jou in de buurt.'
             : 'Ours are on Gearhive, and so is gear from people near you.'}</p>
         <div class="chips">
-            {links.gearhiveCategories.map((c) => <a href={c.url} rel="noopener">{c[lang]}</a>)}
+            {links.gearhiveCategories.map((c) => <a href={c.url} target="_blank" rel="noopener">{c[lang]}</a>)}
             <a href={href(lang, 'rent-gear.html')}>{nl ? 'Onze dakkoffer en drager' : 'Our roof box and carrier'}</a>
         </div>
-        <a class="btn" href={links.gearhive} rel="noopener">{nl ? 'Bekijk op Gearhive' : 'Find gear on Gearhive'} <span class="ar" aria-hidden="true">→</span></a>
+        <a class="btn" href={links.gearhive} target="_blank" rel="noopener">{nl ? 'Bekijk op Gearhive' : 'Find gear on Gearhive'} <span class="ar" aria-hidden="true">→</span></a>
     </div>
 </div>

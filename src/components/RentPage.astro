@@ -198,7 +198,7 @@ const mosaic = [
                 <div class="book">
                     <div class="price">€{r.fromPerDay} <small>{copy.priceFrom}</small></div>
                     <div class="rows">{copy.rows.map(([a, b]) => <div class="row"><span>{a}</span><b>{b}</b></div>)}</div>
-                    <a class="btn" href={links.goboony} rel="noopener">{copy.book} <span class="ar" aria-hidden="true">→</span></a>
+                    <a class="btn" href={links.goboony} target="_blank" rel="noopener">{copy.book} <span class="ar" aria-hidden="true">→</span></a>
                     <span class="note">{copy.bookNote}</span>
                     <a class="link second" href="#availability">{copy.checkDates}</a>
                 </div>

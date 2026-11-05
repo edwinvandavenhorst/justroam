@@ -16,7 +16,7 @@ const nl = lang === 'nl';
                 <p>
                     <a href={`mailto:${business.email}`}>{business.email}</a><br>
                     <a href={`tel:${business.phone}`}>{business.phoneDisplay}</a><br>
-                    <a href={business.instagram} rel="noopener">Instagram</a>
+                    <a href={business.instagram} target="_blank" rel="noopener">Instagram</a>
                 </p>
             </div>
             <div>
@@ -32,7 +32,7 @@ const nl = lang === 'nl';
                 <ul>
                     <li><a href={href(lang, 'rent.html')}>{nl ? 'Ranger huren' : 'Rent the Ranger'}</a></li>
                     <li><a href={href(lang, 'rent-gear.html')}>{nl ? 'Uitrusting huren' : 'Rent gear'}</a></li>
-                    <li><a href={links.gearhive} rel="noopener">Gearhive</a></li>
+                    <li><a href={links.gearhive} target="_blank" rel="noopener">Gearhive</a></li>
                 </ul>
             </div>
             <div>

@@ -7,8 +7,8 @@ export type Qa = { q: string; a: string };
 export type FaqGroup = { id: string; title: string; items: Qa[] };
 
 const mail = `<a href="mailto:${business.email}">${business.email}</a>`;
-const gh = `<a href="${links.gearhive}" rel="noopener">Gearhive</a>`;
-const goboony = `<a href="${links.goboony}" rel="noopener">Goboony</a>`;
+const gh = `<a href="${links.gearhive}" target="_blank" rel="noopener">Gearhive</a>`;
+const goboony = `<a href="${links.goboony}" target="_blank" rel="noopener">Goboony</a>`;
 const discEn = ranger.discounts.map((d) => `${d.percent}% from ${d.weeks} weeks`).join(', ');
 const discNl = ranger.discounts.map((d) => `${d.percent}% vanaf ${d.weeks} weken`).join(', ');
 

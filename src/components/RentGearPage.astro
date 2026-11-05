@@ -193,9 +193,9 @@ const jsonLd = {
                     <ul class="checks">{c.good.map((g) => <li>{g}</li>)}</ul>
                     <h3>{copy.bookT}</h3>
                     <div class="gh-module" data-gearhive-advertentie={it.listing}>
-                        <a class="btn" href={it.url} rel="noopener">{copy.openListing} <span class="ar" aria-hidden="true">→</span></a>
+                        <a class="btn" href={it.url} target="_blank" rel="noopener">{copy.openListing} <span class="ar" aria-hidden="true">→</span></a>
                     </div>
-                    <p class="gear-more">{c.more[0]} <a href={c.more[2]} rel="noopener">{c.more[1]}</a></p>
+                    <p class="gear-more">{c.more[0]} <a href={c.more[2]} target="_blank" rel="noopener">{c.more[1]}</a></p>
                 </article>
             );
         })}
@@ -216,7 +216,7 @@ const jsonLd = {
                 <h2>{copy.showT}</h2>
                 <p>{copy.showP}</p>
                 <ol class="show-steps">{copy.showSteps.map((s) => <li>{s}</li>)}</ol>
-                <a class="btn sand" href={gearhive.signup} rel="noopener">{copy.showCta} <span class="ar" aria-hidden="true">→</span></a>
+                <a class="btn sand" href={gearhive.signup} target="_blank" rel="noopener">{copy.showCta} <span class="ar" aria-hidden="true">→</span></a>
             </div>
             <div class="snippet">
                 <p>{copy.snippetNote}</p>
