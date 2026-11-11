@@ -7,7 +7,7 @@
 <title>Mockup K: Build page, simple | JustRoam</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="r3.css">
 <style>
     /* header as on staging: full logo, Instagram, EN | NL */
@@ -169,26 +169,20 @@
     .module-bar p { margin: 0; color: var(--muted); font-size: 15px; }
     .module-bar b { color: var(--brown); }
 
-    /* route on a map */
-    .route-wrap { background: var(--sand-l) url('topo.svg') center / cover no-repeat; padding-block: 90px; }
-    .route { position: relative; }
-    .route .trail { position: absolute; left: 0; right: 0; top: 0; width: 100%; height: 130px; }
-    .route .trail path { fill: none; stroke: var(--brown); stroke-width: 3; stroke-dasharray: 2 10; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-    .route ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
-    .route li { padding-top: calc(var(--y) + 50px); position: relative; }
-    .route .pin { position: absolute; top: calc(var(--y) - 22px); left: 50%; transform: translateX(-50%); width: 44px; height: 44px; border-radius: 50% 50% 50% 0; rotate: -45deg; background: var(--green); color: #fff; display: grid; place-items: center; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 20px; box-shadow: 0 6px 14px rgba(66,28,4,.25); }
-    .route .pin span, .route .pin svg { rotate: 45deg; }
-    .route .pin.flag { background: var(--brown); }
-    .route .pin.flag svg { width: 20px; height: 20px; fill: none; stroke: var(--sand); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-    .route li h3 { font-size: 28px; text-align: center; }
-    .route li p { color: var(--muted); text-align: center; margin: 6px auto 0; max-width: 26ch; font-size: 16px; background: rgba(241,223,189,.75); border-radius: 10px; padding: 2px 6px; }
+    /* route poster, after mockup C */
+    .route-poster { background: var(--brown); color: var(--sand-l); padding-block: 90px; }
+    .route-poster .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
+    .hand { font-family: 'Caveat', cursive; font-size: 28px; color: var(--sand); }
+    .route-poster h2 { color: var(--sand); margin: 6px 0 26px; }
+    .route-poster ol { list-style: none; margin: 0 0 30px; padding: 0; }
+    .route-poster li { display: grid; grid-template-columns: 44px 1fr; gap: 10px; padding: 14px 0; border-bottom: 1px dashed rgba(241,223,189,.3); font-size: 16px; color: #e8d6b6; }
+    .route-poster li b { font-family: 'Barlow Condensed'; font-size: 26px; font-weight: 800; color: var(--sand); line-height: 1; }
+    .route-poster li strong { display: block; color: #fff; font-size: 18px; margin-bottom: 2px; }
+    .route-poster .map { border-radius: 24px; overflow: hidden; }
+    .route-poster .map svg { display: block; width: 100%; height: auto; }
     @media (max-width: 860px) {
         .module-bar { grid-template-columns: 1fr; }
-        .route .trail { display: none; }
-        .route ol { grid-template-columns: 1fr; gap: 0; border-left: 3px dashed var(--brown); margin-left: 22px; }
-        .route li { padding: 0 0 28px 40px; }
-        .route .pin { top: -4px; left: -24px; transform: none; }
-        .route li h3, .route li p { text-align: left; margin-left: 0; }
+        .route-poster .wrap { grid-template-columns: 1fr; }
     }
 </style>
 </head>
@@ -296,23 +290,48 @@
     </div>
 </section>
 
-<!-- 3. how it works, as a route on a map -->
-<section class="route-wrap">
+<!-- 3. how it works, as a route sketch (after mockup C) -->
+<section class="route-poster">
     <div class="wrap">
-        <div class="head2">
-            <span class="kicker">How it works</span>
-            <h2>The route to your build</h2>
-        </div>
-        <div class="route">
-            <svg class="trail" viewBox="0 0 1000 130" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M0 70 C 60 70, 80 34, 125 34 S 250 104, 375 104 S 520 40, 625 40 S 780 100, 875 100 S 960 70, 1000 64" />
-            </svg>
+        <div>
+            <span class="hand">your build, step by step</span>
+            <h2>From first call to first trip.</h2>
             <ol>
-                <li style="--y: 34px"><span class="pin"><span>1</span></span><h3>Intake</h3><p>A free 45-minute call about your vehicle, how you travel and your budget.</p></li>
-                <li style="--y: 104px"><span class="pin"><span>2</span></span><h3>Design together</h3><p>We design your interior around how you travel, and agree on price and planning.</p></li>
-                <li style="--y: 40px"><span class="pin"><span>3</span></span><h3>Build</h3><p>We build it for you, or you build alongside us on agreed days. We always do the electrics and the gas.</p></li>
-                <li style="--y: 100px"><span class="pin flag"><svg viewBox="0 0 24 24"><path d="M6 21V4M6 4h11l-2 4 2 4H6"/></svg></span><h3>Handover</h3><p>We walk you through everything, and off you go on your first trip.</p></li>
+                <li><b>1</b><div><strong>Intake</strong>A free 45-minute call about your vehicle, how you travel and your budget.</div></li>
+                <li><b>2</b><div><strong>Design together</strong>We design your interior around how you travel, and agree on price and planning.</div></li>
+                <li><b>3</b><div><strong>Build</strong>We build it for you, or you build alongside us on agreed days. We always do the electrics and the gas.</div></li>
+                <li><b>4</b><div><strong>Handover</strong>We walk you through everything, and off you go.</div></li>
             </ol>
+            <a class="btn sand" href="#plan">Plan your intake <span class="ar">→</span></a>
+        </div>
+        <div class="map">
+            <svg viewBox="0 0 600 420" role="img" aria-label="Sketch of the route from your idea to your first trip">
+                <rect width="600" height="420" fill="#2f1503"/>
+                <g fill="none" stroke="#5a3418" stroke-width="1">
+                    <path d="M0 80 Q150 60 300 90 T600 70"/><path d="M0 200 Q160 180 320 210 T600 190"/><path d="M0 320 Q180 300 330 330 T600 310"/>
+                    <path d="M120 0 Q100 140 140 260 T120 420"/><path d="M300 0 Q330 160 290 280 T320 420"/><path d="M470 0 Q450 120 490 250 T460 420"/>
+                </g>
+                <path d="M80 80 C 150 80, 170 150, 220 160 S 300 120, 340 170 S 330 260, 400 280 S 500 300, 520 350" fill="none" stroke="#ecd3a9" stroke-width="3" stroke-dasharray="8 7" stroke-linecap="round"/>
+                <g font-family="Barlow Condensed" font-weight="800" font-size="16" fill="#2b1d12" text-anchor="middle">
+                    <circle cx="80" cy="80" r="14" fill="#ff6b35"/><text x="80" y="86">!</text>
+                    <circle cx="220" cy="160" r="14" fill="#d4a76a"/><text x="220" y="166">1</text>
+                    <circle cx="340" cy="170" r="14" fill="#d4a76a"/><text x="340" y="176">2</text>
+                    <circle cx="400" cy="280" r="14" fill="#d4a76a"/><text x="400" y="286">3</text>
+                    <circle cx="520" cy="350" r="14" fill="#d4a76a"/><text x="520" y="356">4</text>
+                </g>
+                <g font-family="Barlow" font-size="14" fill="#ecd3a9">
+                    <text x="100" y="66">Your idea</text>
+                    <text x="200" y="196">Intake</text>
+                    <text x="360" y="160">Design</text>
+                    <text x="420" y="276">Build in Voorburg</text>
+                    <text x="520" y="392" text-anchor="middle">Handover</text>
+                    <text x="552" y="298" text-anchor="middle">First trip</text>
+                </g>
+                <g fill="none" stroke="#ecd3a9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M540 340 v-30 h18 l-5 6 l5 6 h-18"/>
+                </g>
+                <text x="40" y="404" font-family="Barlow" font-size="12" fill="#b49a7a">Sketch, not to scale.</text>
+            </svg>
         </div>
     </div>
 </section>
