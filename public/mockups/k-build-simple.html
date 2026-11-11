@@ -163,11 +163,38 @@
         .trips { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 560px) { .steps, .trips { grid-template-columns: 1fr; } .trip { aspect-ratio: 4 / 3; } }
+    /* slim module bar */
+    .module-bar { margin-top: 26px; display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; background: #fff; border: 1px dashed #cdb894; border-radius: 18px; padding: 16px 22px; }
+    .module-bar .kicker { margin: 0; background: var(--sand-l); color: #8a6a3a; padding: 4px 10px; border-radius: 999px; font-size: 11px; }
+    .module-bar p { margin: 0; color: var(--muted); font-size: 15px; }
+    .module-bar b { color: var(--brown); }
+
+    /* route on a map */
+    .route-wrap { background: var(--sand-l) url('topo.svg') center / cover no-repeat; padding-block: 90px; }
+    .route { position: relative; }
+    .route .trail { position: absolute; left: 0; right: 0; top: 0; width: 100%; height: 130px; }
+    .route .trail path { fill: none; stroke: var(--brown); stroke-width: 3; stroke-dasharray: 2 10; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+    .route ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
+    .route li { padding-top: calc(var(--y) + 50px); position: relative; }
+    .route .pin { position: absolute; top: calc(var(--y) - 22px); left: 50%; transform: translateX(-50%); width: 44px; height: 44px; border-radius: 50% 50% 50% 0; rotate: -45deg; background: var(--green); color: #fff; display: grid; place-items: center; font-family: 'Barlow Condensed'; font-weight: 800; font-size: 20px; box-shadow: 0 6px 14px rgba(66,28,4,.25); }
+    .route .pin span, .route .pin svg { rotate: 45deg; }
+    .route .pin.flag { background: var(--brown); }
+    .route .pin.flag svg { width: 20px; height: 20px; fill: none; stroke: var(--sand); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .route li h3 { font-size: 28px; text-align: center; }
+    .route li p { color: var(--muted); text-align: center; margin: 6px auto 0; max-width: 26ch; font-size: 16px; background: rgba(241,223,189,.75); border-radius: 10px; padding: 2px 6px; }
+    @media (max-width: 860px) {
+        .module-bar { grid-template-columns: 1fr; }
+        .route .trail { display: none; }
+        .route ol { grid-template-columns: 1fr; gap: 0; border-left: 3px dashed var(--brown); margin-left: 22px; }
+        .route li { padding: 0 0 28px 40px; }
+        .route .pin { top: -4px; left: -24px; transform: none; }
+        .route li h3, .route li p { text-align: left; margin-left: 0; }
+    }
 </style>
 </head>
 <body>
 
-<div class="switch"><div class="wrap"><b>Mockup K:</b> build page, new line-up &nbsp; <a href="index.html" style="color:#fff;opacity:.65">All directions</a></div></div>
+<div class="switch"><div class="wrap"><b>Mockup K:</b> build page, four blocks &nbsp; <a href="index.html" style="color:#fff;opacity:.65">All directions</a></div></div>
 
 <header class="top">
     <div class="wrap">
@@ -184,56 +211,23 @@
 <section class="hero">
     <img src="../images/build/IMG_50.jpeg" alt="Our Ranger with rooftop tent and awning in a forest">
     <div class="wrap">
-        <span class="kicker">Overland builds from Voorburg</span>
         <h1>Turn your 4x4 into an overland-ready adventure machine</h1>
-        <p>For your own pickup or SUV, across Western Europe. We build it for you, or we build it together.</p>
+        <p>For your own pickup or SUV. We build it for you, or we build it together.</p>
         <div class="row">
-            <a class="btn sand" href="#packages">View packages <span class="ar">→</span></a>
-            <a class="link" href="#plan">Plan your intake</a>
-        </div>
-        <div class="travel">
-            <span>How do you travel?</span>
-            <a href="#pk-basis">A few weekends a year</a>
-            <a href="#pk-camp">Weeks on the road</a>
-            <a href="#pk-offroad">Off the beaten track</a>
+            <a class="btn sand" href="#packages">View the packages <span class="ar">→</span></a>
         </div>
     </div>
 </section>
 
-<!-- 1. how a build works -->
-<section class="section" style="padding-bottom: 30px">
-    <div class="wrap">
-        <div class="head2">
-            <span class="kicker">How a build works</span>
-            <h2>From first call to first trip</h2>
-            <p>Four steps, and you know where you stand at every one of them.</p>
-        </div>
-        <ol class="steps">
-            <li><span class="num">01</span><h3>Intake</h3><p>A free 45-minute call about your vehicle, how you travel and your budget.</p></li>
-            <li><span class="num">02</span><h3>Design together</h3><p>We design your interior around how you travel, and agree on price and planning.</p></li>
-            <li><span class="num">03</span><h3>Build</h3><p>We build it, or you build alongside us. You choose.</p></li>
-            <li><span class="num">04</span><h3>Handover</h3><p>We walk you through everything, and off you go.</p></li>
-        </ol>
-        <div class="ways">
-            <div class="way">
-                <span class="big"><svg viewBox="0 0 24 24"><path d="M14 6l4 4-9 9H5v-4z"/><path d="M12 8l4 4"/></svg></span>
-                <div>
-                    <span class="step-tag">Step 03, option 1</span>
-                    <h3>We build</h3>
-                    <p>You drop off your vehicle, we build it and keep you posted along the way. You pick it up ready to go.</p>
-                </div>
-            </div>
-            <div class="way">
-                <span class="big"><svg viewBox="0 0 24 24"><circle cx="8" cy="7" r="3"/><circle cx="16" cy="7" r="3"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5"/></svg></span>
-                <div>
-                    <span class="step-tag">Step 03, option 2</span>
-                    <h3>Build together</h3>
-                    <p>You build alongside us on agreed days. You learn how everything works, and you pay less for labour. We always do the electrics and the gas.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
+
+
+
+
+
+
+
+
 
 <!-- 2. packages -->
 <section class="section" id="packages">
@@ -294,83 +288,36 @@
         </div>
 
         <p class="fits"><b>Every build is made to measure.</b> In the intake we go through what you need, what you can leave out, and which parts you might add on their own.</p>
-    </div>
-</section>
-
-<!-- 3. the module, in development -->
-<section class="wrap" style="padding-bottom: 90px">
-    <div class="module">
-        <div>
+        <div class="module-bar">
             <span class="kicker">In development</span>
-            <h2>The JustRoam module</h2>
-            <p>A slide-out unit for your pickup. It fits under the cover you already have, so it stays dry and your truck stays your truck. Take it out when you don't need it.</p>
-            <ul>
-                <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span>Kitchen</li>
-                <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span>Fridge</li>
-                <li><span class="ic c-water"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></span>Water</li>
-                <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span>Charging</li>
-                <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span>Storage</li>
-            </ul>
-        </div>
-        <div>
-            <p class="rent"><b>Try before you buy.</b> We are building the first one now. Soon you can rent it, and if you buy it, you get your rental back.</p>
-            <a class="btn sand" href="#">Keep me posted <span class="ar">→</span></a>
+            <p><b>The JustRoam module.</b> A slide-out unit with kitchen, fridge, water, charging and storage, under the cover you already have. Soon to rent, and if you buy it, you get your rental back.</p>
+            <a class="link" href="#">Keep me posted</a>
         </div>
     </div>
 </section>
 
-<!-- 4. builds, one card per project (template) -->
-<section class="wrap" style="padding-bottom: 90px">
-    <div class="head2">
-        <span class="kicker">Builds</span>
-        <h2>What we have built</h2>
-    </div>
-    <div class="builds">
-        <article class="build">
-            <div class="frame"><img src="../images/build/IMG_29.jpeg" alt="Our Ford Ranger during the build"></div>
-            <div class="b-txt">
-                <span class="b-tag">Our own build</span>
-                <h3>Ford Ranger, family overlander</h3>
-                <dl>
-                    <div><dt>Package</dt><dd>Ready to camp + Full off-road</dd></div>
-                    <div><dt>Build time</dt><dd>7 months</dd></div>
-                    <div><dt>Highlights</dt><dd>Canopy, two rooftop tents, slide-out kitchen, water, recovery gear</dd></div>
-                </dl>
-                <a class="link" href="#">Read the build story</a>
-            </div>
-        </article>
-        <article class="build next">
-            <div class="frame empty"><span>Photo of the build</span></div>
-            <div class="b-txt">
-                <span class="b-tag">In the workshop</span>
-                <h3>[Vehicle], [short description]</h3>
-                <dl>
-                    <div><dt>Package</dt><dd>[package]</dd></div>
-                    <div><dt>Build time</dt><dd>[months]</dd></div>
-                    <div><dt>Highlights</dt><dd>[three or four key parts]</dd></div>
-                </dl>
-                <span class="link muted">Story follows when it is finished</span>
-            </div>
-        </article>
+<!-- 3. how it works, as a route on a map -->
+<section class="route-wrap">
+    <div class="wrap">
+        <div class="head2">
+            <span class="kicker">How it works</span>
+            <h2>The route to your build</h2>
+        </div>
+        <div class="route">
+            <svg class="trail" viewBox="0 0 1000 130" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 70 C 60 70, 80 34, 125 34 S 250 104, 375 104 S 520 40, 625 40 S 780 100, 875 100 S 960 70, 1000 64" />
+            </svg>
+            <ol>
+                <li style="--y: 34px"><span class="pin"><span>1</span></span><h3>Intake</h3><p>A free 45-minute call about your vehicle, how you travel and your budget.</p></li>
+                <li style="--y: 104px"><span class="pin"><span>2</span></span><h3>Design together</h3><p>We design your interior around how you travel, and agree on price and planning.</p></li>
+                <li style="--y: 40px"><span class="pin"><span>3</span></span><h3>Build</h3><p>We build it for you, or you build alongside us on agreed days. We always do the electrics and the gas.</p></li>
+                <li style="--y: 100px"><span class="pin flag"><svg viewBox="0 0 24 24"><path d="M6 21V4M6 4h11l-2 4 2 4H6"/></svg></span><h3>Handover</h3><p>We walk you through everything, and off you go on your first trip.</p></li>
+            </ol>
+        </div>
     </div>
 </section>
 
-<!-- 5. trips: where the build took us -->
-<section class="wrap" style="padding-bottom: 90px">
-    <div class="head2">
-        <span class="kicker">Tested on the road</span>
-        <h2>Where our build took us</h2>
-        <p>We don't just build them. We travel with them, and every trip makes the next build better.</p>
-    </div>
-    <div class="trips">
-        <a class="trip" href="#"><img src="../images/rent/IMG_4254.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Bosnia &amp; Slovenia</h3><p>Wild horses, a narrow trail and howling in the night</p><span class="more">Read the story →</span></div></a>
-        <a class="trip" href="#"><img src="../images/rent/IMG_5025.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Elba</h3><p>Sun and island in the autumn break</p><span class="more">Read the story →</span></div></a>
-        <a class="trip" href="#"><img src="../images/rent/IMG_4042.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Norway</h3><p>[one line about the trip]</p><span class="more">Story coming soon</span></div></a>
-        <a class="trip" href="#"><img src="../images/rent/image_forrest_1.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Peloponnese</h3><p>[one line about the trip]</p><span class="more">Story coming soon</span></div></a>
-    </div>
-</section>
-
-<section class="wrap" id="plan" style="padding-bottom: 90px">
+<section class="wrap" id="plan" style="padding-block: 90px">
     <div class="intake">
         <div>
             <span class="kicker">Plan your build</span>

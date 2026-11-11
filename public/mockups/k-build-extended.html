@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mockup K extended | JustRoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="r3.css">
+<style>
+    /* header as on staging: full logo, Instagram, EN | NL */
+    header.top .wrap { height: 104px; }
+    .brand img { height: 92px; width: auto; display: block; }
+    .insta svg { width: 26px; height: 26px; fill: none; stroke: var(--brown); stroke-width: 2; display: block; }
+    .lang2 { display: flex; gap: 4px; align-items: center; font-weight: 700; font-size: 15px; color: var(--brown); }
+    .lang2 span, .lang2 a { padding: 4px 8px; border-radius: 8px; text-decoration: none; color: var(--brown); }
+    .lang2 .on { background: rgba(44, 95, 45, .14); color: var(--green); }
+    header.top nav a.cur { border-color: var(--green); }
+
+    /* hero, like the live page: one photo, one promise, two buttons */
+    .hero { position: relative; height: clamp(440px, 64svh, 620px); border-radius: 0 0 28px 28px; overflow: hidden; color: #fff; }
+    .hero img { position: absolute; inset: 0; object-position: 50% 70%; }
+    .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(25,12,3,.8) 0%, rgba(25,12,3,.4) 50%, rgba(25,12,3,0) 75%); }
+    .hero .wrap { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .hero .wrap > * { max-width: 600px; }
+    .hero .kicker { color: var(--sand); }
+    .hero h1 { color: #fff; font-size: clamp(44px, 5.4vw, 76px); font-weight: 800; margin: 8px 0 16px; }
+    .hero p { font-size: 19px; color: #f1e6d4; margin: 0; }
+    .hero .row { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-top: 26px; }
+    .hero .link { color: #fff; }
+
+    .head2 { margin-bottom: 28px; max-width: 760px; }
+    .head2 p { color: var(--muted); font-size: 19px; margin: 14px 0 0; }
+
+    /* two ways to build */
+    .ways { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .way { background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 28px; display: grid; grid-template-columns: 56px 1fr; gap: 18px; }
+    .way .big { width: 56px; height: 56px; border-radius: 16px; background: var(--sand-l); color: var(--brown); display: grid; place-items: center; }
+    .way .big svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .way h3 { font-size: 30px; }
+    .way p { color: var(--muted); margin: 8px 0 0; }
+    .way .note { display: inline-block; margin-top: 12px; font-weight: 700; color: var(--green); font-size: 15px; }
+    .ways-foot { margin-top: 16px; color: var(--muted); }
+    .ways-foot b { color: var(--brown); }
+
+    /* icons per line */
+    .ic { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+    .ic svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .c-power { background: #fbe9b7; color: #8a6200; }
+    .c-kitchen { background: #f6dccd; color: #9a4421; }
+    .c-water { background: #dcebf3; color: #22607e; }
+    .c-sleep { background: #e3ecdc; color: #2c5f2d; }
+    .c-road { background: #e8e1d6; color: #4b3a28; }
+
+    /* packages */
+    .pk-grid { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 20px; align-items: start; }
+    .pk { background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 28px 26px 26px; position: relative; }
+    .pk.main { border: 2px solid var(--green); }
+    .pk.addon { background: transparent; border: 2px dashed #cdb894; }
+    .badge { position: absolute; top: -13px; left: 24px; background: var(--green); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; }
+    .pk.addon .badge { background: var(--sand); color: var(--brown); }
+    .pk h3 { font-size: 36px; }
+    .pk .meta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-weight: 700; font-size: 15px; color: var(--green); }
+    .pk .meta span { color: #b09a78; font-weight: 600; }
+    .pk .tag { color: var(--muted); margin: 12px 0 18px; font-size: 16px; }
+    .pk .plus { font-weight: 700; color: var(--brown); font-size: 15px; padding: 10px 14px; background: var(--page); border-radius: 12px; margin-bottom: 8px; }
+    .pk ul { list-style: none; margin: 0; padding: 0; }
+    .pk li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+    .pk li:first-child { border-top: 0; }
+    .pk li b { display: block; color: var(--brown); font-size: 16px; }
+    .pk .cta { margin-top: 18px; }
+    .pk li em { font-style: normal; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #9a7b4c; background: var(--sand-l); border-radius: 6px; padding: 2px 6px; margin-left: 6px; vertical-align: 2px; }
+    .fits { margin-top: 22px; color: var(--muted); text-align: center; }
+    .fits b { color: var(--brown); }
+
+    /* the module, in development */
+    .module { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: end; background: var(--brown); color: var(--sand-l); border-radius: 28px; padding: clamp(28px, 4vw, 52px); }
+    .module .kicker { color: var(--brown); background: var(--sand); padding: 5px 12px; border-radius: 999px; font-size: 12px; }
+    .module h2 { color: var(--sand); margin-top: 16px; }
+    .module p { margin: 14px 0 0; }
+    .module ul { list-style: none; padding: 0; margin: 20px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+    .module li { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.08); border-radius: 999px; padding: 5px 14px 5px 5px; font-weight: 600; font-size: 15px; }
+    .module .rent { margin-top: 0; padding: 14px 16px; border: 1px solid rgba(241,223,189,.3); border-radius: 16px; }
+    .module .rent b { color: var(--sand); }
+    .module .btn { margin-top: 24px; }
+
+    /* story link and intake, as on staging */
+    .story { display: grid; grid-template-columns: 1fr 1.2fr; background: #fff; border: 1px solid var(--line); border-radius: 28px; overflow: hidden; }
+    .story .frame { border-radius: 0; min-height: 300px; position: relative; }
+    .story .frame img { position: absolute; inset: 0; }
+    .story .txt { padding: clamp(28px, 4vw, 48px); align-self: center; }
+    .story h2 { font-size: clamp(34px, 4vw, 48px); }
+    .story p { margin: 14px 0 24px; color: var(--muted); }
+    .intake { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; background: #fff; border: 1px solid var(--line); border-radius: 28px; padding: clamp(28px, 5vw, 50px); }
+    .intake ol { padding-left: 20px; color: var(--muted); margin: 14px 0 0; }
+    .intake .after { font-weight: 600; color: var(--brown); margin: 14px 0 0; }
+    .opts { display: grid; gap: 10px; align-content: start; }
+    .opts a { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; background: var(--page); border-radius: 16px; padding: 14px 16px; text-decoration: none; color: var(--brown); }
+    .opts a.primary { background: var(--green); color: #fff; }
+    .opts i { width: 44px; height: 44px; border-radius: 12px; background: var(--green); color: #fff; display: grid; place-items: center; font-style: normal; font-weight: 800; }
+    .opts a.primary i { background: #fff; color: var(--green); }
+    .opts small { display: block; opacity: .8; }
+
+    .ph-note { color: #b09a78; font-weight: 600; }
+
+    @media (max-width: 960px) {
+        header.top .wrap { height: 72px; } .brand img { height: 58px; }
+        .ways, .pk-grid, .module, .story, .intake { grid-template-columns: 1fr; }
+        .hero::after { background: linear-gradient(0deg, rgba(25,12,3,.88) 0%, rgba(25,12,3,.3) 75%); }
+        .hero .wrap { justify-content: flex-end; padding-bottom: 40px; }
+    }
+    @media (max-width: 560px) { .insta { margin-left: auto; } header.top .btn { display: none; } .way { grid-template-columns: 1fr; } }
+    /* hero: how do you travel */
+    .hero .wrap > .travel { max-width: none; }
+    .travel { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 30px; }
+    .travel span { font-weight: 700; color: var(--sand); margin-right: 6px; }
+    .travel a { background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.35); color: #fff; text-decoration: none; border-radius: 999px; padding: 8px 16px; font-weight: 600; font-size: 15px; backdrop-filter: blur(4px); }
+    .travel a:hover { background: rgba(255,255,255,.26); }
+    .pk:target { box-shadow: 0 0 0 4px rgba(212,167,106,.7); }
+    html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+
+    /* steps */
+    .steps { list-style: none; padding: 0; margin: 0 0 22px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .steps li { border-top: 3px solid var(--green); padding-top: 14px; }
+    .steps .num { font-family: 'Barlow Condensed'; font-weight: 800; font-size: 20px; color: var(--green); }
+    .steps h3 { font-size: 28px; margin-top: 2px; }
+    .steps p { color: var(--muted); margin: 6px 0 0; font-size: 16px; }
+    .step-tag { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green); margin-bottom: 4px; }
+
+    /* builds: project card template */
+    .builds { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .build { background: #fff; border: 1px solid var(--line); border-radius: 26px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+    .build .frame { border-radius: 0; aspect-ratio: 16 / 9; position: relative; }
+    .build .frame img { position: absolute; inset: 0; }
+    .build .frame.empty { background: repeating-linear-gradient(135deg, #f1dfbd 0 12px, #f7ead2 12px 24px); display: grid; place-items: center; color: #9a7b4c; font-weight: 600; }
+    .build .b-txt { padding: 24px 26px 26px; }
+    .b-tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green); }
+    .build.next .b-tag { color: #9a7b4c; }
+    .build h3 { font-size: 30px; margin: 4px 0 14px; }
+    .build dl { margin: 0 0 18px; }
+    .build dl div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 15px; }
+    .build dt { color: var(--muted); }
+    .build dd { margin: 0; font-weight: 600; color: var(--brown); }
+    .link.muted { color: #9a7b4c; border-color: var(--line); }
+
+    /* trips */
+    .trips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .trip { position: relative; display: block; aspect-ratio: 3 / 4; border-radius: 22px; overflow: hidden; color: #fff; text-decoration: none; }
+    .trip img { position: absolute; inset: 0; transition: transform .4s; }
+    .trip:hover img { transform: scale(1.04); }
+    .trip::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(25,12,3,.85) 0%, rgba(25,12,3,.1) 60%); }
+    .trip > div { position: absolute; z-index: 2; left: 18px; right: 18px; bottom: 18px; }
+    .trip h3 { color: #fff; font-size: 30px; }
+    .trip p { margin: 6px 0 10px; font-size: 15px; color: #f1e6d4; }
+    .trip .more { font-weight: 700; color: var(--sand); font-size: 15px; }
+    .ph-tag { position: absolute; z-index: 2; top: 12px; left: 12px; background: rgba(0,0,0,.55); color: #fff; font-size: 11px; padding: 3px 8px; border-radius: 6px; }
+
+    @media (max-width: 960px) {
+        .steps { grid-template-columns: 1fr 1fr; }
+        .builds { grid-template-columns: 1fr; }
+        .trips { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) { .steps, .trips { grid-template-columns: 1fr; } .trip { aspect-ratio: 4 / 3; } }
+</style>
+</head>
+<body>
+
+<div class="switch"><div class="wrap"><b>Mockup K, extended:</b> the busy version with steps, builds and trips, kept for later &nbsp; <a href="index.html" style="color:#fff;opacity:.65">All directions</a></div></div>
+
+<header class="top">
+    <div class="wrap">
+        <a class="brand" href="#"><img src="../images/Logo_JustRoam.svg" alt="JustRoam, rent & custom builds"></a>
+        <nav>
+            <a class="cur" href="#">Builds</a><a href="#">Rent the Ranger</a><a href="#">Rent gear</a><a href="#">Stories</a><a href="#">FAQ</a>
+        </nav>
+        <a class="insta" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r=".6"/></svg></a>
+        <div class="lang2"><span class="on">EN</span>|<a href="#">NL</a></div>
+        <a class="btn" href="#plan">Plan your build <span class="ar">→</span></a>
+    </div>
+</header>
+
+<section class="hero">
+    <img src="../images/build/IMG_50.jpeg" alt="Our Ranger with rooftop tent and awning in a forest">
+    <div class="wrap">
+        <span class="kicker">Overland builds from Voorburg</span>
+        <h1>Turn your 4x4 into an overland-ready adventure machine</h1>
+        <p>For your own pickup or SUV, across Western Europe. We build it for you, or we build it together.</p>
+        <div class="row">
+            <a class="btn sand" href="#packages">View packages <span class="ar">→</span></a>
+            <a class="link" href="#plan">Plan your intake</a>
+        </div>
+        <div class="travel">
+            <span>How do you travel?</span>
+            <a href="#pk-basis">A few weekends a year</a>
+            <a href="#pk-camp">Weeks on the road</a>
+            <a href="#pk-offroad">Off the beaten track</a>
+        </div>
+    </div>
+</section>
+
+<!-- 1. how a build works -->
+<section class="section" style="padding-bottom: 30px">
+    <div class="wrap">
+        <div class="head2">
+            <span class="kicker">How a build works</span>
+            <h2>From first call to first trip</h2>
+            <p>Four steps, and you know where you stand at every one of them.</p>
+        </div>
+        <ol class="steps">
+            <li><span class="num">01</span><h3>Intake</h3><p>A free 45-minute call about your vehicle, how you travel and your budget.</p></li>
+            <li><span class="num">02</span><h3>Design together</h3><p>We design your interior around how you travel, and agree on price and planning.</p></li>
+            <li><span class="num">03</span><h3>Build</h3><p>We build it, or you build alongside us. You choose.</p></li>
+            <li><span class="num">04</span><h3>Handover</h3><p>We walk you through everything, and off you go.</p></li>
+        </ol>
+        <div class="ways">
+            <div class="way">
+                <span class="big"><svg viewBox="0 0 24 24"><path d="M14 6l4 4-9 9H5v-4z"/><path d="M12 8l4 4"/></svg></span>
+                <div>
+                    <span class="step-tag">Step 03, option 1</span>
+                    <h3>We build</h3>
+                    <p>You drop off your vehicle, we build it and keep you posted along the way. You pick it up ready to go.</p>
+                </div>
+            </div>
+            <div class="way">
+                <span class="big"><svg viewBox="0 0 24 24"><circle cx="8" cy="7" r="3"/><circle cx="16" cy="7" r="3"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M11 20c0-3 2.5-5 5-5s5 2 5 5"/></svg></span>
+                <div>
+                    <span class="step-tag">Step 03, option 2</span>
+                    <h3>Build together</h3>
+                    <p>You build alongside us on agreed days. You learn how everything works, and you pay less for labour. We always do the electrics and the gas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 2. packages -->
+<section class="section" id="packages">
+    <div class="wrap">
+        <div class="head2">
+            <div>
+                <span class="kicker">Build packages</span>
+                <h2>Start with power, go all the way to camping</h2>
+            </div>
+            <p>Two packages and one add-on, as a starting point. We tailor the details of every package to your vehicle and the way you travel, whether it is a pickup, an SUV, a Land Cruiser or a Jimny.</p>
+        </div>
+
+        <div class="pk-grid">
+            <article class="pk" id="pk-basis">
+                <h3>Basis</h3>
+                <div class="meta">From € <span>[price]</span> · <span>[build time]</span></div>
+                <p class="tag">Power on the road, and ready for whatever you add later.</p>
+                <ul>
+                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Second battery</b>Charges while you drive</div></li>
+                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>LED lighting</b>In the back of your vehicle</div></li>
+                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Charge all devices</b>USB ports and 12V outlets</div></li>
+                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Ready to expand</b>Pre-wired for a fridge, water pump and more</div></li>
+                    <li class="opt"><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Solar panel <em>optional</em></b>Charge your battery while parked</div></li>
+                </ul>
+                <a class="btn light cta" href="#plan" style="border:1px solid var(--line)">Plan this build <span class="ar">→</span></a>
+            </article>
+
+            <article class="pk main" id="pk-camp">
+                <span class="badge">Most complete</span>
+                <h3>Ready to camp</h3>
+                <div class="meta">From € <span>[price]</span> · <span>[build time]</span></div>
+                <p class="tag">Everything you need to cook, sleep and travel for weeks.</p>
+                <div class="plus">Everything in Basis, plus:</div>
+                <ul>
+                    <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Interior made for your vehicle</b>Drawers and storage, designed together</div></li>
+                    <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Kitchen</b>Cook a proper meal anywhere</div></li>
+                    <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Fridge</b>Drinks cold, food fresh</div></li>
+                    <li><span class="ic c-water"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></span><div><b>Water</b>Tank, pump and basin</div></li>
+                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>A place to sleep</b>A rooftop tent, or a bed built in</div></li>
+                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>Awning</b>Your outdoor living space, with LED lights</div></li>
+                </ul>
+                <a class="btn cta" href="#plan">Plan this build <span class="ar">→</span></a>
+            </article>
+
+            <article class="pk addon" id="pk-offroad">
+                <span class="badge">Add-on</span>
+                <h3>+ Full off-road</h3>
+                <div class="meta">From € <span>[price]</span></div>
+                <p class="tag">For rough tracks. Add it to Basis or Ready to camp.</p>
+                <ul>
+                    <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Upgraded suspension</b>Handles the extra weight and rough terrain</div></li>
+                    <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Recovery gear</b>Winch, recovery boards and a snorkel</div></li>
+                    <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Protection</b>Skid plates and rock sliders</div></li>
+                    <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Auxiliary lights</b>Front and rear, for night driving and camp</div></li>
+                </ul>
+                <a class="btn light cta" href="#plan" style="border:1px solid var(--line)">Ask about off-road <span class="ar">→</span></a>
+            </article>
+        </div>
+
+        <p class="fits"><b>Every build is made to measure.</b> In the intake we go through what you need, what you can leave out, and which parts you might add on their own.</p>
+    </div>
+</section>
+
+<!-- 3. the module, in development -->
+<section class="wrap" style="padding-bottom: 90px">
+    <div class="module">
+        <div>
+            <span class="kicker">In development</span>
+            <h2>The JustRoam module</h2>
+            <p>A slide-out unit for your pickup. It fits under the cover you already have, so it stays dry and your truck stays your truck. Take it out when you don't need it.</p>
+            <ul>
+                <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span>Kitchen</li>
+                <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span>Fridge</li>
+                <li><span class="ic c-water"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></span>Water</li>
+                <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span>Charging</li>
+                <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span>Storage</li>
+            </ul>
+        </div>
+        <div>
+            <p class="rent"><b>Try before you buy.</b> We are building the first one now. Soon you can rent it, and if you buy it, you get your rental back.</p>
+            <a class="btn sand" href="#">Keep me posted <span class="ar">→</span></a>
+        </div>
+    </div>
+</section>
+
+<!-- 4. builds, one card per project (template) -->
+<section class="wrap" style="padding-bottom: 90px">
+    <div class="head2">
+        <span class="kicker">Builds</span>
+        <h2>What we have built</h2>
+    </div>
+    <div class="builds">
+        <article class="build">
+            <div class="frame"><img src="../images/build/IMG_29.jpeg" alt="Our Ford Ranger during the build"></div>
+            <div class="b-txt">
+                <span class="b-tag">Our own build</span>
+                <h3>Ford Ranger, family overlander</h3>
+                <dl>
+                    <div><dt>Package</dt><dd>Ready to camp + Full off-road</dd></div>
+                    <div><dt>Build time</dt><dd>7 months</dd></div>
+                    <div><dt>Highlights</dt><dd>Canopy, two rooftop tents, slide-out kitchen, water, recovery gear</dd></div>
+                </dl>
+                <a class="link" href="#">Read the build story</a>
+            </div>
+        </article>
+        <article class="build next">
+            <div class="frame empty"><span>Photo of the build</span></div>
+            <div class="b-txt">
+                <span class="b-tag">In the workshop</span>
+                <h3>[Vehicle], [short description]</h3>
+                <dl>
+                    <div><dt>Package</dt><dd>[package]</dd></div>
+                    <div><dt>Build time</dt><dd>[months]</dd></div>
+                    <div><dt>Highlights</dt><dd>[three or four key parts]</dd></div>
+                </dl>
+                <span class="link muted">Story follows when it is finished</span>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- 5. trips: where the build took us -->
+<section class="wrap" style="padding-bottom: 90px">
+    <div class="head2">
+        <span class="kicker">Tested on the road</span>
+        <h2>Where our build took us</h2>
+        <p>We don't just build them. We travel with them, and every trip makes the next build better.</p>
+    </div>
+    <div class="trips">
+        <a class="trip" href="#"><img src="../images/rent/IMG_4254.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Bosnia &amp; Slovenia</h3><p>Wild horses, a narrow trail and howling in the night</p><span class="more">Read the story →</span></div></a>
+        <a class="trip" href="#"><img src="../images/rent/IMG_5025.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Elba</h3><p>Sun and island in the autumn break</p><span class="more">Read the story →</span></div></a>
+        <a class="trip" href="#"><img src="../images/rent/IMG_4042.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Norway</h3><p>[one line about the trip]</p><span class="more">Story coming soon</span></div></a>
+        <a class="trip" href="#"><img src="../images/rent/image_forrest_1.jpeg" alt=""><span class="ph-tag">photo to choose</span><div><h3>Peloponnese</h3><p>[one line about the trip]</p><span class="more">Story coming soon</span></div></a>
+    </div>
+</section>
+
+<section class="wrap" id="plan" style="padding-bottom: 90px">
+    <div class="intake">
+        <div>
+            <span class="kicker">Plan your build</span>
+            <h2>Plan your intake</h2>
+            <p class="lead" style="margin-top:14px">A free, no-obligation 45-minute call, by phone or video. Together we go through:</p>
+            <ol><li>Your vehicle: make, model and year</li><li>How you travel: weekends or weeks, with whom</li><li>What you want, and what you are unsure about</li><li>Your budget, and when the vehicle should be ready</li></ol>
+            <p class="after">Afterwards you know what is possible, roughly what it costs and how long it takes.</p>
+        </div>
+        <div class="opts">
+            <a class="primary" href="#"><i>W</i><div><b>Request an intake</b><small>Via WhatsApp</small></div></a>
+            <a href="#"><i>IG</i><div><b>Instagram</b><small>@_justroam_</small></div></a>
+            <a href="#"><i>@</i><div><b>Email us</b><small>info@justroam.nl</small></div></a>
+            <a href="#"><i>☎</i><div><b>Call us</b><small>+31 6 1133 4832</small></div></a>
+        </div>
+    </div>
+</section>
+
+<footer class="site">
+    <div class="wrap">
+        <div><h4>JustRoam</h4>Overland builds and Ford Ranger rental from Voorburg.</div>
+        <div><h4>Build</h4><a href="#">Packages</a><a href="#">Plan your build</a><a href="#">Build story</a></div>
+        <div><h4>Rent</h4><a href="#">Rent the Ranger</a><a href="#">Rent gear</a><a href="#">Gearhive</a></div>
+        <div><h4>More</h4><a href="#">Stories</a><a href="#">FAQ</a><a href="#">Contact</a></div>
+    </div>
+</footer>
+</body>
+</html>
