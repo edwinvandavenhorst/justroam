@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Direction C: Route poster | JustRoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Karla:wght@400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+    :root { --green: #2c5f2d; --green-d: #1e4620; --sand: #d4a76a; --sand-l: #ecd3a9; --cream: #f7efe1; --brown: #421c04; --orange: #ff6b35; --ink: #2b1d12; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'Karla', sans-serif; font-size: 18px; line-height: 1.55; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: 'Zilla Slab', serif; font-weight: 700; margin: 0; line-height: .98; color: var(--brown); }
+    .hand { font-family: 'Caveat', cursive; font-size: 26px; color: var(--green-d); }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+
+    .switch { background: #000; color: #fff; font-size: 13px; padding: 7px 0; } .switch a { margin-right: 14px; opacity: .65; } .switch a.on { opacity: 1; font-weight: 700; }
+
+    header.top { background: var(--green); color: var(--cream); }
+    header.top .wrap { display: flex; align-items: center; height: 76px; gap: 26px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-family: 'Zilla Slab'; font-weight: 700; font-size: 28px; text-decoration: none; color: var(--cream); }
+    .logo img { width: 44px; height: 44px; object-fit: contain; background: var(--cream); border-radius: 50%; padding: 3px; }
+    header.top nav { margin-left: auto; display: flex; gap: 22px; font-weight: 700; }
+    header.top nav a { text-decoration: none; }
+    .btn { display: inline-block; font-weight: 700; text-decoration: none; padding: 14px 24px; border-radius: 6px; border: 3px solid var(--brown); background: var(--brown); color: var(--cream); box-shadow: 4px 4px 0 var(--sand); }
+    .btn.alt { background: var(--cream); color: var(--brown); }
+    .btn.sand { background: var(--sand); color: var(--brown); border-color: var(--sand); box-shadow: 4px 4px 0 var(--brown); }
+
+    /* poster hero */
+    .hero { background: var(--sand-l); overflow: hidden; }
+    .hero .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; min-height: 640px; padding-top: 40px; padding-bottom: 60px; }
+    .hero h1 { font-size: clamp(64px, 9vw, 132px); letter-spacing: -.02em; }
+    .hero h1 .o { color: var(--green); }
+    .hero p { font-size: 21px; max-width: 34ch; margin: 22px 0 30px; }
+    .cards { position: relative; height: 520px; }
+    .postcard { position: absolute; background: #fff; padding: 12px 12px 46px; box-shadow: 0 18px 40px rgba(66,28,4,.18); }
+    .postcard .hand { position: absolute; left: 16px; bottom: 6px; font-size: 24px; }
+    .pc1 { width: 74%; height: 330px; left: 0; top: 10px; transform: rotate(-4deg); }
+    .pc2 { width: 62%; height: 300px; right: 0; bottom: 0; transform: rotate(5deg); }
+    .stamp { position: absolute; right: 18px; top: 0; width: 120px; height: 120px; border-radius: 50%; border: 3px dashed var(--brown); color: var(--brown); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; font-family: 'Zilla Slab'; font-weight: 700; font-size: 15px; line-height: 1.1; transform: rotate(12deg); background: rgba(247,239,225,.85); z-index: 3; }
+    .stamp b { font-size: 28px; }
+
+    /* route band */
+    .route { background: var(--brown); color: var(--cream); padding: 90px 0; }
+    .route .wrap { display: grid; grid-template-columns: 5fr 7fr; gap: 50px; align-items: center; }
+    .route h2 { color: var(--sand); font-size: clamp(44px, 6vw, 76px); }
+    .route .hand { color: var(--sand); }
+    .route ol { list-style: none; margin: 26px 0 30px; padding: 0; }
+    .route li { display: flex; gap: 14px; padding: 8px 0; border-bottom: 1px dashed rgba(236,211,169,.35); }
+    .route li b { font-family: 'Zilla Slab'; color: var(--sand); min-width: 28px; }
+    .map { background: #2f1503; border-radius: 12px; padding: 14px; }
+
+    /* two tiles */
+    .tiles { display: grid; grid-template-columns: 1fr 1fr; }
+    .tile { min-height: 560px; display: grid; grid-template-rows: 300px 1fr; }
+    .tile .txt { padding: 40px 44px 50px; }
+    .tile h2 { font-size: 56px; margin-bottom: 14px; }
+    .tile.rent { background: var(--green); color: var(--cream); } .tile.rent h2 { color: var(--cream); }
+    .tile.build { background: var(--orange); color: var(--ink); }
+    .tile ul { padding-left: 20px; margin: 0 0 26px; }
+
+    /* ticket */
+    .ticket-sec { padding: 90px 0; }
+    .ticket { display: grid; grid-template-columns: 2fr 1fr; background: #fff; border-radius: 14px; max-width: 900px; margin: 0 auto; box-shadow: 0 14px 30px rgba(66,28,4,.1); position: relative; }
+    .ticket .main { padding: 36px 40px; border-right: 3px dashed var(--sand-l); }
+    .ticket .stub { padding: 36px 30px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; background: var(--sand-l); border-radius: 0 14px 14px 0; }
+    .ticket h3 { font-size: 40px; margin-bottom: 12px; }
+    .ticket .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #eee2cd; }
+    .ticket .big { font-family: 'Zilla Slab'; font-size: 64px; font-weight: 700; color: var(--green); line-height: 1; }
+
+    footer { background: var(--green-d); color: var(--sand-l); padding: 44px 0; }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+
+    @media (max-width: 900px) {
+        header.top nav { display: none; }
+        .hero .wrap, .route .wrap, .tiles, .ticket { grid-template-columns: 1fr; }
+        .cards { height: 420px; } .pc1 { height: 260px; } .pc2 { height: 230px; }
+        .ticket .main { border-right: 0; border-bottom: 3px dashed var(--sand-l); } .ticket .stub { border-radius: 0 0 14px 14px; }
+        .tile h2 { font-size: 44px; }
+    }
+</style>
+</head>
+<body>
+<div class="switch"><div class="wrap"><b>Directions:</b> &nbsp; <a href="a-field-journal.html">A Field journal</a><a href="b-workshop.html">B Workshop</a><a class="on" href="c-route-poster.html">C Route poster</a><a href="index.html">Compare</a></div></div>
+
+<header class="top">
+    <div class="wrap">
+        <a class="logo" href="#"><img src="../images/Logo_JustRoam_notext.svg" alt="">JustRoam</a>
+        <nav><a href="#">Rent the Ranger</a><a href="#">Builds</a><a href="#">Trips</a><a href="#">FAQ</a><a href="#">NL</a></nav>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="wrap">
+        <div>
+            <span class="hand">from Voorburg, with mud on the tyres</span>
+            <h1>Go r<span class="o">o</span>am.</h1>
+            <p>Rent our Ford Ranger with two rooftop tents and a full kitchen, or let us build your own truck for the road.</p>
+            <a class="btn" href="#">Check the dates</a> &nbsp; <a class="btn alt" href="#">Build mine</a>
+        </div>
+        <div class="cards">
+            <div class="postcard pc1"><img src="../images/rent/IMG_4254.jpeg" alt="The Ranger on a lakeside beach"><span class="hand">[place], [year]</span></div>
+            <div class="postcard pc2"><img src="../images/rent/IMG_5025.jpeg" alt="The Ranger camped between trees"><span class="hand">[place], [year]</span></div>
+            <div class="stamp">SLEEPS<b>4</b>VOORBURG NL</div>
+        </div>
+    </div>
+</section>
+
+<section class="route">
+    <div class="wrap">
+        <div>
+            <span class="hand">trip no. 1</span>
+            <h2>Planned Norway. Ended up in Bosnia.</h2>
+            <ol>
+                <li><b>1</b>A hill above the Slovenian vineyards, two nights</li>
+                <li><b>2</b>Una park: rafting and the clearest water</li>
+                <li><b>3</b>Wild horses, off-trail</li>
+                <li><b>4</b>Into Montenegro on foot, dog and all</li>
+                <li><b>5</b>A detour to the Weissee in Austria</li>
+            </ol>
+            <a class="btn sand" href="#">Read the trip</a>
+        </div>
+        <div class="map">
+            <svg viewBox="0 0 600 420" role="img" aria-label="Sketch of the route from Voorburg to Bosnia and back">
+                <rect width="600" height="420" fill="#2f1503"/>
+                <g fill="none" stroke="#5a3418" stroke-width="1">
+                    <path d="M0 80 Q150 60 300 90 T600 70"/><path d="M0 200 Q160 180 320 210 T600 190"/><path d="M0 320 Q180 300 330 330 T600 310"/>
+                    <path d="M120 0 Q100 140 140 260 T120 420"/><path d="M300 0 Q330 160 290 280 T320 420"/><path d="M470 0 Q450 120 490 250 T460 420"/>
+                </g>
+                <path d="M90 70 C 160 120, 220 170, 270 215 S 360 260, 395 290 S 450 330, 470 350 M470 350 C 430 300, 380 260, 330 230 S 250 190, 230 175 S 150 110, 90 70" fill="none" stroke="#ecd3a9" stroke-width="3" stroke-dasharray="8 7" stroke-linecap="round"/>
+                <g font-family="Zilla Slab" font-weight="700" font-size="15" fill="#2b1d12">
+                    <circle cx="90" cy="70" r="13" fill="#ff6b35"/><text x="86" y="75" fill="#2b1d12">H</text>
+                    <circle cx="270" cy="215" r="13" fill="#d4a76a"/><text x="266" y="220">1</text>
+                    <circle cx="355" cy="262" r="13" fill="#d4a76a"/><text x="351" y="267">2</text>
+                    <circle cx="410" cy="300" r="13" fill="#d4a76a"/><text x="406" y="305">3</text>
+                    <circle cx="470" cy="350" r="13" fill="#d4a76a"/><text x="466" y="355">4</text>
+                    <circle cx="230" cy="175" r="13" fill="#d4a76a"/><text x="226" y="180">5</text>
+                </g>
+                <g font-family="Karla" font-size="13" fill="#ecd3a9">
+                    <text x="108" y="66">Voorburg</text><text x="40" y="400">Sketch, not to scale. Real map comes with the story.</text>
+                </g>
+            </svg>
+        </div>
+    </div>
+</section>
+
+<section class="tiles">
+    <div class="tile rent">
+        <div><img src="../images/hero.jpg" alt="The Ranger with two rooftop tents in a forest"></div>
+        <div class="txt">
+            <h2>Rent the Ranger</h2>
+            <ul><li>Two rooftop tents, sleeps 4</li><li>Slide-out kitchen, 45 L fridge, 50 L water</li><li>4WD, winch and recovery boards</li></ul>
+            <a class="btn sand" href="#">See dates and prices</a>
+        </div>
+    </div>
+    <div class="tile build">
+        <div><img src="../images/rent/IMG_4831.jpeg" alt="Slide-out kitchen in the canopy"></div>
+        <div class="txt">
+            <h2>Build yours</h2>
+            <ul><li>Getting started: canopy, power and solar</li><li>Getting serious: interior, kitchen and water</li><li>Going all-in: tents, awning, suspension, recovery</li></ul>
+            <a class="btn" href="#">Compare the packages</a>
+        </div>
+    </div>
+</section>
+
+<section class="ticket-sec wrap">
+    <div class="ticket">
+        <div class="main">
+            <h3>Your ticket out</h3>
+            <div class="row"><span>Cleaning, once</span><b>€50</b></div>
+            <div class="row"><span>2 weeks or more</span><b>10% off</b></div>
+            <div class="row"><span>3 weeks or more</span><b>15% off</b></div>
+            <div class="row"><span>Insurance and breakdown cover</span><b>included</b></div>
+            <p class="hand" style="margin:16px 0 0">book via Goboony, pick up in Voorburg</p>
+        </div>
+        <div class="stub">
+            <span>from</span><span class="big">€130</span><span>per day</span>
+            <a class="btn" style="margin-top:18px" href="#">Check dates</a>
+        </div>
+    </div>
+</section>
+
+<footer><div class="wrap"><span>JustRoam &middot; Voorburg</span><span>info@justroam.nl &middot; +31 6 1133 4832</span></div></footer>
+</body>
+</html>

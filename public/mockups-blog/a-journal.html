@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mockup A: Journal | JustRoam</title>
+<link rel="stylesheet" href="mockup.css">
+<style>
+    .hero { position: relative; min-height: 78vh; display: flex; align-items: flex-end; color: #fff; background: #222 url('../images/hero.jpg') center 40% / cover; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,.72) 100%); }
+    .hero .wrap { position: relative; padding-bottom: 48px; }
+    .hero h1 { color: #fff; font-size: clamp(2.2rem, 5.5vw, 4rem); margin: 8px 0 12px; max-width: 18ch; }
+    .hero p.lede { font-size: 1.25rem; max-width: 56ch; margin: 0; opacity: .95; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 56px; padding-top: 48px; align-items: start; }
+    .sticky { position: sticky; top: 20px; }
+    .byline { display: flex; gap: 12px; align-items: center; color: var(--muted); font-size: .92rem; margin-bottom: 26px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+    .byline .dot { width: 42px; height: 42px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--dark); }
+    .story > p:first-of-type::first-letter { float: left; font-size: 4.4rem; line-height: .85; padding: 6px 12px 0 0; color: var(--primary); font-weight: 800; }
+    .chapter { margin-top: 54px; }
+    .chapter .label { display: inline-block; background: var(--primary); color: #fff; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 3px 12px; border-radius: 99px; }
+    .chapter h2 { margin: 10px 0 14px; font-size: 1.9rem; }
+    .photo-wide img { aspect-ratio: 16 / 9; }
+    .photo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 26px 0; }
+    .photo-pair img { aspect-ratio: 4 / 3; }
+    .photo-wide { margin: 26px 0; }
+    @media (max-width: 640px) { .photo-pair { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="mock-bar"><div class="wrap"><img src="../images/Logo_JustRoam.svg" alt="JustRoam"><nav><a href="../index.html">Home</a><a href="../rent.html">Rental</a><a href="../build.html">Build</a><a href="../stories.html">Our stories</a></nav></div></div>
+<div class="mock-switch"><div class="wrap"><strong>Blog mockups</strong><a class="on" href="a-journal.html">A Journal</a><a href="b-stops.html">B Stop by stop</a><a href="c-photo-first.html">C Photo first</a><a href="index.html">Compare</a></div></div>
+
+<header class="hero">
+    <div class="wrap">
+        <div class="kicker">Our own adventure</div>
+        <h1>Maiden Trip: Bosnia &amp; Slovenia</h1>
+        <p class="lede">Our first overland trip ever: a last-minute pivot from Norway to the Balkans, wild horses, a scary narrow trail, and a dog who could not cross into Montenegro.</p>
+        <ul class="meta-row"><li>Summer</li><li>Family trip with dog</li><li>Mixed roads and light off-road</li><li>Almost 2 weeks in Bosnia</li></ul>
+    </div>
+</header>
+
+<main class="wrap layout">
+    <article class="story">
+        <div class="byline"><span class="dot">E</span><span><b>Edwin</b> &middot; Voorburg &middot; <span class="todo">[date]</span> &middot; 8 min read</span></div>
+
+        <p>Just a few days before departure we were still undecided where to go. Norway had been the original plan for our maiden trip, but the rugged camping and unpredictable weather gave us pause: none of us had real experience camping in the wild, and the basic questions (bathroom, showering, safety) were still unanswered. Then, without anyone quite remembering whose idea it was, Albania came up. One look at the map and we decided to just go for it.</p>
+
+        <div class="pull">"This, we realised, is what overlanding actually is: no fixed plan, just going with the flow."</div>
+
+        <section class="chapter" id="slovenia">
+            <span class="label">Part 1</span>
+            <h2>A hill above the vineyards</h2>
+            <p>We found a spot on a hill overlooking the Slovenian vineyards, and it was so good we stayed two nights: wine, sunset over the vines, and me discovering the joys of a long outdoor shower.</p>
+            <figure class="photo-wide standin"><img src="../images/rent/image_forrest_1.jpeg" alt="Camp on a hill above Slovenian vineyards at sunset"><figcaption>Two nights above the vineyards: the spot that taught us what overlanding is about.</figcaption></figure>
+        </section>
+
+        <section class="chapter" id="una">
+            <span class="label">Part 2</span>
+            <h2>Una park, and a place called Status Quo</h2>
+            <p>Finally in Bosnia, we drove to a camping right inside the park with minimal facilities but the clearest water we had stayed by yet. Over dinner we found out we could go rafting, and booked it on the spot. Two brothers picked us up for a multi-hour tour with stops to jump in the water, fun for the whole family, Izzy included.</p>
+            <div class="photo-pair standin">
+                <figure><img src="../images/rent/IMG_4840.jpeg" alt="Rafting on the river in Una park"><figcaption>Rafting, booked over dinner.</figcaption></figure>
+                <figure><img src="../images/rent/IMG_3836.jpeg" alt="Status Quo camping with canoe and paddle board"><figcaption>Status Quo: a free canoe the kids never wanted to leave.</figcaption></figure>
+            </div>
+            <p>Outside the park we found Status Quo. To this day we have not had better facilities. The spot was never busy, which made it a real sanctuary.</p>
+        </section>
+
+        <section class="chapter" id="horses">
+            <span class="label">Part 3</span>
+            <h2>Looking for wild horses</h2>
+            <p>No guided tour, just us and the car. Finding the entrance took some trial and error, and once on the plain we drove deeper and deeper without seeing anything. Then we spotted a herd, drove off-trail onto rocky terrain to get close, and got pictures and drone footage. So cool.</p>
+            <figure class="photo-wide standin"><img src="../images/rent/IMG_4825.jpeg" alt="Wild horses on a remote plain in Bosnia"><figcaption>A herd on a remote plain: rocky terrain, no trail, one drone shot.</figcaption></figure>
+        </section>
+
+        <section class="chapter" id="trail">
+            <span class="label">Part 4</span>
+            <h2>The trail that got too narrow</h2>
+            <p>Following a trail we had found on maps.me, things went fine until it narrowed more than we liked: shrubs, bushes, fresh scratches in the paint. The only option was reversing out, which left the clutch slipping and the car smelling scorched. Not something to repeat.</p>
+            <p>From there we headed to the highest point in Bosnia, a herders' town called <span class="todo">[town name]</span>, reached via 40 km of bumpy gravel. Something that sounded exactly like howling wolves surrounded us that night. To this day we do not know if it was wolves or herding dogs.</p>
+        </section>
+
+        <section class="chapter" id="end">
+            <span class="label">Part 5</span>
+            <h2>Montenegro on foot, Austria on a whim</h2>
+            <p>A 4.5-hour hike took us across the border to a lake in Montenegro, dog and all, where the restaurant host checked our passports. Then a call from friends in Austria changed our plans and we drove north for a hike around the Weissee. It is good to end a trip on a high, and that hike was exactly that.</p>
+        </section>
+
+        <div class="cta-card" style="margin-top:50px">
+            <h3>Want to drive something like this?</h3>
+            <p>Rent our Ford Ranger with dual rooftop tents, or let us build your own overland rig.</p>
+            <a class="btn sand" href="../rent.html">Rent the Ranger</a> <a class="btn ghost" style="color:#fff;border-color:#fff" href="../build.html">Build your truck</a>
+        </div>
+    </article>
+
+    <aside class="sticky" id="route">
+        <div class="route-card">
+            <h3>The route</h3>
+            <div class="map-slot"><strong>Map comes here</strong>All stops pinned, tap a number to jump to the story. Google My Maps embed now, own map later.</div>
+            <div class="stat-grid">
+                <div class="stat"><span>Duration</span><b class="todo">[days]</b></div>
+                <div class="stat"><span>Distance</span><b class="todo">[km]</b></div>
+                <div class="stat"><span>Roads</span><b class="todo">[% gravel]</b></div>
+                <div class="stat"><span>Best time</span><b>Summer</b></div>
+            </div>
+            <h4>Highlights</h4>
+            <ol class="stops">
+                <li><b><a href="#slovenia">Vineyard hill, Slovenia</a></b><small>2 nights, sunset over the vines</small></li>
+                <li><b><a href="#una">Una park, Bosnia</a></b><small>Clear water, rafting, Status Quo</small></li>
+                <li><b><a href="#horses">Wild horse plain</a></b><small>Off-trail, drone footage</small></li>
+                <li><b><a href="#trail">Highest village in Bosnia</a></b><small>40 km gravel, one restaurant</small></li>
+                <li><b><a href="#end">Lake hike to Montenegro</a></b><small>4.5 hours on foot</small></li>
+                <li><b><a href="#end">Weissee, Austria</a></b><small>Spontaneous detour</small></li>
+            </ol>
+            <h4>Tips</h4>
+            <ul class="tips">
+                <li>Travelling with a dog: sort the Montenegro paperwork (tick treatment, tether) before you leave.</li>
+                <li>Croatia: do not count on a restaurant seating you with a dog. Keep a supermarket picnic as plan B.</li>
+                <li>Outside the EU, an eSIM worked well for data.</li>
+                <li>Scout unmarked trails before committing a loaded truck. Ours cost paint and a squashed solar drawer.</li>
+                <li>Earplugs, for the nights near the herders' village.</li>
+            </ul>
+        </div>
+    </aside>
+</main>
+
+<footer class="mock-foot"><div class="wrap">Mockup A of 3. Photos are stand-ins from the rental page; text is condensed from the Bosnia &amp; Slovenia draft. <a href="index.html">Compare the three</a></div></footer>
+</body>
+</html>

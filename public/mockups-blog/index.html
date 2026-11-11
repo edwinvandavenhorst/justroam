@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Blog mockups | JustRoam</title>
+<link rel="stylesheet" href="mockup.css">
+<style>
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 36px 0; }
+    .card { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px; background: #fff; display: flex; flex-direction: column; }
+    .card h2 { margin: 0 0 6px; font-size: 1.35rem; }
+    .card .tag { color: var(--primary); font-weight: 700; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; }
+    .card ul { padding-left: 18px; margin: 10px 0; font-size: .95rem; }
+    .card .btn { margin-top: auto; align-self: flex-start; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="mock-bar"><div class="wrap"><img src="../images/Logo_JustRoam.svg" alt="JustRoam"><nav><a href="../stories.html">Back to the site</a></nav></div></div>
+<main class="wrap">
+    <h1 style="margin-top:36px">Three layouts for the travel stories</h1>
+    <p>All three tell the story in first person, lead with large photos and keep the route on the right: highlights, tips and a slot for the map. Photos are stand-ins and the text is condensed from the Bosnia &amp; Slovenia draft.</p>
+    <div class="grid">
+        <div class="card"><span class="tag">A</span><h2>Journal</h2>
+            <p>Full-width hero, the story in chapters with big photos in between. Route card sticks along while you read.</p>
+            <ul><li>Most like a travel magazine</li><li>Best for long, personal stories</li><li>Map and stops stay in view</li></ul>
+            <a class="btn" href="a-journal.html">Open A</a></div>
+        <div class="card"><span class="tag">B</span><h2>Stop by stop</h2>
+            <p>The story is split into numbered stops, each with a photo and a tip. The route list on the right lights up as you read.</p>
+            <ul><li>Most structured and easiest to scan</li><li>Grows into a clickable map</li><li>Good for tips per place</li></ul>
+            <a class="btn" href="b-stops.html">Open B</a></div>
+        <div class="card"><span class="tag">C</span><h2>Photo first</h2>
+            <p>A photo mosaic on top, an "in short" box, the story, a Q&amp;A and related stories. Route in short with GPX on the right.</p>
+            <ul><li>Strongest first impression</li><li>Best for search and AI answers</li><li>Q&amp;A block and related links built in</li></ul>
+            <a class="btn" href="c-photo-first.html">Open C</a></div>
+    </div>
+</main>
+<footer class="mock-foot"><div class="wrap">Throwaway mockups. Nothing here is linked from the live site.</div></footer>
+</body>
+</html>

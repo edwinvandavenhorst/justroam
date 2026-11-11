@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mockup B: Stop by stop | JustRoam</title>
+<link rel="stylesheet" href="mockup.css">
+<style>
+    .top { background: var(--paper); border-bottom: 1px solid var(--line); padding: 44px 0 34px; }
+    .top h1 { font-size: clamp(2rem, 4.5vw, 3.2rem); margin: 6px 0 12px; }
+    .top .lede { font-size: 1.2rem; max-width: 62ch; margin: 0; color: var(--muted); }
+    .top .kicker { color: var(--primary); }
+    .facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; padding: 0; list-style: none; }
+    .facts li { background: #fff; border: 1px solid var(--line); border-radius: 99px; padding: 5px 14px; font-size: .9rem; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; padding-top: 44px; align-items: start; }
+    .rail { grid-column: 2; grid-row: 1; }
+    .story { grid-column: 1; grid-row: 1; }
+    .sticky { position: sticky; top: 20px; }
+
+    /* left rail: map + route line with scroll spy */
+    .rail .route-card { padding: 18px; }
+    .line { list-style: none; margin: 18px 0 0; padding: 0; position: relative; }
+    .line::before { content: ''; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 3px; background: var(--line); border-radius: 3px; }
+    .line li { position: relative; padding: 0 0 0 42px; margin-bottom: 4px; }
+    .line a { display: block; text-decoration: none; color: var(--text); padding: 7px 8px; border-radius: var(--radius); font-size: .93rem; line-height: 1.3; }
+    .line a small { display: block; color: var(--muted); font-size: .8rem; }
+    .line li::before { content: attr(data-n); position: absolute; left: 0; top: 7px; width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 3px solid var(--line); color: var(--muted); font-weight: 800; font-size: .8rem; display: flex; align-items: center; justify-content: center; z-index: 1; }
+    .line li.active::before { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .line li.active a { background: #e8f1e8; font-weight: 700; color: var(--primary-dark); }
+
+    /* stops */
+    .stop { padding: 0 0 48px; margin-bottom: 48px; border-bottom: 1px solid var(--line); scroll-margin-top: 20px; }
+    .stop:last-of-type { border-bottom: 0; }
+    .stop-head { display: flex; gap: 14px; align-items: center; margin-bottom: 14px; }
+    .stop-head .n { flex: none; width: 46px; height: 46px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; }
+    .stop-head h2 { margin: 0; font-size: 1.7rem; }
+    .stop-head small { display: block; color: var(--muted); font-size: .9rem; }
+    .stop figure img { aspect-ratio: 16 / 9; }
+    .stop .cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: 26px; margin-top: 18px; align-items: start; }
+    .stop p { margin: 0 0 1em; }
+    .tip { background: #fff8e8; border: 1px solid #ecd9a8; border-left: 5px solid var(--sand); border-radius: var(--radius); padding: 12px 16px; font-size: .95rem; line-height: 1.5; }
+    .tip b { display: block; font-size: .75rem; text-transform: uppercase; letter-spacing: .1em; color: #8a6a22; margin-bottom: 2px; }
+    @media (max-width: 960px) { .layout { gap: 24px; } .stop .cols { grid-template-columns: 1fr; } .rail, .story { grid-column: 1; grid-row: auto; } .rail { order: -1; } }
+</style>
+</head>
+<body>
+
+<div class="mock-bar"><div class="wrap"><img src="../images/Logo_JustRoam.svg" alt="JustRoam"><nav><a href="../index.html">Home</a><a href="../rent.html">Rental</a><a href="../build.html">Build</a><a href="../stories.html">Our stories</a></nav></div></div>
+<div class="mock-switch"><div class="wrap"><strong>Blog mockups</strong><a href="a-journal.html">A Journal</a><a class="on" href="b-stops.html">B Stop by stop</a><a href="c-photo-first.html">C Photo first</a><a href="index.html">Compare</a></div></div>
+
+<header class="top">
+    <div class="wrap">
+        <div class="kicker">Our own adventure &middot; Summer trip</div>
+        <h1>Maiden Trip: Bosnia &amp; Slovenia</h1>
+        <p class="lede">Six stops, one family, one dog and a truck that was packed for Norway. How a last-minute pivot became the trip that made us fall in love with overlanding.</p>
+        <ul class="facts"><li><b>Duration</b> <span class="todo">[days]</span></li><li><b>Distance</b> <span class="todo">[km]</span></li><li><b>Roads</b> mixed, light off-road</li><li><b>By</b> Edwin &middot; <span class="todo">[date]</span></li></ul>
+    </div>
+</header>
+
+<main class="wrap layout">
+    <aside class="sticky rail" id="route">
+        <div class="route-card">
+            <h3>The route</h3>
+            <div class="map-slot" style="min-height:160px"><strong>Map comes here</strong>Pins for all six stops. The active stop in the list lights up as you read.</div>
+            <ol class="line" id="line">
+                <li data-n="1" class="active"><a href="#s1">Vineyard hill<small>Slovenia, 2 nights</small></a></li>
+                <li data-n="2"><a href="#s2">Una park<small>Bosnia, rafting + Status Quo</small></a></li>
+                <li data-n="3"><a href="#s3">Wild horse plain<small>Bosnia, off-trail</small></a></li>
+                <li data-n="4"><a href="#s4">Herders' village<small>Highest point, 40 km gravel</small></a></li>
+                <li data-n="5"><a href="#s5">Lake hike<small>Into Montenegro, 4.5 h</small></a></li>
+                <li data-n="6"><a href="#s6">Weissee<small>Austria, unplanned</small></a></li>
+            </ol>
+            <a class="btn small ghost" style="margin-top:12px" href="#">Download GPX (coming)</a>
+        </div>
+    </aside>
+
+    <article class="story">
+        <section class="stop" id="s1">
+            <div class="stop-head"><span class="n">1</span><div><h2>A hill above the vineyards</h2><small>Slovenia &middot; 2 nights</small></div></div>
+            <figure class="standin"><img src="../images/rent/image_forrest_1.jpeg" alt="Camp above Slovenian vineyards at sunset"><figcaption>Sunset over the vines, from the camp chairs.</figcaption></figure>
+            <div class="cols">
+                <div><p>Norway felt too uncertain for a first overland trip, so a few days before leaving we pivoted south. We found a spot on a hill overlooking the vineyards and it was so good we stayed two nights: wine, sunset, and a very long outdoor shower.</p></div>
+                <div class="tip"><b>Tip</b>Check the weather by altitude. Triglav promised 13 &deg;C days and 8 &deg;C nights, so we skipped it on the way down.</div>
+            </div>
+        </section>
+
+        <section class="stop" id="s2">
+            <div class="stop-head"><span class="n">2</span><div><h2>Una park and Status Quo</h2><small>Bosnia &middot; almost 2 weeks around here</small></div></div>
+            <figure class="standin"><img src="../images/rent/IMG_4840.jpeg" alt="Family rafting on the Una river"><figcaption>Rafting with two brothers as guides, booked over dinner.</figcaption></figure>
+            <div class="cols">
+                <div><p>The clearest water we had stayed by. A camping inside the park, then Status Quo outside it, with a free canoe and paddle board. The kids never wanted to leave. We promised to come back on the way home, and we did.</p></div>
+                <div class="tip"><b>Tip</b>Official sites here can beat anything you expect on facilities, at about 20 euro a night.</div>
+            </div>
+        </section>
+
+        <section class="stop" id="s3">
+            <div class="stop-head"><span class="n">3</span><div><h2>Wild horse plain</h2><small>Bosnia &middot; no tour, no trail</small></div></div>
+            <figure class="standin"><img src="../images/rent/IMG_4825.jpeg" alt="Wild horses on a remote plain"><figcaption>Found them after driving deeper and deeper.</figcaption></figure>
+            <div class="cols">
+                <div><p>Finding the entrance took trial and error. Once on the plain we drove for a long time without seeing anything, then a herd appeared. We went off-trail over rocky ground to get close and sent up the drone.</p></div>
+                <div class="tip"><b>Tip</b>Scout unmarked trails first. The maps.me trail we tried afterwards narrowed until we had to reverse out: scratched paint, a scorched clutch and a squashed solar drawer.</div>
+            </div>
+        </section>
+
+        <section class="stop" id="s4">
+            <div class="stop-head"><span class="n">4</span><div><h2>The herders' village</h2><small>Highest point in Bosnia &middot; <span class="todo">[village name]</span></small></div></div>
+            <figure class="standin"><img src="../images/rent/IMG_3836.jpeg" alt="Gravel road to the herders' village"><figcaption>40 km of sharp-stoned gravel, passed by crawling passenger cars.</figcaption></figure>
+            <div class="cols">
+                <div><p>The only restaurant was the only place to sleep, and something that sounded exactly like howling wolves surrounded us. To this day we do not know if it was wolves or herding dogs.</p></div>
+                <div class="tip"><b>Tip</b>Earplugs. Either way.</div>
+            </div>
+        </section>
+
+        <section class="stop" id="s5">
+            <div class="stop-head"><span class="n">5</span><div><h2>On foot into Montenegro</h2><small>4.5 hour hike</small></div></div>
+            <figure class="standin"><img src="../images/rent/IMG_5025.jpeg" alt="Valley full of flowers on the hike to the lake"><figcaption>A valley full of flowers, then forest, then the lake.</figcaption></figure>
+            <div class="cols">
+                <div><p>Our dog Izzy could not enter Montenegro by car without paperwork we did not have. So we walked: gravel paths, forest, and a lake where the restaurant host checked our passports. We made it after all, dog and all.</p></div>
+                <div class="tip"><b>Tip</b>Sort pet entry rules (tick treatment, tether test) before leaving, not on the road.</div>
+            </div>
+        </section>
+
+        <section class="stop" id="s6">
+            <div class="stop-head"><span class="n">6</span><div><h2>Weissee, a spontaneous detour</h2><small>Austria</small></div></div>
+            <figure class="standin"><img src="../images/rent/IMG_Forrest_2.jpeg" alt="Hike around the Weissee in Austria"><figcaption>A hike with friends to end the trip on a high.</figcaption></figure>
+            <div class="cols">
+                <div><p>A call from friends changed our plans. Campsite prices gave us sticker shock (80 euro a night against 20 in Bosnia), so we booked a real bed, a shower and a kitchen for about the same money. The next day, a hike and then home.</p></div>
+                <div class="tip"><b>Tip</b>Compare campsites with a simple apartment in Austria. The price can be close.</div>
+            </div>
+        </section>
+
+        <div class="cta-card">
+            <h3>Want to drive something like this?</h3>
+            <p>Rent our Ford Ranger with dual rooftop tents, or let us build your own overland rig.</p>
+            <a class="btn sand" href="../rent.html">Rent the Ranger</a>
+        </div>
+    </article>
+</main>
+
+<footer class="mock-foot"><div class="wrap">Mockup B of 3. Photos are stand-ins from the rental page; text is condensed from the Bosnia &amp; Slovenia draft. <a href="index.html">Compare the three</a></div></footer>
+
+<script>
+    // Scroll spy: light up the stop being read in the route list
+    (function () {
+        var items = document.querySelectorAll('#line li');
+        var stops = document.querySelectorAll('.stop');
+        if (!('IntersectionObserver' in window)) return;
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                var n = Array.prototype.indexOf.call(stops, e.target);
+                items.forEach(function (li, i) { li.classList.toggle('active', i === n); });
+            });
+        }, { rootMargin: '-30% 0px -60% 0px' });
+        stops.forEach(function (s) { io.observe(s); });
+    })();
+</script>
+</body>
+</html>

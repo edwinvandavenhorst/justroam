@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Direction F: Advisor | JustRoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+    :root { --header: #f5e6c8; --cream: #faf4e8; --green: #2c5f2d; --green-d: #1e4620; --sand: #d4a76a; --brown: #421c04; --ink: #2b1d12; --muted: #6d5f50; --line: #e8dcc6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: 'Rubik', sans-serif; font-size: 17px; line-height: 1.55; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; }
+    h1, h2, h3 { margin: 0; color: var(--brown); line-height: 1; }
+    .caps { text-transform: uppercase; font-weight: 900; letter-spacing: -.01em; }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+    .switch { background: #000; color: #fff; font-size: 13px; padding: 7px 0; } .switch a { margin-right: 14px; opacity: .65; } .switch a.on { opacity: 1; font-weight: 700; }
+
+    .bar { background: var(--green); color: #fff; text-align: center; font-size: 14px; padding: 7px; font-weight: 500; }
+    header.top { background: var(--header); position: sticky; top: 0; z-index: 5; }
+    header.top .wrap { display: flex; align-items: center; height: 76px; gap: 26px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 900; font-size: 24px; text-transform: uppercase; text-decoration: none; color: var(--brown); letter-spacing: -.01em; }
+    .logo img { width: 50px; height: 50px; object-fit: contain; }
+    header nav { display: flex; gap: 22px; font-weight: 500; margin-left: 12px; }
+    header nav a { text-decoration: none; color: var(--brown); }
+    .icons { margin-left: auto; display: flex; gap: 8px; }
+    .ib { height: 42px; padding: 0 14px; border-radius: 8px; background: var(--brown); color: var(--header); display: flex; align-items: center; justify-content: center; font-weight: 700; text-decoration: none; font-size: 14px; }
+    .ib.green { background: var(--green); color: #fff; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 22px; border-radius: 8px; font-weight: 700; text-decoration: none; background: var(--green); color: #fff; }
+    .btn.out { background: transparent; color: var(--brown); box-shadow: inset 0 0 0 2px var(--brown); }
+    .btn.sand { background: var(--sand); color: var(--brown); }
+
+    .hero .wrap { display: grid; grid-template-columns: 1fr 1.05fr; gap: 50px; align-items: center; padding-top: 50px; padding-bottom: 60px; }
+    .eyebrow { font-weight: 800; text-transform: uppercase; font-size: 15px; letter-spacing: .02em; color: var(--brown); }
+    .hero h1 { font-size: clamp(46px, 6vw, 82px); margin: 14px 0 18px; }
+    .hero p { color: var(--muted); max-width: 46ch; margin: 0 0 26px; }
+    .hero .ph { border-radius: 22px; overflow: hidden; aspect-ratio: 5 / 4; }
+    .proof { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 22px; font-size: 15px; color: var(--muted); }
+    .proof b { color: var(--green); }
+
+    .sec { padding: 70px 0; }
+    .sec .head { display: flex; justify-content: space-between; align-items: end; margin-bottom: 26px; gap: 20px; }
+    .sec h2 { font-size: clamp(34px, 4vw, 52px); }
+    .sec .head a { font-weight: 700; color: var(--brown); text-underline-offset: 4px; }
+
+    .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .tile { background: #fff; border-radius: 16px; overflow: hidden; text-decoration: none; border: 1px solid var(--line); }
+    .tile .ph { aspect-ratio: 4 / 3; }
+    .tile div:last-child { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; }
+    .tile b { text-transform: uppercase; font-weight: 800; color: var(--brown); }
+    .tile span { width: 34px; height: 34px; border-radius: 8px; background: var(--header); display: flex; align-items: center; justify-content: center; font-weight: 700; }
+
+    .advise { background: var(--header); }
+    .advise .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; padding-top: 70px; padding-bottom: 70px; }
+    .advise h2 { font-size: clamp(36px, 4.5vw, 58px); }
+    .advise p { color: var(--muted); }
+    .opt { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; background: var(--cream); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; text-decoration: none; }
+    .opt i { width: 44px; height: 44px; border-radius: 10px; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; font-style: normal; font-weight: 800; }
+    .opt b { display: block; } .opt small { color: var(--muted); font-size: 14px; }
+    .quiz { background: #fff; border-radius: 20px; padding: 28px; border: 1px solid var(--line); }
+    .quiz h3 { font-size: 24px; margin-bottom: 14px; text-transform: uppercase; font-weight: 800; }
+    .q { margin-bottom: 18px; } .q b { display: block; margin-bottom: 8px; font-size: 15px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chips label { border: 2px solid var(--line); border-radius: 99px; padding: 7px 14px; font-size: 15px; cursor: pointer; }
+    .chips input { display: none; } .chips input:checked + span { color: var(--green); font-weight: 700; }
+    .chips label:has(input:checked) { border-color: var(--green); background: #eef4ec; }
+
+    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .prod { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+    .prod .ph { aspect-ratio: 4 / 3; position: relative; }
+    .prod .badge { position: absolute; left: 12px; top: 12px; background: var(--green); color: #fff; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 99px; }
+    .prod .in { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+    .prod h3 { text-transform: uppercase; font-weight: 800; font-size: 22px; }
+    .prod .price { font-weight: 800; color: var(--green); font-size: 20px; margin: 8px 0; }
+    .prod ul { padding-left: 18px; margin: 0 0 18px; font-size: 15px; color: var(--muted); }
+    .prod .btn { margin-top: auto; justify-content: center; }
+
+    .ridge { display: block; width: 100%; height: 70px; margin-top: 30px; }
+    footer { background: var(--brown); color: #fff; padding: 44px 0; font-size: 15px; }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+    @media (max-width: 960px) {
+        header nav { display: none; } .hero .wrap, .advise .wrap { grid-template-columns: 1fr; }
+        .tiles { grid-template-columns: 1fr 1fr; } .products { grid-template-columns: 1fr; } .sec .head { display: block; } .sec .head a { display: inline-block; margin-top: 10px; }
+    }
+</style>
+</head>
+<body>
+<div class="switch"><div class="wrap"><b>Round 2:</b> &nbsp; <a href="d-basecamp.html">D Basecamp</a><a href="e-listing.html">E Listing</a><a class="on" href="f-advisor.html">F Advisor</a><a href="index.html">Compare</a></div></div>
+<div class="bar">Rent the Ranger from €130 a day &middot; builds for trucks in NL, BE and DE</div>
+
+<header class="top">
+    <div class="wrap">
+        <a class="logo" href="#"><img src="../images/Logo_JustRoam_notext.svg" alt="">JustRoam</a>
+        <nav><a href="#">Rent</a><a href="#">Builds</a><a href="#">Roof box &amp; bikes</a><a href="#">Stories</a><a href="#">FAQ</a></nav>
+        <div class="icons"><a class="ib" href="#">NL</a><a class="ib green" href="#">Plan your build</a></div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="wrap">
+        <div>
+            <div class="eyebrow">Overland builds from Voorburg</div>
+            <h1 class="caps">Built in Voorburg. Made for far away.</h1>
+            <p>We turn your pickup into a truck you can live out of: canopy, power, kitchen, water and tents. Want to try first? Rent our own Ranger.</p>
+            <a class="btn" href="#">Find your build &rarr;</a> &nbsp; <a class="btn out" href="#">Rent the Ranger</a>
+            <div class="proof"><span><b>[&#9733; rating]</b> on Goboony</span><span><b>7 months</b> to build our own</span><span><b>3</b> build packages</span></div>
+        </div>
+        <div class="ph"><img src="../images/hero.jpg" alt="The Ranger with two rooftop tents in a forest"></div>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap">
+        <div class="head"><h2 class="caps">Where are you heading next?</h2><a href="#">Everything we do</a></div>
+        <div class="tiles">
+            <a class="tile" href="#"><div class="ph"><img src="../images/rent/IMG_4829.jpeg" alt="Canopy build"></div><div><b>Build your truck</b><span>&rsaquo;</span></div></a>
+            <a class="tile" href="#"><div class="ph"><img src="../images/rent/IMG_4254.jpeg" alt="The Ranger by a lake"></div><div><b>Rent the Ranger</b><span>&rsaquo;</span></div></a>
+            <a class="tile" href="#"><div class="ph"><img src="../images/rent-gear/roofbox1.png" alt="Roof box"></div><div><b>Roof box &amp; bikes</b><span>&rsaquo;</span></div></a>
+            <a class="tile" href="#"><div class="ph"><img src="../images/rent/IMG_5025.jpeg" alt="Camp between the trees"></div><div><b>Trip stories</b><span>&rsaquo;</span></div></a>
+        </div>
+    </div>
+</section>
+
+<section class="advise">
+    <div class="wrap">
+        <div>
+            <h2 class="caps">Which build fits your truck?</h2>
+            <p>Answer three questions and get our advice. Rather talk to a person? We are happy to help.</p>
+            <a class="opt" href="#"><i>@</i><div><b>Email us</b><small>info@justroam.nl</small></div></a>
+            <a class="opt" href="#"><i>&#9742;</i><div><b>Call us</b><small>+31 6 1133 4832</small></div></a>
+            <a class="opt" href="#"><i>&#8962;</i><div><b>See the Ranger in Voorburg</b><small>By appointment [check]</small></div></a>
+        </div>
+        <form class="quiz" onsubmit="return false">
+            <h3>Build advisor</h3>
+            <div class="q"><b>1. Your pickup</b><div class="chips"><label><input type="radio" name="a" checked><span>Ford Ranger</span></label><label><input type="radio" name="a"><span>Toyota Hilux</span></label><label><input type="radio" name="a"><span>VW Amarok</span></label><label><input type="radio" name="a"><span>Other</span></label></div></div>
+            <div class="q"><b>2. How long are your trips?</b><div class="chips"><label><input type="radio" name="b"><span>Weekends</span></label><label><input type="radio" name="b" checked><span>1 to 3 weeks</span></label><label><input type="radio" name="b"><span>Months</span></label></div></div>
+            <div class="q"><b>3. Who comes along?</b><div class="chips"><label><input type="radio" name="c"><span>Just us two</span></label><label><input type="radio" name="c" checked><span>Family</span></label><label><input type="radio" name="c"><span>Family and dog</span></label></div></div>
+            <a class="btn" href="#" style="width:100%;justify-content:center">Show my advice</a>
+        </form>
+    </div>
+</section>
+
+<section class="sec">
+    <div class="wrap">
+        <div class="head"><h2 class="caps">Build packages</h2><a href="#">Compare in detail</a></div>
+        <div class="products">
+            <div class="prod"><div class="ph"><img src="../images/rent/IMG_4843.jpeg" alt="Power panel"><span class="badge">± 1 month</span></div><div class="in"><h3>Getting started</h3><div class="price">from €[price]</div><ul><li>Aluminium canopy</li><li>Dual battery and solar</li><li>LED lighting, USB and 12V</li></ul><a class="btn sand" href="#">Choose this build</a></div></div>
+            <div class="prod"><div class="ph"><img src="../images/rent/IMG_4831.jpeg" alt="Slide-out kitchen"><span class="badge">± 2 months</span></div><div class="in"><h3>Getting serious</h3><div class="price">from €[price]</div><ul><li>Drawer system and kitchen</li><li>Fridge-ready, water and shower</li><li>Front and rear lights</li></ul><a class="btn sand" href="#">Choose this build</a></div></div>
+            <div class="prod"><div class="ph"><img src="../images/rent/IMG_3679.jpeg" alt="Two rooftop tents open"><span class="badge">± 3-4 months</span></div><div class="in"><h3>Going all-in</h3><div class="price">from €[price]</div><ul><li>Roof tent(s) and 270&deg; awning</li><li>Suspension, winch, snorkel</li><li>Skid plates and rock sliders</li></ul><a class="btn sand" href="#">Choose this build</a></div></div>
+        </div>
+    </div>
+</section>
+
+<svg class="ridge" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70 L0 52 L120 30 L210 46 L330 12 L430 40 L560 22 L690 50 L800 18 L930 44 L1040 26 L1160 48 L1290 20 L1440 42 L1440 70 Z" fill="#421c04"/></svg>
+<footer><div class="wrap"><span>JustRoam &middot; Voorburg &middot; KVK 71621865</span><span>info@justroam.nl &middot; +31 6 1133 4832</span></div></footer>
+</body>
+</html>

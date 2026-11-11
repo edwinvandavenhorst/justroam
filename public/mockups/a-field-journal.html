@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Direction A: Field journal | JustRoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+    :root { --paper: #f4ede1; --ink: #2a1a0e; --brown: #421c04; --green: #2c5f2d; --sand: #d4a76a; --rule: #cbbba3; --muted: #6f5e4d; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; font-size: 17px; line-height: 1.6; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; }
+    .mono { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+    .serif { font-family: 'Fraunces', serif; }
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+
+    .switch { background: var(--ink); color: #fff; font: 13px 'IBM Plex Sans'; padding: 7px 0; }
+    .switch a { color: #fff; margin-right: 14px; opacity: .7; } .switch a.on { opacity: 1; font-weight: 600; }
+
+    header.top { border-bottom: 1px solid var(--rule); }
+    header.top .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 74px; }
+    header.top nav a { margin-right: 22px; text-decoration: none; font-size: 15px; }
+    header.top nav a:hover { text-decoration: underline; text-underline-offset: 5px; }
+    .logo { font-family: 'Fraunces', serif; font-weight: 700; font-size: 26px; text-decoration: none; letter-spacing: -.01em; }
+    .logo small { display: block; text-align: center; font: 10px 'IBM Plex Mono'; letter-spacing: .2em; color: var(--muted); }
+    .top-right { justify-self: end; display: flex; gap: 18px; align-items: center; }
+    .btn-line { font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--green); color: var(--green); padding-bottom: 2px; }
+    .btn-solid { display: inline-block; background: var(--green); color: #fff; text-decoration: none; padding: 13px 22px; font-weight: 600; }
+
+    /* hero: text left, tall photo right, caption like a journal */
+    .hero { display: grid; grid-template-columns: 5fr 7fr; gap: 0; border-bottom: 1px solid var(--rule); }
+    .hero-text { padding: 70px 56px 60px 0; display: flex; flex-direction: column; justify-content: space-between; }
+    .hero h1 { font-family: 'Fraunces', serif; font-weight: 300; font-size: clamp(44px, 5.2vw, 78px); line-height: 1.02; margin: 18px 0 26px; letter-spacing: -.02em; color: var(--brown); }
+    .hero h1 em { font-style: italic; font-weight: 500; color: var(--green); }
+    .hero p { max-width: 38ch; font-size: 19px; color: var(--muted); }
+    .hero .actions { display: flex; gap: 26px; align-items: center; margin-top: 30px; }
+    .hero-photo { position: relative; min-height: 680px; }
+    .hero-photo figcaption { position: absolute; left: 0; bottom: 0; background: var(--paper); padding: 12px 18px 0 0; }
+    .ledger { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--rule); margin-top: 40px; }
+    .ledger div { padding: 14px 10px 0 0; }
+    .ledger b { display: block; font-family: 'Fraunces', serif; font-size: 28px; font-weight: 500; color: var(--brown); }
+
+    /* intro letter */
+    .letter { display: grid; grid-template-columns: 3fr 6fr 3fr; gap: 40px; padding: 90px 0; border-bottom: 1px solid var(--rule); }
+    .letter p.big { font-family: 'Fraunces', serif; font-size: 30px; line-height: 1.35; font-weight: 300; margin: 0 0 22px; color: var(--brown); }
+    .letter .sig { font-family: 'Fraunces', serif; font-style: italic; font-size: 20px; }
+
+    /* two offers as newspaper columns, no cards */
+    .offers { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--rule); }
+    .offer { padding: 56px 48px 64px 0; }
+    .offer + .offer { padding-left: 48px; border-left: 1px solid var(--rule); }
+    .offer .ph { aspect-ratio: 3 / 2; margin: 18px 0 22px; }
+    .offer h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 40px; margin: 6px 0 10px; color: var(--brown); letter-spacing: -.01em; }
+    .offer dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 22px; margin: 18px 0 26px; font-size: 15px; }
+    .offer dt { font-family: 'IBM Plex Mono', monospace; font-size: 12px; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+    .offer dd { margin: 0; }
+
+    /* contact sheet of the truck */
+    .sheet { padding: 80px 0; border-bottom: 1px solid var(--rule); }
+    .sheet h2 { font-family: 'Fraunces', serif; font-weight: 300; font-size: 46px; margin: 0 0 30px; color: var(--brown); }
+    .sheet-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 260px 260px; gap: 10px; }
+    .sheet-grid figure { margin: 0; position: relative; }
+    .sheet-grid figure:first-child { grid-row: span 2; }
+    .sheet-grid figcaption { position: absolute; left: 10px; bottom: 10px; background: var(--paper); padding: 4px 8px; }
+
+    /* stories as a table of contents */
+    .toc { padding: 80px 0; }
+    .toc h2 { font-family: 'Fraunces', serif; font-weight: 300; font-size: 46px; margin: 0 0 24px; color: var(--brown); }
+    .toc a.row { display: grid; grid-template-columns: 90px 1fr 220px 40px; gap: 20px; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--rule); text-decoration: none; }
+    .toc a.row:last-child { border-bottom: 1px solid var(--rule); }
+    .toc .t { font-family: 'Fraunces', serif; font-size: 28px; color: var(--brown); }
+    .toc a.row:hover .t { font-style: italic; color: var(--green); }
+
+    footer { background: var(--brown); color: #ead9c1; padding: 50px 0; font-size: 15px; }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    footer .logo { color: #fff; }
+
+    @media (max-width: 900px) {
+        header.top .wrap { grid-template-columns: auto 1fr; } header.top nav { display: none; }
+        .hero, .offers, .letter { grid-template-columns: 1fr; }
+        .hero-text { padding: 40px 0; } .hero-photo { min-height: 420px; }
+        .offer, .offer + .offer { padding: 40px 0; border-left: 0; }
+        .offer + .offer { border-top: 1px solid var(--rule); }
+        .sheet-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 240px 160px 160px; } .sheet-grid figure:first-child { grid-column: span 2; grid-row: auto; }
+        .toc a.row { grid-template-columns: 1fr; gap: 4px; } .ledger { grid-template-columns: 1fr 1fr; }
+    }
+</style>
+</head>
+<body>
+<div class="switch"><div class="wrap"><b>Directions:</b> &nbsp; <a class="on" href="a-field-journal.html">A Field journal</a><a href="b-workshop.html">B Workshop</a><a href="c-route-poster.html">C Route poster</a><a href="index.html">Compare</a></div></div>
+
+<header class="top">
+    <div class="wrap">
+        <nav><a href="#">Rent the Ranger</a><a href="#">Builds</a><a href="#">Stories</a></nav>
+        <a class="logo" href="#">JustRoam<small>VOORBURG &middot; NL</small></a>
+        <div class="top-right"><a href="#" class="mono">NL</a><a class="btn-line" href="#">Check dates</a></div>
+    </div>
+</header>
+
+<div class="wrap">
+    <section class="hero">
+        <div class="hero-text">
+            <div>
+                <div class="mono">No. 01 &middot; Overland from Voorburg</div>
+                <h1>We built a truck for our own trips. <em>Now you can take it out.</em></h1>
+                <p>A Ford Ranger with two rooftop tents, a kitchen and everything else we pack for weeks on the road. Rent it, or let us build one for you.</p>
+                <div class="actions"><a class="btn-solid" href="#">See dates and prices</a><a class="btn-line" href="#">Have yours built</a></div>
+            </div>
+            <div class="ledger">
+                <div><span class="mono">Sleeps</span><b>4</b></div>
+                <div><span class="mono">From / day</span><b>€130</b></div>
+                <div><span class="mono">Fridge</span><b>45 L</b></div>
+                <div><span class="mono">Water</span><b>50 L</b></div>
+            </div>
+        </div>
+        <figure class="hero-photo" style="margin:0">
+            <img src="../images/rent/IMG_4042.jpeg" alt="The Ranger at night with both tents lit">
+            <figcaption class="mono">Fig. 1 &middot; Both tents up, lights on &middot; [place, month year]</figcaption>
+        </figure>
+    </section>
+
+    <section class="letter">
+        <div class="mono">A note from us</div>
+        <div>
+            <p class="big">We are Edwin and family from Voorburg. This Ranger took seven months to build and has carried us, our kids and Izzy the dog across the Balkans.</p>
+            <p>When it is not on one of our own trips, it is yours to borrow. You pick it up in Voorburg, we walk you through every switch and drawer, and you leave with the same truck we trust ourselves.</p>
+            <p class="sig">Edwin</p>
+        </div>
+        <div class="mono">52.07&deg; N &middot; 4.36&deg; E</div>
+    </section>
+
+    <section class="offers">
+        <article class="offer">
+            <span class="mono">I. Rent</span>
+            <h2>The Ranger, fully packed</h2>
+            <div class="ph"><img src="../images/rent/IMG_4254.jpeg" alt="The Ranger by a lake with mountains"></div>
+            <dl>
+                <dt>Sleeping</dt><dd>Two rooftop tents, 140 and 160 cm, 250 cm mattresses</dd>
+                <dt>Kitchen</dt><dd>Slide-out, two burners, 45 L fridge, 50 L water</dd>
+                <dt>Driving</dt><dd>4WD, diesel, manual, winch and recovery boards</dd>
+                <dt>Price</dt><dd>From €130 a day plus €50 cleaning. 10% off from 2 weeks, 15% from 3</dd>
+            </dl>
+            <a class="btn-line" href="#">See dates and prices</a>
+        </article>
+        <article class="offer">
+            <span class="mono">II. Build</span>
+            <h2>Your truck, our workshop</h2>
+            <div class="ph"><img src="../images/rent/IMG_4829.jpeg" alt="Canopy with custom drawers"></div>
+            <dl>
+                <dt>Getting started</dt><dd>Canopy, dual battery and solar &middot; ± 1 month</dd>
+                <dt>Getting serious</dt><dd>Plus interior, kitchen and water &middot; ± 2 months</dd>
+                <dt>Going all-in</dt><dd>The full overland build &middot; ± 3-4 months</dd>
+                <dt>Where</dt><dd>Trucks from the Netherlands, Germany and Belgium</dd>
+            </dl>
+            <a class="btn-line" href="#">Compare the packages</a>
+        </article>
+    </section>
+
+    <section class="sheet">
+        <div class="mono">Contact sheet</div>
+        <h2>What is in the back</h2>
+        <div class="sheet-grid">
+            <figure><img src="../images/rent/IMG_4831.jpeg" alt="Slide-out kitchen"><figcaption class="mono">Kitchen slide</figcaption></figure>
+            <figure><img src="../images/rent/IMG_4841.jpeg" alt="Fridge"><figcaption class="mono">45 L fridge</figcaption></figure>
+            <figure><img src="../images/rent/IMG_4837.jpeg" alt="Utensil drawer"><figcaption class="mono">Cutlery drawer</figcaption></figure>
+            <figure><img src="../images/rent/IMG_4843.jpeg" alt="Power panel"><figcaption class="mono">USB-A, USB-C, outlets</figcaption></figure>
+            <figure><img src="../images/rent/IMG_4866.jpeg" alt="Tent ladder"><figcaption class="mono">Ladder up</figcaption></figure>
+        </div>
+    </section>
+
+    <section class="toc">
+        <div class="mono">From the logbook</div>
+        <h2>Stories</h2>
+        <a class="row" href="#"><span class="mono">Build</span><span class="t">Seven months, one Ranger</span><span class="mono">Canopy to roof tents</span><span>&rarr;</span></a>
+        <a class="row" href="#"><span class="mono">Trip 01</span><span class="t">Maiden trip: Bosnia and Slovenia</span><span class="mono">Summer &middot; [km]</span><span>&rarr;</span></a>
+        <a class="row" href="#"><span class="mono">Trip 02</span><span class="t">Autumn on Elba</span><span class="mono">Autumn break</span><span>&rarr;</span></a>
+        <a class="row" href="#"><span class="mono">Trip 03</span><span class="t">Norway, finally</span><span class="mono">Coming</span><span>&rarr;</span></a>
+    </section>
+</div>
+
+<footer><div class="wrap"><span class="logo">JustRoam</span><span>info@justroam.nl &middot; +31 6 1133 4832 &middot; Voorburg</span><span class="mono" style="color:#ead9c1">KVK 71621865</span></div></footer>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mockup J: Build blocks | JustRoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="r3.css">
+<style>
+    .intro { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; padding-block: 44px 40px; }
+    .intro h1 { font-size: clamp(48px, 6.4vw, 92px); font-weight: 800; margin: 8px 0 16px; }
+    .intro .row { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-top: 24px; }
+    .intro .frame { aspect-ratio: 4 / 3; }
+
+    /* vehicle tabs */
+    .tabs-wrap { position: sticky; top: 80px; z-index: 10; background: var(--page); padding-block: 14px; border-bottom: 1px solid var(--line); }
+    .tabs { display: inline-flex; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 5px; gap: 4px; }
+    .tabs button { border: 0; background: transparent; border-radius: 999px; padding: 11px 22px; font: 700 16px 'Barlow'; color: var(--brown); cursor: pointer; display: flex; gap: 10px; align-items: center; }
+    .tabs button svg { width: 30px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+    .tabs button[aria-selected='true'] { background: var(--green); color: #fff; }
+    .tabs-note { display: inline-block; margin-left: 16px; color: var(--muted); font-size: 15px; }
+    [data-only] { display: none; }
+    body[data-vehicle='pickup'] [data-only~='pickup'], body[data-vehicle='suv'] [data-only~='suv'] { display: revert; }
+    body[data-vehicle='suv'] .ph.empty[data-only~='suv'] { display: grid; }
+
+    /* blocks */
+    .blocks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .block { background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 22px; display: flex; flex-direction: column; position: relative; }
+    .block .top { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+    .block .ico { width: 54px; height: 54px; border-radius: 16px; background: var(--sand-l); display: grid; place-items: center; flex: none; }
+    .block .ico svg { width: 30px; height: 30px; stroke: var(--brown); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .block .letter { font-family: 'Barlow Condensed'; font-weight: 800; font-size: 15px; color: var(--muted); letter-spacing: .08em; }
+    .block h3 { font-size: 32px; margin: 14px 0 6px; }
+    .block p { color: var(--muted); margin: 0 0 12px; font-size: 15px; }
+    .block ul { margin: 0 0 16px; padding-left: 18px; font-size: 15px; }
+    .block .ph { margin-top: auto; border-radius: 16px; overflow: hidden; aspect-ratio: 16 / 10; }
+    .block .ph.empty { background: repeating-linear-gradient(135deg, #f6efe2, #f6efe2 10px, #efe5d3 10px, #efe5d3 20px); display: grid; place-items: center; color: var(--muted); font-size: 14px; text-align: center; padding: 10px; }
+    .block.base { border: 2px solid var(--green); }
+    .block .badge { position: absolute; top: -12px; left: 22px; background: var(--green); color: #fff; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+
+    /* package builder: blocks per package */
+    .combo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .pkg { background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 26px; display: flex; flex-direction: column; }
+    .pkg.mid { border: 2px solid var(--green); }
+    .pkg h3 { font-size: 34px; }
+    .pkg .time { color: var(--green); font-weight: 700; margin: 4px 0 16px; }
+    .stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; padding: 6px 12px 6px 6px; font-weight: 600; font-size: 14px; background: var(--sand-l); color: var(--brown); }
+    .chip i { width: 24px; height: 24px; border-radius: 50%; background: #fff; display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: 12px; }
+    .chip.off { background: transparent; border: 1px dashed var(--line); color: #b9a98e; }
+    .chip.off i { background: transparent; }
+    .pkg .btn { margin-top: auto; align-self: flex-start; }
+    .mix { margin-top: 18px; background: var(--brown); color: #fff; border-radius: 24px; padding: 24px 28px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .mix b { font-family: 'Barlow Condensed'; font-size: 30px; display: block; line-height: 1; }
+    .mix span { color: #e7d6bd; }
+
+    .vehicles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .vehicles span { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 6px 12px; font-size: 14px; font-weight: 600; }
+    .note { background: #fff3d6; border-radius: 14px; padding: 12px 16px; font-size: 14px; margin-top: 16px; }
+
+    @media (max-width: 960px) {
+        .intro, .blocks, .combo { grid-template-columns: 1fr; }
+        .tabs-wrap { top: 70px; } .tabs button { padding: 10px 14px; font-size: 15px; } .tabs-note { display: block; margin: 8px 0 0; }
+    }
+</style>
+</head>
+<body data-vehicle="pickup">
+<div class="switch"><div class="wrap"><b>Mockup J:</b> &nbsp; <a class="on" href="j-build-blocks.html">Build page with blocks</a><a href="index.html">All directions</a></div></div>
+
+<header class="top"><div class="wrap">
+    <a class="logo" href="#"><img src="../images/Logo_JustRoam_notext.svg" alt="">JustRoam</a>
+    <nav><a href="#">Builds</a><a href="#">Rent the Ranger</a><a href="#">Roof box &amp; bikes</a><a href="#">Stories</a><a href="#">Contact</a></nav>
+    <a class="lang" href="#">NL</a>
+    <a class="btn" href="#plan">Plan your build <span class="ar">&rarr;</span></a>
+</div></header>
+
+<main>
+    <section class="wrap intro">
+        <div>
+            <span class="kicker">Overland builds</span>
+            <h1>Your 4x4, built for the road</h1>
+            <p class="lead">Pickup or SUV: we build in blocks. Power, sleeping, kitchen, water, off-road. Pick a package, or put together the blocks you need.</p>
+            <div class="row"><a class="btn" href="#packages">See the packages <span class="ar">&rarr;</span></a><a class="link" href="#blocks">How the blocks work</a></div>
+        </div>
+        <div class="frame"><img src="../images/rent/IMG_3679.jpeg" alt="Our Ranger with both rooftop tents open"></div>
+    </section>
+
+    <div class="tabs-wrap">
+        <div class="wrap">
+            <div class="tabs" role="tablist" aria-label="Vehicle type">
+                <button role="tab" aria-selected="true" data-v="pickup"><svg viewBox="0 0 40 22"><path d="M2 16v-5l5-1 5-6h10v7h15l1 5z"/><circle cx="10" cy="17" r="3"/><circle cx="31" cy="17" r="3"/></svg>Pickup</button>
+                <button role="tab" aria-selected="false" data-v="suv"><svg viewBox="0 0 40 22"><path d="M2 16v-6l4-1 4-5h20l5 6 3 1v5z"/><circle cx="10" cy="17" r="3"/><circle cx="31" cy="17" r="3"/></svg>SUV &amp; 4x4</button>
+            </div>
+            <span class="tabs-note" data-only="pickup">Ranger, Hilux, Amarok, D-Max and other pickups</span>
+            <span class="tabs-note" data-only="suv">Land Cruiser, Defender, Wrangler, Pajero and other SUVs <span style="color:#b9a98e">[check list]</span></span>
+        </div>
+    </div>
+
+    <section class="wrap section" id="blocks">
+        <div class="head-row" style="display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+            <div><span class="kicker">Building blocks</span><h2>Six blocks, one truck</h2></div>
+            <p style="max-width:44ch;color:var(--muted);margin:0">Every build starts with the base for your vehicle. The other blocks work the same on a pickup and an SUV.</p>
+        </div>
+        <div class="blocks">
+            <article class="block base">
+                <span class="badge">Always included</span>
+                <div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 18h18M5 18V9h14v9M5 9l2-4h10l2 4"/></svg></span><span class="letter">BLOCK A</span></div>
+                <div data-only="pickup"><h3>Canopy</h3><p>The base on a pickup: everything else mounts on or in it.</p><ul><li>Aluminium canopy on the load bed</li><li>LED lighting inside</li><li>Ready for a roof tent on top</li></ul></div>
+                <div data-only="suv"><h3>Roof rack &amp; boot layout</h3><p>The base on an SUV: a strong roof and a smart boot. <span style="color:#b9a98e">[check]</span></p><ul><li>Load-rated roof rack</li><li>Boot floor or drawer frame</li><li>LED lighting in the boot</li></ul></div>
+                <div class="ph" data-only="pickup"><img src="../images/build/IMG_6.jpeg" alt="Canopy fitted on our Ranger"></div>
+                <div class="ph empty" data-only="suv">Photo after our first SUV build</div>
+            </article>
+            <article class="block">
+                <div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M7 4h10v16H7zM10 2h4M12 9l-2 4h4l-2 4"/></svg></span><span class="letter">BLOCK B</span></div>
+                <h3>Power</h3><p>Off-grid for days, charged while you drive.</p>
+                <ul><li>Dual battery system</li><li>Solar charging</li><li>USB and 12V outlets, pre-wired for later</li></ul>
+                <div class="ph"><img src="../images/rent/IMG_4843.jpeg" alt="Power panel with USB and 12V"></div>
+            </article>
+            <article class="block">
+                <div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 20h18M5 20 12 5l7 15M12 5v15"/></svg></span><span class="letter">BLOCK C</span></div>
+                <h3>Sleep</h3><p>Up on the roof, set up in minutes.</p>
+                <ul><li>Roof tent(s), one or two</li><li>270° awning with LED lights</li><li data-only="suv">On the roof rack from block A</li><li data-only="pickup">On top of the canopy</li></ul>
+                <div class="ph"><img src="../images/build/IMG_29.jpeg" alt="Two rooftop tents open"></div>
+            </article>
+            <article class="block">
+                <div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 6h18v12H3zM3 12h18M10 9h4M10 15h4"/></svg></span><span class="letter">BLOCK D</span></div>
+                <h3>Kitchen &amp; storage</h3><p>Everything has a place, nothing rattles.</p>
+                <ul><li>Drawer system <span data-only="pickup">in the load bed</span><span data-only="suv">in the boot</span></li><li>Slide-out kitchen with gas stove</li><li>Fridge-ready, 35 or 45 L</li></ul>
+                <div class="ph"><img src="../images/rent/IMG_4831.jpeg" alt="Slide-out kitchen"></div>
+            </article>
+            <article class="block">
+                <div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z"/></svg></span><span class="letter">BLOCK E</span></div>
+                <h3>Water</h3><p>Cook, wash up and shower anywhere.</p>
+                <ul><li>Tank and pump</li><li>Basin for cooking and washing</li><li>Outside shower</li></ul>
+                <div class="ph"><img src="../images/build/IMG_13.jpeg" alt="Water tank being fitted"></div>
+            </article>
+            <article class="block">
+                <div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 15l2-6h14l2 6v4H3zM7.5 17h.01M16.5 17h.01M12 3v4"/></svg></span><span class="letter">BLOCK F</span></div>
+                <h3>Off-road</h3><p>Gets you there, and back out again.</p>
+                <ul><li>Upgraded suspension</li><li>Winch, recovery boards, snorkel</li><li>Skid plates and rock sliders</li><li>Front and rear auxiliary lights</li></ul>
+                <div class="ph"><img src="../images/build/IMG_19.jpeg" alt="Front with winch"></div>
+            </article>
+        </div>
+    </section>
+
+    <section class="topo" style="padding-block:90px" id="packages">
+        <div class="wrap">
+            <div style="display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:26px">
+                <div><span class="kicker">Packages</span><h2>Three ways to stack the blocks</h2></div>
+                <p style="max-width:40ch;color:var(--muted);margin:0">Same three packages for both vehicle types. Only block A changes.</p>
+            </div>
+            <div class="combo">
+                <div class="pkg">
+                    <h3>Getting started</h3><div class="time">± 1 month</div>
+                    <div class="stack"><span class="chip"><i>A</i><span data-only="pickup">Canopy</span><span data-only="suv">Roof rack &amp; boot</span></span><span class="chip"><i>B</i>Power</span><span class="chip off"><i>C</i>Sleep</span><span class="chip off"><i>D</i>Kitchen</span><span class="chip off"><i>E</i>Water</span><span class="chip off"><i>F</i>Off-road</span></div>
+                    <a class="btn light" href="#plan">Plan this build <span class="ar">&rarr;</span></a>
+                </div>
+                <div class="pkg mid">
+                    <h3>Getting serious</h3><div class="time">± 2 months</div>
+                    <div class="stack"><span class="chip"><i>A</i><span data-only="pickup">Canopy</span><span data-only="suv">Roof rack &amp; boot</span></span><span class="chip"><i>B</i>Power</span><span class="chip off"><i>C</i>Sleep</span><span class="chip"><i>D</i>Kitchen</span><span class="chip"><i>E</i>Water</span><span class="chip off"><i>F</i>Off-road</span></div>
+                    <a class="btn" href="#plan">Plan this build <span class="ar">&rarr;</span></a>
+                </div>
+                <div class="pkg">
+                    <h3>Going all-in</h3><div class="time">± 3-4 months</div>
+                    <div class="stack"><span class="chip"><i>A</i><span data-only="pickup">Canopy</span><span data-only="suv">Roof rack &amp; boot</span></span><span class="chip"><i>B</i>Power</span><span class="chip"><i>C</i>Sleep</span><span class="chip"><i>D</i>Kitchen</span><span class="chip"><i>E</i>Water</span><span class="chip"><i>F</i>Off-road</span></div>
+                    <a class="btn light" href="#plan">Plan this build <span class="ar">&rarr;</span></a>
+                </div>
+            </div>
+            <div class="mix">
+                <div><b>Want a different stack?</b><span>Base plus any blocks you like, for example power and sleep for weekends away.</span></div>
+                <a class="btn sand" href="#plan">Ask for your own mix <span class="ar">&rarr;</span></a>
+            </div>
+            <p class="note" data-only="suv">For SUVs, block A and the build times are a proposal: to confirm before this goes live. [check]</p>
+        </div>
+    </section>
+
+    <section class="wrap section" id="plan">
+        <div style="display:grid;grid-template-columns:1.1fr 1fr;gap:40px;background:#fff;border:1px solid var(--line);border-radius:28px;padding:44px" class="plan-box">
+            <div>
+                <span class="kicker">Plan your build</span>
+                <h2>Tell us about your 4x4</h2>
+                <p class="lead" style="margin-top:14px">Send make, model and year, how you travel, and which package or blocks appeal to you. We come back with advice and a quote.</p>
+            </div>
+            <div style="display:grid;gap:10px;align-content:start">
+                <a class="btn" href="#" style="justify-content:space-between">Email us <span class="ar">&rarr;</span></a>
+                <a class="btn light" href="#" style="justify-content:space-between;border:1px solid var(--line)">Call +31 6 1133 4832 <span class="ar">&rarr;</span></a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site"><div class="wrap">
+    <div><h4>JustRoam</h4>Overland builds and Ford Ranger rental from Voorburg.<br><br>info@justroam.nl<br>+31 6 1133 4832</div>
+    <div><h4>Build</h4><a href="#">Pickup builds</a><a href="#">SUV &amp; 4x4 builds</a><a href="#">Packages</a></div>
+    <div><h4>Rent</h4><a href="#">Rent the Ranger</a><a href="#">Roof box &amp; bikes</a><a href="#">Gearhive</a></div>
+    <div><h4>More</h4><a href="#">Stories</a><a href="#">FAQ</a><a href="#">Contact</a></div>
+</div></footer>
+
+<script>
+    // Vehicle tabs: switch which variant of block A and the notes are shown
+    document.querySelectorAll('.tabs button').forEach(function (b) {
+        b.addEventListener('click', function () {
+            document.body.dataset.vehicle = b.dataset.v;
+            document.querySelectorAll('.tabs button').forEach(function (x) { x.setAttribute('aria-selected', String(x === b)); });
+        });
+    });
+</script>
+<style>@media (max-width: 960px) { .plan-box { grid-template-columns: 1fr !important; padding: 26px !important; } }</style>
+</body>
+</html>

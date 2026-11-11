@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Direction E: Listing | JustRoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root { --header: #f5e6c8; --green: #2c5f2d; --green-d: #1e4620; --sand: #d4a76a; --brown: #421c04; --ink: #222; --muted: #6a6a6a; --line: #e4e0d8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: var(--ink); font-family: 'Figtree', sans-serif; font-size: 16px; line-height: 1.55; }
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    a { color: inherit; }
+    h1, h2, h3 { margin: 0; color: var(--ink); line-height: 1.2; }
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .switch { background: #000; color: #fff; font-size: 13px; padding: 7px 0; } .switch a { margin-right: 14px; opacity: .65; } .switch a.on { opacity: 1; font-weight: 700; }
+
+    header.top { background: var(--header); border-bottom: 1px solid #e8d6b0; }
+    header.top .wrap { display: flex; align-items: center; height: 78px; gap: 24px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 24px; text-decoration: none; color: var(--brown); }
+    .logo img { width: 50px; height: 50px; object-fit: contain; }
+    .search { margin: 0 auto; display: flex; align-items: center; background: #fff; border: 1px solid #e3d2ad; border-radius: 99px; box-shadow: 0 2px 10px rgba(66,28,4,.08); padding: 6px 6px 6px 22px; gap: 18px; font-size: 14px; }
+    .search span { display: block; font-weight: 700; font-size: 12px; }
+    .search div { padding-right: 18px; border-right: 1px solid var(--line); color: var(--muted); } .search div:last-of-type { border: 0; }
+    .search a { width: 42px; height: 42px; border-radius: 50%; background: var(--green); color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 700; }
+    header nav a { text-decoration: none; font-weight: 600; margin-left: 18px; color: var(--brown); }
+
+    .title { padding: 26px 0 16px; display: flex; justify-content: space-between; align-items: end; gap: 20px; }
+    .title h1 { font-size: 30px; font-weight: 700; }
+    .title .links { font-size: 14px; font-weight: 600; text-decoration: underline; display: flex; gap: 18px; }
+
+    .mosaic { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 220px 220px; gap: 8px; border-radius: 16px; overflow: hidden; position: relative; }
+    .mosaic > div:first-child { grid-row: span 2; }
+    .mosaic .all { position: absolute; right: 16px; bottom: 16px; background: #fff; border: 1px solid #222; border-radius: 8px; padding: 6px 14px; font-weight: 600; font-size: 14px; }
+
+    .body { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 70px; padding: 34px 0 60px; }
+    .sub h2 { font-size: 22px; font-weight: 600; }
+    .sub p.spec { margin: 4px 0 6px; }
+    .rating { font-weight: 600; }
+    .host { display: flex; gap: 16px; align-items: center; padding: 24px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-top: 20px; }
+    .avatar { width: 52px; height: 52px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--brown); font-size: 20px; flex: none; }
+    .hl { list-style: none; padding: 26px 0; margin: 0; border-bottom: 1px solid var(--line); display: grid; gap: 22px; }
+    .hl li { display: grid; grid-template-columns: 34px 1fr; gap: 16px; }
+    .hl b { display: block; }
+    .hl span { color: var(--muted); font-size: 15px; }
+    .ico { width: 28px; height: 28px; stroke: var(--ink); fill: none; stroke-width: 1.6; }
+    .block { padding: 30px 0; border-bottom: 1px solid var(--line); }
+    .block h2 { font-size: 22px; font-weight: 600; margin-bottom: 18px; }
+    .amen { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 30px; }
+    .amen div { display: flex; gap: 14px; align-items: center; }
+    .know { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; font-size: 15px; }
+    .know b { display: block; margin-bottom: 6px; }
+    .map { height: 260px; border-radius: 14px; background: #e9efe4 repeating-linear-gradient(45deg, #e9efe4, #e9efe4 12px, #e1e9da 12px, #e1e9da 24px); display: flex; align-items: center; justify-content: center; color: var(--green-d); font-weight: 600; }
+
+    /* sticky booking card */
+    .book { position: sticky; top: 24px; border: 1px solid var(--line); border-radius: 16px; padding: 24px; box-shadow: 0 8px 28px rgba(0,0,0,.12); }
+    .book .price { font-size: 24px; font-weight: 700; } .book .price span { font-size: 16px; font-weight: 400; }
+    .dates { border: 1px solid #b0b0b0; border-radius: 10px; margin: 18px 0 12px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; }
+    .dates div { padding: 10px 12px; font-size: 14px; color: var(--muted); } .dates div + div { border-left: 1px solid #b0b0b0; }
+    .dates b { display: block; font-size: 11px; color: var(--ink); letter-spacing: .04em; text-transform: uppercase; }
+    .cta { display: block; text-align: center; background: var(--green); color: #fff; padding: 14px; border-radius: 10px; font-weight: 700; text-decoration: none; font-size: 16px; }
+    .cta:hover { background: var(--green-d); }
+    .book small { display: block; text-align: center; color: var(--muted); margin: 10px 0 16px; }
+    .row { display: flex; justify-content: space-between; padding: 5px 0; } .row u { color: var(--ink); }
+    .row.total { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 14px; font-weight: 700; }
+
+    /* build funnel band */
+    .build { background: var(--green); color: #fff; padding: 60px 0; }
+    .build .wrap { display: grid; grid-template-columns: 1fr 1.4fr; gap: 50px; align-items: center; }
+    .build h2 { color: #fff; font-size: 40px; font-weight: 800; }
+    .build p { opacity: .9; }
+    .pk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .pk a { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.25); border-radius: 14px; padding: 18px; text-decoration: none; }
+    .pk a:hover { background: rgba(255,255,255,.16); }
+    .pk b { display: block; font-size: 18px; } .pk span { font-size: 14px; opacity: .85; }
+    .btn-sand { display: inline-block; background: var(--sand); color: var(--brown); padding: 13px 20px; border-radius: 10px; font-weight: 700; text-decoration: none; margin-top: 10px; }
+
+    footer { background: var(--brown); color: #fff; padding: 46px 0; font-size: 15px; }
+    footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+
+    @media (max-width: 960px) {
+        .search, header nav { display: none; } .body, .build .wrap { grid-template-columns: 1fr; gap: 30px; }
+        .mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 240px 120px; } .mosaic > div:first-child { grid-column: span 2; grid-row: auto; } .mosaic > div:nth-child(n+4) { display: none; }
+        .book { position: static; } .amen, .know, .pk { grid-template-columns: 1fr; } .title { display: block; } .title .links { margin-top: 8px; }
+    }
+</style>
+</head>
+<body>
+<div class="switch"><div class="wrap"><b>Round 2:</b> &nbsp; <a href="d-basecamp.html">D Basecamp</a><a class="on" href="e-listing.html">E Listing</a><a href="f-advisor.html">F Advisor</a><a href="index.html">Compare</a></div></div>
+
+<svg width="0" height="0" style="position:absolute">
+    <symbol id="i-tent" viewBox="0 0 24 24"><path d="M3 20h18M5 20 12 5l7 15M12 5v15"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M15 8l2 2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-fire" viewBox="0 0 24 24"><path d="M12 3c2 4 6 5 6 10a6 6 0 0 1-12 0c0-3 2-4 3-6 1 2 2 2 3 1-1-2 0-4 0-5z"/></symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M4 7l16 10M20 7 4 17"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s7 7.5 7 12a7 7 0 0 1-14 0c0-4.5 7-12 7-12z"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M9 3v5M15 3v5M6 8h12v4a6 6 0 0 1-12 0zM12 18v3"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 15l2-6h14l2 6v4H3z"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/></symbol>
+    <symbol id="i-hook" viewBox="0 0 24 24"><path d="M12 3v9a4 4 0 1 1-4 4"/></symbol>
+</svg>
+
+<header class="top">
+    <div class="wrap">
+        <a class="logo" href="#"><img src="../images/Logo_JustRoam_notext.svg" alt="">JustRoam</a>
+        <div class="search"><div><span>Pick up</span>Voorburg</div><div><span>When</span>Add dates</div><div><span>Who</span>Up to 4</div><a href="#">&rarr;</a></div>
+        <nav><a href="#">Builds</a><a href="#">Stories</a><a href="#">NL</a></nav>
+    </div>
+</header>
+
+<main class="wrap">
+    <div class="title"><h1>Ford Ranger with two rooftop tents, fully equipped</h1><div class="links"><span>Share</span><span>Save</span></div></div>
+    <div class="mosaic">
+        <div><img src="../images/rent/IMG_4042.jpeg" alt="The Ranger at night with tents lit"></div>
+        <div><img src="../images/rent/IMG_4831.jpeg" alt="Slide-out kitchen"></div>
+        <div><img src="../images/rent/IMG_4254.jpeg" alt="The Ranger by a lake"></div>
+        <div><img src="../images/rent/IMG_4866.jpeg" alt="Tent ladder"></div>
+        <div><img src="../images/rent/IMG_4841.jpeg" alt="Fridge"></div>
+        <span class="all">Show all photos</span>
+    </div>
+
+    <div class="body">
+        <div>
+            <div class="sub">
+                <h2>Overland camper in Voorburg, the Netherlands</h2>
+                <p class="spec">4 sleeping spots &middot; 2 rooftop tents &middot; 4WD &middot; diesel, manual</p>
+                <span class="rating">[&#9733; rating] &middot; <u>[n] reviews on Goboony</u></span>
+            </div>
+            <div class="host"><span class="avatar">E</span><div><b>Hosted by Edwin and family</b><br><span style="color:var(--muted)">We built this Ranger ourselves over seven months, for our own trips</span></div></div>
+            <ul class="hl">
+                <li><svg class="ico"><use href="#i-key"/></svg><div><b>Full handover in Voorburg</b><span>We walk you through every system before you leave.</span></div></li>
+                <li><svg class="ico"><use href="#i-shield"/></svg><div><b>Insurance and breakdown cover included</b><span>Booked and paid through Goboony.</span></div></li>
+                <li><svg class="ico"><use href="#i-cal"/></svg><div><b>Longer trips cost less</b><span>10% off from 2 weeks, 15% off from 3 weeks.</span></div></li>
+            </ul>
+            <div class="block">
+                <h2>What is on board</h2>
+                <div class="amen">
+                    <div><svg class="ico"><use href="#i-tent"/></svg>Two rooftop tents, 140 and 160 cm</div>
+                    <div><svg class="ico"><use href="#i-fire"/></svg>Two-burner gas stove, pans and cutlery</div>
+                    <div><svg class="ico"><use href="#i-snow"/></svg>45 L fridge</div>
+                    <div><svg class="ico"><use href="#i-drop"/></svg>50 L water tank with pump</div>
+                    <div><svg class="ico"><use href="#i-plug"/></svg>USB-A, USB-C and power outlets</div>
+                    <div><svg class="ico"><use href="#i-car"/></svg>Upgraded suspension, 4WD</div>
+                    <div><svg class="ico"><use href="#i-hook"/></svg>Winch, recovery boards, compressor</div>
+                    <div><svg class="ico"><use href="#i-tent"/></svg>Awning with LED lights, table and chairs</div>
+                </div>
+            </div>
+            <div class="block">
+                <h2>Where you pick it up</h2>
+                <div class="map">Map: Voorburg, next to The Hague</div>
+            </div>
+            <div class="block" style="border:0">
+                <h2>Things to know</h2>
+                <div class="know">
+                    <div><b>Drivers</b>Age 25 or older, licence held for at least 2 years.</div>
+                    <div><b>Trips</b>Weekend or weeks, across Europe and North Africa.</div>
+                    <div><b>House rules</b>Not available for parties or festivals.</div>
+                </div>
+            </div>
+        </div>
+
+        <aside>
+            <div class="book">
+                <div class="price">€130 <span>per day, from</span></div>
+                <div class="dates"><div><b>Pick up</b>Add date</div><div><b>Return</b>Add date</div></div>
+                <a class="cta" href="#">Check availability</a>
+                <small>You book and pay on Goboony</small>
+                <div class="row"><u>Example: 7 days &times; €130</u><span>€910</span></div>
+                <div class="row"><u>Cleaning, once</u><span>€50</span></div>
+                <div class="row total"><span>Total from</span><span>€960</span></div>
+            </div>
+        </aside>
+    </div>
+</main>
+
+<section class="build">
+    <div class="wrap">
+        <div>
+            <h2>Like the setup? We build it into your truck.</h2>
+            <p>The Ranger you just looked at is our own build. Three packages, from the basics to fully overland ready.</p>
+            <a class="btn-sand" href="#">Plan your build</a>
+        </div>
+        <div class="pk">
+            <a href="#"><b>Getting started</b><span>Canopy, power, solar &middot; ± 1 month</span></a>
+            <a href="#"><b>Getting serious</b><span>Plus kitchen and water &middot; ± 2 months</span></a>
+            <a href="#"><b>Going all-in</b><span>Tents, awning, recovery &middot; ± 3-4 months</span></a>
+        </div>
+    </div>
+</section>
+
+<footer><div class="wrap"><span>JustRoam &middot; Voorburg &middot; KVK 71621865</span><span>info@justroam.nl &middot; +31 6 1133 4832</span></div></footer>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Direction H: Build story | JustRoam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="r3.css">
+<style>
+    .hero .wrap { display: grid; grid-template-columns: 1fr 1.25fr; gap: 50px; align-items: center; padding-top: 50px; padding-bottom: 70px; }
+    .hero h1 { font-size: clamp(54px, 6.4vw, 92px); font-weight: 800; margin: 12px 0 16px; }
+    .hero .row { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-top: 26px; }
+    .ba { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .ba .frame { aspect-ratio: 3 / 4; }
+    .ba .tag { position: absolute; left: 14px; top: 14px; background: #fff; color: var(--brown); font-weight: 700; font-size: 14px; padding: 6px 12px; border-radius: 999px; }
+    .ba .frame:last-child .tag { background: var(--green); color: #fff; }
+    .ba .arrow { position: absolute; }
+    .timeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; margin-top: 30px; counter-reset: s; }
+    .timeline figure { margin: 0; counter-increment: s; }
+    .timeline .frame { aspect-ratio: 3 / 4; border-radius: 20px; }
+    .timeline figcaption { margin-top: 12px; }
+    .timeline figcaption::before { content: '0' counter(s); display: block; font-family: 'Barlow Condensed'; font-weight: 800; color: var(--sand); font-size: 22px; line-height: 1; }
+    .timeline b { display: block; font-family: 'Barlow Condensed'; font-size: 22px; color: var(--brown); line-height: 1.05; margin: 2px 0 4px; }
+    .timeline span { font-size: 14px; color: var(--muted); }
+    .head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; }
+    .pk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+    .pk > div { background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 26px; display: flex; flex-direction: column; }
+    .pk > div.mid { border: 2px solid var(--green); }
+    .pk h3 { font-size: 34px; }
+    .pk .meta { color: var(--green); font-weight: 700; margin: 4px 0 12px; }
+    .pk ul { padding-left: 18px; margin: 0 0 22px; color: var(--muted); }
+    .pk .btn { margin-top: auto; align-self: flex-start; }
+    .result-band { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .result-band .card { border-radius: 28px; overflow: hidden; position: relative; min-height: 440px; color: #fff; text-decoration: none; }
+    .result-band .card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(25,12,3,.85) 0%, rgba(25,12,3,0) 60%); }
+    .result-band .card div { position: absolute; z-index: 2; left: 30px; right: 30px; bottom: 28px; }
+    .result-band h3 { color: #fff; font-size: 40px; margin: 6px 0 8px; }
+    .result-band p { margin: 0 0 18px; color: #efe3d0; }
+    @media (max-width: 960px) {
+        .hero .wrap, .result-band { grid-template-columns: 1fr; } .timeline { grid-template-columns: repeat(2, 1fr); } .pk { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+<div class="switch"><div class="wrap"><b>Round 3:</b> &nbsp; <a href="g-configurator.html">G Configurator</a><a class="on" href="h-build-story.html">H Build story</a><a href="i-the-route.html">I The route</a><a href="index.html">Compare</a></div></div>
+
+<header class="top"><div class="wrap">
+    <a class="logo" href="#"><img src="../images/Logo_JustRoam_notext.svg" alt="">JustRoam</a>
+    <nav><a href="#">Builds</a><a href="#">Rent the Ranger</a><a href="#">Roof box &amp; bikes</a><a href="#">Stories</a><a href="#">Contact</a></nav>
+    <a class="lang" href="#">NL</a>
+    <a class="btn" href="#">Plan your build <span class="ar">&rarr;</span></a>
+</div></header>
+
+<main>
+    <section class="hero">
+        <div class="wrap">
+            <div>
+                <span class="kicker">Overland builds from Voorburg</span>
+                <h1>Same truck. Seven months later.</h1>
+                <p class="lead">We took a standard Ford Ranger and built everything we needed for trips with the kids and the dog. Now we build yours, in three clear packages.</p>
+                <div class="row"><a class="btn" href="#">Plan your build <span class="ar">&rarr;</span></a><a class="link" href="#how">See how we build</a></div>
+            </div>
+            <div class="ba">
+                <div class="frame"><img src="../images/build/IMG_1.jpeg" alt="Our Ranger as we bought it"><span class="tag">Day 1</span></div>
+                <div class="frame"><img src="../images/rent/IMG_3679.jpeg" alt="Our Ranger with both rooftop tents open"><span class="tag">Month 7</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="wrap section" id="how" style="padding-top:20px">
+        <div class="head"><div><span class="kicker">How we build</span><h2>Step by step, the way we built ours</h2></div><a class="link" href="#">Read the full build story</a></div>
+        <div class="timeline">
+            <figure><div class="frame"><img src="../images/build/IMG_6.jpeg" alt="Canopy fitted"></div><figcaption><b>Canopy</b><span>Aluminium, with lighting</span></figcaption></figure>
+            <figure><div class="frame"><img src="../images/build/IMG_52.jpeg" alt="Hand-drawn wiring diagram"></div><figcaption><b>Power</b><span>Planned on paper first</span></figcaption></figure>
+            <figure><div class="frame"><img src="../images/build/IMG_19.jpeg" alt="Front with winch"></div><figcaption><b>Front and winch</b><span>Lights, winch, protection</span></figcaption></figure>
+            <figure><div class="frame"><img src="../images/build/IMG_35.jpeg" alt="Upgraded suspension"></div><figcaption><b>Suspension</b><span>Carries the extra weight</span></figcaption></figure>
+            <figure><div class="frame"><img src="../images/build/IMG_42.jpeg" alt="Kitchen slide"></div><figcaption><b>Interior</b><span>Drawers, kitchen, fridge</span></figcaption></figure>
+            <figure><div class="frame"><img src="../images/build/IMG_29.jpeg" alt="Two rooftop tents open"></div><figcaption><b>Tents</b><span>Two rooftop tents, awning</span></figcaption></figure>
+        </div>
+    </section>
+
+    <section class="wrap section" style="padding-top:0">
+        <div class="annot-wrap">
+            <div>
+                <span class="kicker">What is in the back</span>
+                <h2>Built around how you travel</h2>
+                <ol class="legend">
+                    <li><div><b>Aluminium canopy</b><span>LED lighting inside, rooftop tents on top</span></div></li>
+                    <li><div><b>Gas bottle</b><span>Refillable, feeds the two-burner stove</span></div></li>
+                    <li><div><b>Storage boxes</b><span>Recovery gear, tools and camp kit</span></div></li>
+                    <li><div><b>Drawer system</b><span>Kitchen slide, fridge and cutlery drawer</span></div></li>
+                </ol>
+            </div>
+            <div class="annot">
+                <img src="../images/rent/IMG_4829.jpeg" alt="Open canopy with drawer system">
+                <span class="pin" style="left:50%;top:12%">1</span><span class="pin" style="left:18%;top:42%">2</span><span class="pin" style="left:52%;top:62%">3</span><span class="pin" style="left:30%;top:82%">4</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="topo" style="padding:90px 0">
+        <div class="wrap">
+            <div class="head"><div><span class="kicker">Your turn</span><h2>Pick your package</h2></div><a class="link" href="#">Compare every detail</a></div>
+            <div class="pk">
+                <div><h3>Getting started</h3><div class="meta">± 1 month &middot; from €[price]</div><ul><li>Aluminium canopy and LED lighting</li><li>Dual battery and solar</li><li>USB and 12V, pre-wired for later</li></ul><a class="btn light" href="#">Plan this build <span class="ar">&rarr;</span></a></div>
+                <div class="mid"><h3>Getting serious</h3><div class="meta">± 2 months &middot; from €[price]</div><ul><li>Everything in Getting started</li><li>Drawers, kitchen, fridge-ready</li><li>Water, pump and outside shower</li></ul><a class="btn" href="#">Plan this build <span class="ar">&rarr;</span></a></div>
+                <div><h3>Going all-in</h3><div class="meta">± 3-4 months &middot; from €[price]</div><ul><li>Everything in Getting serious</li><li>Roof tent(s) and 270&deg; awning</li><li>Suspension, winch, sliders, snorkel</li></ul><a class="btn light" href="#">Plan this build <span class="ar">&rarr;</span></a></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="wrap section">
+        <div class="result-band">
+            <a class="card" href="#"><img src="../images/rent/IMG_4042.jpeg" alt="The Ranger at night with tents lit" style="position:absolute;inset:0"><div><span class="kicker" style="color:var(--sand)">Try the result</span><h3>Rent our Ranger</h3><p>A weekend in the finished truck tells you more than any brochure. From €130 a day.</p><span class="btn sand">See dates <span class="ar">&rarr;</span></span></div></a>
+            <a class="card" href="#"><img src="../images/rent-gear/roofbox1.png" alt="Roof box" style="position:absolute;inset:0"><div><span class="kicker" style="color:var(--sand)">Just need space?</span><h3>Roof box &amp; bike carrier</h3><p>Rent ours, or find gear near you on Gearhive.</p><span class="btn light">Go to Gearhive <span class="ar">&rarr;</span></span></div></a>
+        </div>
+    </section>
+</main>
+
+<footer class="site"><div class="wrap">
+    <div><h4>JustRoam</h4>Overland builds and Ford Ranger rental from Voorburg.<br><br>info@justroam.nl<br>+31 6 1133 4832</div>
+    <div><h4>Build</h4><a href="#">Packages</a><a href="#">How we build</a><a href="#">Our build story</a></div>
+    <div><h4>Rent</h4><a href="#">Rent the Ranger</a><a href="#">Roof box &amp; bikes</a><a href="#">Gearhive</a></div>
+    <div><h4>More</h4><a href="#">Stories</a><a href="#">FAQ</a><a href="#">Contact</a></div>
+</div></footer>
+</body>
+</html>

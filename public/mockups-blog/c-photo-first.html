@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mockup C: Photo first | JustRoam</title>
+<link rel="stylesheet" href="mockup.css">
+<style>
+    .mosaic { display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 210px 210px; gap: 8px; padding-top: 22px; }
+    .mosaic a { position: relative; display: block; overflow: hidden; border-radius: var(--radius-lg); background: #ddd; cursor: zoom-in; }
+    .mosaic a:first-child { grid-row: span 2; }
+    .mosaic img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; transition: transform .4s; }
+    .mosaic a:hover img { transform: scale(1.04); }
+    .mosaic .more { position: absolute; right: 12px; bottom: 12px; background: rgba(0,0,0,.65); color: #fff; padding: 6px 14px; border-radius: 99px; font-size: .85rem; font-weight: 700; }
+    .titlebar { padding: 30px 0 6px; }
+    .titlebar h1 { font-size: clamp(2rem, 4.5vw, 3.1rem); margin: 6px 0 10px; }
+    .titlebar .kicker { color: var(--primary); }
+    .titlebar .sub { color: var(--muted); margin: 0; font-size: 1.1rem; max-width: 70ch; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 52px; padding-top: 30px; align-items: start; }
+    .sticky { position: sticky; top: 20px; }
+    .short { background: #eef5ee; border: 1px solid #cfe0cf; border-radius: var(--radius-lg); padding: 18px 22px; margin-bottom: 28px; }
+    .short h2 { margin: 0 0 6px; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .08em; color: var(--primary-dark); }
+    .short p { margin: 0; font-size: 1rem; line-height: 1.6; }
+    .story h2 { font-size: 1.7rem; margin: 40px 0 12px; }
+    .inline { margin: 28px 0; }
+    .inline img { aspect-ratio: 3 / 2; }
+    .faq { margin-top: 44px; }
+    .faq details { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 18px; margin-bottom: 10px; background: #fff; }
+    .faq summary { cursor: pointer; font-weight: 700; color: var(--dark); }
+    .faq details p { margin: 10px 0 0; }
+    .related { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+    .related a { text-decoration: none; color: var(--dark); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: #fff; }
+    .related img { aspect-ratio: 16 / 10; border-radius: 0; }
+    .related span { display: block; padding: 10px 14px 14px; font-weight: 700; font-size: .95rem; line-height: 1.3; }
+    .related small { display: block; color: var(--muted); font-weight: 400; }
+    .lb { position: fixed; inset: 0; background: rgba(0,0,0,.88); display: none; align-items: center; justify-content: center; z-index: 50; padding: 20px; cursor: zoom-out; }
+    .lb.on { display: flex; }
+    .lb img { max-height: 90vh; width: auto; border-radius: var(--radius); }
+    @media (max-width: 760px) { .mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 190px 120px 120px; } .mosaic a:first-child { grid-column: span 2; grid-row: 1; } .related { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="mock-bar"><div class="wrap"><img src="../images/Logo_JustRoam.svg" alt="JustRoam"><nav><a href="../index.html">Home</a><a href="../rent.html">Rental</a><a href="../build.html">Build</a><a href="../stories.html">Our stories</a></nav></div></div>
+<div class="mock-switch"><div class="wrap"><strong>Blog mockups</strong><a href="a-journal.html">A Journal</a><a href="b-stops.html">B Stop by stop</a><a class="on" href="c-photo-first.html">C Photo first</a><a href="index.html">Compare</a></div></div>
+
+<div class="wrap">
+    <div class="mosaic standin" id="mosaic">
+        <a href="../images/hero.jpg"><img src="../images/hero.jpg" alt="Our Ranger with rooftop tents in a forest"></a>
+        <a href="../images/rent/image_forrest_1.jpeg"><img src="../images/rent/image_forrest_1.jpeg" alt="Camp above the vineyards"></a>
+        <a href="../images/rent/IMG_4840.jpeg"><img src="../images/rent/IMG_4840.jpeg" alt="Rafting in Una park"></a>
+        <a href="../images/rent/IMG_4825.jpeg"><img src="../images/rent/IMG_4825.jpeg" alt="Wild horses on a plain"></a>
+        <a href="../images/rent/IMG_3836.jpeg"><img src="../images/rent/IMG_3836.jpeg" alt="Gravel road to the herders' village"><span class="more">All photos</span></a>
+    </div>
+
+    <div class="titlebar">
+        <div class="kicker">Our own adventure</div>
+        <h1>Maiden Trip: Bosnia &amp; Slovenia</h1>
+        <p class="sub">By Edwin &middot; <span class="todo">[date]</span> &middot; 8 min read &middot; Summer &middot; family trip with dog</p>
+    </div>
+
+    <main class="layout">
+        <article class="story">
+            <section class="short">
+                <h2>In short</h2>
+                <p>Our first overland trip ever. We planned Norway, pivoted south days before leaving and spent almost two weeks in Bosnia, in and around Una park. Highlights: two nights above Slovenian vineyards, rafting, a herd of wild horses and a 4.5 hour hike into Montenegro. Mixed roads with some real gravel, summer, <span class="todo">[km]</span> in total.</p>
+            </section>
+
+            <p>Just a few days before departure we were still undecided where to go. Norway had been the original plan, but the rugged camping and unpredictable weather gave us pause: none of us had real experience camping in the wild. Then Albania came up, one look at the map, and we just went for it.</p>
+
+            <figure class="inline standin"><img src="../images/rent/image_forrest_1.jpeg" alt="Camp on a hill above Slovenian vineyards"><figcaption>Day 3: so good we stayed two nights.</figcaption></figure>
+
+            <h2>No fixed plan</h2>
+            <p>We drove until around four each afternoon and found a spot for the night. A weather check showed 13 &deg;C days and 8 &deg;C nights at Triglav, so we turned south on the spot. A hill above the Slovenian vineyards, wine, sunset and a long outdoor shower. This, we realised, is what overlanding actually is.</p>
+
+            <h2>Bosnia, and the dog who could not cross</h2>
+            <p>Our dog Izzy could not enter Montenegro without paperwork we did not have, so we spent more time in Bosnia instead of driving through it. That turned out to be the best decision of the trip: the clearest water, a rafting day booked over dinner, and a camping called Status Quo with a free canoe the kids never wanted to leave.</p>
+
+            <figure class="inline standin"><img src="../images/rent/IMG_4825.jpeg" alt="Wild horses on a remote plain in Bosnia"><figcaption>No tour, no trail. Just the car, and a lot of patience.</figcaption></figure>
+
+            <h2>Wild horses, a narrow trail and howling in the night</h2>
+            <p>We found a herd on a remote plain and drove off-trail to get close. A trail from maps.me later narrowed until we had to reverse out, with a slipping clutch to show for it. Then 40 km of gravel to the highest village in Bosnia, where the only restaurant was also the only place to sleep, and something howled all night. Wolves or herding dogs: we still do not know.</p>
+
+            <h2>Ending on a high</h2>
+            <p>A 4.5 hour hike took us over the border to a lake in Montenegro, dog and all. A call from friends then pulled us north to Austria for a hike around the Weissee. It is good to end a trip on a high.</p>
+
+            <section class="faq">
+                <h2>Good to know before you go</h2>
+                <details open><summary>Can you take a dog to Montenegro?</summary><p>Only with the right paperwork. We were missing the tick treatment and tether requirements, which reshaped our route. Check the rules well before departure.</p></details>
+                <details><summary>Are the roads doable without a 4x4?</summary><p>Mostly yes, but one 40 km stretch to the highest village was sharp gravel where we needed patience, and some trails were genuinely 4x4 territory.</p></details>
+                <details><summary>Is wild camping allowed?</summary><p>We camped on official sites and found them excellent. Rules differ per country, so check them for each border you cross.</p></details>
+                <details><summary>What would you do differently?</summary><p>Scout unmarked trails before committing, sort pet paperwork up front, and pack earplugs.</p></details>
+            </section>
+
+            <div class="cta-card" style="margin-top:40px">
+                <h3>Want to drive something like this?</h3>
+                <p>Rent our Ford Ranger with dual rooftop tents, or let us build your own overland rig.</p>
+                <a class="btn sand" href="../rent.html">Rent the Ranger</a>
+            </div>
+
+            <h2 style="margin-top:44px">More stories</h2>
+            <div class="related standin">
+                <a href="#"><img src="../images/rent/IMG_4840.jpeg" alt=""><span>Sun and island in the autumn break: Elba<small>Coming soon</small></span></a>
+                <a href="#"><img src="../images/rent/IMG_5025.jpeg" alt=""><span>Norway: the trip we postponed<small>Coming soon</small></span></a>
+                <a href="../blog_build.html"><img src="../images/hero.jpg" alt=""><span>Building a family-ready overland truck<small>Build story</small></span></a>
+            </div>
+        </article>
+
+        <aside class="sticky" id="route">
+            <div class="route-card">
+                <h3>Route in short</h3>
+                <div class="stat-grid">
+                    <div class="stat"><span>Duration</span><b class="todo">[days]</b></div>
+                    <div class="stat"><span>Distance</span><b class="todo">[km]</b></div>
+                    <div class="stat"><span>Roads</span><b class="todo">[% gravel]</b></div>
+                    <div class="stat"><span>Best time</span><b>Summer</b></div>
+                </div>
+                <div class="map-slot" style="margin-top:16px"><strong>Map comes here</strong>All stops on one map. Later: tap a pin to open the photos from that place.</div>
+                <a class="btn small ghost" style="margin-top:12px" href="#">Download GPX (coming)</a>
+
+                <h4>Highlights</h4>
+                <ol class="stops">
+                    <li><b>Vineyard hill, Slovenia</b><small>Two nights, sunset over the vines</small></li>
+                    <li><b>Una park, Bosnia</b><small>Rafting, Status Quo camping</small></li>
+                    <li><b>Wild horse plain</b><small>Off-trail with the drone</small></li>
+                    <li><b>Highest village in Bosnia</b><small>40 km gravel</small></li>
+                    <li><b>Lake hike to Montenegro</b><small>4.5 hours on foot</small></li>
+                </ol>
+
+                <h4>Tips</h4>
+                <ul class="tips">
+                    <li>Sort pet paperwork before you leave.</li>
+                    <li>Keep a supermarket picnic as plan B in Croatia, with a dog.</li>
+                    <li>An eSIM worked well outside the EU.</li>
+                    <li>Scout unmarked trails first.</li>
+                </ul>
+            </div>
+        </aside>
+    </main>
+</div>
+
+<div class="lb" id="lb"><img alt=""></div>
+<footer class="mock-foot"><div class="wrap">Mockup C of 3. Photos are stand-ins from the rental page; text is condensed from the Bosnia &amp; Slovenia draft. <a href="index.html">Compare the three</a></div></footer>
+
+<script>
+    // Tiny lightbox for the mosaic
+    (function () {
+        var lb = document.getElementById('lb'), img = lb.querySelector('img');
+        document.querySelectorAll('#mosaic a').forEach(function (a) {
+            a.addEventListener('click', function (e) { e.preventDefault(); img.src = a.getAttribute('href'); lb.classList.add('on'); });
+        });
+        lb.addEventListener('click', function () { lb.classList.remove('on'); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') lb.classList.remove('on'); });
+    })();
+</script>
+</body>
+</html>
