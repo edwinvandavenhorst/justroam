@@ -205,7 +205,12 @@
     .spec-box li:first-child { border-top: 0; }
     .spec-box li span:last-child { font-weight: 700; white-space: nowrap; }
     .spec-note { margin-top: 18px; color: var(--muted); font-size: 15px; }
-    @media (max-width: 960px) { .spec-grid, .spec-extra { grid-template-columns: 1fr; } }
+    .spec-warranty { margin-top: 20px; }
+    .spec-warranty > p { margin: 0 0 14px; color: var(--brown); font-size: 15px; }
+    .warranty-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .warranty-cols h4 { font-size: 15px; margin: 0 0 4px; color: var(--green); }
+    .warranty-cols li { display: block; }
+    @media (max-width: 960px) { .warranty-cols, .spec-grid, .spec-extra { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -410,6 +415,27 @@
                     <li><span>Rooftop tent and awning</span><span>made to measure</span></li>
                 </ul>
                 <p class="spec-note">Parts are invoiced afterwards, on what we actually used. If that differs by more than 10%, we contact you first.</p>
+            </div>
+        </div>
+        <div class="spec-box spec-warranty">
+            <h3>Warranty</h3>
+            <p>If something fails because of how we built it, or because of a part we supplied, we fix it at no cost. That applies for <span class="ph-note">[term]</span> after delivery. Parts also carry their own manufacturer warranty, and we handle that claim for you.</p>
+            <div class="warranty-cols">
+                <div>
+                    <h4>Covered</h4>
+                    <ul>
+                        <li>Mistakes in our build and installation</li>
+                        <li>Faulty parts we supplied</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Not covered</h4>
+                    <ul>
+                        <li>Damage from use the build is not meant for, overloading or accidents</li>
+                        <li>Changes or repairs by someone else</li>
+                        <li>Normal wear</li>
+                    </ul>
+                </div>
             </div>
         </div>
         <p class="spec-note ph-note">Mockup: option prices are parts only unless marked fitted; check before going live.</p>
