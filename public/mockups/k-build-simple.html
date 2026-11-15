@@ -184,6 +184,28 @@
         .module-bar { grid-template-columns: 1fr; }
         .route-poster .wrap { grid-template-columns: 1fr; }
     }
+
+    /* specification, what is in each package */
+    .spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .spec { background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 26px; display: flex; flex-direction: column; }
+    .spec.addon { background: transparent; border: 2px dashed #cdb894; }
+    .spec h3 { font-size: 30px; }
+    .spec .sub { color: var(--muted); font-size: 15px; margin: 4px 0 14px; }
+    .spec h4 { font-family: 'Barlow Condensed'; font-size: 15px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green); margin: 16px 0 4px; }
+    .spec ul { list-style: none; margin: 0; padding: 0; }
+    .spec li { padding: 7px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--brown); }
+    .spec li small { display: block; color: var(--muted); font-size: 14px; }
+    .spec .price { margin-top: auto; padding-top: 18px; font-weight: 700; color: var(--green); }
+    .spec .price span { display: block; font-weight: 500; color: var(--muted); font-size: 14px; }
+    .spec-extra { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; margin-top: 20px; }
+    .spec-box { background: var(--sand-l); border-radius: 22px; padding: 24px 26px; }
+    .spec-box h3 { font-size: 26px; margin-bottom: 8px; }
+    .spec-box ul { list-style: none; margin: 0; padding: 0; }
+    .spec-box li { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-top: 1px solid rgba(43,29,18,.12); font-size: 15px; }
+    .spec-box li:first-child { border-top: 0; }
+    .spec-box li span:last-child { font-weight: 700; white-space: nowrap; }
+    .spec-note { margin-top: 18px; color: var(--muted); font-size: 15px; }
+    @media (max-width: 960px) { .spec-grid, .spec-extra { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -237,7 +259,7 @@
         <div class="pk-grid">
             <article class="pk" id="pk-basis">
                 <h3>Basis</h3>
-                <div class="meta">From € <span>[price]</span> · <span>[build time]</span></div>
+                <div class="meta">From €6,000 · <span>about 1 week</span></div>
                 <p class="tag">Power on the road, and ready for whatever you add later.</p>
                 <ul>
                     <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Second battery</b>Charges while you drive</div></li>
@@ -252,7 +274,7 @@
             <article class="pk main" id="pk-camp">
                 <span class="badge">Most complete</span>
                 <h3>Ready to camp</h3>
-                <div class="meta">From € <span>[price]</span> · <span>[build time]</span></div>
+                <div class="meta">From €16,500 · <span>about 3 weeks</span></div>
                 <p class="tag">Everything you need to cook, sleep and travel for weeks.</p>
                 <div class="plus">Everything in Basis, plus:</div>
                 <ul>
@@ -260,8 +282,8 @@
                     <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Kitchen</b>Cook a proper meal anywhere</div></li>
                     <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Fridge</b>Drinks cold, food fresh</div></li>
                     <li><span class="ic c-water"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></span><div><b>Water</b>Tank, pump and basin</div></li>
-                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>A place to sleep</b>A rooftop tent, or a bed built in</div></li>
-                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>Awning</b>Your outdoor living space, with LED lights</div></li>
+                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>A place to sleep <em>made to measure</em></b>A rooftop tent, or a bed built in. Priced in the intake</div></li>
+                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>Awning <em>made to measure</em></b>Your outdoor living space, with LED lights. Priced in the intake</div></li>
                 </ul>
                 <a class="btn cta" href="#plan">Plan this build <span class="ar">→</span></a>
             </article>
@@ -269,7 +291,7 @@
             <article class="pk addon" id="pk-offroad">
                 <span class="badge">Add-on</span>
                 <h3>+ Full off-road</h3>
-                <div class="meta">From € <span>[price]</span></div>
+                <div class="meta">From €12,500 · <span>about 1 week extra</span></div>
                 <p class="tag">For rough tracks. Add it to Basis or Ready to camp.</p>
                 <ul>
                     <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Upgraded suspension</b>Handles the extra weight and rough terrain</div></li>
@@ -281,12 +303,116 @@
             </article>
         </div>
 
-        <p class="fits"><b>Every build is made to measure.</b> In the intake we go through what you need, what you can leave out, and which parts you might add on their own.</p>
+        <p class="fits">All prices include VAT, parts and labour, excluding the vehicle. <a class="link" href="#spec">See exactly what is in each package</a></p>
+        <p class="fits" style="margin-top:8px"><b>Every build is made to measure.</b> In the intake we go through what you need, what you can leave out, and which parts you might add on their own.</p>
         <div class="module-bar">
             <span class="kicker">In development</span>
             <p><b>The JustRoam module.</b> A slide-out unit with kitchen, fridge, water, charging and storage, under the cover you already have. Soon to rent, and if you buy it, you get your rental back.</p>
             <a class="link" href="#">Keep me posted</a>
         </div>
+    </div>
+</section>
+
+
+<!-- 2b. specification, in the spirit of a full spec list -->
+<section class="section" id="spec" style="padding-top:0">
+    <div class="wrap">
+        <div class="head2">
+            <div>
+                <span class="kicker">Specification</span>
+                <h2>What is in it, exactly</h2>
+            </div>
+            <p>The parts we use as standard. If your vehicle or the way you travel asks for something else, we change it in the design.</p>
+        </div>
+
+        <div class="spec-grid">
+            <article class="spec">
+                <h3>Basis</h3>
+                <p class="sub">Power on the road</p>
+                <h4>Battery and charging</h4>
+                <ul>
+                    <li>280Ah second battery<small>Eco-Worthy lithium</small></li>
+                    <li>Dual charger 40A<small>Redarc, charges from the alternator and solar</small></li>
+                    <li>Battery monitor<small>Redarc Smart Battery Monitor, read it on your phone</small></li>
+                </ul>
+                <h4>In the back</h4>
+                <ul>
+                    <li>Central control panel<small>Switches, fuses and USB in one place</small></li>
+                    <li>LED lighting, 3 lights</li>
+                    <li>USB and 12V outlets</li>
+                    <li>Full wiring with fuses<small>Pre-wired for a fridge, pump and more</small></li>
+                </ul>
+                <p class="price">From €6,000<span>About 1 week in the workshop</span></p>
+            </article>
+
+            <article class="spec">
+                <h3>Ready to camp</h3>
+                <p class="sub">Everything in Basis, plus</p>
+                <h4>Interior</h4>
+                <ul>
+                    <li>Drawer system, built to your layout<small>Three drawers on Brasom heavy duty slides, carpet finish</small></li>
+                    <li>Storage around the drawers<small>With access to the second battery</small></li>
+                </ul>
+                <h4>Kitchen</h4>
+                <ul>
+                    <li>Two-burner hob<small>Dometic, with gas connection</small></li>
+                    <li>Sink with tap</li>
+                </ul>
+                <h4>Water and fridge</h4>
+                <ul>
+                    <li>50L water tank<small>Ironman</small></li>
+                    <li>Water pump with filter and hand shower</li>
+                    <li>35L compressor fridge<small>Dometic, fixed in its own drawer</small></li>
+                </ul>
+                <p class="price">From €16,500<span>About 3 weeks, Basis included</span></p>
+            </article>
+
+            <article class="spec addon">
+                <h3>+ Full off-road</h3>
+                <p class="sub">Add it to Basis or Ready to camp</p>
+                <h4>Suspension</h4>
+                <ul>
+                    <li>Heavy duty suspension<small>Pedders, including control arms, wheel alignment after fitting</small></li>
+                </ul>
+                <h4>Recovery</h4>
+                <ul>
+                    <li>Winch<small>Warn VR EVO 10-S, synthetic rope, on a Rival winch plate</small></li>
+                    <li>Recovery boards<small>MaxTrax MKII, with mounts</small></li>
+                    <li>Snorkel<small>Bravo</small></li>
+                </ul>
+                <h4>Protection and lights</h4>
+                <ul>
+                    <li>Skid plates and rock sliders<small>Horntools: radiator, sump, transfer case, tank</small></li>
+                    <li>Auxiliary lights<small>Lazer LED in the grille, LED bar at the rear</small></li>
+                </ul>
+                <p class="price">From €12,500<span>About 1 week extra</span></p>
+            </article>
+        </div>
+
+        <div class="spec-extra">
+            <div class="spec-box">
+                <h3>Options</h3>
+                <ul>
+                    <li><span>Roof rack, fitted</span><span>about €1,550</span></li>
+                    <li><span>Folding solar panel 200W</span><span>€550</span></li>
+                    <li><span>Battery display in the control panel</span><span>€165</span></li>
+                    <li><span>Shore power charger</span><span>€180</span></li>
+                    <li><span>45L fridge instead of 35L</span><span>+ €60</span></li>
+                    <li><span>Front brake upgrade, with the suspension</span><span>on request</span></li>
+                    <li><span>Table on the canopy ceiling</span><span>€510</span></li>
+                </ul>
+            </div>
+            <div class="spec-box">
+                <h3>Not included</h3>
+                <ul>
+                    <li><span>The vehicle</span><span>yours</span></li>
+                    <li><span>Canopy, if you do not have one yet</span><span>from €3,850</span></li>
+                    <li><span>Rooftop tent and awning</span><span>made to measure</span></li>
+                </ul>
+                <p class="spec-note">Parts are invoiced afterwards, on what we actually used. If that differs by more than 10%, we contact you first.</p>
+            </div>
+        </div>
+        <p class="spec-note ph-note">Mockup: option prices are parts only unless marked fitted; check before going live.</p>
     </div>
 </section>
 
