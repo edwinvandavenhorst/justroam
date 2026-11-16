@@ -1,0 +1,81 @@
+---
+// Terms for the paid vehicle advice (EUR 180). Linked from the Stripe
+// Payment Link and from the summary email after the intake call.
+// Draft: to be checked by a lawyer before production.
+import Base from '../layouts/Base.astro';
+import { href, type Lang } from '../i18n';
+import { business } from '../data/site';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+const isDraft = process.env.VERCEL_ENV !== 'production';
+const mail = `<a href="mailto:${business.email}">${business.email}</a>`;
+const privacy = `<a href="${href(lang, 'privacy.html')}">${nl ? 'privacybeleid' : 'privacy policy'}</a>`;
+
+const copy = nl ? {
+    title: 'Voorwaarden autokeuze-advies | JustRoam',
+    description: 'De voorwaarden voor het autokeuze-advies van JustRoam: wat je krijgt, betaling, levering, herroepingsrecht en verrekening met een ombouw.',
+    kicker: 'Voorwaarden',
+    h1: 'Autokeuze-advies',
+    lead: 'Je wilt een auto kopen om om te bouwen voor overlanding, en je wilt hulp bij de keuze. Hieronder staat wat je van ons krijgt en wat we van jou verwachten.',
+    draft: 'Concept. Deze voorwaarden worden nog juridisch gecontroleerd.',
+    updated: 'Laatst bijgewerkt: 16 november 2026.',
+    sections: [
+        ['1. Wie we zijn', `<p>JustRoam, eenmanszaak, KVK ${business.kvk}, Populierendreef 850, Voorburg. Contact: ${mail} of ${business.phoneDisplay}. Deze voorwaarden gelden voor het autokeuze-advies. Voor een ombouw gelden aparte voorwaarden en een bouwovereenkomst.</p>`],
+        ['2. Wat het advies is', `<p>Je krijgt een shortlist van 3 tot 5 auto's die op het moment van levering te koop staan en passen bij de ombouw die je wilt. Per auto lees je waarom hij past, wat hij ongeveer kost en waar je op moet letten.</p><p>Staat er op dat moment niets geschikts te koop, dan krijg je 3 tot 5 autotypes om naar te zoeken: model, geschikte bouwjaren, motorisering en de punten waar je bij die auto op moet letten.</p><p>Wil je het advies samen doorlopen, dan plannen we op verzoek een belafspraak van 15 minuten.</p><p>Het advies is geen keuring, geen inspectie en geen aankoopbemiddeling. Wij zien of controleren de auto's niet. Jij beslist welke auto je koopt, en je koopt hem zelf, rechtstreeks van de verkoper.</p>`],
+        ['3. Intake', `<p>Voor het advies houden we een gratis intakegesprek van 30 minuten. Daarin bespreken we wat voor auto je zoekt, je budget en hoe je wilt reizen. Het gesprek verplicht je tot niets.</p>`],
+        ['4. Prijs en betaling', `<p>Het advies kost eenmalig €180 inclusief 21% btw. Je betaalt vooraf via de betaallink die je na de intake van ons krijgt. Je ontvangt een factuur.</p>`],
+        ['5. Levering', `<p>Je krijgt het advies binnen 10 werkdagen na je betaling als pdf per e-mail. Het advies is gebaseerd op het aanbod en de prijzen op dat moment. Aanbod en prijzen veranderen snel: we garanderen niet dat een genoemde auto beschikbaar blijft of dezelfde prijs houdt.</p>`],
+        ['6. De staat van de auto: jouw verantwoordelijkheid', `<p>Jij bent altijd zelf verantwoordelijk voor het controleren van de auto die je koopt: de technische staat, schade en roest, de kilometerstand, de papieren en de historie. We raden je sterk aan om voor de koop een onafhankelijke aankoopkeuring te laten doen.</p><p>De koop is een afspraak tussen jou en de verkoper. JustRoam is daar geen partij in.</p>`],
+        ['7. Herroepingsrecht', `<p>Koop je het advies als particulier, dan heb je 14 dagen bedenktijd vanaf je betaling. Bij het betalen vraag je ons uitdrukkelijk om binnen die 14 dagen te beginnen, en je verklaart dat je je herroepingsrecht verliest zodra we het advies volledig hebben geleverd.</p><p>Herroep je voordat het advies geleverd is, dan betalen we je binnen 14 dagen terug, min een redelijk bedrag voor het werk dat we al hebben gedaan. Herroepen kan met een e-mail aan ${mail}, bijvoorbeeld: <i>"Ik herroep mijn overeenkomst voor het autokeuze-advies, besteld op [datum]. Naam, adres, datum."</i></p>`],
+        ['8. Verrekening met een ombouw', `<p>Laat je binnen 12 maanden na je betaling van het advies je auto door JustRoam ombouwen, dan trekken we de €180 af van de eindfactuur van die ombouw.</p><ul><li>De 12 maanden gelden voor het <b>bevestigen</b> van de ombouw: offerte akkoord en aanbetaling betaald. Begint de bouw door onze planning later, dan krijg je de verrekening nog steeds.</li><li>Eén verrekening per advies. Je kunt hem niet aan iemand anders overdragen of laten uitbetalen.</li><li>Wordt de ombouw na de aanbetaling geannuleerd, dan vervalt de verrekening.</li></ul>`],
+        ['9. Aansprakelijkheid', `<p>We doen ons best om je goed te adviseren. Onze aansprakelijkheid voor het advies is beperkt tot het bedrag dat je ervoor hebt betaald, behalve bij opzet of grove nalatigheid van onze kant.</p><p>We zijn niet aansprakelijk voor de staat, de historie, de prijs of de beschikbaarheid van een auto, en niet voor de koop zelf of de gevolgen daarvan.</p>`],
+        ['10. Persoonsgegevens', `<p>We gebruiken je gegevens alleen voor het advies en een eventuele ombouw. Meer lees je in ons ${privacy}.</p>`],
+        ['11. Klachten en toepasselijk recht', `<p>Ben je niet tevreden, mail ons dan via ${mail}. We reageren binnen 14 dagen. Op deze voorwaarden is Nederlands recht van toepassing. Ben je consument, dan houd je de bescherming die het recht van je eigen land je geeft.</p>`]
+    ],
+    back: ['Terug naar ombouw', 'build.html']
+} : {
+    title: 'Vehicle Advice Terms | JustRoam',
+    description: 'Terms for the JustRoam vehicle advice: what you get, payment, delivery, right of withdrawal and the credit against a build.',
+    kicker: 'Terms',
+    h1: 'Vehicle advice',
+    lead: 'You want to buy a vehicle to build out for overlanding, and you want help choosing it. Here is what you get from us and what we expect from you.',
+    draft: 'Draft. These terms are still being checked by a lawyer.',
+    updated: 'Last updated: 16 November 2026.',
+    sections: [
+        ['1. Who we are', `<p>JustRoam, sole proprietorship, KVK ${business.kvk}, Populierendreef 850, Voorburg, the Netherlands. Contact: ${mail} or ${business.phoneDisplay}. These terms apply to the vehicle advice. A build has its own terms and a build agreement.</p>`],
+        ['2. What the advice is', `<p>You get a shortlist of 3 to 5 vehicles that are for sale at the time of delivery and suit the build you have in mind. For each vehicle you read why it fits, roughly what it costs and what to look out for.</p><p>If nothing suitable is for sale at that moment, you get 3 to 5 vehicle types to search for instead: model, suitable model years, engine and the points to check on that vehicle.</p><p>If you want to go through the advice together, we schedule a 15-minute call on request.</p><p>The advice is not an inspection, not a survey and not a purchase brokerage. We do not see or check the vehicles. You decide which vehicle to buy, and you buy it yourself, directly from the seller.</p>`],
+        ['3. Intake', `<p>Before the advice we hold a free 30-minute intake call. We talk about the vehicle you are looking for, your budget and how you want to travel. The call does not commit you to anything.</p>`],
+        ['4. Price and payment', `<p>The advice costs a one-off €180 including 21% VAT. You pay in advance through the payment link we send after the intake. You receive an invoice.</p>`],
+        ['5. Delivery', `<p>You receive the advice as a PDF by email within 10 working days of your payment. The advice is based on the vehicles and prices on the market at that moment. The market moves fast: we do not guarantee that a vehicle we mention stays available or keeps its price.</p>`],
+        ['6. The condition of the vehicle is your responsibility', `<p>You are always responsible for checking the vehicle you buy yourself: its technical condition, damage and rust, mileage, papers and history. We strongly recommend an independent pre-purchase inspection before you buy.</p><p>The purchase is an agreement between you and the seller. JustRoam is not a party to it.</p>`],
+        ['7. Right of withdrawal', `<p>If you buy the advice as a consumer, you have 14 days to change your mind, counted from your payment. When you pay, you expressly ask us to start within those 14 days, and you confirm that you lose your right of withdrawal once we have delivered the advice in full.</p><p>If you withdraw before the advice is delivered, we refund you within 14 days, minus a reasonable amount for the work we have already done. To withdraw, email ${mail}, for example: <i>"I withdraw from my agreement for the vehicle advice, ordered on [date]. Name, address, date."</i></p>`],
+        ['8. Credit against a build', `<p>If JustRoam builds out your vehicle within 12 months of your payment for the advice, we deduct the €180 from the final invoice of that build.</p><ul><li>The 12 months apply to <b>confirming</b> the build: quote accepted and deposit paid. If our schedule means the build starts later, you still get the credit.</li><li>One credit per advice. It cannot be transferred to someone else or paid out.</li><li>If the build is cancelled after the deposit, the credit lapses.</li></ul>`],
+        ['9. Liability', `<p>We do our best to advise you well. Our liability for the advice is limited to the amount you paid for it, except in case of intent or gross negligence on our part.</p><p>We are not liable for the condition, history, price or availability of a vehicle, nor for the purchase itself or its consequences.</p>`],
+        ['10. Personal data', `<p>We only use your details for the advice and a possible build. Read more in our ${privacy}.</p>`],
+        ['11. Complaints and governing law', `<p>Not happy? Email us at ${mail}. We reply within 14 days. These terms are governed by Dutch law. If you are a consumer, you keep the protection that the law of your own country gives you.</p>`]
+    ],
+    back: ['Back to builds', 'build.html']
+};
+---
+<Base lang={lang} title={copy.title} description={copy.description}>
+    <section class="wrap legal-page">
+        <div class="legal-head">
+            <span class="kicker">{copy.kicker}</span>
+            <h1>{copy.h1}</h1>
+            <p class="lead">{copy.lead}</p>
+            {isDraft && <p class="legal-draft">{copy.draft}</p>}
+        </div>
+        <div class="legal-body">
+            {copy.sections.map(([h, body]) => (
+                <section>
+                    <h2>{h}</h2>
+                    <Fragment set:html={body} />
+                </section>
+            ))}
+            <p class="legal-updated">{copy.updated}</p>
+            <a class="btn" href={href(lang, copy.back[1])}>{copy.back[0]}</a>
+        </div>
+    </section>
+</Base>

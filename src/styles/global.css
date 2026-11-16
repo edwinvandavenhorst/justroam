@@ -325,6 +325,20 @@ html { scroll-padding-top: 96px; }
 .faq-head { max-width: 860px; margin-bottom: 36px; }
 .faq-head h1, .gear-intro h1 { font-size: clamp(44px, 6vw, 80px); margin: 6px 0 0; }
 .faq-head .lead, .gear-intro .lead { margin-top: 14px; }
+/* Legal pages (vehicle advice terms) */
+.legal-page { padding-block: 40px clamp(56px, 8vw, 90px); }
+.legal-head { max-width: 860px; margin-bottom: 36px; }
+.legal-head h1 { font-size: clamp(44px, 6vw, 80px); margin: 6px 0 0; }
+.legal-head .lead { margin-top: 14px; }
+.legal-draft { display: inline-block; margin-top: 18px; background: #fde68a; color: #713f12; border: 1px dashed #b45309; border-radius: 8px; padding: 8px 14px; font-size: 15px; font-weight: 600; }
+.legal-body { max-width: 760px; }
+.legal-body section { padding: 22px 0; border-top: 1px solid var(--line); }
+.legal-body h2 { font-size: clamp(24px, 2.6vw, 30px); margin: 0 0 10px; }
+.legal-body p, .legal-body li { color: var(--muted); }
+.legal-body p + p { margin-top: 10px; }
+.legal-body ul { margin: 10px 0 0; padding-left: 20px; }
+.legal-body li + li { margin-top: 6px; }
+.legal-updated { margin: 22px 0 26px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 15px; }
 .faq-jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
 .faq-jump a { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 14px; font-weight: 600; font-size: 15px; text-decoration: none; color: var(--brown); }
 .faq-jump a:hover { border-color: var(--green); color: var(--green); }
