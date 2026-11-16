@@ -31,7 +31,7 @@ const copy = {
         route: [['Intake', 'A free 45-minute call about your vehicle, how you travel and your budget.'], ['Design together', 'We design your interior around how you travel, and agree on price and planning.'], ['Build', 'We build it for you, or you build alongside us on agreed days. We always do the electrics and the gas.'], ['Handover', 'We walk you through everything, and off you go.']],
         routeCta: 'Plan your intake',
         vehicle: ['JustRoam does not supply vehicles.', 'New to overlanding, or could you use some help? We can put together a short list of vehicles that suit your build. This service costs a one-time fee of €180, credited against your build if you decide to have us build your vehicle.', 'Book this service here'],
-        adviceUrl: '#plan',
+        adviceUrl: 'https://cal.com/justroam/30min',
         map: { label: 'Sketch of the route from your idea to your first trip', idea: 'Your idea', intake: 'Intake', design: 'Design', build: 'Build in Voorburg', handover: 'Handover', trip: 'First trip', note: 'Sketch, not to scale.' },
         faqT: 'Questions about a build',
         chaptersLabel: 'On this page',
@@ -54,7 +54,7 @@ const copy = {
         route: [['Intake', 'Een gratis gesprek van 45 minuten over je auto, hoe je reist en je budget.'], ['Samen ontwerpen', 'We ontwerpen je interieur rond hoe je reist, en spreken prijs en planning af.'], ['Bouwen', 'Wij bouwen hem voor je, of je bouwt op afgesproken dagen mee. De elektra en het gas doen we altijd zelf.'], ['Oplevering', 'We lopen alles samen met je door, en dan kun je op pad.']],
         routeCta: 'Plan je intake',
         vehicle: ['JustRoam levert geen auto\'s.', 'Nieuw in overlanden, of kun je wat hulp gebruiken? We stellen een korte lijst samen met auto\'s die passen bij je ombouw. Deze service kost eenmalig €180, en dat verrekenen we met je ombouw als je die door ons laat bouwen.', 'Boek deze service hier'],
-        adviceUrl: '#plan',
+        adviceUrl: 'https://cal.com/justroam/30min',
         map: { label: 'Schets van de route van je idee naar je eerste reis', idea: 'Je idee', intake: 'Intake', design: 'Ontwerp', build: 'Bouwen in Voorburg', handover: 'Oplevering', trip: 'Eerste reis', note: 'Schets, niet op schaal.' },
         faqT: 'Vragen over ombouw',
         chaptersLabel: 'Op deze pagina',
@@ -137,7 +137,7 @@ const jsonLd = [
                 <span class="kicker">{copy.routeKicker}</span>
                 <h2>{copy.routeT}</h2>
                 <ol>{copy.route.map(([t, d], i) => <li><b>{i + 1}</b><div><strong>{t}</strong>{d}</div></li>)}</ol>
-                <p class="route-vehicle"><b>{copy.vehicle[0]}</b> {copy.vehicle[1]} <a href={copy.adviceUrl}>{copy.vehicle[2]}</a></p>
+                <p class="route-vehicle"><b>{copy.vehicle[0]}</b> {copy.vehicle[1]} <a href={copy.adviceUrl} target="_blank" rel="noopener">{copy.vehicle[2]}</a></p>
                 <a class="btn sand" href="#plan">{copy.routeCta} <span class="ar" aria-hidden="true">→</span></a>
             </div>
             <div class="map">
