@@ -60,6 +60,7 @@ const jsonLd = {
 <Base lang={lang} title={copy.title} description={copy.description} jsonLd={jsonLd}>
     <section class="wrap faq-page">
         <div class="faq-head">
+            {kind === 'gear' && <a class="back-link" href={href(lang, 'rent-gear.html')}><span aria-hidden="true">←</span> {nl ? 'Terug naar dakkoffer en fietsendrager' : 'Back to the roof box and bike carrier'}</a>}
             <span class="kicker">{copy.kicker}</span>
             <h1>{copy.h1}</h1>
             <p class="lead">{copy.lead}</p>

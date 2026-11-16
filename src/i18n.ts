@@ -25,6 +25,7 @@ export function alternatePath(pathname: string, to: Lang): string {
 // Order follows what we want people to do: builds first
 export const nav = {
     en: [
+        { page: '', label: 'Home' },
         { page: 'build.html', label: 'Builds' },
         { page: 'rent.html', label: 'Rent the Ranger' },
         { page: 'rent-gear.html', label: 'Rent gear' },
@@ -32,6 +33,7 @@ export const nav = {
         { page: 'faq.html', label: 'FAQ' }
     ],
     nl: [
+        { page: '', label: 'Home' },
         { page: 'build.html', label: 'Ombouw' },
         { page: 'rent.html', label: 'Ranger huren' },
         { page: 'rent-gear.html', label: 'Uitrusting huren' },

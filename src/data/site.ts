@@ -18,6 +18,8 @@ export const business = {
 };
 
 export const links = {
+    // Free 30-minute intake call, booked straight into Edwin's calendar
+    cal: 'https://cal.com/justroam/30min',
     goboony: 'https://www.goboony.nl/campers/nederland/zuid-holland/voorburg/92756',
     gearhive: 'https://gearhive.nl/verhuurder/ac1e36bb-58c0-46d4-b191-f7f058dc0f2a',
     gearhiveCategories: [
