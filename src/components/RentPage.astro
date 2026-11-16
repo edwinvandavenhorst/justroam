@@ -59,6 +59,13 @@ const copy = {
             ['Trips', 'A weekend away or weeks across Europe and North Africa.'],
             ['House rules', 'Not available for parties or festivals.']
         ],
+        reviewsT: 'What renters say',
+        reviews: [
+            ['Had a great week with Edwin\'s beautifully built pickup!', 'Dominick', 'June 2026'],
+            ['A well-kept Ranger. Drives beautifully and everything is spotless. Recommended.', 'Friso', 'May 2026']
+        ],
+        reviewsNote: 'Reviews from Goboony, translated from Dutch.',
+        reviewsLink: 'Read them on Goboony',
         backTitle: 'Everything has a place',
         faqT: 'Questions about renting',
         priceFrom: 'per day, from',
@@ -110,6 +117,13 @@ const copy = {
             ['Reizen', 'Een weekend weg of weken door Europa en Noord-Afrika.'],
             ['Huisregels', 'Niet beschikbaar voor feesten of festivals.']
         ],
+        reviewsT: 'Wat huurders zeggen',
+        reviews: [
+            ['Top week gehad met de mooi gebouwde pickup van Edwin!', 'Dominick', 'juni 2026'],
+            ['Een goed verzorgde Ranger. Rijdt heerlijk en alles super netjes. Een aanrader.', 'Friso', 'mei 2026']
+        ],
+        reviewsNote: 'Recensies van Goboony.',
+        reviewsLink: 'Lees ze op Goboony',
         backTitle: 'Alles heeft een plek',
         faqT: 'Vragen over huren',
         priceFrom: 'per dag, vanaf',
@@ -231,6 +245,13 @@ const mosaic = photos.slice(0, 5);
                 <div class="block">
                     <h2>{copy.knowT}</h2>
                     <div class="know">{copy.know.map(([t, d]) => <div><b>{t}</b>{d}</div>)}</div>
+                </div>
+                <div class="block">
+                    <h2>{copy.reviewsT}</h2>
+                    <div class="reviews">
+                        {copy.reviews.map(([q, who, when]) => <figure><blockquote>“{q}”</blockquote><figcaption><b>{who}</b> · {when}</figcaption></figure>)}
+                    </div>
+                    <p class="reviews-note">{copy.reviewsNote} <a class="link" href={links.goboony + '#reviews'} target="_blank" rel="noopener">{copy.reviewsLink}</a></p>
                 </div>
             </div>
 

@@ -226,6 +226,13 @@ html { scroll-padding-top: 96px; }
 .block h2 { font-size: clamp(32px, 3.6vw, 42px); margin-bottom: 18px; }
 .amenities { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 30px; }
 .amenities li { align-items: center; }
+.reviews { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.reviews figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.reviews blockquote { margin: 0; font-size: 18px; color: var(--ink); line-height: 1.45; }
+.reviews figcaption { font-size: 14px; color: var(--muted); }
+.reviews figcaption b { color: var(--brown); }
+.reviews-note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+@media (max-width: 640px) { .reviews { grid-template-columns: 1fr; } }
 .know { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; font-size: 15px; }
 .know b { display: block; margin-bottom: 6px; font-family: var(--font-head); font-size: 22px; color: var(--brown); }
 .book { position: sticky; top: 100px; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 24px; box-shadow: 0 10px 30px rgba(66, 28, 4, 0.08); }
