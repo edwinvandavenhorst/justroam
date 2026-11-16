@@ -35,14 +35,14 @@ export const POST: APIRoute = async ({ request }) => {
     const from = process.env.MAIL_FROM || 'info@justroam.nl';
 
     const text = [
-        `${name} is interested in the JustRoam module.`,
+        `${name} would like to hear when the JustRoam module is ready.`,
         '',
         `Name: ${name}`,
         `Email: ${email}`,
         `Phone: ${phone || '(not given)'}`,
         `Site language: ${lang}`,
         '',
-        'Sent from the "Keep me posted" form on the build page. Reply to this email to answer them directly.'
+        `If you reply to this email, your answer goes straight to ${name}.`
     ].join('\n');
 
     try {
