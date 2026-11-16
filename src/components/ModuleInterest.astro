@@ -1,0 +1,95 @@
+---
+// "Keep me posted" for the JustRoam module: a button that opens a small
+// form in a dialog. The form posts to /api/module-interest, which emails
+// Edwin. Nothing is stored on the site.
+import { business } from '../data/site';
+import type { Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+
+const t = nl ? {
+    open: 'Houd me op de hoogte',
+    title: 'Houd me op de hoogte',
+    intro: 'Laat je gegevens achter, dan hoor je het als de JustRoam-module klaar is.',
+    name: 'Naam',
+    email: 'E-mail',
+    phone: 'Telefoon',
+    optional: 'optioneel',
+    send: 'Versturen',
+    sending: 'Bezig met versturen...',
+    close: 'Sluiten',
+    done: 'Dank je! We laten van ons horen zodra de module klaar is.',
+    error: `Dat lukte niet. Mail ons gerust op ${business.email}.`,
+    privacy: 'We gebruiken je gegevens alleen om je over de module te informeren.'
+} : {
+    open: 'Keep me posted',
+    title: 'Keep me posted',
+    intro: 'Leave your details and we will let you know when the JustRoam module is ready.',
+    name: 'Name',
+    email: 'Email',
+    phone: 'Phone',
+    optional: 'optional',
+    send: 'Send',
+    sending: 'Sending...',
+    close: 'Close',
+    done: 'Thank you! We will be in touch as soon as the module is ready.',
+    error: `That did not work. Feel free to email us at ${business.email}.`,
+    privacy: 'We only use your details to tell you about the module.'
+};
+---
+<button class="btn light cta" type="button" data-module-open>{t.open} <span class="ar" aria-hidden="true">→</span></button>
+
+<dialog class="mi-dialog" data-module-dialog data-sending={t.sending} data-send={t.send} data-done={t.done} data-error={t.error}>
+    <button class="mi-close" type="button" data-module-close aria-label={t.close}>×</button>
+    <h3>{t.title}</h3>
+    <p class="mi-intro">{t.intro}</p>
+    <form data-module-form novalidate>
+        <input type="hidden" name="lang" value={lang} />
+        <label><span>{t.name}</span><input name="name" autocomplete="name" required maxlength="100" /></label>
+        <label><span>{t.email}</span><input name="email" type="email" autocomplete="email" required maxlength="200" /></label>
+        <label><span>{t.phone} <small>({t.optional})</small></span><input name="phone" type="tel" autocomplete="tel" maxlength="40" /></label>
+        <label class="mi-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+        <button class="btn" type="submit">{t.send} <span class="ar" aria-hidden="true">→</span></button>
+        <p class="mi-note">{t.privacy}</p>
+        <p class="mi-status" role="status" aria-live="polite"></p>
+    </form>
+</dialog>
+
+<script>
+    document.querySelectorAll<HTMLButtonElement>('[data-module-open]').forEach((openBtn) => {
+        const dialog = openBtn.parentElement?.querySelector<HTMLDialogElement>('[data-module-dialog]');
+        if (!dialog) return;
+        const form = dialog.querySelector<HTMLFormElement>('[data-module-form]')!;
+        const status = dialog.querySelector<HTMLElement>('.mi-status')!;
+        const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+
+        openBtn.addEventListener('click', () => dialog.showModal());
+        dialog.querySelector('[data-module-close]')?.addEventListener('click', () => dialog.close());
+        // close when clicking the backdrop
+        dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!form.reportValidity()) return;
+            submit.disabled = true;
+            status.textContent = dialog.dataset.sending ?? '';
+            try {
+                const res = await fetch('/api/module-interest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(Object.fromEntries(new FormData(form)))
+                });
+                if (!res.ok) throw new Error(String(res.status));
+                form.reset();
+                form.hidden = true;
+                dialog.querySelector('.mi-intro')!.textContent = dialog.dataset.done ?? '';
+            } catch {
+                status.textContent = dialog.dataset.error ?? '';
+            } finally {
+                submit.disabled = false;
+            }
+        });
+    });
+</script>

@@ -6,7 +6,7 @@ import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
 import PackageCards from './PackageCards.astro';
 import IntakeBlock from './IntakeBlock.astro';
-import { href, type Lang } from '../i18n';
+import type { Lang } from '../i18n';
 import { business, packages, euro, daysText } from '../data/site';
 
 interface Props { lang: Lang }
@@ -23,33 +23,18 @@ const copy = {
         heroAlt: 'Our Ranger with rooftop tent and awning in a forest',
         pkKicker: 'Build packages',
         pkT: 'Start with power, go all the way to camping',
-        pkP: 'Two packages and two add-ons, as a starting point. We tailor the details of every package to your vehicle and the way you travel, whether it is a pickup, an SUV, a Land Cruiser or a Jimny.',
+        pkP: 'Two packages, two add-ons and a module on the way, as a starting point. We tailor the details of every package to your vehicle and the way you travel, whether it is a pickup, an SUV, a Land Cruiser or a Jimny.',
         fits: 'All prices include VAT, parts and labour, excluding the vehicle. Workshop days are working days on your build; we agree the dates together.',
-        fitsLink: 'See options and warranty',
-        measure: ['Every build is made to measure.', 'In the intake we go through what you need, what you can leave out, and which parts you might add on their own.'],
-        optKicker: 'Good to know',
-        optT: 'Options and warranty',
-        optP: 'Add what you need on top of a package. What is not in the price, and what we stand behind after delivery.',
-        optionsT: 'Options',
-        options: [['Roof rack, fitted', 'about €1,550'], ['Folding solar panel 200W', '€550'], ['Battery display in the control panel', '€165'], ['Shore power charger', '€180'], ['45L fridge instead of 35L', '+ €60'], ['Front brake upgrade, with the suspension', 'on request'], ['Table on the canopy ceiling', '€510']],
-        notT: 'Not included',
-        not: [['The vehicle', 'yours'], ['Canopy, if you do not have one yet', 'from €3,850'], ['Rooftop tent and awning', 'made to measure']],
-        parts: 'Parts are invoiced afterwards, on what we actually used. If that differs by more than 10%, we contact you first.',
-        warT: 'Warranty',
-        war: 'If something fails because of how we built it, or because of a part we supplied, we fix it at no cost. That applies for 12 months after delivery. Parts also carry their own manufacturer warranty, and we handle that claim for you.',
-        covT: 'Covered',
-        cov: ['Mistakes in our build and installation', 'Faulty parts we supplied'],
-        notCovT: 'Not covered',
-        notCov: ['Damage from use the build is not meant for, overloading or accidents', 'Changes or repairs by someone else', 'Normal wear'],
+        measure: ['Every build is custom made.', 'In the intake we go through what you need, what you can leave out, and which parts you might add on their own.'],
         routeKicker: 'Your build, step by step',
         routeT: 'From first call to first trip.',
         route: [['Intake', 'A free 45-minute call about your vehicle, how you travel and your budget.'], ['Design together', 'We design your interior around how you travel, and agree on price and planning.'], ['Build', 'We build it for you, or you build alongside us on agreed days. We always do the electrics and the gas.'], ['Handover', 'We walk you through everything, and off you go.']],
         routeCta: 'Plan your intake',
+        vehicle: ['You bring the vehicle.', 'JustRoam does not supply vehicles. Still looking for one? We are happy to advise you on choosing a vehicle that suits your build.'],
         map: { label: 'Sketch of the route from your idea to your first trip', idea: 'Your idea', intake: 'Intake', design: 'Design', build: 'Build in Voorburg', handover: 'Handover', trip: 'First trip', note: 'Sketch, not to scale.' },
         faqT: 'Questions about a build',
         chaptersLabel: 'On this page',
-        chapters: [['packages', 'Packages'], ['addons', 'Add-ons'], ['options', 'Options and warranty'], ['steps', 'How it works'], ['plan', 'Intake'], ['faq', 'FAQ']],
-        storyLink: 'Read how we built our own Ranger'
+        chapters: [['packages', 'Packages'], ['addons', 'Add-ons and extras'], ['steps', 'How it works'], ['plan', 'Intake'], ['faq', 'FAQ']],
     },
     nl: {
         title: 'Overland-ombouw voor je 4x4 in NL, DE en BE | JustRoam',
@@ -60,33 +45,18 @@ const copy = {
         heroAlt: 'Onze Ranger met daktent en luifel in het bos',
         pkKicker: 'Ombouwpakketten',
         pkT: 'Begin met stroom, ga door tot kamperen',
-        pkP: 'Twee pakketten en twee add-ons, als vertrekpunt. De details stemmen we af op je auto en hoe je reist, of het nu een pickup, een SUV, een Land Cruiser of een Jimny is.',
+        pkP: 'Twee pakketten, twee add-ons en een module in ontwikkeling, als vertrekpunt. De details stemmen we af op je auto en hoe je reist, of het nu een pickup, een SUV, een Land Cruiser of een Jimny is.',
         fits: 'Alle prijzen zijn inclusief btw, onderdelen en arbeid, exclusief de auto. Werkdagen zijn dagen waarop we aan jouw auto werken; de data spreken we samen af.',
-        fitsLink: 'Bekijk opties en garantie',
         measure: ['Elke ombouw is maatwerk.', 'In de intake bespreken we wat je nodig hebt, wat je kunt weglaten en welke onderdelen je los kunt toevoegen.'],
-        optKicker: 'Goed om te weten',
-        optT: 'Opties en garantie',
-        optP: 'Voeg toe wat je nodig hebt bovenop een pakket. Wat niet in de prijs zit, en waar we na de oplevering voor instaan.',
-        optionsT: 'Opties',
-        options: [['Imperiaal, gemonteerd', 'ongeveer €1.550'], ['Opvouwbaar zonnepaneel 200W', '€550'], ['Accudisplay in het bedieningspaneel', '€165'], ['Walstroomlader', '€180'], ['45L-koelkast in plaats van 35L', '+ €60'], ['Betere remmen voor, samen met de vering', 'op aanvraag'], ['Tafel aan het plafond van de opbouw', '€510']],
-        notT: 'Niet inbegrepen',
-        not: [['De auto', 'van jou'], ['Opbouw, als je die nog niet hebt', 'vanaf €3.850'], ['Daktent en luifel', 'op maat']],
-        parts: 'Onderdelen factureren we achteraf, op wat we echt gebruikt hebben. Wijkt dat meer dan 10% af, dan nemen we eerst contact met je op.',
-        warT: 'Garantie',
-        war: 'Gaat er iets mis door hoe wij gebouwd hebben, of door een onderdeel dat wij geleverd hebben, dan maken we het kosteloos. Dat geldt tot 12 maanden na de oplevering. Onderdelen hebben daarnaast hun eigen fabrieksgarantie, en die claim regelen wij voor je.',
-        covT: 'Wel gedekt',
-        cov: ['Fouten in onze bouw en installatie', 'Defecte onderdelen die wij geleverd hebben'],
-        notCovT: 'Niet gedekt',
-        notCov: ['Schade door gebruik waar de ombouw niet voor bedoeld is, overbelasting of ongelukken', 'Wijzigingen of reparaties door iemand anders', 'Normale slijtage'],
         routeKicker: 'Je ombouw, stap voor stap',
         routeT: 'Van eerste gesprek tot eerste reis.',
         route: [['Intake', 'Een gratis gesprek van 45 minuten over je auto, hoe je reist en je budget.'], ['Samen ontwerpen', 'We ontwerpen je interieur rond hoe je reist, en spreken prijs en planning af.'], ['Bouwen', 'Wij bouwen hem voor je, of je bouwt op afgesproken dagen mee. De elektra en het gas doen we altijd zelf.'], ['Oplevering', 'We lopen alles samen met je door, en dan kun je op pad.']],
         routeCta: 'Plan je intake',
+        vehicle: ['Jij brengt de auto.', 'JustRoam levert geen auto\'s. Ben je nog op zoek? We adviseren je graag bij het kiezen van een auto die past bij je ombouw.'],
         map: { label: 'Schets van de route van je idee naar je eerste reis', idea: 'Je idee', intake: 'Intake', design: 'Ontwerp', build: 'Bouwen in Voorburg', handover: 'Oplevering', trip: 'Eerste reis', note: 'Schets, niet op schaal.' },
         faqT: 'Vragen over ombouw',
         chaptersLabel: 'Op deze pagina',
-        chapters: [['packages', 'Pakketten'], ['addons', 'Add-ons'], ['options', 'Opties en garantie'], ['steps', 'Zo werkt het'], ['plan', 'Intake'], ['faq', 'FAQ']],
-        storyLink: 'Lees hoe we onze eigen Ranger bouwden'
+        chapters: [['packages', 'Pakketten'], ['addons', 'Add-ons en extra\'s'], ['steps', 'Zo werkt het'], ['plan', 'Intake'], ['faq', 'FAQ']],
     }
 }[lang];
 
@@ -96,16 +66,18 @@ const price = (k: string) => euro(pk[k].from, lang);
 const faq = nl ? [
     { q: 'Wat is het verschil tussen de pakketten?', a: `Basis (vanaf ${price('basis')}) geeft je stroom onderweg: een tweede accu die laadt tijdens het rijden, LED-verlichting, USB en 12V, een accumonitor en voorbedrading voor later. Ready to camp (vanaf ${price('camp')}, Basis inbegrepen) voegt een interieur op maat, keuken, koelkast en water toe. Daarbovenop kun je Full off-road (vanaf ${price('offroad')}) en buitenverlichting (vanaf ${price('lights')}) toevoegen.` },
     { q: 'Hoe lang duurt een ombouw?', a: `We rekenen in werkdagen: ${daysText(pk.basis, lang)} voor Basis, ${daysText(pk.camp, lang)} voor Ready to camp, plus ${daysText(pk.offroad, lang)} voor off-road en ${daysText(pk.lights, lang)} voor de verlichting. De data spreken we samen af in de intake.` },
-    { q: 'Wat zit er niet in de prijs?', a: 'De auto zelf, een opbouw als je die nog niet hebt, en een daktent en luifel: die zijn op maat en prijzen we in de intake. Onderdelen factureren we achteraf op wat we echt gebruikt hebben; wijkt dat meer dan 10% af, dan bellen we eerst.' },
-    { q: 'Is er garantie?', a: 'Ja, 12 maanden na de oplevering op fouten in onze bouw en op onderdelen die wij geleverd hebben. Schade door verkeerd gebruik, overbelasting, ongelukken of reparaties door anderen valt daar niet onder.' },
-    { q: 'Lever ik mijn eigen auto aan?', a: 'Ja. We bouwen een auto die van jou is om, voor voertuigen in Nederland, Duitsland en België.' },
+    { q: 'Wat zit er niet in de prijs?', a: 'De auto zelf, en een daktent en luifel: die zijn maatwerk en prijzen we in de intake. Heb je nog geen opbouw, dan staat die bij de extra\'s.' },
+    { q: 'Hoe komt de offerte tot stand?', a: 'Na de intake maken we op basis van je wensen een begroting, met de prijzen die op dat moment gelden. Omdat elke auto anders is, kan de prijs per auto verschillen. Daarom duurt het een paar dagen voordat je de offerte krijgt. Onderdelen factureren we achteraf op wat we echt gebruikt hebben; wijkt dat meer dan 10% af, dan nemen we eerst contact met je op.' },
+    { q: 'Is er garantie?', a: 'Ja. Gaat er iets mis door hoe wij gebouwd hebben, of door een onderdeel dat wij geleverd hebben, dan maken we het kosteloos. Dat geldt tot 12 maanden na de oplevering. Onderdelen hebben daarnaast hun eigen fabrieksgarantie, en die claim regelen wij voor je. Niet gedekt: schade door gebruik waar de ombouw niet voor bedoeld is, overbelasting of ongelukken, wijzigingen of reparaties door iemand anders, en normale slijtage.' },
+    { q: 'Lever ik mijn eigen auto aan?', a: 'Ja. JustRoam levert geen auto\'s; we bouwen een auto om die van jou is, in Nederland, Duitsland en België. Ben je nog op zoek, dan adviseren we je graag bij het kiezen van een auto die past bij je ombouw.' },
     { q: 'Kan ik een ombouw eerst uitproberen?', a: 'Ja, door onze eigen Ranger te huren. Die heeft een opbouw, keuken, water, twee daktenten en recovery-uitrusting, dus na een weekend weet je wat je in je eigen auto wilt.' }
 ] : [
     { q: 'What is the difference between the packages?', a: `Basis (from ${price('basis')}) gives you power on the road: a second battery that charges while you drive, LED lighting, USB and 12V, a battery monitor and wiring ready for later. Ready to camp (from ${price('camp')}, Basis included) adds an interior made for your vehicle, a kitchen, a fridge and water. On top of either you can add Full off-road (from ${price('offroad')}) and outdoor lighting (from ${price('lights')}).` },
     { q: 'How long does a build take?', a: `We count in workshop days: ${daysText(pk.basis, lang)} for Basis, ${daysText(pk.camp, lang)} for Ready to camp, plus ${daysText(pk.offroad, lang)} for off-road and ${daysText(pk.lights, lang)} for lighting. We agree the dates together in the intake.` },
-    { q: 'What is not in the price?', a: 'The vehicle itself, a canopy if you do not have one yet, and a rooftop tent and awning: those are made to measure and priced in the intake. Parts are invoiced afterwards on what we actually used; if that differs by more than 10%, we call you first.' },
-    { q: 'Is there a warranty?', a: 'Yes, 12 months after delivery on mistakes in our build and on parts we supplied. Damage from misuse, overloading, accidents or repairs by someone else is not covered.' },
-    { q: 'Do I supply my own vehicle?', a: 'Yes. We convert a vehicle you own, for vehicles in the Netherlands, Germany and Belgium.' },
+    { q: 'What is not in the price?', a: 'The vehicle itself, and a rooftop tent and awning: those are custom made and priced in the intake. If you do not have a canopy yet, you will find it under the extras.' },
+    { q: 'How do you put the quote together?', a: 'After the intake we make a budget based on your wishes, using the prices that apply at that moment. Every vehicle is different, so the price can differ per vehicle. That is why it takes a few days before we send you the quote. Parts are invoiced afterwards on what we actually used; if that differs by more than 10%, we contact you first.' },
+    { q: 'Is there a warranty?', a: 'Yes. If something fails because of how we built it, or because of a part we supplied, we fix it at no cost. That applies for 12 months after delivery. Parts also carry their own manufacturer warranty, and we handle that claim for you. Not covered: damage from use the build is not meant for, overloading or accidents, changes or repairs by someone else, and normal wear.' },
+    { q: 'Do I supply my own vehicle?', a: 'Yes. JustRoam does not supply vehicles; we convert a vehicle you own, in the Netherlands, Germany and Belgium. Still looking for one? We are happy to advise you on choosing a vehicle that suits your build.' },
     { q: 'Can I try a build before I commit?', a: 'Yes, by renting our own Ranger. It has a canopy, kitchen, water, two rooftop tents and recovery gear, so a weekend away shows you what you want in your own vehicle.' }
 ];
 
@@ -151,35 +123,8 @@ const jsonLd = [
             <p>{copy.pkP}</p>
         </div>
         <PackageCards lang={lang} />
-        <p class="fits">{copy.fits} <a class="link" href="#options">{copy.fitsLink}</a></p>
+        <p class="fits">{copy.fits}</p>
         <p class="fits"><b>{copy.measure[0]}</b> {copy.measure[1]}</p>
-    </section>
-
-    <section class="wrap" id="options" style="padding-bottom: clamp(56px, 8vw, 90px)">
-        <div class="build-head">
-            <span class="kicker">{copy.optKicker}</span>
-            <h2>{copy.optT}</h2>
-            <p>{copy.optP}</p>
-        </div>
-        <div class="spec-extra">
-            <div class="spec-box">
-                <h3>{copy.optionsT}</h3>
-                <ul>{copy.options.map(([a, b]) => <li><span>{a}</span><span>{b}</span></li>)}</ul>
-            </div>
-            <div class="spec-box">
-                <h3>{copy.notT}</h3>
-                <ul>{copy.not.map(([a, b]) => <li><span>{a}</span><span>{b}</span></li>)}</ul>
-                <p class="spec-note">{copy.parts}</p>
-            </div>
-        </div>
-        <div class="spec-box spec-warranty">
-            <h3>{copy.warT}</h3>
-            <p>{copy.war}</p>
-            <div class="warranty-cols">
-                <div><h4>{copy.covT}</h4><ul>{copy.cov.map((c) => <li>{c}</li>)}</ul></div>
-                <div><h4>{copy.notCovT}</h4><ul>{copy.notCov.map((c) => <li>{c}</li>)}</ul></div>
-            </div>
-        </div>
     </section>
 
     <section class="route-poster" id="steps">
@@ -188,6 +133,7 @@ const jsonLd = [
                 <span class="kicker">{copy.routeKicker}</span>
                 <h2>{copy.routeT}</h2>
                 <ol>{copy.route.map(([t, d], i) => <li><b>{i + 1}</b><div><strong>{t}</strong>{d}</div></li>)}</ol>
+                <p class="route-vehicle"><b>{copy.vehicle[0]}</b> {copy.vehicle[1]}</p>
                 <a class="btn sand" href="#plan">{copy.routeCta} <span class="ar" aria-hidden="true">→</span></a>
             </div>
             <div class="map">
@@ -225,7 +171,7 @@ const jsonLd = [
     </section>
 
     <section class="wrap" id="faq" style="padding-bottom: clamp(56px, 8vw, 90px)">
-        <div class="head-row"><h2>{copy.faqT}</h2><a class="link" href={href(lang, 'blog_build.html')}>{copy.storyLink}</a></div>
+        <h2 style="margin-bottom:22px">{copy.faqT}</h2>
         <div class="faq">{faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
     </section>
 </Base>

@@ -42,7 +42,6 @@ p { margin: 0 0 1em; }
 .btn { display: inline-flex; align-items: center; gap: 14px; padding: 7px 7px 7px 22px; border-radius: 999px; background: var(--green); color: #fff; font-weight: 600; font-size: 16px; text-decoration: none; border: 0; cursor: pointer; font-family: inherit; transition: background 0.2s; }
 .btn .ar { width: 36px; height: 36px; border-radius: 50%; background: var(--sand); color: var(--brown); display: grid; place-items: center; font-size: 17px; transition: transform 0.2s; }
 .btn:hover { background: var(--green-d); }
-.btn:hover .ar { transform: translateX(3px); }
 .btn.light { background: #fff; color: var(--brown); }
 .btn.light .ar { background: var(--green); color: #fff; }
 .btn.sand { background: var(--sand); color: var(--brown); }
@@ -391,7 +390,7 @@ html { scroll-padding-top: 96px; }
 .contact-details a { color: var(--green); font-weight: 600; }
 @media (max-width: 860px) { .contact-routes { grid-template-columns: 1fr; } .contact-page .plan .contact-opts { order: -1; } }
 
-/* build page (mockup K): hero, package cards, options and warranty, route */
+/* build page (mockup K): hero, package cards, add-ons and extras, route */
 .build-hero { position: relative; height: clamp(440px, 64svh, 620px); border-radius: 0 0 28px 28px; overflow: hidden; color: #fff; background: #1c1208; }
 .build-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; }
 .build-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(25, 12, 3, 0.8) 0%, rgba(25, 12, 3, 0.4) 50%, rgba(25, 12, 3, 0) 75%); }
@@ -403,7 +402,10 @@ html { scroll-padding-top: 96px; }
 .build-head p { color: var(--muted); font-size: 19px; margin: 14px 0 0; }
 
 .pk-grid, .addon-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
-.pk-grid { grid-template-columns: repeat(3, 1fr); }
+.pk-grid, .addon-row { grid-template-columns: repeat(3, 1fr); }
+.pk.extras { background: var(--sand-l); border-color: transparent; }
+.pk.extras li { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-color: rgba(43, 29, 18, 0.12); color: var(--brown); }
+.pk.extras li span:last-child { font-weight: 700; white-space: nowrap; }
 .pk.upcoming { background: var(--sand-l); border-color: transparent; }
 .pk.upcoming .badge { background: var(--sand); color: var(--brown); }
 .pk.upcoming .meta { color: var(--brown); }
@@ -432,20 +434,6 @@ html { scroll-padding-top: 96px; }
 .fits + .fits { margin-top: 8px; }
 .fits b { color: var(--brown); }
 
-.spec-extra { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; }
-.spec-box { background: var(--sand-l); border-radius: 22px; padding: 24px 26px; }
-.spec-box h3 { font-size: 26px; margin-bottom: 8px; }
-.spec-box ul { list-style: none; margin: 0; padding: 0; }
-.spec-box li { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-top: 1px solid rgba(43, 29, 18, 0.12); font-size: 15px; }
-.spec-box li:first-child { border-top: 0; }
-.spec-box li span:last-child { font-weight: 700; white-space: nowrap; }
-.spec-note { margin: 18px 0 0; color: var(--muted); font-size: 15px; }
-.spec-warranty { margin-top: 20px; }
-.spec-warranty > p { margin: 0 0 14px; color: var(--brown); font-size: 15px; }
-.warranty-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-.warranty-cols h4 { font-size: 15px; margin: 0 0 4px; color: var(--green); }
-.warranty-cols li { display: block; }
-
 .route-poster { background: var(--brown); color: var(--sand-l); padding-block: clamp(56px, 8vw, 90px); }
 .route-poster .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 50px; align-items: center; }
 .route-poster .kicker { color: var(--sand); }
@@ -455,6 +443,8 @@ html { scroll-padding-top: 96px; }
 .route-poster li b { font-family: var(--font-head); font-size: 26px; font-weight: 800; color: var(--sand); line-height: 1; }
 .route-poster li strong { display: block; color: #fff; font-size: 18px; margin-bottom: 2px; }
 .route-poster .map { border-radius: 24px; overflow: hidden; }
+.route-vehicle { margin: 0 0 26px; padding: 14px 16px; border: 1px solid rgba(241, 223, 189, 0.3); border-radius: 16px; font-size: 15px; color: #e8d6b6; }
+.route-vehicle b { color: #fff; }
 .route-poster .map svg { display: block; width: 100%; height: auto; }
 
 /* package tiles: the short version on the home page */
@@ -466,7 +456,7 @@ html { scroll-padding-top: 96px; }
 .pk-tiles strong { display: block; color: var(--green); font-size: 18px; margin: 6px 0 2px; }
 
 @media (max-width: 960px) {
-    .pk-grid, .addon-row, .spec-extra, .warranty-cols, .route-poster .wrap { grid-template-columns: 1fr; }
+    .pk-grid, .addon-row, .route-poster .wrap { grid-template-columns: 1fr; }
     .pk-tiles { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) { .pk-tiles { grid-template-columns: 1fr; } }
@@ -480,3 +470,20 @@ html:has(.chapters) { scroll-padding-top: 175px; }
 .chapters a:hover { border-color: var(--green); }
 .chapters a.on { background: var(--green); border-color: var(--green); color: #fff; }
 @media (max-width: 560px) { .chapters { top: 72px; } .chapters a { font-size: 14px; padding: 6px 12px; } }
+
+/* "Keep me posted" dialog for the JustRoam module */
+.mi-dialog { border: 0; border-radius: 24px; padding: 30px 28px 24px; width: min(440px, calc(100vw - 32px)); background: #fff; color: var(--ink); box-shadow: 0 20px 60px rgba(25, 12, 3, 0.3); }
+.mi-dialog::backdrop { background: rgba(25, 12, 3, 0.55); }
+.mi-dialog h3 { font-size: 32px; margin: 0 0 8px; }
+.mi-intro { color: var(--muted); margin: 0 0 18px; }
+.mi-close { position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: var(--page); color: var(--brown); font-size: 22px; line-height: 1; cursor: pointer; }
+.mi-dialog form { display: grid; gap: 14px; }
+.mi-dialog label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; color: var(--brown); }
+.mi-dialog label small { font-weight: 500; color: var(--muted); }
+.mi-dialog input { font: inherit; font-weight: 400; padding: 11px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--page); color: var(--ink); }
+.mi-dialog input:focus { outline: 2px solid var(--green); outline-offset: 1px; border-color: transparent; }
+.mi-dialog .btn { justify-self: start; margin-top: 4px; }
+.mi-hp { position: absolute; left: -9999px; }
+.mi-note { margin: 0; font-size: 13px; color: var(--muted); }
+.mi-status { margin: 0; font-size: 14px; color: var(--brown); }
+.mi-status:empty { display: none; }

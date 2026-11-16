@@ -1,8 +1,10 @@
 ---
-// The build packages as cards: two packages side by side, then the two
-// add-ons. Prices and days come from data/site.ts.
+// The build packages as cards: Basis, Ready to camp and the JustRoam module
+// side by side, then "Add-ons and extras": the two add-ons and the list of
+// extra options. Prices and days come from data/site.ts.
+import ModuleInterest from './ModuleInterest.astro';
 import { packages, euro, daysText } from '../data/site';
-import { href, type Lang } from '../i18n';
+import type { Lang } from '../i18n';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -14,9 +16,9 @@ const copy = nl ? {
     from: 'Vanaf',
     most: 'Meest compleet',
     plus: 'Alles uit Basis, plus:',
-    plan: 'Plan deze ombouw',
-    addonsT: 'Add-ons',
-    addonsP: 'Voeg er een of allebei toe aan Basis of Ready to camp.',
+    explore: 'Ontdek deze ombouw',
+    addonsT: 'Add-ons en extra\'s',
+    addonsP: 'Voeg ze toe aan Basis of Ready to camp.',
     tags: {
         basis: 'Stroom onderweg, en klaar voor alles wat je later toevoegt.',
         camp: 'Alles om te koken, te slapen en weken te reizen.',
@@ -28,18 +30,18 @@ const copy = nl ? {
         badge: 'In ontwikkeling',
         t: 'JustRoam-module',
         soon: 'Binnenkort',
-        sub: 'Eerst huren, later kopen',
         tag: 'Een complete kampeerunit die je onder de opbouw schuift die je al hebt.',
         items: [
             { t: 'Uitschuifkeuken', d: 'Koken achter je auto' },
             { t: 'Koelkast', d: 'Drinken koud, eten vers' },
             { t: 'Water', d: 'Tank, pomp en wasbak' },
-            { t: 'Laden', d: 'Stroom voor je spullen, aan boord' },
-            { t: 'Opbergruimte', d: 'Lades voor al je uitrusting' },
-            { t: 'Eerst huren', d: 'Koop je hem, dan krijg je je huur terug' }
-        ],
-        cta: 'Houd me op de hoogte'
+            { t: 'Tweede accu', d: 'Stroom voor koelkast en je spullen, aan boord' },
+            { t: 'Opbergruimte', d: 'Lades voor al je uitrusting' }
+        ]
     },
+    extrasT: 'Extra\'s',
+    extrasP: 'Los toe te voegen aan elke ombouw.',
+    extras: [['Opbouw, als je die nog niet hebt', 'vanaf €3.850'], ['Imperiaal, gemonteerd', 'vanaf €1.550'], ['Opvouwbaar zonnepaneel 200W', '€550'], ['Accudisplay in het bedieningspaneel', '€165'], ['Walstroomlader', '€180'], ['45L-koelkast in plaats van 35L', '+ €60'], ['Betere remmen voor', 'op aanvraag'], ['Tafel aan het plafond van de opbouw', '€510']],
     items: {
         basis: [
             { t: 'Tweede accu', d: 'Laadt op terwijl je rijdt' },
@@ -54,8 +56,8 @@ const copy = nl ? {
             { t: 'Keuken', d: 'Overal een echte maaltijd koken' },
             { t: 'Koelkast', d: 'Drinken koud, eten vers' },
             { t: 'Water', d: 'Tank, pomp en wasbak' },
-            { t: 'Een plek om te slapen', d: 'Een daktent of een ingebouwd bed. Prijs in de intake', tag: 'op maat' },
-            { t: 'Luifel', d: 'Je buitenruimte, met LED-verlichting. Prijs in de intake', tag: 'op maat' }
+            { t: 'Een plek om te slapen', d: 'Een daktent of een ingebouwd bed. Prijs in de intake', tag: 'maatwerk' },
+            { t: 'Luifel', d: 'Je buitenruimte, met LED-verlichting. Prijs in de intake', tag: 'maatwerk' }
         ],
         offroad: [
             { t: 'Zwaardere vering', d: 'Draagt het extra gewicht en ruw terrein' },
@@ -72,9 +74,9 @@ const copy = nl ? {
     from: 'From',
     most: 'Most complete',
     plus: 'Everything in Basis, plus:',
-    plan: 'Plan this build',
-    addonsT: 'Add-ons',
-    addonsP: 'Add one or both to Basis or Ready to camp.',
+    explore: 'Explore this build',
+    addonsT: 'Add-ons and extras',
+    addonsP: 'Add them to Basis or Ready to camp.',
     tags: {
         basis: 'Power on the road, and ready for whatever you add later.',
         camp: 'Everything you need to cook, sleep and travel for weeks.',
@@ -86,18 +88,18 @@ const copy = nl ? {
         badge: 'In development',
         t: 'JustRoam module',
         soon: 'Coming soon',
-        sub: 'Rent it first, buy it later',
         tag: 'A complete camping unit that slides in under the canopy you already have.',
         items: [
             { t: 'Slide-out kitchen', d: 'Cook at the back of your vehicle' },
             { t: 'Fridge', d: 'Drinks cold, food fresh' },
             { t: 'Water', d: 'Tank, pump and basin' },
-            { t: 'Charging', d: 'Power for your devices, on board' },
-            { t: 'Storage', d: 'Drawers for all your gear' },
-            { t: 'Rent first', d: 'If you buy it, you get your rental back' }
-        ],
-        cta: 'Keep me posted'
+            { t: 'Second battery', d: 'Power for the fridge and your devices, on board' },
+            { t: 'Storage', d: 'Drawers for all your gear' }
+        ]
     },
+    extrasT: 'Extras',
+    extrasP: 'Add to any build.',
+    extras: [['Canopy, if you do not have one yet', 'from €3,850'], ['Roof rack, fitted', 'from €1,550'], ['Folding solar panel 200W', '€550'], ['Battery display in the control panel', '€165'], ['Shore power charger', '€180'], ['45L fridge instead of 35L', '+ €60'], ['Front brake upgrade', 'on request'], ['Table on the canopy ceiling', '€510']],
     items: {
         basis: [
             { t: 'Second battery', d: 'Charges while you drive' },
@@ -112,8 +114,8 @@ const copy = nl ? {
             { t: 'Kitchen', d: 'Cook a proper meal anywhere' },
             { t: 'Fridge', d: 'Drinks cold, food fresh' },
             { t: 'Water', d: 'Tank, pump and basin' },
-            { t: 'A place to sleep', d: 'A rooftop tent, or a bed built in. Priced in the intake', tag: 'made to measure' },
-            { t: 'Awning', d: 'Your outdoor living space, with LED lights. Priced in the intake', tag: 'made to measure' }
+            { t: 'A place to sleep', d: 'A rooftop tent, or a bed built in. Priced in the intake', tag: 'custom' },
+            { t: 'Awning', d: 'Your outdoor living space, with LED lights. Priced in the intake', tag: 'custom' }
         ],
         offroad: [
             { t: 'Upgraded suspension', d: 'Handles the extra weight and rough terrain' },
@@ -139,16 +141,16 @@ const plan = '#plan';
             <p class="tag">{copy.tags[key as 'basis']}</p>
             {key === 'camp' && <div class="plus">{copy.plus}</div>}
             <ul>{list(key).map((i) => <li><b>{i.t}{i.tag && <em>{i.tag}</em>}</b>{i.d}</li>)}</ul>
-            <a class={key === 'camp' ? 'btn cta' : 'btn light cta'} href={plan}>{copy.plan} <span class="ar" aria-hidden="true">→</span></a>
+            <a class={key === 'camp' ? 'btn cta' : 'btn light cta'} href={plan}>{copy.explore} <span class="ar" aria-hidden="true">→</span></a>
         </article>
     ))}
     <article class="pk upcoming" id="pk-module">
         <span class="badge">{copy.module.badge}</span>
         <h3>{copy.module.t}</h3>
-        <div class="meta">{copy.module.soon}<span>{copy.module.sub}</span></div>
+        <div class="meta">{copy.module.soon}</div>
         <p class="tag">{copy.module.tag}</p>
         <ul>{copy.module.items.map((i) => <li><b>{i.t}</b>{i.d}</li>)}</ul>
-        <a class="btn light cta" href={href(lang, 'contact.html')}>{copy.module.cta} <span class="ar" aria-hidden="true">→</span></a>
+        <ModuleInterest lang={lang} />
     </article>
 </div>
 
@@ -166,4 +168,9 @@ const plan = '#plan';
             <a class="btn light cta" href={plan}>{copy.ask[key as 'offroad']} <span class="ar" aria-hidden="true">→</span></a>
         </article>
     ))}
+    <article class="pk extras" id="pk-extras">
+        <h3>{copy.extrasT}</h3>
+        <p class="tag">{copy.extrasP}</p>
+        <ul>{copy.extras.map(([a, b]) => <li><span>{a}</span><span>{b}</span></li>)}</ul>
+    </article>
 </div>
