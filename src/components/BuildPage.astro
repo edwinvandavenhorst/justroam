@@ -48,6 +48,8 @@ const copy = {
         routeCta: 'Plan your intake',
         map: { label: 'Sketch of the route from your idea to your first trip', idea: 'Your idea', intake: 'Intake', design: 'Design', build: 'Build in Voorburg', handover: 'Handover', trip: 'First trip', note: 'Sketch, not to scale.' },
         faqT: 'Questions about a build',
+        chaptersLabel: 'On this page',
+        chapters: [['packages', 'Packages'], ['addons', 'Add-ons'], ['options', 'Options and warranty'], ['steps', 'How it works'], ['plan', 'Intake'], ['faq', 'FAQ']],
         storyLink: 'Read how we built our own Ranger'
     },
     nl: {
@@ -84,6 +86,8 @@ const copy = {
         routeCta: 'Plan je intake',
         map: { label: 'Schets van de route van je idee naar je eerste reis', idea: 'Je idee', intake: 'Intake', design: 'Ontwerp', build: 'Bouwen in Voorburg', handover: 'Oplevering', trip: 'Eerste reis', note: 'Schets, niet op schaal.' },
         faqT: 'Vragen over ombouw',
+        chaptersLabel: 'Op deze pagina',
+        chapters: [['packages', 'Pakketten'], ['addons', 'Add-ons'], ['options', 'Opties en garantie'], ['steps', 'Zo werkt het'], ['plan', 'Intake'], ['faq', 'FAQ']],
         storyLink: 'Lees hoe we onze eigen Ranger bouwden'
     }
 }[lang];
@@ -138,6 +142,10 @@ const jsonLd = [
         </div>
     </section>
 
+    <nav class="chapters" aria-label={copy.chaptersLabel}>
+        <div class="wrap">{copy.chapters.map(([id, label]) => <a href={'#' + id}>{label}</a>)}</div>
+    </nav>
+
     <section class="wrap section" id="packages">
         <div class="build-head">
             <span class="kicker">{copy.pkKicker}</span>
@@ -181,7 +189,7 @@ const jsonLd = [
         </div>
     </section>
 
-    <section class="route-poster">
+    <section class="route-poster" id="steps">
         <div class="wrap">
             <div>
                 <span class="kicker">{copy.routeKicker}</span>
@@ -223,8 +231,28 @@ const jsonLd = [
         <IntakeBlock lang={lang} />
     </section>
 
-    <section class="wrap" style="padding-bottom: clamp(56px, 8vw, 90px)">
+    <section class="wrap" id="faq" style="padding-bottom: clamp(56px, 8vw, 90px)">
         <div class="head-row"><h2>{copy.faqT}</h2><a class="link" href={href(lang, 'blog_build.html')}>{copy.storyLink}</a></div>
         <div class="faq">{faq.map((f) => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
     </section>
 </Base>
+
+<script>
+    // Mark the chapter you are reading in the bar: the last one whose top has
+    // passed the upper third of the screen. On small screens, keep it in view.
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.chapters a')];
+    const targets = links.map((a) => document.getElementById(a.hash.slice(1)));
+    let current = -1;
+    const update = () => {
+        const line = window.innerHeight * 0.35;
+        let i = -1;
+        targets.forEach((el, n) => { if (el && el.getBoundingClientRect().top <= line) i = n; });
+        if (i === current) return;
+        current = i;
+        links.forEach((a, n) => a.classList.toggle('on', n === i));
+        const on = links[i];
+        if (on && on.parentElement) on.parentElement.scrollTo({ left: on.offsetLeft - 16, behavior: 'smooth' });
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+</script>
