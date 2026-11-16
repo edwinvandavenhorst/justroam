@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Mockup: JustRoam e-mails</title>
+<style>
+    body { margin: 0; background: #ece6da; font-family: Arial, Helvetica, sans-serif; color: #2b1d12; }
+    .page { max-width: 1100px; margin: 0 auto; padding: 32px 20px 60px; }
+    .page > h1 { font-size: 26px; margin: 0 0 6px; color: #421c04; }
+    .page > p { margin: 0 0 26px; color: #6e5f4f; font-size: 15px; max-width: 760px; line-height: 1.5; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+    .label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #2c5f2d; margin: 0 0 4px; }
+    .subject { font-size: 14px; color: #2b1d12; margin: 0 0 12px; }
+    .subject span { color: #6e5f4f; }
+    .inbox { background: #fff; border-radius: 14px; padding: 22px 16px; box-shadow: 0 6px 24px rgba(43, 29, 18, .08); }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+    <h1>Mockup: e-mails in JustRoam-stijl</h1>
+    <p>Dezelfde opbouw als de Gearhive-mails (smalle kaart, kopbalk met logo, kort blok met knop), maar in de kleuren en het logo van JustRoam. Links de melding die jij krijgt, rechts een bevestiging voor de bezoeker (nieuw, voorstel). Op staging komt er bovenaan een gele testbalk, net als bij Gearhive.</p>
+
+    <div class="grid">
+        <div>
+            <p class="label">1. Naar jou (info@justroam.nl)</p>
+            <p class="subject"><span>Onderwerp:</span> Interested in JustRoam module</p>
+            <div class="inbox">
+                <!-- email: notification -->
+                <div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto 12px; background: #fde68a; color: #713f12; padding: 10px 14px; font-size: 12.5px; line-height: 1.5; border-radius: 8px; border: 2px dashed #b45309;">
+                    <strong style="font-size: 11px; letter-spacing: 0.08em;">TEST &middot; STAGING</strong><br>
+                    This email comes from the JustRoam test site (staging.justroam.nl).
+                </div>
+                <div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto;">
+                    <div style="background: #f5e6c8; padding: 14px 20px; border-radius: 12px 12px 0 0;">
+                        <img src="../images/Logo_JustRoam_ClearBackground.png" width="128" height="72" alt="JustRoam" style="display: block;">
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid #e6d8bf; border-top: none; border-radius: 0 0 12px 12px; padding: 24px;">
+                        <p style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #2c5f2d; margin: 0 0 6px;">JustRoam module</p>
+                        <h1 style="font-size: 18px; color: #421c04; margin: 0 0 12px;">New interest in the module</h1>
+                        <p style="font-size: 13px; color: #2b1d12; line-height: 1.6; margin: 0 0 16px;">
+                            Sanne de Vries would like to hear when the JustRoam module is ready.
+                        </p>
+                        <table role="presentation" style="width: 100%; border-collapse: collapse; font-size: 13px; margin: 0 0 18px; background: #fbf6ec; border-radius: 8px;">
+                            <tr><td style="padding: 9px 12px; color: #6e5f4f; width: 110px; border-bottom: 1px solid #efe4d0;">Name</td><td style="padding: 9px 12px; color: #2b1d12; font-weight: 700; border-bottom: 1px solid #efe4d0;">Sanne de Vries</td></tr>
+                            <tr><td style="padding: 9px 12px; color: #6e5f4f; border-bottom: 1px solid #efe4d0;">Email</td><td style="padding: 9px 12px; color: #2b1d12; font-weight: 700; border-bottom: 1px solid #efe4d0;">sanne@voorbeeld.nl</td></tr>
+                            <tr><td style="padding: 9px 12px; color: #6e5f4f; border-bottom: 1px solid #efe4d0;">Phone</td><td style="padding: 9px 12px; color: #2b1d12; font-weight: 700; border-bottom: 1px solid #efe4d0;">+31 6 12 34 56 78</td></tr>
+                            <tr><td style="padding: 9px 12px; color: #6e5f4f;">Site</td><td style="padding: 9px 12px; color: #2b1d12; font-weight: 700;">NL</td></tr>
+                        </table>
+                        <a href="#" style="display: inline-block; background: #2c5f2d; color: #ffffff; font-weight: 700; font-size: 13px; padding: 11px 20px; border-radius: 999px; text-decoration: none;">Email Sanne</a>
+                        <p style="font-size: 11px; color: #9a8463; line-height: 1.5; margin: 22px 0 0; border-top: 1px solid #efe4d0; padding-top: 12px;">
+                            Sent by the "Keep me posted" button on the build page of justroam.nl.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <p class="label">2. Naar de bezoeker (voorstel)</p>
+            <p class="subject"><span>Onderwerp:</span> We houden je op de hoogte van de JustRoam-module</p>
+            <div class="inbox">
+                <!-- email: confirmation (NL; EN version has the same layout) -->
+                <div style="font-family: Arial, Helvetica, sans-serif; max-width: 480px; margin: 0 auto;">
+                    <div style="background: #f5e6c8; padding: 14px 20px; border-radius: 12px 12px 0 0;">
+                        <img src="../images/Logo_JustRoam_ClearBackground.png" width="128" height="72" alt="JustRoam" style="display: block;">
+                    </div>
+                    <div style="background: #ffffff; border: 1px solid #e6d8bf; border-top: none; border-radius: 0 0 12px 12px; padding: 24px;">
+                        <h1 style="font-size: 18px; color: #421c04; margin: 0 0 12px;">Bedankt, Sanne</h1>
+                        <p style="font-size: 13px; color: #2b1d12; line-height: 1.6; margin: 0 0 14px;">
+                            Je staat op de lijst. Zodra de JustRoam-module klaar is, hoor je het als een van de eersten.
+                        </p>
+                        <div style="background: #f1dfbd; border-radius: 10px; padding: 14px 16px; margin: 0 0 18px;">
+                            <p style="font-size: 12px; font-weight: 700; color: #421c04; margin: 0 0 4px;">De JustRoam-module</p>
+                            <p style="font-size: 12.5px; color: #2b1d12; line-height: 1.55; margin: 0;">Een complete kampeerunit met uitschuifkeuken, koelkast, water, tweede accu en opbergruimte, die je onder de opbouw schuift die je al hebt.</p>
+                        </div>
+                        <p style="font-size: 13px; color: #2b1d12; line-height: 1.6; margin: 0 0 16px;">
+                            Wil je niet wachten? Bekijk wat we nu al in je auto bouwen.
+                        </p>
+                        <a href="#" style="display: inline-block; background: #2c5f2d; color: #ffffff; font-weight: 700; font-size: 13px; padding: 11px 20px; border-radius: 999px; text-decoration: none;">Bekijk de ombouwpakketten</a>
+                        <p style="font-size: 12px; color: #6e5f4f; line-height: 1.6; margin: 20px 0 0;">
+                            Vragen? Antwoord gewoon op deze mail, dan komt hij bij ons binnen.
+                        </p>
+                        <p style="font-size: 11px; color: #9a8463; line-height: 1.5; margin: 18px 0 0; border-top: 1px solid #efe4d0; padding-top: 12px;">
+                            Je krijgt deze mail omdat je je gegevens achterliet op justroam.nl. We gebruiken ze alleen om je over de module te informeren.<br>
+                            JustRoam &middot; Voorburg &middot; justroam.nl
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
