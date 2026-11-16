@@ -176,23 +176,25 @@ const jsonLd = [
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }
 ];
 
-// All photos of the Ranger, in the order of the gallery: a carousel with
-// every photo small underneath (like the old site), and full screen on click.
-const photos = [
-    { src: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, en: 'Camped under the trees with both tents up', nl: 'Kamperen onder de bomen met beide tenten open' },
-    { src: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, en: 'The Ranger at night with both tents lit', nl: 'De Ranger in het donker met beide tenten verlicht' },
-    { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, en: 'Slide-out table in the back', nl: 'Uitschuiftafel achterin' },
-    { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, en: 'The Ranger by a lake', nl: 'De Ranger bij een meer' },
-    { src: '/images/rent/IMG_4866.jpeg', w: 1960, h: 2613, en: 'Ladder up to the tent', nl: 'Ladder naar de tent' },
-    { src: '/images/rent/IMG_4841.jpeg', w: 1960, h: 2614, en: '45 litre fridge', nl: '45 liter koelkast' },
-    { src: '/images/rent/image_forrest_1.jpeg', w: 1960, h: 1103, en: 'The Ranger in a forest', nl: 'De Ranger in het bos' },
-    { src: '/images/rent/IMG_4825.jpeg', w: 1960, h: 1470, en: 'The Ranger with the tents folded', nl: 'De Ranger met ingeklapte tenten' },
-    { src: '/images/rent/IMG_4829.jpeg', w: 1960, h: 1938, en: 'Open canopy with the drawer system', nl: 'Open laadbak met het ladesysteem' },
+// All photos of the Ranger, in the order and with the framing of the old
+// site: pos = which part of a landscape photo stays in view, fit 'contain' =
+// portrait photos shown whole on a light background. A carousel with every
+// photo small underneath, and full screen on click.
+const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'; en: string; nl: string }[] = [
+    { src: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, pos: 'center 25%', en: 'Camped under the trees with both tents up', nl: 'Kamperen onder de bomen met beide tenten open' },
+    { src: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, pos: 'center 25%', en: 'The Ranger at night with both tents lit', nl: 'De Ranger in het donker met beide tenten verlicht' },
+    { src: '/images/rent/image_forrest_1.jpeg', w: 1960, h: 1103, pos: 'center 80%', en: 'The Ranger in a forest', nl: 'De Ranger in het bos' },
+    { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, pos: 'center 60%', en: 'The Ranger by a lake', nl: 'De Ranger bij een meer' },
+    { src: '/images/rent/IMG_4825.jpeg', w: 1960, h: 1470, pos: 'center 20%', en: 'The Ranger with the tents folded', nl: 'De Ranger met ingeklapte tenten' },
+    { src: '/images/rent/IMG_4829.jpeg', w: 1960, h: 1938, fit: 'contain', en: 'Open canopy with the drawer system', nl: 'Open laadbak met het ladesysteem' },
+    { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, pos: 'center 20%', en: 'Slide-out table in the back', nl: 'Uitschuiftafel achterin' },
     { src: '/images/rent/IMG_4832.jpeg', w: 1960, h: 1470, en: 'Two-burner gas stove on the slide-out kitchen', nl: 'Tweepits gasstel op de uitschuifkeuken' },
     { src: '/images/rent/IMG_4834.jpeg', w: 1960, h: 1470, en: 'Cooking on the gas stove', nl: 'Koken op het gasstel' },
-    { src: '/images/rent/IMG_4837.jpeg', w: 1960, h: 2613, en: 'Kitchen drawer with pans and cutlery', nl: 'Keukenlade met pannen en bestek' },
-    { src: '/images/rent/IMG_4840.jpeg', w: 1960, h: 2614, en: 'Drawer with the fridge slid out', nl: 'Lade met de koelkast uitgeschoven' },
-    { src: '/images/rent/IMG_4843.jpeg', w: 1960, h: 2613, en: 'Power panel with switches, USB and a fire extinguisher', nl: 'Stroompaneel met schakelaars, USB en een brandblusser' },
+    { src: '/images/rent/IMG_4837.jpeg', w: 1960, h: 2613, fit: 'contain', en: 'Kitchen drawer with pans and cutlery', nl: 'Keukenlade met pannen en bestek' },
+    { src: '/images/rent/IMG_4840.jpeg', w: 1960, h: 2614, fit: 'contain', en: 'Drawer with the fridge slid out', nl: 'Lade met de koelkast uitgeschoven' },
+    { src: '/images/rent/IMG_4841.jpeg', w: 1960, h: 2614, fit: 'contain', en: '45 litre fridge', nl: '45 liter koelkast' },
+    { src: '/images/rent/IMG_4843.jpeg', w: 1960, h: 2613, fit: 'contain', en: 'Power panel with switches, USB and a fire extinguisher', nl: 'Stroompaneel met schakelaars, USB en een brandblusser' },
+    { src: '/images/rent/IMG_4866.jpeg', w: 1960, h: 2613, fit: 'contain', en: 'Ladder up to the tent', nl: 'Ladder naar de tent' },
     { src: '/images/rent/IMG_Forrest_2.jpeg', w: 1960, h: 1103, en: 'Awning open beside the Ranger', nl: 'Luifel uitgeklapt naast de Ranger' },
     { src: '/images/rent/IMG_3836.jpeg', w: 1960, h: 2614, en: 'Recovery boards on the side', nl: 'Zandplaten aan de zijkant' }
 ];
@@ -207,7 +209,7 @@ const photos = [
         <div class="rg">
             <div class="rg-main">
                 <div class="rg-track">
-                    {photos.map((m, i) => <button type="button" class="rg-slide" data-gal-open={i} aria-label={`${copy.galOpen}: ${m[lang]}`}><Photo src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes="(max-width: 960px) 100vw, 1240px" eager={i === 0} /></button>)}
+                    {photos.map((m, i) => <button type="button" class:list={['rg-slide', { contain: m.fit === 'contain' }]} style={m.pos ? `--pos:${m.pos}` : undefined} data-gal-open={i} aria-label={`${copy.galOpen}: ${m[lang]}`}><Photo src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes="(max-width: 960px) 100vw, 1240px" eager={i < 2} /></button>)}
                 </div>
                 <button type="button" class="gal-btn rg-prev" aria-label={copy.galPrev}>‹</button>
                 <button type="button" class="gal-btn rg-next" aria-label={copy.galNext}>›</button>
@@ -303,33 +305,51 @@ const photos = [
 <script>
     // Photo carousel on the page (arrows, swipe, thumbnails) and the same
     // photos full screen in a dialog, opened at the photo that was clicked.
-    function carousel(track: HTMLElement, onChange?: (i: number) => void) {
+    function carousel(track: HTMLElement, onChange?: (i: number) => void, wrap = true) {
         const total = track.children.length;
         const current = () => Math.round(track.scrollLeft / track.clientWidth);
         const go = (i: number, smooth = true) => {
-            const n = (i + total) % total;
+            const n = wrap ? (i + total) % total : Math.min(Math.max(i, 0), total - 1);
             track.scrollTo({ left: n * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
         };
         let last = -1;
-        track.addEventListener('scroll', () => {
+        const check = () => {
             const i = current();
             if (i !== last) { last = i; onChange?.(i); }
-        }, { passive: true });
-        return { go, current };
+        };
+        track.addEventListener('scroll', check, { passive: true });
+        check();
+        return { go, current, total };
     }
 
+    // On the page, as on the old site: no wrapping round, the arrow at the
+    // first or last photo disappears, the arrow keys work anywhere on the
+    // page, and a thumbnail jumps straight to its photo.
     const rgTrack = document.querySelector<HTMLElement>('.rg-track');
     const thumbs = [...document.querySelectorAll<HTMLElement>('.rg-thumb')];
     const rgCount = document.querySelector('.rg-count span');
+    const rgPrev = document.querySelector<HTMLElement>('.rg-prev');
+    const rgNext = document.querySelector<HTMLElement>('.rg-next');
     if (rgTrack) {
         const rg = carousel(rgTrack, (i) => {
             if (rgCount) rgCount.textContent = String(i + 1);
             thumbs.forEach((t, k) => t.classList.toggle('on', k === i));
-            thumbs[i]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+            if (rgPrev) rgPrev.hidden = i === 0;
+            if (rgNext) rgNext.hidden = i === thumbs.length - 1;
+        }, false);
+        rgPrev?.addEventListener('click', () => rg.go(rg.current() - 1));
+        rgNext?.addEventListener('click', () => rg.go(rg.current() + 1));
+        thumbs.forEach((t) => t.addEventListener('click', () => {
+            rg.go(Number(t.dataset.rgGo), false);
+            rgTrack.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }));
+        document.addEventListener('keydown', (e) => {
+            if (document.querySelector('dialog.gal[open]')) return;
+            const el = e.target as HTMLElement;
+            if (el.closest('input, textarea, select, [contenteditable]')) return;
+            if (e.key === 'ArrowLeft' && rg.current() > 0) rg.go(rg.current() - 1);
+            if (e.key === 'ArrowRight' && rg.current() < rg.total - 1) rg.go(rg.current() + 1);
         });
-        document.querySelector('.rg-prev')?.addEventListener('click', () => rg.go(rg.current() - 1));
-        document.querySelector('.rg-next')?.addEventListener('click', () => rg.go(rg.current() + 1));
-        thumbs.forEach((t) => t.addEventListener('click', () => rg.go(Number(t.dataset.rgGo))));
     }
 
     const dlg = document.querySelector<HTMLDialogElement>('dialog.gal');
