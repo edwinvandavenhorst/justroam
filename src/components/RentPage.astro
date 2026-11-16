@@ -78,7 +78,6 @@ const copy = {
         bandCta: 'Plan your build',
         pkDesc: ['Power on the road', 'Plus interior, kitchen and water', 'Suspension, recovery, protection', 'Front lights and a rear bar'],
         from: 'from',
-        galAll: 'Show all {n} photos',
         galOpen: 'Open photo',
         galLabel: 'Photos of the Ranger',
         galPrev: 'Previous photo',
@@ -136,7 +135,6 @@ const copy = {
         bandCta: 'Plan je ombouw',
         pkDesc: ['Stroom onderweg', 'Plus interieur, keuken en water', 'Vering, recovery, bescherming', 'Verlichting voor en een lichtbalk achter'],
         from: 'vanaf',
-        galAll: "Alle {n} foto's",
         galOpen: 'Open foto',
         galLabel: "Foto's van de Ranger",
         galPrev: 'Vorige foto',
@@ -178,15 +176,15 @@ const jsonLd = [
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }
 ];
 
-// All photos of the Ranger, in the order of the gallery. The first five
-// form the mosaic at the top; every photo opens the full-screen carousel.
+// All photos of the Ranger, in the order of the gallery: a carousel with
+// every photo small underneath (like the old site), and full screen on click.
 const photos = [
+    { src: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, en: 'Camped under the trees with both tents up', nl: 'Kamperen onder de bomen met beide tenten open' },
     { src: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, en: 'The Ranger at night with both tents lit', nl: 'De Ranger in het donker met beide tenten verlicht' },
     { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, en: 'Slide-out table in the back', nl: 'Uitschuiftafel achterin' },
     { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, en: 'The Ranger by a lake', nl: 'De Ranger bij een meer' },
     { src: '/images/rent/IMG_4866.jpeg', w: 1960, h: 2613, en: 'Ladder up to the tent', nl: 'Ladder naar de tent' },
     { src: '/images/rent/IMG_4841.jpeg', w: 1960, h: 2614, en: '45 litre fridge', nl: '45 liter koelkast' },
-    { src: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, en: 'Camped under the trees with both tents up', nl: 'Kamperen onder de bomen met beide tenten open' },
     { src: '/images/rent/image_forrest_1.jpeg', w: 1960, h: 1103, en: 'The Ranger in a forest', nl: 'De Ranger in het bos' },
     { src: '/images/rent/IMG_4825.jpeg', w: 1960, h: 1470, en: 'The Ranger with the tents folded', nl: 'De Ranger met ingeklapte tenten' },
     { src: '/images/rent/IMG_4829.jpeg', w: 1960, h: 1938, en: 'Open canopy with the drawer system', nl: 'Open laadbak met het ladesysteem' },
@@ -198,7 +196,7 @@ const photos = [
     { src: '/images/rent/IMG_Forrest_2.jpeg', w: 1960, h: 1103, en: 'Awning open beside the Ranger', nl: 'Luifel uitgeklapt naast de Ranger' },
     { src: '/images/rent/IMG_3836.jpeg', w: 1960, h: 2614, en: 'Recovery boards on the side', nl: 'Zandplaten aan de zijkant' }
 ];
-const mosaic = photos.slice(0, 5);
+
 ---
 <Base lang={lang} title={copy.title} description={copy.description} ogImage="/images/rent/IMG_4042.jpeg" jsonLd={jsonLd}>
     <div class="wrap">
@@ -206,11 +204,18 @@ const mosaic = photos.slice(0, 5);
             <span class="kicker">{copy.kicker}</span>
             <h1>{copy.h1}</h1>
         </div>
-        <div class="mosaic-wrap">
-            <div class="mosaic">
-                {mosaic.map((m, i) => <button type="button" class="mosaic-btn" data-gal-open={i} aria-label={`${copy.galOpen}: ${m[lang]}`}><Photo class="cover" src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes={i === 0 ? '(max-width: 860px) 100vw, 50vw' : '25vw'} eager /></button>)}
+        <div class="rg">
+            <div class="rg-main">
+                <div class="rg-track">
+                    {photos.map((m, i) => <button type="button" class="rg-slide" data-gal-open={i} aria-label={`${copy.galOpen}: ${m[lang]}`}><Photo src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes="(max-width: 960px) 100vw, 1240px" eager={i === 0} /></button>)}
+                </div>
+                <button type="button" class="gal-btn rg-prev" aria-label={copy.galPrev}>‹</button>
+                <button type="button" class="gal-btn rg-next" aria-label={copy.galNext}>›</button>
+                <p class="rg-count"><span>1</span> / {photos.length}</p>
             </div>
-            <button type="button" class="gal-all" data-gal-open="0">{copy.galAll.replace('{n}', String(photos.length))}</button>
+            <div class="rg-thumbs">
+                {photos.map((m, i) => <button type="button" class:list={['rg-thumb', { on: i === 0 }]} data-rg-go={i} aria-label={m[lang]}><Photo src={m.src} width={m.w} height={m.h} alt="" sizes="160px" /></button>)}
+            </div>
         </div>
         <dialog class="gal" aria-label={copy.galLabel}>
             <div class="gal-track">
@@ -226,6 +231,13 @@ const mosaic = photos.slice(0, 5);
             <div>
                 <p class="spec"><b>{copy.spec}</b></p>
                 <div class="host"><span class="avatar">E</span><div><b>{copy.hostT}</b><br><span>{copy.hostD}</span></div></div>
+                <div class="rent-reviews">
+                    <h3>{copy.reviewsT}</h3>
+                    <div class="reviews">
+                        {copy.reviews.map(([q, who, when]) => <figure><blockquote>“{q}”</blockquote><figcaption><b>{who}</b> · {when}</figcaption></figure>)}
+                    </div>
+                    <p class="reviews-note">{copy.reviewsNote} <a class="link" href={links.goboony + '#reviews'} target="_blank" rel="noopener">{copy.reviewsLink}</a></p>
+                </div>
                 <ul class="highlights">
                     {copy.highlights.map(([ic, t, d]) => (
                         <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d={icons[ic]} /></svg><div><b>{t}</b><span>{d}</span></div></li>
@@ -246,13 +258,7 @@ const mosaic = photos.slice(0, 5);
                     <h2>{copy.knowT}</h2>
                     <div class="know">{copy.know.map(([t, d]) => <div><b>{t}</b>{d}</div>)}</div>
                 </div>
-                <div class="block">
-                    <h2>{copy.reviewsT}</h2>
-                    <div class="reviews">
-                        {copy.reviews.map(([q, who, when]) => <figure><blockquote>“{q}”</blockquote><figcaption><b>{who}</b> · {when}</figcaption></figure>)}
-                    </div>
-                    <p class="reviews-note">{copy.reviewsNote} <a class="link" href={links.goboony + '#reviews'} target="_blank" rel="noopener">{copy.reviewsLink}</a></p>
-                </div>
+
             </div>
 
             <aside>
@@ -295,31 +301,54 @@ const mosaic = photos.slice(0, 5);
 </Base>
 
 <script>
-    // Full-screen photo carousel: swipe on touch (scroll snap), arrows and
-    // keys on desktop. Opens at the photo that was clicked.
-    const dlg = document.querySelector<HTMLDialogElement>('dialog.gal');
-    const track = dlg?.querySelector<HTMLElement>('.gal-track');
-    const count = dlg?.querySelector('.gal-count span');
-    if (dlg && track) {
+    // Photo carousel on the page (arrows, swipe, thumbnails) and the same
+    // photos full screen in a dialog, opened at the photo that was clicked.
+    function carousel(track: HTMLElement, onChange?: (i: number) => void) {
         const total = track.children.length;
         const current = () => Math.round(track.scrollLeft / track.clientWidth);
         const go = (i: number, smooth = true) => {
             const n = (i + total) % total;
             track.scrollTo({ left: n * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
         };
+        let last = -1;
+        track.addEventListener('scroll', () => {
+            const i = current();
+            if (i !== last) { last = i; onChange?.(i); }
+        }, { passive: true });
+        return { go, current };
+    }
+
+    const rgTrack = document.querySelector<HTMLElement>('.rg-track');
+    const thumbs = [...document.querySelectorAll<HTMLElement>('.rg-thumb')];
+    const rgCount = document.querySelector('.rg-count span');
+    if (rgTrack) {
+        const rg = carousel(rgTrack, (i) => {
+            if (rgCount) rgCount.textContent = String(i + 1);
+            thumbs.forEach((t, k) => t.classList.toggle('on', k === i));
+            thumbs[i]?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+        });
+        document.querySelector('.rg-prev')?.addEventListener('click', () => rg.go(rg.current() - 1));
+        document.querySelector('.rg-next')?.addEventListener('click', () => rg.go(rg.current() + 1));
+        thumbs.forEach((t) => t.addEventListener('click', () => rg.go(Number(t.dataset.rgGo))));
+    }
+
+    const dlg = document.querySelector<HTMLDialogElement>('dialog.gal');
+    const galTrack = dlg?.querySelector<HTMLElement>('.gal-track');
+    const galCount = dlg?.querySelector('.gal-count span');
+    if (dlg && galTrack) {
+        const gal = carousel(galTrack, (i) => { if (galCount) galCount.textContent = String(i + 1); });
         document.querySelectorAll<HTMLElement>('[data-gal-open]').forEach((b) =>
             b.addEventListener('click', () => {
                 dlg.showModal();
-                go(Number(b.dataset.galOpen), false);
+                gal.go(Number(b.dataset.galOpen), false);
             })
         );
-        track.addEventListener('scroll', () => { if (count) count.textContent = String(current() + 1); }, { passive: true });
-        dlg.querySelector('.gal-prev')?.addEventListener('click', () => go(current() - 1));
-        dlg.querySelector('.gal-next')?.addEventListener('click', () => go(current() + 1));
+        dlg.querySelector('.gal-prev')?.addEventListener('click', () => gal.go(gal.current() - 1));
+        dlg.querySelector('.gal-next')?.addEventListener('click', () => gal.go(gal.current() + 1));
         dlg.querySelector('.gal-close')?.addEventListener('click', () => dlg.close());
         dlg.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') go(current() - 1);
-            if (e.key === 'ArrowRight') go(current() + 1);
+            if (e.key === 'ArrowLeft') gal.go(gal.current() - 1);
+            if (e.key === 'ArrowRight') gal.go(gal.current() + 1);
         });
     }
 </script>
