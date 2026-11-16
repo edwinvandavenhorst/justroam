@@ -73,7 +73,7 @@
     .pk .tag { color: var(--muted); margin: 12px 0 18px; font-size: 16px; }
     .pk .plus { font-weight: 700; color: var(--brown); font-size: 15px; padding: 10px 14px; background: var(--page); border-radius: 12px; margin-bottom: 8px; }
     .pk ul { list-style: none; margin: 0 0 22px; padding: 0; }
-    .pk li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 11px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+    .pk li { display: block; padding: 11px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
     .pk li:first-child { border-top: 0; }
     .pk li b { display: block; color: var(--brown); font-size: 16px; }
     .pk .cta { margin-top: auto; align-self: flex-start; }
@@ -273,12 +273,12 @@
                 <div class="meta">From €6,000 <span>about 5 workshop days</span></div>
                 <p class="tag">Power on the road, and ready for whatever you add later.</p>
                 <ul>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Second battery</b>Charges while you drive</div></li>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>LED lighting</b>In the back of your vehicle</div></li>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Charge all devices</b>USB ports and 12V outlets</div></li>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Battery monitor</b>See your charge on your phone</div></li>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Ready to expand</b>Pre-wired for a fridge, water pump and more</div></li>
-                    <li class="opt"><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Solar panel <em>optional</em></b>Charge your battery while parked</div></li>
+                    <li><div><b>Second battery</b>Charges while you drive</div></li>
+                    <li><div><b>LED lighting</b>In the back of your vehicle</div></li>
+                    <li><div><b>Charge all devices</b>USB ports and 12V outlets</div></li>
+                    <li><div><b>Battery monitor</b>See your charge on your phone</div></li>
+                    <li><div><b>Ready to expand</b>Pre-wired for a fridge, water pump and more</div></li>
+                    <li class="opt"><div><b>Solar panel <em>optional</em></b>Charge your battery while parked</div></li>
                 </ul>
                 <a class="btn light cta" href="#plan" style="border:1px solid var(--line)">Plan this build <span class="ar">→</span></a>
             </article>
@@ -290,12 +290,12 @@
                 <p class="tag">Everything you need to cook, sleep and travel for weeks.</p>
                 <div class="plus">Everything in Basis, plus:</div>
                 <ul>
-                    <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Interior made for your vehicle</b>Drawers and storage, designed together</div></li>
-                    <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Kitchen</b>Cook a proper meal anywhere</div></li>
-                    <li><span class="ic c-kitchen"><svg viewBox="0 0 24 24"><path d="M4 11h16v8H4zM8 11V7m4 4V5m4 6V7"/></svg></span><div><b>Fridge</b>Drinks cold, food fresh</div></li>
-                    <li><span class="ic c-water"><svg viewBox="0 0 24 24"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></span><div><b>Water</b>Tank, pump and basin</div></li>
-                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>A place to sleep <em>made to measure</em></b>A rooftop tent, or a bed built in. Priced in the intake</div></li>
-                    <li><span class="ic c-sleep"><svg viewBox="0 0 24 24"><path d="M3 19 12 5l9 14zM12 5v14"/></svg></span><div><b>Awning <em>made to measure</em></b>Your outdoor living space, with LED lights. Priced in the intake</div></li>
+                    <li><div><b>Interior made for your vehicle</b>Drawers and storage, designed together</div></li>
+                    <li><div><b>Kitchen</b>Cook a proper meal anywhere</div></li>
+                    <li><div><b>Fridge</b>Drinks cold, food fresh</div></li>
+                    <li><div><b>Water</b>Tank, pump and basin</div></li>
+                    <li><div><b>A place to sleep <em>made to measure</em></b>A rooftop tent, or a bed built in. Priced in the intake</div></li>
+                    <li><div><b>Awning <em>made to measure</em></b>Your outdoor living space, with LED lights. Priced in the intake</div></li>
                 </ul>
                 <a class="btn cta" href="#plan">Plan this build <span class="ar">→</span></a>
             </article>
@@ -312,9 +312,9 @@
                 <div class="meta">From €9,550 <span>about 4 workshop days extra</span></div>
                 <p class="tag">For rough tracks and remote places.</p>
                 <ul>
-                    <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Upgraded suspension</b>Handles the extra weight and rough terrain</div></li>
-                    <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Recovery gear</b>Winch, recovery boards and a snorkel</div></li>
-                    <li><span class="ic c-road"><svg viewBox="0 0 24 24"><path d="M3 19h18M6 19l4-9 3 5 2-3 3 7"/></svg></span><div><b>Protection</b>Skid plates and rock sliders</div></li>
+                    <li><div><b>Upgraded suspension</b>Handles the extra weight and rough terrain</div></li>
+                    <li><div><b>Recovery gear</b>Winch, recovery boards and a snorkel</div></li>
+                    <li><div><b>Protection</b>Skid plates and rock sliders</div></li>
                 </ul>
                 <a class="btn light cta" href="#plan" style="border:1px solid var(--line)">Ask about off-road <span class="ar">→</span></a>
             </article>
@@ -323,9 +323,9 @@
                 <div class="meta">From €1,750 <span>about 1 workshop day extra</span></div>
                 <p class="tag">See and be seen, on the road and at camp.</p>
                 <ul>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Front lights</b>Built into the grille, for night driving</div></li>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Rear light bar</b>Light up your camp and the back of the vehicle</div></li>
-                    <li><span class="ic c-power"><svg viewBox="0 0 24 24"><path d="M13 3 6 13h5l-1 8 7-10h-5z"/></svg></span><div><b>Switches on the dash</b>Fitted and wired</div></li>
+                    <li><div><b>Front lights</b>Built into the grille, for night driving</div></li>
+                    <li><div><b>Rear light bar</b>Light up your camp and the back of the vehicle</div></li>
+                    <li><div><b>Switches on the dash</b>Fitted and wired</div></li>
                 </ul>
                 <a class="btn light cta" href="#plan" style="border:1px solid var(--line)">Ask about lighting <span class="ar">→</span></a>
             </article>
