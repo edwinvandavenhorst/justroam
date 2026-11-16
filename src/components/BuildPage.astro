@@ -27,7 +27,6 @@ const copy = {
         fits: 'All prices include VAT, parts and labour, excluding the vehicle. Workshop days are working days on your build; we agree the dates together.',
         fitsLink: 'See options and warranty',
         measure: ['Every build is made to measure.', 'In the intake we go through what you need, what you can leave out, and which parts you might add on their own.'],
-        module: ['In development', 'The JustRoam module.', 'A slide-out unit with kitchen, fridge, water, charging and storage, under the cover you already have. Soon to rent, and if you buy it, you get your rental back.', 'Keep me posted'],
         optKicker: 'Good to know',
         optT: 'Options and warranty',
         optP: 'Add what you need on top of a package. What is not in the price, and what we stand behind after delivery.',
@@ -65,7 +64,6 @@ const copy = {
         fits: 'Alle prijzen zijn inclusief btw, onderdelen en arbeid, exclusief de auto. Werkdagen zijn dagen waarop we aan jouw auto werken; de data spreken we samen af.',
         fitsLink: 'Bekijk opties en garantie',
         measure: ['Elke ombouw is maatwerk.', 'In de intake bespreken we wat je nodig hebt, wat je kunt weglaten en welke onderdelen je los kunt toevoegen.'],
-        module: ['In ontwikkeling', 'De JustRoam-module.', 'Een uitschuifunit met keuken, koelkast, water, laden en opbergruimte, onder de opbouw die je al hebt. Straks te huur, en koop je hem, dan krijg je je huur terug.', 'Houd me op de hoogte'],
         optKicker: 'Goed om te weten',
         optT: 'Opties en garantie',
         optP: 'Voeg toe wat je nodig hebt bovenop een pakket. Wat niet in de prijs zit, en waar we na de oplevering voor instaan.',
@@ -155,11 +153,6 @@ const jsonLd = [
         <PackageCards lang={lang} />
         <p class="fits">{copy.fits} <a class="link" href="#options">{copy.fitsLink}</a></p>
         <p class="fits"><b>{copy.measure[0]}</b> {copy.measure[1]}</p>
-        <div class="module-bar">
-            <span class="kicker">{copy.module[0]}</span>
-            <p><b>{copy.module[1]}</b> {copy.module[2]}</p>
-            <a class="link" href={href(lang, 'contact.html')}>{copy.module[3]}</a>
-        </div>
     </section>
 
     <section class="wrap" id="options" style="padding-bottom: clamp(56px, 8vw, 90px)">

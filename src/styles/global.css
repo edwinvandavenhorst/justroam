@@ -403,6 +403,11 @@ html { scroll-padding-top: 96px; }
 .build-head p { color: var(--muted); font-size: 19px; margin: 14px 0 0; }
 
 .pk-grid, .addon-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+.pk-grid { grid-template-columns: repeat(3, 1fr); }
+.pk.upcoming { background: var(--sand-l); border-color: transparent; }
+.pk.upcoming .badge { background: var(--sand); color: var(--brown); }
+.pk.upcoming .meta { color: var(--brown); }
+.pk.upcoming li { border-color: rgba(43, 29, 18, 0.12); }
 .pk { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 26px; padding: 28px 26px 26px; position: relative; }
 .pk.main { border: 2px solid var(--green); }
 .pk.addon { background: transparent; border: 2px dashed #cdb894; }
@@ -423,13 +428,9 @@ html { scroll-padding-top: 96px; }
 .addon-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 44px 0 18px; }
 .addon-head h3 { font-size: 30px; }
 .addon-head p { margin: 0; color: var(--muted); }
-.fits { margin: 22px 0 0; color: var(--muted); text-align: center; }
+.fits { margin: 22px 0 0; color: var(--muted); text-align: center; font-size: 15px; }
 .fits + .fits { margin-top: 8px; }
 .fits b { color: var(--brown); }
-.module-bar { margin-top: 26px; display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; background: #fff; border: 1px dashed #cdb894; border-radius: 18px; padding: 16px 22px; }
-.module-bar .kicker { margin: 0; background: var(--sand-l); color: #8a6a3a; padding: 4px 10px; border-radius: 999px; font-size: 11px; }
-.module-bar p { margin: 0; color: var(--muted); font-size: 15px; }
-.module-bar b { color: var(--brown); }
 
 .spec-extra { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; }
 .spec-box { background: var(--sand-l); border-radius: 22px; padding: 24px 26px; }
@@ -466,7 +467,6 @@ html { scroll-padding-top: 96px; }
 
 @media (max-width: 960px) {
     .pk-grid, .addon-row, .spec-extra, .warranty-cols, .route-poster .wrap { grid-template-columns: 1fr; }
-    .module-bar { grid-template-columns: 1fr; }
     .pk-tiles { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) { .pk-tiles { grid-template-columns: 1fr; } }
