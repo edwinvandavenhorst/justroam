@@ -18,7 +18,7 @@ const subject = intake ? (nl ? 'Intake aanvragen' : 'Intake request') : (nl ? 'V
 const mailto = `mailto:${business.email}?subject=${encodeURIComponent(subject)}${intake ? `&body=${encodeURIComponent(template)}` : ''}`;
 
 const cal = {
-    href: links.cal,
+    href: links.cal.build[lang],
     title: intake ? (nl ? 'Boek je intake' : 'Book your intake') : (nl ? 'Plan een gesprek' : 'Book a call'),
     sub: nl ? 'Kies een moment in mijn agenda' : 'Pick a time in my calendar',
     icon: 'M3 5h18v16H3z M3 10h18 M8 3v4 M16 3v4',
