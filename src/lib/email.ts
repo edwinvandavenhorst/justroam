@@ -5,8 +5,11 @@
 const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
 
 // Mail clients can only show images from a public address, and staging is
-// behind a login. This logo is already on the live site; after the cutover
-// a small dedicated email logo can replace it.
+// behind a login. So the logo always comes from justroam.nl: a small copy
+// (256x144, shown at 128x72) in public/email/logo.png. Until the cutover
+// justroam.nl is still the old GitHub Pages site without that file, so the
+// big live logo is used. GO-LIVE STEP: switch to the small one below.
+// const LOGO_URL = 'https://justroam.nl/email/logo.png';
 const LOGO_URL = 'https://justroam.nl/images/Logo_JustRoam_ClearBackground.png';
 
 export const FROM = { name: 'JustRoam', email: process.env.MAIL_FROM || 'info@justroam.nl' };

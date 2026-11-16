@@ -16,7 +16,9 @@ const nl = lang === 'nl';
 // staging.justroam.nl (Vercel) talks to staging.gearhive.nl, with the test
 // listings in the staging database; justroam.nl (GitHub Pages) to the real
 // Gearhive. A test booking on staging must never land in production.
-const isStaging = !!process.env.VERCEL;
+// Alleen de productie-deploy van justroam.nl gebruikt de echte Gearhive.
+// Staging, previews en lokaal gebruiken staging.gearhive.nl.
+const isStaging = process.env.VERCEL_ENV !== 'production';
 const gh = isStaging
     ? {
           base: 'https://staging.gearhive.nl',
