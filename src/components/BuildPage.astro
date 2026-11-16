@@ -30,7 +30,8 @@ const copy = {
         routeT: 'From first call to first trip.',
         route: [['Intake', 'A free 45-minute call about your vehicle, how you travel and your budget.'], ['Design together', 'We design your interior around how you travel, and agree on price and planning.'], ['Build', 'We build it for you, or you build alongside us on agreed days. We always do the electrics and the gas.'], ['Handover', 'We walk you through everything, and off you go.']],
         routeCta: 'Plan your intake',
-        vehicle: ['You bring the vehicle.', 'JustRoam does not supply vehicles. Still looking for one? We advise you on choosing a vehicle that suits your build: €180 for about 2 hours, credited against your build if you go ahead.'],
+        vehicle: ['JustRoam does not supply vehicles.', 'New to overlanding, or could you use some help? We can put together a short list of vehicles that suit your build. This service costs a one-time fee of €180, credited against your build if you decide to have us build your vehicle.', 'Book this service here'],
+        adviceUrl: '#plan',
         map: { label: 'Sketch of the route from your idea to your first trip', idea: 'Your idea', intake: 'Intake', design: 'Design', build: 'Build in Voorburg', handover: 'Handover', trip: 'First trip', note: 'Sketch, not to scale.' },
         faqT: 'Questions about a build',
         chaptersLabel: 'On this page',
@@ -52,7 +53,8 @@ const copy = {
         routeT: 'Van eerste gesprek tot eerste reis.',
         route: [['Intake', 'Een gratis gesprek van 45 minuten over je auto, hoe je reist en je budget.'], ['Samen ontwerpen', 'We ontwerpen je interieur rond hoe je reist, en spreken prijs en planning af.'], ['Bouwen', 'Wij bouwen hem voor je, of je bouwt op afgesproken dagen mee. De elektra en het gas doen we altijd zelf.'], ['Oplevering', 'We lopen alles samen met je door, en dan kun je op pad.']],
         routeCta: 'Plan je intake',
-        vehicle: ['Jij brengt de auto.', 'JustRoam levert geen auto\'s. Ben je nog op zoek? We adviseren je bij het kiezen van een auto die past bij je ombouw: €180 voor ongeveer 2 uur, en dat verrekenen we met je ombouw als je doorgaat.'],
+        vehicle: ['JustRoam levert geen auto\'s.', 'Nieuw in overlanden, of kun je wat hulp gebruiken? We stellen een korte lijst samen met auto\'s die passen bij je ombouw. Deze service kost eenmalig €180, en dat verrekenen we met je ombouw als je die door ons laat bouwen.', 'Boek deze service hier'],
+        adviceUrl: '#plan',
         map: { label: 'Schets van de route van je idee naar je eerste reis', idea: 'Je idee', intake: 'Intake', design: 'Ontwerp', build: 'Bouwen in Voorburg', handover: 'Oplevering', trip: 'Eerste reis', note: 'Schets, niet op schaal.' },
         faqT: 'Vragen over ombouw',
         chaptersLabel: 'Op deze pagina',
@@ -69,7 +71,7 @@ const faq = nl ? [
     { q: 'Wat zit er niet in de prijs?', a: 'De auto zelf, en een daktent en luifel: die zijn maatwerk en prijzen we in de intake. Heb je nog geen opbouw, dan staat die bij de extra\'s.' },
     { q: 'Hoe komt de offerte tot stand?', a: 'Na de intake maken we op basis van je wensen een begroting, met de prijzen die op dat moment gelden. Omdat elke auto anders is, kan de prijs per auto verschillen. Daarom duurt het een paar dagen voordat je de offerte krijgt. Onderdelen factureren we achteraf op wat we echt gebruikt hebben; wijkt dat meer dan 10% af, dan nemen we eerst contact met je op.' },
     { q: 'Is er garantie?', a: 'Ja. Gaat er iets mis door hoe wij gebouwd hebben, of door een onderdeel dat wij geleverd hebben, dan maken we het kosteloos. Dat geldt tot 12 maanden na de oplevering. Onderdelen hebben daarnaast hun eigen fabrieksgarantie, en die claim regelen wij voor je. Niet gedekt: schade door gebruik waar de ombouw niet voor bedoeld is, overbelasting of ongelukken, wijzigingen of reparaties door iemand anders, en normale slijtage.' },
-    { q: 'Lever ik mijn eigen auto aan?', a: 'Ja. JustRoam levert geen auto\'s; we bouwen een auto om die van jou is, in Nederland, Duitsland en België. Ben je nog op zoek, dan adviseren we je bij het kiezen van een auto die past bij je ombouw. Dat kost €180 voor ongeveer 2 uur, en dat bedrag verrekenen we met je ombouw als je doorgaat.' },
+    { q: 'Lever ik mijn eigen auto aan?', a: 'Ja. JustRoam levert geen auto\'s; we bouwen een auto om die van jou is, in Nederland, Duitsland en België. Nieuw in overlanden, of kun je wat hulp gebruiken? Dan stellen we een korte lijst samen met auto\'s die passen bij je ombouw. Dat kost eenmalig €180, en dat verrekenen we met je ombouw als je die door ons laat bouwen.' },
     { q: 'Moet ik een aanbetaling doen?', a: 'Ja. Bij de opdracht betaal je 30%. Daarmee bestellen we de onderdelen en leggen we je bouwdata vast. De rest betaal je bij de oplevering. Bij grotere ombouwen, zoals Ready to camp met off-road, werken we met drie termijnen: 30% bij de opdracht, 40% bij de start van de bouw en 30% bij de oplevering. Tot we onderdelen bestellen, krijg je de aanbetaling terug als je afziet van de ombouw.' },
     { q: 'Kan ik een ombouw eerst uitproberen?', a: 'Ja, door onze eigen Ranger te huren. Die heeft een opbouw, keuken, water, twee daktenten en recovery-uitrusting, dus na een weekend weet je wat je in je eigen auto wilt.' }
 ] : [
@@ -78,7 +80,7 @@ const faq = nl ? [
     { q: 'What is not in the price?', a: 'The vehicle itself, and a rooftop tent and awning: those are custom made and priced in the intake. If you do not have a canopy yet, you will find it under the extras.' },
     { q: 'How do you put the quote together?', a: 'After the intake we make a budget based on your wishes, using the prices that apply at that moment. Every vehicle is different, so the price can differ per vehicle. That is why it takes a few days before we send you the quote. Parts are invoiced afterwards on what we actually used; if that differs by more than 10%, we contact you first.' },
     { q: 'Is there a warranty?', a: 'Yes. If something fails because of how we built it, or because of a part we supplied, we fix it at no cost. That applies for 12 months after delivery. Parts also carry their own manufacturer warranty, and we handle that claim for you. Not covered: damage from use the build is not meant for, overloading or accidents, changes or repairs by someone else, and normal wear.' },
-    { q: 'Do I supply my own vehicle?', a: 'Yes. JustRoam does not supply vehicles; we convert a vehicle you own, in the Netherlands, Germany and Belgium. Still looking for one? We advise you on choosing a vehicle that suits your build. That costs €180 for about 2 hours, and we credit it against your build if you go ahead.' },
+    { q: 'Do I supply my own vehicle?', a: 'Yes. JustRoam does not supply vehicles; we convert a vehicle you own, in the Netherlands, Germany and Belgium. New to overlanding, or could you use some help? We can put together a short list of vehicles that suit your build. That costs a one-time fee of €180, credited against your build if you decide to have us build your vehicle.' },
     { q: 'Do I pay a deposit?', a: 'Yes. You pay 30% when you place the order. We use it to order the parts and to fix your build dates. You pay the rest at handover. For larger builds, such as Ready to camp with off-road, we work in three stages: 30% at order, 40% when the build starts and 30% at handover. Until we order parts, you get your deposit back if you decide not to go ahead.' },
     { q: 'Can I try a build before I commit?', a: 'Yes, by renting our own Ranger. It has a canopy, kitchen, water, two rooftop tents and recovery gear, so a weekend away shows you what you want in your own vehicle.' }
 ];
@@ -135,7 +137,7 @@ const jsonLd = [
                 <span class="kicker">{copy.routeKicker}</span>
                 <h2>{copy.routeT}</h2>
                 <ol>{copy.route.map(([t, d], i) => <li><b>{i + 1}</b><div><strong>{t}</strong>{d}</div></li>)}</ol>
-                <p class="route-vehicle"><b>{copy.vehicle[0]}</b> {copy.vehicle[1]}</p>
+                <p class="route-vehicle"><b>{copy.vehicle[0]}</b> {copy.vehicle[1]} <a href={copy.adviceUrl}>{copy.vehicle[2]}</a></p>
                 <a class="btn sand" href="#plan">{copy.routeCta} <span class="ar" aria-hidden="true">→</span></a>
             </div>
             <div class="map">

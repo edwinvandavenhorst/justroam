@@ -445,6 +445,7 @@ html { scroll-padding-top: 96px; }
 .route-poster .map { border-radius: 24px; overflow: hidden; }
 .route-vehicle { margin: 0 0 26px; padding: 14px 16px; border: 1px solid rgba(241, 223, 189, 0.3); border-radius: 16px; font-size: 15px; color: #e8d6b6; }
 .route-vehicle b { color: #fff; }
+.route-vehicle a { color: var(--sand); font-weight: 700; }
 .route-poster .map svg { display: block; width: 100%; height: auto; }
 
 /* package tiles: the short version on the home page */
