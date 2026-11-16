@@ -5,7 +5,7 @@ import RangerCalendar from './RangerCalendar.astro';
 import InTheBack from './InTheBack.astro';
 import GearBand from './GearBand.astro';
 import { href, type Lang } from '../i18n';
-import { business, links, ranger, packages } from '../data/site';
+import { business, links, ranger, packages, euro } from '../data/site';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -67,9 +67,10 @@ const copy = {
         book: 'Book on Goboony',
         bookNote: 'You book and pay on Goboony',
         bandT: 'Like the setup? We build it into your truck.',
-        bandP: 'The Ranger you are looking at is our own build. Three packages, from the basics to fully overland ready.',
+        bandP: 'The Ranger you are looking at is our own build. Two packages and two add-ons, from the basics to fully overland ready.',
         bandCta: 'Plan your build',
-        pkDesc: ['Canopy, power, solar', 'Plus kitchen and water', 'Tents, awning, recovery']
+        pkDesc: ['Power on the road', 'Plus interior, kitchen and water', 'Suspension, recovery, protection', 'Front lights and a rear bar'],
+        from: 'from'
     },
     nl: {
         title: 'Ford Ranger met daktenten huren | Voorburg | JustRoam',
@@ -111,9 +112,10 @@ const copy = {
         book: 'Boek via Goboony',
         bookNote: 'Je boekt en betaalt op Goboony',
         bandT: 'Mooi zo? Wij bouwen het in jouw auto.',
-        bandP: 'De Ranger die je hier ziet is onze eigen ombouw. Drie pakketten, van de basis tot volledig overland-klaar.',
+        bandP: 'De Ranger die je hier ziet is onze eigen ombouw. Twee pakketten en twee add-ons, van de basis tot volledig overland-klaar.',
         bandCta: 'Plan je ombouw',
-        pkDesc: ['Opbouw, stroom, zonnepaneel', 'Plus keuken en water', 'Tenten, luifel, berging']
+        pkDesc: ['Stroom onderweg', 'Plus interieur, keuken en water', 'Vering, recovery, bescherming', 'Verlichting voor en een lichtbalk achter'],
+        from: 'vanaf'
     }
 }[lang];
 
@@ -218,7 +220,7 @@ const mosaic = [
                 <a class="btn sand" href={href(lang, 'contact.html')}>{copy.bandCta} <span class="ar" aria-hidden="true">→</span></a>
             </div>
             <div class="pk-links">
-                {packages.map((p, i) => <a href={href(lang, 'build.html')}><b>{p.name}</b><span>{copy.pkDesc[i]} · {p.months[lang]}</span></a>)}
+                {packages.map((p, i) => <a href={href(lang, 'build.html#pk-' + p.key)}><b>{p.name[lang]}</b><span>{copy.pkDesc[i]} · {copy.from} {euro(p.from, lang)}</span></a>)}
             </div>
         </div>
     </section>

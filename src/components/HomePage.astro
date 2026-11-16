@@ -3,11 +3,10 @@ import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
 import HeroCarousel from './HeroCarousel.astro';
 import InTheBack from './InTheBack.astro';
-import BuildSheet from './BuildSheet.astro';
 import TryRanger from './TryRanger.astro';
 import GearBand from './GearBand.astro';
 import { href, type Lang } from '../i18n';
-import { business, links } from '../data/site';
+import { business, links, packages, euro, daysText } from '../data/site';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -16,10 +15,10 @@ const nl = lang === 'nl';
 const copy = {
     en: {
         title: 'JustRoam | Overland Truck Builds & Ranger Rental, Voorburg',
-        description: 'We turn your pickup into an overland truck in three clear packages: canopy, power, kitchen, water and tents. Or rent our own Ford Ranger first. Voorburg, NL.',
-        sheetKicker: 'Build sheet',
-        sheetTitle: 'Three packages',
-        sheetMore: 'Compare every detail',
+        description: 'We turn your pickup or SUV into an overland vehicle: two packages and two add-ons, from power to kitchen, water and off-road. Or rent our own Ford Ranger first. Voorburg, NL.',
+        sheetKicker: 'Build packages',
+        sheetTitle: 'Two packages, two add-ons',
+        sheetMore: 'See what is in each package',
         sheetCta: 'Plan your build',
         storiesKicker: 'Stories',
         storiesTitle: 'Built, then taken out',
@@ -32,17 +31,17 @@ const copy = {
         soon: 'Coming soon',
         faqTitle: 'Questions about a build',
         faq: [
-            { q: 'What is the difference between the packages?', a: "Getting started adds an aluminium canopy plus a dual-battery system with solar charging (± 1 month). Getting serious adds a custom interior, kitchen, fridge-ready installation and water system on top of that (± 2 months). Going all-in adds roof tent(s), a 270-degree awning, upgraded suspension and recovery equipment (± 3-4 months)." },
-            { q: 'How long does a build take?', a: 'Roughly 1 month for Getting started, 2 months for Getting serious and 3-4 months for Going all-in. Build times also depend on parts availability.' },
+            { q: 'What is the difference between the packages?', a: 'Basis gives you power on the road: a second battery, LED lighting, USB and 12V and a battery monitor. Ready to camp adds an interior made for your vehicle, a kitchen, a fridge and water. On top of either you can add Full off-road and outdoor lighting.' },
+            { q: 'How long does a build take?', a: 'We count in workshop days: about 5 for Basis and about 15 for Ready to camp, plus about 4 for off-road and 1 for lighting. We agree the dates together in the intake.' },
             { q: 'Do I supply my own vehicle?', a: 'Yes. We convert a truck you own into an overland-ready vehicle, for vehicles in the Netherlands, Germany and Belgium.' }
         ]
     },
     nl: {
         title: 'JustRoam | Overland-ombouw en Ranger huren, Voorburg',
-        description: 'Wij bouwen je pickup om tot overland-auto in drie duidelijke pakketten: opbouw, stroom, keuken, water en tenten. Of huur eerst onze eigen Ford Ranger. Voorburg.',
-        sheetKicker: 'Bouwtabel',
-        sheetTitle: 'Drie pakketten',
-        sheetMore: 'Vergelijk alle details',
+        description: 'Wij bouwen je pickup of SUV om tot overland-auto: twee pakketten en twee add-ons, van stroom tot keuken, water en off-road. Of huur eerst onze eigen Ford Ranger. Voorburg.',
+        sheetKicker: 'Ombouwpakketten',
+        sheetTitle: 'Twee pakketten, twee add-ons',
+        sheetMore: 'Bekijk wat er in elk pakket zit',
         sheetCta: 'Plan je ombouw',
         storiesKicker: 'Verhalen',
         storiesTitle: 'Gebouwd, en dan op pad',
@@ -55,8 +54,8 @@ const copy = {
         soon: 'Binnenkort',
         faqTitle: 'Vragen over ombouw',
         faq: [
-            { q: 'Wat is het verschil tussen de pakketten?', a: 'Getting started voegt een aluminium opbouw toe plus een tweede accu met zonnepaneel (± 1 maand). Getting serious voegt daar een interieur op maat, keuken, koelkastvoorbereiding en watersysteem aan toe (± 2 maanden). Going all-in voegt daktent(en), een 270-graden luifel, verbeterde vering en bergingsuitrusting toe (± 3-4 maanden).' },
-            { q: 'Hoe lang duurt een ombouw?', a: 'Ongeveer 1 maand voor Getting started, 2 maanden voor Getting serious en 3-4 maanden voor Going all-in. De bouwtijd hangt ook af van de beschikbaarheid van onderdelen.' },
+            { q: 'Wat is het verschil tussen de pakketten?', a: 'Basis geeft je stroom onderweg: een tweede accu, LED-verlichting, USB en 12V en een accumonitor. Ready to camp voegt een interieur op maat, keuken, koelkast en water toe. Daarbovenop kun je Full off-road en buitenverlichting toevoegen.' },
+            { q: 'Hoe lang duurt een ombouw?', a: 'We rekenen in werkdagen: ongeveer 5 voor Basis en ongeveer 15 voor Ready to camp, plus ongeveer 4 voor off-road en 1 voor verlichting. De data spreken we samen af in de intake.' },
             { q: 'Lever ik mijn eigen auto aan?', a: 'Ja. We bouwen een auto die van jou is om tot overland-auto, voor voertuigen in Nederland, Duitsland en België.' }
         ]
     }
@@ -96,7 +95,9 @@ const jsonLd = [
                 <div><span class="kicker">{copy.sheetKicker}</span><h2>{copy.sheetTitle}</h2></div>
                 <a class="link" href={href(lang, 'build.html')}>{copy.sheetMore}</a>
             </div>
-            <BuildSheet lang={lang} />
+            <div class="pk-tiles">
+                {packages.map((p) => <a class={p.addon ? 'addon' : ''} href={href(lang, 'build.html#pk-' + p.key)}><b>{p.name[lang]}</b><strong>{nl ? 'Vanaf' : 'From'} {euro(p.from, lang)}</strong>{daysText(p, lang)}</a>)}
+            </div>
             <p style="margin:26px 0 0"><a class="btn" href={href(lang, 'contact.html')}>{copy.sheetCta} <span class="ar" aria-hidden="true">→</span></a></p>
         </div>
     </section>

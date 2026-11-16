@@ -43,23 +43,29 @@ export const ranger = {
     sleeps: 4
 };
 
-// The three build packages, in the order of the build sheet
+// Build packages: two packages and two add-ons. Prices are "from", incl. VAT,
+// parts and labour; days are workshop days (not calendar weeks).
 export const packages = [
-    { key: 'started', name: 'Getting started', months: { en: '± 1 month', nl: '± 1 maand' } },
-    { key: 'serious', name: 'Getting serious', months: { en: '± 2 months', nl: '± 2 maanden' } },
-    { key: 'allin', name: 'Going all-in', months: { en: '± 3-4 months', nl: '± 3-4 maanden' } }
+    { key: 'basis', name: { en: 'Basis', nl: 'Basis' }, from: 6000, days: 5, addon: false },
+    { key: 'camp', name: { en: 'Ready to camp', nl: 'Ready to camp' }, from: 17000, days: 15, addon: false },
+    { key: 'offroad', name: { en: '+ Full off-road', nl: '+ Full off-road' }, from: 9550, days: 4, addon: true },
+    { key: 'lights', name: { en: '+ Outdoor lighting', nl: '+ Buitenverlichting' }, from: 1750, days: 1, addon: true }
 ];
 
-// Build sheet rows: which package includes what (true per package, in order)
-export const sheetRows = [
-    { en: 'Aluminium canopy and LED lighting', nl: 'Aluminium opbouw en LED-verlichting', has: [true, true, true] },
-    { en: 'Dual battery and solar', nl: 'Tweede accu en zonnepaneel', has: [true, true, true] },
-    { en: 'USB and 12V outlets', nl: 'USB- en 12V-aansluitingen', has: [true, true, true] },
-    { en: 'Drawers, kitchen, fridge-ready', nl: 'Lades, keuken, koelkastklaar', has: [false, true, true] },
-    { en: 'Water, pump and outside shower', nl: 'Water, pomp en buitendouche', has: [false, true, true] },
-    { en: 'Front and rear auxiliary lights', nl: 'Extra verlichting voor en achter', has: [false, true, true] },
-    { en: 'Roof tent(s) and 270° awning', nl: 'Daktent(en) en 270° luifel', has: [false, false, true] },
-    { en: 'Upgraded suspension', nl: 'Verbeterde vering', has: [false, false, true] },
-    { en: 'Winch, recovery boards, snorkel', nl: 'Lier, zandplaten, snorkel', has: [false, false, true] },
-    { en: 'Skid plates and rock sliders', nl: 'Bodemplaten en rock sliders', has: [false, false, true] }
-];
+// "€6,000" in English, "€6.000" in Dutch
+export function euro(n: number, lang: 'en' | 'nl'): string {
+    return '€' + n.toLocaleString(lang === 'nl' ? 'nl-NL' : 'en-GB');
+}
+
+// Workshop days, worded per language and package type
+export function daysText(p: { days: number; addon: boolean; key: string }, lang: 'en' | 'nl'): string {
+    const n = p.days;
+    if (lang === 'nl') {
+        const d = n === 1 ? 'werkdag' : 'werkdagen';
+        if (p.addon) return `ongeveer ${n} ${d} extra`;
+        return p.key === 'camp' ? `ongeveer ${n} ${d}, Basis inbegrepen` : `ongeveer ${n} ${d}`;
+    }
+    const d = n === 1 ? 'workshop day' : 'workshop days';
+    if (p.addon) return `about ${n} ${d} extra`;
+    return p.key === 'camp' ? `about ${n} ${d}, Basis included` : `about ${n} ${d}`;
+}

@@ -60,10 +60,10 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
             title: 'Builds',
             items: [
                 { q: 'Do you build custom overland vehicles?', a: 'Yes. Whether you want a simple rooftop tent setup or a full expedition vehicle, we help you design and build it.' },
-                { q: 'How long does a build take?', a: "It depends on the build. A basic setup (second battery, charger and solar panels) typically takes 2 to 4 weeks. Builds with custom fabrication can take 3 to 4 months. You get a detailed timeline during planning, and we keep you posted about delays from parts deliveries." },
+                { q: 'How long does a build take?', a: 'We count in workshop days: about 5 for Basis and about 15 for Ready to camp, plus about 4 for off-road and 1 for outdoor lighting. We agree the dates together in the intake, and keep you posted if parts deliveries change the plan.' },
                 { q: 'Can you work with my existing vehicle?', a: "Absolutely. We can fit out your own pickup or 4x4. We'll assess your vehicle and recommend the best setup for your needs and budget." },
-                { q: 'How much does a build cost?', a: 'It depends on what you want. A basic rooftop tent setup starts around €3,000 to €5,000; a full build depends on the specification. Contact us for a quote based on your plans.' },
-                { q: 'Do you provide maintenance after the build?', a: 'Yes, for everything we built: servicing, upgrades and repairs to keep your setup in top shape. We do not service the vehicle itself.' }
+                { q: 'How much does a build cost?', a: 'Basis starts from €6,000 and Ready to camp from €17,000, including VAT, parts and labour. Full off-road adds from €9,550 and outdoor lighting from €1,750. A rooftop tent and awning are made to measure and priced in the intake.' },
+                { q: 'Do you provide maintenance after the build?', a: 'Yes, for everything we built: servicing, upgrades and repairs. We do not service the vehicle itself.' }
             ]
         }
     ],
@@ -114,9 +114,9 @@ export const rangerFaq: Record<'en' | 'nl', FaqGroup[]> = {
             title: 'Ombouw',
             items: [
                 { q: 'Doen jullie maatwerk?', a: 'Ja. Of je nu alleen elektra wilt of een volledig overland-voertuig: we ontwerpen en bouwen het samen met je.' },
-                { q: 'Hoe lang duurt een ombouw?', a: 'Dat hangt af van de ombouw. Een basis (tweede accu, lader en zonnepanelen) duurt meestal 2 tot 4 weken. Een uitgebreidere ombouw kan 3 tot 4 maanden duren, mede afhankelijk van de levertijd van onderdelen. Loopt iets uit, dan hoor je dat zo snel mogelijk.' },
+                { q: 'Hoe lang duurt een ombouw?', a: 'We rekenen in werkdagen: ongeveer 5 voor Basis en ongeveer 15 voor Ready to camp, plus ongeveer 4 voor off-road en 1 voor buitenverlichting. De data spreken we samen af in de intake. Loopt iets uit door de levering van onderdelen, dan hoor je dat zo snel mogelijk.' },
                 { q: 'Kunnen jullie met mijn eigen auto werken?', a: 'Zeker. We bouwen je eigen pickup of 4x4 om. We bekijken samen de mogelijkheden en adviseren de beste opzet voor je auto en budget.' },
-                { q: 'Wat kost een ombouw?', a: 'Dat hangt af van wat je wilt. Een basis met daktent begint rond €3.000 tot €5.000; de prijs van een volledige ombouw hangt af van de uitvoering. Neem contact op voor een offerte op maat.' },
+                { q: 'Wat kost een ombouw?', a: 'Basis begint vanaf €6.000 en Ready to camp vanaf €17.000, inclusief btw, onderdelen en arbeid. Full off-road komt daar vanaf €9.550 bij en buitenverlichting vanaf €1.750. Een daktent en luifel zijn maatwerk en prijzen we in de intake.' },
                 { q: 'Doen jullie onderhoud na de ombouw?', a: 'Ja, op alles wat we hebben ingebouwd. Onderhoud aan de auto zelf doen we niet.' }
             ]
         }

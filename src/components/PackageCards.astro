@@ -1,0 +1,129 @@
+---
+// The build packages as cards: two packages side by side, then the two
+// add-ons. Prices and days come from data/site.ts.
+import { packages, euro, daysText } from '../data/site';
+import type { Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const nl = lang === 'nl';
+const pk = Object.fromEntries(packages.map((p) => [p.key, p]));
+
+type Item = { t: string; d: string; tag?: string };
+const copy = nl ? {
+    from: 'Vanaf',
+    most: 'Meest compleet',
+    plus: 'Alles uit Basis, plus:',
+    plan: 'Plan deze ombouw',
+    addonsT: 'Add-ons',
+    addonsP: 'Voeg er een of allebei toe aan Basis of Ready to camp.',
+    tags: {
+        basis: 'Stroom onderweg, en klaar voor alles wat je later toevoegt.',
+        camp: 'Alles om te koken, te slapen en weken te reizen.',
+        offroad: 'Voor ruwe paden en afgelegen plekken.',
+        lights: 'Zien en gezien worden, onderweg en op de camping.'
+    },
+    ask: { offroad: 'Vraag naar off-road', lights: 'Vraag naar verlichting' },
+    items: {
+        basis: [
+            { t: 'Tweede accu', d: 'Laadt op terwijl je rijdt' },
+            { t: 'LED-verlichting', d: 'Achterin je auto' },
+            { t: 'Alles opladen', d: 'USB en 12V-aansluitingen' },
+            { t: 'Accumonitor', d: 'Zie je lading op je telefoon' },
+            { t: 'Klaar om uit te breiden', d: 'Voorbedraad voor een koelkast, waterpomp en meer' },
+            { t: 'Zonnepaneel', d: 'Laad je accu op als je stilstaat', tag: 'optioneel' }
+        ],
+        camp: [
+            { t: 'Interieur op maat van je auto', d: 'Lades en opbergruimte, samen ontworpen' },
+            { t: 'Keuken', d: 'Overal een echte maaltijd koken' },
+            { t: 'Koelkast', d: 'Drinken koud, eten vers' },
+            { t: 'Water', d: 'Tank, pomp en wasbak' },
+            { t: 'Een plek om te slapen', d: 'Een daktent of een ingebouwd bed. Prijs in de intake', tag: 'op maat' },
+            { t: 'Luifel', d: 'Je buitenruimte, met LED-verlichting. Prijs in de intake', tag: 'op maat' }
+        ],
+        offroad: [
+            { t: 'Zwaardere vering', d: 'Draagt het extra gewicht en ruw terrein' },
+            { t: 'Recovery', d: 'Lier, zandplaten en een snorkel' },
+            { t: 'Bescherming', d: 'Skid plates en rock sliders' }
+        ],
+        lights: [
+            { t: 'Verlichting voor', d: 'Ingebouwd in de grille, voor rijden in het donker' },
+            { t: 'Lichtbalk achter', d: 'Licht op je kampeerplek en achter de auto' },
+            { t: 'Schakelaars op het dashboard', d: 'Gemonteerd en aangesloten' }
+        ]
+    } as Record<string, Item[]>
+} : {
+    from: 'From',
+    most: 'Most complete',
+    plus: 'Everything in Basis, plus:',
+    plan: 'Plan this build',
+    addonsT: 'Add-ons',
+    addonsP: 'Add one or both to Basis or Ready to camp.',
+    tags: {
+        basis: 'Power on the road, and ready for whatever you add later.',
+        camp: 'Everything you need to cook, sleep and travel for weeks.',
+        offroad: 'For rough tracks and remote places.',
+        lights: 'See and be seen, on the road and at camp.'
+    },
+    ask: { offroad: 'Ask about off-road', lights: 'Ask about lighting' },
+    items: {
+        basis: [
+            { t: 'Second battery', d: 'Charges while you drive' },
+            { t: 'LED lighting', d: 'In the back of your vehicle' },
+            { t: 'Charge all devices', d: 'USB ports and 12V outlets' },
+            { t: 'Battery monitor', d: 'See your charge on your phone' },
+            { t: 'Ready to expand', d: 'Pre-wired for a fridge, water pump and more' },
+            { t: 'Solar panel', d: 'Charge your battery while parked', tag: 'optional' }
+        ],
+        camp: [
+            { t: 'Interior made for your vehicle', d: 'Drawers and storage, designed together' },
+            { t: 'Kitchen', d: 'Cook a proper meal anywhere' },
+            { t: 'Fridge', d: 'Drinks cold, food fresh' },
+            { t: 'Water', d: 'Tank, pump and basin' },
+            { t: 'A place to sleep', d: 'A rooftop tent, or a bed built in. Priced in the intake', tag: 'made to measure' },
+            { t: 'Awning', d: 'Your outdoor living space, with LED lights. Priced in the intake', tag: 'made to measure' }
+        ],
+        offroad: [
+            { t: 'Upgraded suspension', d: 'Handles the extra weight and rough terrain' },
+            { t: 'Recovery gear', d: 'Winch, recovery boards and a snorkel' },
+            { t: 'Protection', d: 'Skid plates and rock sliders' }
+        ],
+        lights: [
+            { t: 'Front lights', d: 'Built into the grille, for night driving' },
+            { t: 'Rear light bar', d: 'Light up your camp and the back of the vehicle' },
+            { t: 'Switches on the dash', d: 'Fitted and wired' }
+        ]
+    } as Record<string, Item[]>
+};
+const list = (key: string) => copy.items[key];
+const plan = '#plan';
+---
+<div class="pk-grid">
+    {['basis', 'camp'].map((key) => (
+        <article class={key === 'camp' ? 'pk main' : 'pk'} id={'pk-' + key}>
+            {key === 'camp' && <span class="badge">{copy.most}</span>}
+            <h3>{pk[key].name[lang]}</h3>
+            <div class="meta">{copy.from} {euro(pk[key].from, lang)}<span>{daysText(pk[key], lang)}</span></div>
+            <p class="tag">{copy.tags[key as 'basis']}</p>
+            {key === 'camp' && <div class="plus">{copy.plus}</div>}
+            <ul>{list(key).map((i) => <li><b>{i.t}{i.tag && <em>{i.tag}</em>}</b>{i.d}</li>)}</ul>
+            <a class={key === 'camp' ? 'btn cta' : 'btn light cta'} href={plan}>{copy.plan} <span class="ar" aria-hidden="true">→</span></a>
+        </article>
+    ))}
+</div>
+
+<div class="addon-head">
+    <h3>{copy.addonsT}</h3>
+    <p>{copy.addonsP}</p>
+</div>
+<div class="addon-row">
+    {['offroad', 'lights'].map((key) => (
+        <article class="pk addon" id={'pk-' + key}>
+            <h3>{pk[key].name[lang]}</h3>
+            <div class="meta">{copy.from} {euro(pk[key].from, lang)}<span>{daysText(pk[key], lang)}</span></div>
+            <p class="tag">{copy.tags[key as 'offroad']}</p>
+            <ul>{list(key).map((i) => <li><b>{i.t}</b>{i.d}</li>)}</ul>
+            <a class="btn light cta" href={plan}>{copy.ask[key as 'offroad']} <span class="ar" aria-hidden="true">→</span></a>
+        </article>
+    ))}
+</div>
