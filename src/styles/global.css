@@ -639,3 +639,14 @@ html:has(.chapters) { scroll-padding-top: 175px; }
     .st-photos { grid-template-columns: repeat(2, 1fr); }
     .st-related { grid-template-columns: 1fr; }
 }
+
+/* trip stories: vintage postcard on top instead of the photo mosaic */
+.st-postcard { position: relative; max-width: 1080px; margin: 6px auto 0; }
+.postcard-hero { margin: 0; transform: rotate(-1.2deg); filter: drop-shadow(0 18px 30px rgba(60, 35, 15, 0.22)); }
+.postcard-hero svg { display: block; width: 100%; height: auto; border-radius: 10px; }
+.pc-letter { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; }
+.pc-script { font-family: 'Yellowtail', cursive; }
+.pc-ribbon { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.04em; }
+.pc-stamp { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.05em; }
+.st-allphotos { position: absolute; right: 18px; bottom: -22px; }
+@media (max-width: 640px) { .st-allphotos { position: static; margin-top: 18px; } .postcard-hero { transform: none; } }

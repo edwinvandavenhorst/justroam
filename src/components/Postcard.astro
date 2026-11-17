@@ -1,0 +1,121 @@
+---
+// A vintage "Greetings from" postcard as the header of a trip story: big
+// block letters each filled with a photo from the trip, a script greeting,
+// a stamp and a postmark in the style of the country. One SVG, so it scales
+// as a whole on every screen.
+import { getImage } from 'astro:assets';
+import '@fontsource/yellowtail/400.css';
+
+export interface PostcardData {
+    greeting: string;          // "Greetings from"
+    word: string;              // "BOSNIA": one photo per letter
+    sub: string;               // ribbon under the letters
+    photos: { src: string; w: number; h: number }[];
+    background: { src: string; w: number; h: number };
+    colors: { ink: string; accent: string; script: string; shadow: string; band: string[] };
+    stamp: { country: string; value: string; year: string };
+    postmark: { place: string; date: string };
+    label: string;             // accessible description
+}
+
+interface Props { card: PostcardData }
+const { card } = Astro.props;
+const c = card.colors;
+
+// Approximate advance widths (em) of Barlow Condensed ExtraBold, enough to
+// space the letters evenly without measuring text at build time.
+const adv: Record<string, number> = { I: 0.27, J: 0.42, M: 0.66, W: 0.74, ' ': 0.3 };
+const size = 270;
+const gap = 14;
+const letters = [...card.word];
+const widths = letters.map((ch) => (adv[ch] ?? 0.53) * size);
+const total = widths.reduce((a, b) => a + b, 0) + gap * (letters.length - 1);
+let x = 600 - total / 2;
+const placed = letters.map((ch, i) => {
+    const cx = x + widths[i] / 2;
+    x += widths[i] + gap;
+    return { ch, cx, w: widths[i] };
+});
+const baseline = 470;
+
+const imgs = await Promise.all(card.photos.map((p) => getImage({ src: p.src, width: 700, height: Math.round((700 * p.h) / p.w), format: 'webp' })));
+const bg = await getImage({ src: card.background.src, width: 1400, height: Math.round((1400 * card.background.h) / card.background.w), format: 'webp' });
+const uid = card.word.toLowerCase().replace(/[^a-z]/g, '');
+
+// The band of the frame: a kilim-like row of diamonds in the given colours.
+const band = c.band;
+---
+<figure class="postcard-hero">
+    <svg viewBox="0 0 1200 760" role="img" aria-label={card.label} xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <pattern id={`kilim-${uid}`} width="60" height="30" patternUnits="userSpaceOnUse">
+                <rect width="60" height="30" fill={band[0]} />
+                <path d="M0 15 L15 0 L30 15 L15 30 Z M30 15 L45 0 L60 15 L45 30 Z" fill={band[1]} />
+                <path d="M7 15 L15 7 L23 15 L15 23 Z M37 15 L45 7 L53 15 L45 23 Z" fill={band[2]} />
+                <path d="M13 15 L15 13 L17 15 L15 17 Z M43 15 L45 13 L47 15 L45 17 Z" fill={band[0]} />
+            </pattern>
+            <linearGradient id={`fade-${uid}`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fff8e8" stop-opacity="0.15" />
+                <stop offset="1" stop-color="#fff8e8" stop-opacity="0.55" />
+            </linearGradient>
+            <clipPath id={`inner-${uid}`}><rect x="36" y="36" width="1128" height="688" rx="6" /></clipPath>
+            {placed.map((l, i) => (
+                <clipPath id={`l-${uid}-${i}`}><text x={l.cx} y={baseline} text-anchor="middle" class="pc-letter" font-size={size}>{l.ch}</text></clipPath>
+            ))}
+            <filter id={`paper-${uid}`}><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" /><feColorMatrix values="0 0 0 0 0.45  0 0 0 0 0.35  0 0 0 0 0.2  0 0 0 0.08 0" /><feComposite in2="SourceGraphic" operator="in" /></filter>
+        </defs>
+
+        <!-- card, frame band and scenic background -->
+        <rect width="1200" height="760" rx="10" fill="#f7eedb" />
+        <rect x="14" y="14" width="1172" height="732" rx="8" fill={`url(#kilim-${uid})`} />
+        <g clip-path={`url(#inner-${uid})`}>
+            <image href={bg.src} x="36" y="36" width="1128" height="688" preserveAspectRatio="xMidYMid slice" />
+            <rect x="36" y="36" width="1128" height="688" fill={`url(#fade-${uid})`} />
+        </g>
+        <rect x="36" y="36" width="1128" height="688" rx="6" fill="none" stroke="#fff8e8" stroke-width="6" />
+
+        <!-- greeting -->
+        <text x="150" y="215" class="pc-script" font-size="112" fill="#fff8e8" stroke={c.ink} stroke-width="14" stroke-linejoin="round" transform="rotate(-7 150 215)">{card.greeting}</text>
+        <text x="150" y="215" class="pc-script" font-size="112" fill={c.script} transform="rotate(-7 150 215)">{card.greeting}</text>
+
+        <!-- block letters: extruded shadow, photo inside, outline -->
+        {placed.map((l) => <text x={l.cx + 11} y={baseline + 11} text-anchor="middle" class="pc-letter" font-size={size} fill={c.shadow} stroke={c.shadow} stroke-width="10" stroke-linejoin="round">{l.ch}</text>)}
+        {placed.map((l, i) => (
+            <g clip-path={`url(#l-${uid}-${i})`}>
+                <rect x={l.cx - l.w / 2 - 10} y={baseline - size} width={l.w + 20} height={size + 10} fill={c.ink} />
+                <image href={imgs[i % imgs.length].src} x={l.cx - l.w / 2 - 30} y={baseline - size - 10} width={l.w + 60} height={size + 30} preserveAspectRatio="xMidYMid slice" />
+            </g>
+        ))}
+        {placed.map((l) => <text x={l.cx} y={baseline} text-anchor="middle" class="pc-letter" font-size={size} fill="none" stroke="#fff8e8" stroke-width="5" stroke-linejoin="round">{l.ch}</text>)}
+
+        <!-- ribbon -->
+        <g transform="translate(600 548)">
+            <path d="M-330 -34 H330 L305 0 L330 34 H-330 L-305 0 Z" fill={c.accent} stroke={c.ink} stroke-width="4" />
+            <text y="13" text-anchor="middle" class="pc-ribbon" font-size="36" fill={c.ink}>{card.sub}</text>
+        </g>
+
+        <!-- stamp -->
+        <g transform="translate(978 70) rotate(4)">
+            <rect width="148" height="178" fill="#fff8e8" />
+            <rect x="0" y="0" width="148" height="178" fill="none" stroke="#f7eedb" stroke-width="10" stroke-dasharray="0.1 13" stroke-linecap="round" />
+            <rect x="12" y="12" width="124" height="154" fill={c.ink} />
+            <path d="M40 12 L118 12 L118 120 Z" fill={c.accent} />
+            {[0, 1, 2, 3, 4, 5].map((k) => <path transform={`translate(${34 + k * 14} ${22 + k * 18}) scale(0.55)`} d="M0 -10 L2.9 -3.1 L9.5 -3.1 L4.2 1.2 L6.2 8.1 L0 4 L-6.2 8.1 L-4.2 1.2 L-9.5 -3.1 L-2.9 -3.1 Z" fill="#fff8e8" />)}
+            <text x="20" y="146" class="pc-stamp" font-size="13" fill="#fff8e8">{card.stamp.country}</text>
+            <text x="20" y="160" class="pc-stamp" font-size="12" fill="#fff8e8">{card.stamp.year}</text>
+            <text x="128" y="160" text-anchor="end" class="pc-stamp" font-size="20" fill="#fff8e8">{card.stamp.value}</text>
+        </g>
+
+        <!-- postmark -->
+        <g transform="translate(948 238) rotate(-12)" fill="none" stroke="#2c2a4a" stroke-opacity="0.72" stroke-width="3">
+            <circle r="62" />
+            <circle r="44" />
+            <path id={`pm-${uid}`} d="M-53 0 A53 53 0 1 1 53 0" stroke="none" />
+            <text class="pc-stamp" font-size="15" fill="#2c2a4a" fill-opacity="0.8" stroke="none"><textPath href={`#pm-${uid}`} startOffset="50%" text-anchor="middle">{card.postmark.place}</textPath></text>
+            <text y="6" text-anchor="middle" class="pc-stamp" font-size="15" fill="#2c2a4a" fill-opacity="0.8" stroke="none">{card.postmark.date}</text>
+            <path d="M70 -22 q 22 -12 44 0 t 44 0 t 44 0 M70 0 q 22 -12 44 0 t 44 0 t 44 0 M70 22 q 22 -12 44 0 t 44 0 t 44 0" />
+        </g>
+
+        <rect width="1200" height="760" rx="10" fill="#000" filter={`url(#paper-${uid})`} opacity="0.6" pointer-events="none" />
+    </svg>
+</figure>

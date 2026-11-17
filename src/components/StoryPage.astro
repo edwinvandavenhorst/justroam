@@ -5,6 +5,7 @@
 // list stick on the right. All photos open full screen.
 import Base from '../layouts/Base.astro';
 import Photo from './Photo.astro';
+import Postcard, { type PostcardData } from './Postcard.astro';
 import { href, type Lang } from '../i18n';
 import { business } from '../data/site';
 import { plain } from '../data/faq';
@@ -22,6 +23,7 @@ export interface StoryData {
     short: string;
     intro?: string;
     mosaic: StoryImage[];
+    postcard?: PostcardData;
     facts: [string, string][];
     sections: StorySection[];
     faqTitle: string;
@@ -96,6 +98,12 @@ const jsonLd = [
     <div class="wrap story-page">
         <a class="back-link" href={href(lang, 'stories.html')}>← {t.back}</a>
 
+        {story.postcard ? (
+            <div class="st-postcard">
+                <Postcard card={story.postcard} />
+                <button type="button" class="btn light st-allphotos" data-gal-open="0">{t.allPhotos} ({all.length}) <span class="ar" aria-hidden="true">→</span></button>
+            </div>
+        ) : (
         <div class="st-mosaic">
             {story.mosaic.slice(0, 5).map((m, i) => (
                 <button type="button" data-gal-open={indexOf.get(m.src)} aria-label={`${t.open}: ${all[indexOf.get(m.src)!].alt}`}>
@@ -104,6 +112,7 @@ const jsonLd = [
                 </button>
             ))}
         </div>
+        )}
 
         <header class="st-head">
             <span class="kicker">{story.kicker}</span>

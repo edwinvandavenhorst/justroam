@@ -2,6 +2,7 @@
 // a hike into Montenegro, Austria. Text from Edwin's draft (bosnia-slovenia-draft.html);
 // places checked against the photo locations in the shared album.
 import type { StoryData, StoryImage } from '../../components/StoryPage.astro';
+import type { PostcardData } from '../../components/Postcard.astro';
 import type { Lang } from '../../i18n';
 
 const dir = '/images/stories/bosnia-slovenia/';
@@ -31,6 +32,23 @@ const P = {
     weisseeLake: ph('weissee-lake', 1280, 960, 'Turquoise water at the Weißsee', 'Turquoise water bij de Weißsee')
 };
 
+// The postcard on top: Bosnian flag colours (navy and yellow, white stars on
+// the stamp) and a kilim band, the woven pattern of Bosnian rugs.
+const card = (nl: boolean): PostcardData => ({
+    greeting: nl ? 'Groeten uit' : 'Greetings from',
+    word: nl ? 'BOSNIË' : 'BOSNIA',
+    sub: nl ? 'en een beetje Slovenië · zomer 2025' : '& a little bit of Slovenia · summer 2025',
+    photos: ['strbacki-buk', 'lukomir-road', 'una-rapids', 'livno-plateau-evening', 'jajce-gate', 'rama-lake-beach'].map((n) => {
+        const portrait = n === 'jajce-gate';
+        return { src: dir + n + '.jpg', w: portrait ? 960 : 1280, h: portrait ? 1280 : 960 };
+    }),
+    background: { src: dir + 'lukomir-gravel.jpg', w: 1280, h: 960 },
+    colors: { ink: '#1d2a6b', accent: '#f5c518', script: '#b5262b', shadow: '#1d2a6b', band: ['#b5262b', '#1d2a6b', '#f5c518'] },
+    stamp: { country: 'BOSNA I HERCEGOVINA', value: '1 KM', year: '2025' },
+    postmark: { place: 'LUKOMIR · BIH', date: '13.08.25' },
+    label: nl ? 'Ansichtkaart: groeten uit Bosnië, met foto\'s van de reis in de letters' : 'Postcard: greetings from Bosnia, with photos from the trip inside the letters'
+});
+
 export function bosniaStory(lang: Lang): StoryData {
     const nl = lang === 'nl';
     const p = nl ? '/nl/' : '/';
@@ -44,6 +62,7 @@ export function bosniaStory(lang: Lang): StoryData {
         published: '2026-11-17',
         short: 'Onze eerste overland-reis ooit. We hadden Noorwegen gepland, draaiden een paar dagen voor vertrek om naar het zuiden en brachten bijna twee weken door in Bosnië. Hoogtepunten: twee nachten boven de Sloveense wijngaarden, raften in Nationaal Park Una, wilde paarden bij Livno, 40 km gravel naar Lukomir en een wandeling van 4,5 uur naar een meer in Montenegro. Zomer, 18 dagen, zo\'n 4.000 km.',
         mosaic: [i('roof'), i('vines'), i('rapids'), i('lukAerial'), i('weissee')],
+        postcard: card(nl),
         facts: [['Wanneer', '3 tot 20 augustus 2025 (18 dagen)'], ['Afstand', 'Zo\'n 4.000 km'], ['Landen', 'Duitsland, Oostenrijk, Slovenië, Kroatië, Bosnië, Montenegro (te voet)'], ['Wegen', 'Vooral asfalt, met lange stukken gravel'], ['Met', 'Gezin van vier en hond Izzy'], ['Auto', 'Ford Ranger met twee daktenten']],
         sections: [
             { id: 'plan', title: 'Noorwegen gepland, zuid gereden', html: `<p>Een paar dagen voor vertrek wisten we nog steeds niet waar we heen gingen. Noorwegen was het plan voor onze eerste reis, maar het ruige kamperen en het wisselvallige weer deden ons twijfelen. Niemand van ons had echt ervaring met wild kamperen, en de basisvragen (wc, douchen, veiligheid) waren nog niet beantwoord. Toen kwam Albanië ter sprake, zonder dat iemand nog weet van wie het idee was. Eén blik op de kaart en we besloten gewoon te gaan.</p><p>Op de dag van vertrek stond de Ranger ingepakt, met een los plan: rijden tot een uur of vier, en dan een plek zoeken voor de nacht. De eerste stop was een simpele, schone camping aan de Donau bij Kelheim, met goede voorzieningen voor een mooie prijs. Daarna zou het Triglav worden, in Slovenië, tot een weercheck onderweg 13 °C overdag en 8 °C 's nachts liet zien. Te koud voor wat we wilden, dus draaiden we ter plekke naar het zuiden.</p>` },
@@ -79,6 +98,7 @@ export function bosniaStory(lang: Lang): StoryData {
         published: '2026-11-17',
         short: 'Our first overland trip ever. We planned Norway, turned south a few days before leaving and spent almost two weeks in Bosnia. Highlights: two nights above the Slovenian vineyards, rafting in Una National Park, wild horses near Livno, 40 km of gravel to Lukomir and a 4.5-hour hike to a lake in Montenegro. Summer, 18 days, about 4,000 km.',
         mosaic: [i('roof'), i('vines'), i('rapids'), i('lukAerial'), i('weissee')],
+        postcard: card(nl),
         facts: [['When', '3 to 20 August 2025 (18 days)'], ['Distance', 'About 4,000 km'], ['Countries', 'Germany, Austria, Slovenia, Croatia, Bosnia, Montenegro (on foot)'], ['Roads', 'Mostly asphalt, with long gravel stretches'], ['With', 'Family of four and Izzy the dog'], ['Vehicle', 'Ford Ranger with two roof tents']],
         sections: [
             { id: 'plan', title: 'Planned Norway, drove south', html: `<p>Just a few days before departure we were still undecided where to go. Norway had been the plan for our maiden trip, but the rugged camping and unpredictable weather gave us pause. None of us had real experience camping in the wild, and the basic questions (bathroom, showering, safety) were still unanswered. Then, without anyone quite remembering whose idea it was, Albania came up. One look at the map and we decided to just go for it.</p><p>On departure day the Ranger was packed, with a loose plan: drive until around four each day, then find a spot for the night. The first stop was a simple, clean camping on the Danube near Kelheim, with good facilities at a great price. Next would be Triglav in Slovenia, until a weather check on the way showed 13 °C days and 8 °C nights. Too cold for what we wanted, so we turned south on the spot.</p>` },
