@@ -328,6 +328,21 @@ html { scroll-padding-top: 96px; }
 .contact-opts svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .contact-opts svg.fill { fill: currentColor; stroke: none; }
 .contact-opts b { display: block; } .contact-opts small { color: var(--muted); }
+.cal-wrap { position: relative; }
+.cal-pop { display: none; position: absolute; z-index: 20; background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; box-shadow: 0 14px 36px rgba(60, 35, 15, 0.16); color: var(--brown); font-size: 15px; }
+.cal-pop p, .cal-more p { margin: 0; }
+.cal-pop ol, .cal-more ol { margin: 10px 0; padding-left: 20px; color: var(--muted); }
+.cal-pop li, .cal-more li { margin-bottom: 4px; }
+.cal-pop .after, .cal-more .after { font-weight: 600; }
+.cal-more { padding: 8px 6px 0; color: var(--brown); font-size: 15px; }
+.cal-more summary { cursor: pointer; font-weight: 700; padding: 6px 0; }
+.cal-more[open] summary { margin-bottom: 6px; }
+@media (hover: hover) {
+    .cal-more { display: none; }
+    .cal-wrap:hover .cal-pop, .cal-wrap:focus-within .cal-pop { display: block; }
+}
+@media (hover: hover) and (min-width: 861px) { .cal-pop { right: calc(100% + 18px); top: 0; width: 400px; } }
+@media (hover: hover) and (max-width: 860px) { .cal-pop { left: 0; right: 0; top: calc(100% + 8px); } }
 @media (max-width: 860px) { .plan { grid-template-columns: 1fr; } }
 
 /* faq */

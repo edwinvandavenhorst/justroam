@@ -12,20 +12,27 @@ const nl = lang === 'nl';
 
 const copy = nl ? {
     kicker: 'Plan je ombouw',
-    title: 'Plan je intake',
-    intro: 'Een gratis en vrijblijvend gesprek van 30 minuten, telefonisch of via video. We lopen samen door:',
-    list: ['Je auto: merk, model en bouwjaar', 'Hoe je reist: weekenden of weken, met wie', 'Wat je wilt, en waar je over twijfelt', 'Je budget, en wanneer de auto klaar moet zijn'],
-    after: 'Daarna weet je wat er kan, wat het ongeveer kost en hoe lang het duurt.',
-    how: 'Boek direct een moment in mijn agenda, of vraag de intake aan via WhatsApp of mail.',
+    title: 'Begin met een gesprek',
+    intro: 'Net begonnen met overlanden, of al jaren onderweg? Heb je al een auto, of weet je nog niet wat bij je past? Neem contact op, dan werken we samen toe naar de auto en de ombouw die bij jou passen: gemaakt voor jouw dromen en jouw soort avontuur.',
     packages: 'Bekijk eerst de pakketten'
 } : {
     kicker: 'Plan your build',
-    title: 'Plan your intake',
+    title: 'Start with a conversation',
+    intro: 'New to overlanding, or years on the road? Already have a vehicle, or not sure yet what suits you? Get in touch, and together we work towards the vehicle and build that fit you: made for your dreams and your kind of adventure.',
+    packages: 'See the packages first'
+};
+
+// Shown when hovering "Book your intake" (on touch screens: a fold-out below the options).
+const calInfo = nl ? {
+    more: 'Wat gebeurt er in de intake?',
+    intro: 'Een gratis en vrijblijvend gesprek van 30 minuten, telefonisch of via video. We lopen samen door:',
+    list: ['Je auto: merk, model en bouwjaar', 'Hoe je reist: weekenden of weken, met wie', 'Wat je wilt, en waar je over twijfelt', 'Je budget, en wanneer de auto klaar moet zijn'],
+    after: 'Daarna weet je wat er kan, wat het ongeveer kost en hoe lang het duurt.'
+} : {
+    more: 'What happens in the intake?',
     intro: 'A free, no-obligation 30-minute call, by phone or video. Together we go through:',
     list: ['Your vehicle: make, model and year', 'How you travel: weekends or weeks, with whom', 'What you want, and what you are unsure about', 'Your budget, and when the vehicle should be ready'],
-    after: 'Afterwards you know what is possible, roughly what it costs and how long it takes.',
-    how: 'Book a time in my calendar straight away, or request the intake via WhatsApp or email.',
-    packages: 'See the packages first'
+    after: 'Afterwards you know what is possible, roughly what it costs and how long it takes.'
 };
 ---
 <div class="plan">
@@ -33,10 +40,7 @@ const copy = nl ? {
         <span class="kicker">{copy.kicker}</span>
         <h2>{copy.title}</h2>
         <p class="lead" style="margin-top:14px">{copy.intro}</p>
-        <ol>{copy.list.map((l) => <li>{l}</li>)}</ol>
-        <p class="plan-after">{copy.after}</p>
-        <p class="plan-how">{copy.how}</p>
         {packagesLink && <p style="margin-top:16px"><a class="link" href={href(lang, 'build.html#packages')}>{copy.packages}</a></p>}
     </div>
-    <ContactOptions lang={lang} topic="intake" />
+    <ContactOptions lang={lang} topic="intake" calInfo={calInfo} />
 </div>

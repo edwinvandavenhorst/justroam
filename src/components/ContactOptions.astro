@@ -5,8 +5,9 @@
 import { business, links } from '../data/site';
 import type { Lang } from '../i18n';
 
-interface Props { lang: Lang; topic?: 'intake' | 'general' }
-const { lang, topic = 'general' } = Astro.props;
+interface CalInfo { more: string; intro: string; list: string[]; after: string }
+interface Props { lang: Lang; topic?: 'intake' | 'general'; calInfo?: CalInfo }
+const { lang, topic = 'general', calInfo } = Astro.props;
 const nl = lang === 'nl';
 const intake = topic === 'intake';
 
@@ -22,7 +23,8 @@ const cal = {
     title: intake ? (nl ? 'Boek je intake' : 'Book your intake') : (nl ? 'Plan een gesprek' : 'Book a call'),
     sub: nl ? 'Kies een moment in mijn agenda' : 'Pick a time in my calendar',
     icon: 'M3 5h18v16H3z M3 10h18 M8 3v4 M16 3v4',
-    primary: intake
+    primary: intake,
+    info: !!calInfo
 };
 
 const opts = [
@@ -58,10 +60,28 @@ const opts = [
 ];
 ---
 <div class="contact-opts">
-    {opts.map((o) => (
-        <a href={o.href} class={o.primary ? 'primary' : undefined} target={o.href.startsWith('http') ? '_blank' : undefined} rel={o.href.startsWith('http') ? 'noopener' : undefined}>
-            <i aria-hidden="true"><svg viewBox="0 0 24 24" class={o.fill ? 'fill' : undefined}><path d={o.icon} /></svg></i>
-            <div><b>{o.title}</b><small>{o.sub}</small></div>
-        </a>
-    ))}
+    {opts.map((o) => {
+        const link = (
+            <a href={o.href} class={o.primary ? 'primary' : undefined} target={o.href.startsWith('http') ? '_blank' : undefined} rel={o.href.startsWith('http') ? 'noopener' : undefined} aria-describedby={'info' in o && o.info ? 'cal-info' : undefined}>
+                <i aria-hidden="true"><svg viewBox="0 0 24 24" class={o.fill ? 'fill' : undefined}><path d={o.icon} /></svg></i>
+                <div><b>{o.title}</b><small>{o.sub}</small></div>
+            </a>
+        );
+        return 'info' in o && o.info && calInfo ? (
+            <div class="cal-wrap">
+                {link}
+                <div class="cal-pop" id="cal-info" role="tooltip">
+                    <p>{calInfo.intro}</p>
+                    <ol>{calInfo.list.map((l) => <li>{l}</li>)}</ol>
+                    <p class="after">{calInfo.after}</p>
+                </div>
+                <details class="cal-more">
+                    <summary>{calInfo.more}</summary>
+                    <p>{calInfo.intro}</p>
+                    <ol>{calInfo.list.map((l) => <li>{l}</li>)}</ol>
+                    <p class="after">{calInfo.after}</p>
+                </details>
+            </div>
+        ) : link;
+    })}
 </div>
