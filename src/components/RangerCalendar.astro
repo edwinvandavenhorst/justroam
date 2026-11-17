@@ -2,7 +2,10 @@
 // Live availability with Goboony day prices, from our own API routes.
 // Without prices it still shows availability; if a calendar fails it says so
 // instead of showing booked days as free.
+// Free days can be picked (pickup day, then return day); the button below
+// then opens Goboony with those dates filled in (starts_at / ends_at).
 import type { Lang } from '../i18n';
+import { links } from '../data/site';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -17,10 +20,18 @@ const t = {
     failed: nl
         ? 'De beschikbaarheid kon niet volledig worden geladen. Controleer de data op Goboony.'
         : 'Availability could not be fully loaded. Please check the dates on Goboony.',
-    loading: nl ? 'Laden...' : 'Loading...'
+    loading: nl ? 'Laden...' : 'Loading...',
+    pickHint: nl ? 'Kies je ophaaldag en daarna je inleverdag.' : 'Pick your pickup day, then your return day.',
+    pickEnd: nl ? 'Kies nu je inleverdag.' : 'Now pick your return day.',
+    clash: nl ? 'Er zit een geboekte dag tussen. Kies een andere periode.' : 'There is a booked day in between. Please pick another period.',
+    pickup: nl ? 'Ophalen' : 'Pickup',
+    ret: nl ? 'Inleveren' : 'Return',
+    clear: nl ? 'Wissen' : 'Clear',
+    book: nl ? 'Boek via Goboony' : 'Book on Goboony',
+    bookDates: nl ? 'Boek deze data via Goboony' : 'Book these dates on Goboony'
 };
 ---
-<div class="cal" id="ranger-cal" data-locale={t.locale} data-failed={t.failed}>
+<div class="cal" id="ranger-cal" data-locale={t.locale} data-failed={t.failed} data-hint={t.pickHint} data-hint-end={t.pickEnd} data-clash={t.clash} data-pickup={t.pickup} data-ret={t.ret} data-book={t.book} data-book-dates={t.bookDates}>
     <div class="cal-head">
         <button class="cal-nav" type="button" data-step="-1" aria-label={t.prev}>‹</button>
         <h3 aria-live="polite">{t.loading}</h3>
@@ -29,6 +40,13 @@ const t = {
     <div class="cal-grid">{t.dows.map((d) => <div class="cal-dow">{d}</div>)}</div>
     <div class="cal-grid" data-days></div>
     <div class="cal-legend"><span><i style="background:#edf4ea"></i>{t.free}</span><span><i style="background:#ecdfcf"></i>{t.booked}</span></div>
+    <div class="cal-pick">
+        <p class="cal-sel" aria-live="polite">{t.pickHint}</p>
+        <div class="cal-actions">
+            <a class="btn" href={links.goboony} target="_blank" rel="noopener" data-cal-book><span>{t.book}</span> <span class="ar" aria-hidden="true">→</span></a>
+            <button type="button" class="link cal-clear" hidden>{t.clear}</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -44,10 +62,54 @@ const t = {
         let month = now.getMonth();
         let booked = new Set<string>();
         let prices: Prices | null = null;
+        let start: string | null = null;
+        let end: string | null = null;
+        let clash = false;
+        const sel = root.querySelector<HTMLElement>('.cal-sel')!;
+        const bookBtn = root.querySelector<HTMLAnchorElement>('[data-cal-book]')!;
+        const bookLabel = bookBtn.querySelector('span')!;
+        const clearBtn = root.querySelector<HTMLButtonElement>('.cal-clear')!;
+        const base = bookBtn.href;
+        const ds = root.dataset;
 
         const key = (d: Date) =>
             `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
         const todayKey = key(now);
+        const fmt = (k: string) =>
+            new Date(k + 'T12:00:00').toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' });
+
+        // Every day from a to b (both included) must be free.
+        function rangeFree(a: string, b: string) {
+            const d = new Date(a + 'T12:00:00');
+            while (key(d) <= b) {
+                if (booked.has(key(d))) return false;
+                d.setDate(d.getDate() + 1);
+            }
+            return true;
+        }
+
+        function pick(k: string) {
+            clash = false;
+            if (!start || end || k <= start) { start = k; end = null; }
+            else if (rangeFree(start, k)) end = k;
+            else { start = k; end = null; clash = true; }
+            render();
+        }
+
+        function update() {
+            if (start && end) {
+                sel.innerHTML = `<b>${ds.pickup}:</b> ${fmt(start)} &nbsp;·&nbsp; <b>${ds.ret}:</b> ${fmt(end)}`;
+                bookBtn.href = `${base}?starts_at=${start}&ends_at=${end}`;
+                bookLabel.textContent = ds.bookDates || '';
+            } else {
+                sel.textContent = clash ? ds.clash || '' : start ? `${ds.pickup}: ${fmt(start)}. ${ds.hintEnd}` : ds.hint || '';
+                bookBtn.href = base;
+                bookLabel.textContent = ds.book || '';
+            }
+            clearBtn.hidden = !start;
+        }
+
+        clearBtn.addEventListener('click', () => { start = end = null; clash = false; render(); });
 
         function render() {
             title.textContent = new Date(year, month, 1).toLocaleDateString(locale, { month: 'long', year: 'numeric' });
@@ -59,9 +121,16 @@ const t = {
             for (let d = 1; d <= last; d++) {
                 const date = new Date(year, month, d);
                 const k = key(date);
-                const cell = document.createElement('div');
+                const free = k >= todayKey && !booked.has(k);
+                const cell = document.createElement(free ? 'button' : 'div');
                 cell.className = 'cal-day';
                 cell.textContent = String(d);
+                if (free) {
+                    (cell as HTMLButtonElement).type = 'button';
+                    cell.addEventListener('click', () => pick(k));
+                    if (k === start || k === end) cell.classList.add('sel');
+                    else if (start && end && k > start && k < end) cell.classList.add('in');
+                }
                 if (k === todayKey) cell.classList.add('today');
                 if (k >= todayKey) {
                     if (booked.has(k)) cell.classList.add('booked');
@@ -76,6 +145,7 @@ const t = {
                 }
                 daysEl.appendChild(cell);
             }
+            update();
         }
 
         function warn() {

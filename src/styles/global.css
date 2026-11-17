@@ -277,6 +277,15 @@ html { scroll-padding-top: 96px; }
 .cal-day small { font-size: 12px; font-weight: 700; color: var(--green); }
 .cal-legend { display: flex; gap: 18px; margin-top: 14px; font-size: 14px; color: var(--muted); flex-wrap: wrap; }
 .cal-legend i { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; }
+.cal button.cal-day { border: 0; font-family: inherit; cursor: pointer; transition: background 0.15s; }
+.cal button.cal-day:hover { background: #dcebd6; }
+.cal-day.in { background: #cfe3c8; }
+.cal .cal-day.sel { background: var(--green); color: #fff; }
+.cal-day.sel small { color: #fff; }
+.cal-pick { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.cal-sel { margin: 0 0 14px; font-size: 15px; }
+.cal-actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.cal-clear { background: none; border: 0; padding: 0; font: inherit; font-size: 15px; cursor: pointer; }
 .cal-note { margin: 14px 0 0; padding: 10px 14px; border-radius: 12px; background: #fff3d6; font-size: 14px; }
 @media (max-width: 560px) { .cal { padding: 14px; } .cal-day { font-size: 13px; border-radius: 8px; } .cal-day small { font-size: 10px; } }
 
