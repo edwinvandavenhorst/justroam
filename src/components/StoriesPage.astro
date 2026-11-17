@@ -23,12 +23,12 @@ const copy = {
         featCta: 'Read the build story',
         tripKicker: 'Trip no. 1',
         tripT: 'Planned Norway. Ended up in Bosnia.',
-        tripStops: ['A hill above the Slovenian vineyards, two nights', 'Una park: rafting and the clearest water', 'Wild horses, off-trail', 'Into Montenegro on foot, dog and all', 'A detour to the Weissee in Austria'],
-        soonFull: 'Story coming soon',
-        mapNote: 'Sketch, not to scale. The real map comes with the story.',
+        tripStops: ['Two nights above the Slovenian vineyards', 'Una National Park: rafting and the clearest water', 'Wild horses near Livno, off-trail', 'Gravel to Lukomir, and into Montenegro on foot', 'Ending at the Weißsee in Austria'],
+        soonFull: 'Read the story',
+        mapNote: 'Sketch, not to scale.',
         moreT: 'Trips',
         trips: [
-            { t: 'Maiden trip: Bosnia and Slovenia', d: 'Summer, almost two weeks in Bosnia', img: '/images/rent/IMG_5025.jpeg' },
+            { t: 'Maiden trip: Bosnia and Slovenia', d: 'Summer 2025, 18 days, almost two weeks in Bosnia', img: '/images/stories/bosnia-slovenia/rama-lake-roof.jpg', w: 1280, h: 960, page: 'bosnia-slovenia.html' },
             { t: 'Autumn on Elba', d: 'Sun and island in the autumn break', img: '/images/rent/IMG_4254.jpeg' },
             { t: 'Norway', d: 'The trip we postponed', img: '/images/rent/image_forrest_1.jpeg', h: 1103 }
         ],
@@ -52,12 +52,12 @@ const copy = {
         featCta: 'Lees het bouwverhaal',
         tripKicker: 'Reis nr. 1',
         tripT: 'Noorwegen gepland. In Bosnië beland.',
-        tripStops: ['Een heuvel boven de Sloveense wijngaarden, twee nachten', 'Una-park: raften en het helderste water', 'Wilde paarden, buiten de paden', 'Te voet Montenegro in, hond en al', 'Een omweg naar de Weissee in Oostenrijk'],
-        soonFull: 'Verhaal volgt binnenkort',
-        mapNote: 'Schets, niet op schaal. De echte kaart komt bij het verhaal.',
+        tripStops: ['Twee nachten boven de Sloveense wijngaarden', 'Nationaal Park Una: raften en het helderste water', 'Wilde paarden bij Livno, buiten de paden', 'Gravel naar Lukomir, en te voet Montenegro in', 'Afsluiten bij de Weißsee in Oostenrijk'],
+        soonFull: 'Lees het verhaal',
+        mapNote: 'Schets, niet op schaal.',
         moreT: 'Reizen',
         trips: [
-            { t: 'Eerste reis: Bosnië en Slovenië', d: 'Zomer, bijna twee weken in Bosnië', img: '/images/rent/IMG_5025.jpeg' },
+            { t: 'Eerste reis: Bosnië en Slovenië', d: 'Zomer 2025, 18 dagen, bijna twee weken in Bosnië', img: '/images/stories/bosnia-slovenia/rama-lake-roof.jpg', w: 1280, h: 960, page: 'bosnia-slovenia.html' },
             { t: 'Herfst op Elba', d: 'Zon en eiland in de herfstvakantie', img: '/images/rent/IMG_4254.jpeg' },
             { t: 'Noorwegen', d: 'De reis die we uitstelden', img: '/images/rent/image_forrest_1.jpeg', h: 1103 }
         ],
@@ -109,7 +109,7 @@ const jsonLd = {
                 <span class="kicker">{copy.tripKicker}</span>
                 <h2>{copy.tripT}</h2>
                 <ol>{copy.tripStops.map((s, i) => <li><b>{i + 1}</b>{s}</li>)}</ol>
-                <span class="soon">{copy.soonFull}</span>
+                <a class="btn sand" style="margin-top:18px" href={href(lang, 'bosnia-slovenia.html')}>{copy.soonFull} <span class="ar" aria-hidden="true">→</span></a>
             </div>
             <div class="map">
                 <svg viewBox="0 0 600 420" role="img" aria-label={copy.tripT}>
@@ -138,12 +138,11 @@ const jsonLd = {
     <section class="wrap section">
         <h2 style="margin-bottom:26px">{copy.moreT}</h2>
         <div class="cards3">
-            {copy.trips.map((s) => (
-                <div class="scard">
-                    <div class="frame"><Photo class="cover" src={s.img} width={1960} height={s.h ?? 1470} alt={s.t} sizes="(max-width: 860px) 100vw, 33vw" /></div>
-                    <b>{s.t}</b><span>{s.d}</span><br><span class="soon">{copy.soon}</span>
-                </div>
-            ))}
+            {copy.trips.map((s: { t: string; d: string; img: string; w?: number; h?: number; page?: string }) => {
+                const inner = <><div class="frame"><Photo class="cover" src={s.img} width={s.w ?? 1960} height={s.h ?? 1470} alt={s.t} sizes="(max-width: 860px) 100vw, 33vw" /></div>
+                    <b>{s.t}</b><span>{s.d}</span>{!s.page && <><br><span class="soon">{copy.soon}</span></>}</>;
+                return s.page ? <a class="scard" href={href(lang, s.page)} style="text-decoration:none;color:inherit">{inner}</a> : <div class="scard">{inner}</div>;
+            })}
         </div>
     </section>
 

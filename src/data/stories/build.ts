@@ -35,7 +35,7 @@ export function buildStory(lang: Lang): StoryData {
         ],
         cta: { title: 'Ook zo\'n pickup?', text: 'We bouwen de jouwe met twee pakketten en twee add-ons, of je huurt eerst de onze.', primary: ['Bekijk de ombouw', 'build.html'], secondary: ['Ranger huren', 'rent.html'] },
         related: [
-            { title: 'Eerste reis: Bosnië en Slovenië', sub: 'Reisverhaal', img: img(50, 1960, 1103) },
+            { title: 'Eerste reis: Bosnië en Slovenië', sub: 'Reisverhaal', img: { src: '/images/stories/bosnia-slovenia/rama-lake-roof.jpg', w: 1280, h: 960 }, page: 'bosnia-slovenia.html' },
             { title: 'Herfst op Elba', sub: 'Reisverhaal', img: img(41, 1960, 2614) }
         ]
     } : {
@@ -62,7 +62,7 @@ export function buildStory(lang: Lang): StoryData {
         ],
         cta: { title: 'Want a pickup like this?', text: 'We build yours from two packages and two add-ons, or you can rent ours first.', primary: ['Explore builds', 'build.html'], secondary: ['Rent the Ranger', 'rent.html'] },
         related: [
-            { title: 'Maiden trip: Bosnia and Slovenia', sub: 'Trip', img: img(50, 1960, 1103) },
+            { title: 'Maiden trip: Bosnia and Slovenia', sub: 'Trip', img: { src: '/images/stories/bosnia-slovenia/rama-lake-roof.jpg', w: 1280, h: 960 }, page: 'bosnia-slovenia.html' },
             { title: 'Autumn on Elba', sub: 'Trip', img: img(41, 1960, 2614) }
         ]
     };
