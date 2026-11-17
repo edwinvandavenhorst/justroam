@@ -180,11 +180,11 @@ const jsonLd = [
 // site: pos = which part of a landscape photo stays in view, fit 'contain' =
 // portrait photos shown whole on a light background. A carousel with every
 // photo small underneath, and full screen on click.
-const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'; noCaption?: boolean; en: string; nl: string }[] = [
+const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'; en: string; nl: string }[] = [
     { src: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, pos: 'center 25%', en: 'Camped under the trees with both tents up', nl: 'Kamperen onder de bomen met beide tenten open' },
     { src: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, pos: 'center 25%', en: 'The Ranger at night in Slovenia', nl: 'De Ranger \'s nachts in Slovenië' },
     { src: '/images/rent/image_forrest_1.jpeg', w: 1960, h: 1103, pos: 'center 80%', en: 'The Ranger with the tents and awning open', nl: 'De Ranger met de tenten en de luifel open' },
-    { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, pos: 'center 60%', noCaption: true, en: 'The Ranger by a lake', nl: 'De Ranger bij een meer' },
+    { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, pos: 'center 60%', en: 'The Ranger at one of the lakes in Bosnia', nl: 'De Ranger bij een van de meren in Bosnië' },
     { src: '/images/rent/IMG_4825.jpeg', w: 1960, h: 1470, pos: 'center 20%', en: 'The Ranger with the tents folded', nl: 'De Ranger met ingeklapte tenten' },
     { src: '/images/rent/IMG_4829.jpeg', w: 1960, h: 1938, fit: 'contain', en: 'A view on what is in the back', nl: 'Een kijkje in wat er achterin zit' },
     { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, pos: 'center 20%', en: 'Fold-out water basin behind the cooker', nl: 'Uitklapbare waterbak achter het kookstel' },
@@ -221,7 +221,7 @@ const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'
         </div>
         <dialog class="gal" aria-label={copy.galLabel}>
             <div class="gal-track">
-                {photos.map((m) => <figure class="gal-slide"><Photo src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes="100vw" />{!m.noCaption && <figcaption>{m[lang]}</figcaption>}</figure>)}
+                {photos.map((m) => <figure class="gal-slide"><Photo src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes="100vw" /><figcaption>{m[lang]}</figcaption></figure>)}
             </div>
             <button type="button" class="gal-btn gal-prev" aria-label={copy.galPrev}>‹</button>
             <button type="button" class="gal-btn gal-next" aria-label={copy.galNext}>›</button>
