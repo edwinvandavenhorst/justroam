@@ -46,7 +46,7 @@ export const ui = {
     en: {
         menu: 'Menu',
         switchLabel: 'NL',
-        plan: 'Plan your build',
+        plan: 'Contact us',
         footerTagline: 'Overland builds and Ford Ranger rental from Voorburg.',
         footerBuild: 'Build',
         footerRent: 'Rent',
@@ -60,7 +60,7 @@ export const ui = {
     nl: {
         menu: 'Menu',
         switchLabel: 'EN',
-        plan: 'Plan je ombouw',
+        plan: 'Neem contact op',
         footerTagline: 'Overland-ombouw en Ford Ranger verhuur vanuit Voorburg.',
         footerBuild: 'Ombouw',
         footerRent: 'Huren',

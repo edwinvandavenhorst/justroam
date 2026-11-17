@@ -75,7 +75,7 @@ const copy = {
         bookNote: 'You book and pay on Goboony',
         bandT: 'Like the setup? We build it into your pickup or 4x4.',
         bandP: 'The Ranger you are looking at is our own build. Two packages and two add-ons, from the basics to fully overland ready.',
-        bandCta: 'Plan your build',
+        bandCta: 'Explore builds',
         pkDesc: ['Power on the road', 'Plus interior, kitchen and water', 'Suspension, recovery, protection', 'Front lights and a rear bar'],
         from: 'from',
         galOpen: 'Open photo',
@@ -132,7 +132,7 @@ const copy = {
         bookNote: 'Je boekt en betaalt op Goboony',
         bandT: 'Mooi zo? Wij bouwen het in jouw pickup of 4x4.',
         bandP: 'De Ranger die je hier ziet is onze eigen ombouw. Twee pakketten en twee add-ons, van de basis tot volledig overland-klaar.',
-        bandCta: 'Plan je ombouw',
+        bandCta: 'Bekijk de ombouw',
         pkDesc: ['Stroom onderweg', 'Plus interieur, keuken en water', 'Vering, recovery, bescherming', 'Verlichting voor en een lichtbalk achter'],
         from: 'vanaf',
         galOpen: 'Open foto',
@@ -284,10 +284,10 @@ const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'
             <div>
                 <h2>{copy.bandT}</h2>
                 <p>{copy.bandP}</p>
-                <a class="btn sand" href={href(lang, 'contact.html')}>{copy.bandCta} <span class="ar" aria-hidden="true">→</span></a>
+                <a class="btn sand" href={href(lang, 'build.html')}>{copy.bandCta} <span class="ar" aria-hidden="true">→</span></a>
             </div>
             <div class="pk-links">
-                {packages.map((p, i) => <a href={href(lang, 'build.html#pk-' + p.key)}><b>{p.name[lang]}</b><span>{copy.pkDesc[i]} · {copy.from} {euro(p.from, lang)}</span></a>)}
+                {packages.map((p, i) => <div><b>{p.name[lang]}</b><span>{copy.pkDesc[i]} · {copy.from} {euro(p.from, lang)}</span></div>)}
             </div>
         </div>
     </section>

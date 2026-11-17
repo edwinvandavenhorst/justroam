@@ -295,8 +295,7 @@ html { scroll-padding-top: 96px; }
 .build-band h2 { color: #fff; }
 .build-band p { color: #e3eedf; margin: 14px 0 22px; }
 .pk-links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.pk-links a { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 18px; padding: 20px; text-decoration: none; }
-.pk-links a:hover { background: rgba(255, 255, 255, 0.16); }
+.pk-links > div { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.25); border-radius: 18px; padding: 20px; text-decoration: none; }
 .pk-links b { display: block; font-family: var(--font-head); font-size: 24px; }
 .pk-links span { font-size: 14px; opacity: 0.85; }
 @media (max-width: 860px) { .build-band .wrap, .pk-links { grid-template-columns: 1fr; } }
