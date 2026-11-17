@@ -38,12 +38,6 @@ const isCurrent = (page: string) => path === href(lang, page);
 </header>
 
 <script>
-    // a slimmer header once the page has scrolled
-    const header = document.querySelector('.site-header');
-    const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 40);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
     const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
     const menu = document.getElementById('main-nav');
     toggle?.addEventListener('click', () => {

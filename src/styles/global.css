@@ -52,11 +52,9 @@ p { margin: 0 0 1em; }
 /* header and footer, original colours */
 html { scroll-padding-top: 96px; }
 .site-header { background: var(--header); position: sticky; top: 0; z-index: 40; }
-.site-header .wrap { display: flex; align-items: center; height: 104px; gap: 26px; transition: height 0.25s ease; }
-.site-header.scrolled .wrap { height: 76px; }
+.site-header .wrap { display: flex; align-items: center; height: 84px; gap: 26px; }
 .brand { display: flex; align-items: center; flex: none; }
-.brand img { height: 92px; width: auto; display: block; transition: height 0.25s ease; }
-.site-header.scrolled .brand img { height: 64px; }
+.brand img { height: 72px; width: auto; display: block; }
 .main-nav { margin-left: auto; }
 .main-nav ul { display: flex; gap: 24px; list-style: none; margin: 0; padding: 0; }
 .main-nav a { display: block; white-space: nowrap; text-decoration: none; color: var(--brown); font-weight: 600; padding: 4px 0; border-bottom: 2px solid transparent; }
@@ -80,8 +78,8 @@ html { scroll-padding-top: 96px; }
     .insta { margin-left: auto; }
 }
 @media (max-width: 560px) {
-    .site-header .wrap, .site-header.scrolled .wrap { gap: 12px; height: 72px; }
-    .brand img, .site-header.scrolled .brand img { height: 58px; }
+    .site-header .wrap { gap: 12px; height: 72px; }
+    .brand img { height: 58px; }
     .lang-switch { font-size: 14px; } .lang-switch a, .lang-switch .on { padding: 3px 6px; }
     .site-header .btn { display: none; }
 }
@@ -529,7 +527,7 @@ html { scroll-padding-top: 96px; }
 
 /* chapter bar on the build page: sticks under the header */
 html:has(.chapters) { scroll-padding-top: 175px; }
-.chapters { position: sticky; top: 76px; z-index: 30; background: rgba(251, 246, 236, 0.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.chapters { position: sticky; top: 84px; z-index: 30; background: rgba(251, 246, 236, 0.94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
 .chapters .wrap { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-block: 12px; }
 .chapters .wrap::-webkit-scrollbar { display: none; }
 .chapters a { flex: none; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-weight: 600; font-size: 15px; color: var(--brown); text-decoration: none; white-space: nowrap; transition: background 0.2s, color 0.2s; }
