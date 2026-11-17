@@ -1,0 +1,29 @@
+/* Throwaway mockups: four ways to put the title and a postcard side by side. */
+:root { --header:#f5e6c8; --page:#fbf6ec; --green:#2c5f2d; --sand:#d4a76a; --brown:#421c04; --ink:#2b1d12; --muted:#6e5f4f; --line:#e6d8bf; --navy:#1d2a6b; --yellow:#f5c518; --red:#b5262b; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 17px/1.55 'Barlow', system-ui, sans-serif; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+.hdr { background: var(--header); }
+.hdr .wrap { display: flex; align-items: center; height: 84px; gap: 26px; }
+.hdr img { height: 72px; }
+.hdr nav { margin-left: auto; display: flex; gap: 22px; font: 600 18px 'Barlow Condensed'; }
+.hdr nav a { color: var(--brown); text-decoration: none; }
+.switch { background: var(--brown); color: #fff; font-size: 14px; padding: 8px 0; }
+.switch .wrap { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.switch a { color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,.35); border-radius: 99px; padding: 2px 12px; opacity: .8; }
+.switch a.on, .switch a:hover { opacity: 1; background: rgba(255,255,255,.15); }
+.note { background: #fff3d6; border-bottom: 1px solid var(--line); font-size: 15px; padding: 10px 0; }
+.back { display: inline-block; margin: 22px 0 6px; color: var(--green); font-weight: 600; font-size: 15px; text-decoration: none; }
+.kicker { font: 700 14px 'Barlow'; letter-spacing: .14em; text-transform: uppercase; color: var(--green); }
+h1 { font: 800 clamp(44px, 5.4vw, 76px)/.95 'Barlow Condensed'; color: var(--brown); margin: 8px 0 14px; }
+.by { color: var(--muted); margin: 0 0 18px; }
+.short { background: #fff; border: 1px solid var(--line); border-left: 5px solid var(--green); border-radius: 18px; padding: 18px 22px; font-size: 16px; }
+.short b { font: 700 20px 'Barlow Condensed'; display: block; color: var(--brown); margin-bottom: 4px; }
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 7px 7px 7px 20px; border-radius: 99px; background: var(--green); color: #fff; font-weight: 600; text-decoration: none; margin-top: 18px; }
+.btn i { width: 34px; height: 34px; border-radius: 50%; background: var(--sand); color: var(--brown); display: grid; place-items: center; font-style: normal; }
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; padding: 10px 0 40px; }
+.card svg { display: block; width: 100%; height: auto; }
+.card { filter: drop-shadow(0 14px 24px rgba(60,35,15,.2)); }
+.body { max-width: 760px; padding-bottom: 60px; }
+.body h2 { font: 800 32px 'Barlow Condensed'; color: var(--brown); margin: 30px 0 8px; }
+@media (max-width: 900px) { .hero { grid-template-columns: 1fr; gap: 22px; } .hero .card-col { order: -1; } .hdr nav { display: none; } }
