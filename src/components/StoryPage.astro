@@ -1,0 +1,206 @@
+---
+// One layout for every story (build story and trips), after blog mockup C:
+// a photo mosaic on top, an "in short" box, the story in sections with
+// photos, questions and answers, related stories; facts and the chapter
+// list stick on the right. All photos open full screen.
+import Base from '../layouts/Base.astro';
+import Photo from './Photo.astro';
+import { href, type Lang } from '../i18n';
+import { business } from '../data/site';
+import { plain } from '../data/faq';
+
+export interface StoryImage { src: string; w: number; h: number; alt?: string }
+export interface StorySection { id: string; title: string; html: string; images?: StoryImage[] }
+export interface StoryData {
+    title: string;
+    description: string;
+    kicker: string;
+    h1: string;
+    byline: string;
+    published: string;
+    modified?: string;
+    short: string;
+    intro?: string;
+    mosaic: StoryImage[];
+    facts: [string, string][];
+    sections: StorySection[];
+    faqTitle: string;
+    faq: { q: string; a: string }[];
+    cta: { title: string; text: string; primary: [string, string]; secondary?: [string, string] };
+    related: { title: string; sub: string; img: StoryImage; page?: string }[];
+}
+
+interface Props { lang: Lang; page: string; story: StoryData }
+const { lang, page, story } = Astro.props;
+const nl = lang === 'nl';
+const t = {
+    short: nl ? 'In het kort' : 'In short',
+    facts: nl ? 'Feiten' : 'Quick facts',
+    chapters: nl ? 'Hoofdstukken' : 'Chapters',
+    allPhotos: nl ? 'Alle foto\'s' : 'All photos',
+    more: nl ? 'Meer verhalen' : 'More stories',
+    back: nl ? 'Alle verhalen' : 'All stories',
+    soon: nl ? 'Binnenkort' : 'Coming soon',
+    open: nl ? 'Open foto' : 'Open photo',
+    galLabel: nl ? 'Foto\'s' : 'Photos',
+    prev: nl ? 'Vorige foto' : 'Previous photo',
+    next: nl ? 'Volgende foto' : 'Next photo',
+    close: nl ? 'Sluiten' : 'Close'
+};
+
+// Every photo of the story in reading order, for the full-screen viewer.
+const all: (StoryImage & { alt: string })[] = [];
+const indexOf = new Map<string, number>();
+const add = (img: StoryImage, fallback: string) => {
+    if (!indexOf.has(img.src)) {
+        indexOf.set(img.src, all.length);
+        all.push({ ...img, alt: img.alt || fallback });
+    }
+    return indexOf.get(img.src)!;
+};
+story.mosaic.forEach((m) => add(m, story.h1));
+story.sections.forEach((s) => s.images?.forEach((img, i) => add(img, `${s.title} (${i + 1})`)));
+
+const url = business.url + href(lang, page);
+const jsonLd = [
+    {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: story.h1,
+        description: story.description,
+        image: business.url + story.mosaic[0].src,
+        datePublished: story.published,
+        dateModified: story.modified ?? story.published,
+        inLanguage: nl ? 'nl-NL' : 'en-GB',
+        mainEntityOfPage: url,
+        author: { '@type': 'Person', name: 'Edwin van Davenhorst', url: business.url },
+        publisher: { '@type': 'Organization', name: 'JustRoam', url: business.url, logo: business.url + '/images/Logo_JustRoam_ClearBackground.png' }
+    },
+    {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: story.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: plain(f.a) } }))
+    },
+    {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            { '@type': 'ListItem', position: 1, name: 'JustRoam', item: business.url + href(lang, '') },
+            { '@type': 'ListItem', position: 2, name: nl ? 'Verhalen' : 'Stories', item: business.url + href(lang, 'stories.html') },
+            { '@type': 'ListItem', position: 3, name: story.h1, item: url }
+        ]
+    }
+];
+---
+<Base lang={lang} title={story.title} description={story.description} ogImage={story.mosaic[0].src} jsonLd={jsonLd}>
+    <div class="wrap story-page">
+        <a class="back-link" href={href(lang, 'stories.html')}>← {t.back}</a>
+
+        <div class="st-mosaic">
+            {story.mosaic.slice(0, 5).map((m, i) => (
+                <button type="button" data-gal-open={indexOf.get(m.src)} aria-label={`${t.open}: ${all[indexOf.get(m.src)!].alt}`}>
+                    <Photo src={m.src} width={m.w} height={m.h} alt={all[indexOf.get(m.src)!].alt} sizes={i === 0 ? '(max-width: 860px) 100vw, 50vw' : '(max-width: 860px) 50vw, 25vw'} eager={i < 3} />
+                    {i === 4 && <span class="st-more">{t.allPhotos} ({all.length})</span>}
+                </button>
+            ))}
+        </div>
+
+        <header class="st-head">
+            <span class="kicker">{story.kicker}</span>
+            <h1>{story.h1}</h1>
+            <p class="st-by">{story.byline}</p>
+        </header>
+
+        <div class="st-layout">
+            <article class="st-body">
+                <section class="st-short">
+                    <h2>{t.short}</h2>
+                    <p set:html={story.short} />
+                </section>
+                {story.intro && <div class="st-intro" set:html={story.intro} />}
+
+                {story.sections.map((s) => (
+                    <section class="st-section" id={s.id}>
+                        <h2>{s.title}</h2>
+                        <div class="st-text" set:html={s.html} />
+                        {s.images && s.images.length > 0 && (
+                            <div class:list={['st-photos', { one: s.images.length === 1 }]}>
+                                {s.images.map((img) => (
+                                    <button type="button" data-gal-open={indexOf.get(img.src)} aria-label={`${t.open}: ${all[indexOf.get(img.src)!].alt}`}>
+                                        <Photo src={img.src} width={img.w} height={img.h} alt={all[indexOf.get(img.src)!].alt} sizes="(max-width: 860px) 50vw, 260px" />
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </section>
+                ))}
+
+                <section class="st-faq">
+                    <h2>{story.faqTitle}</h2>
+                    <div class="faq">{story.faq.map((f) => <details><summary>{f.q}</summary><p set:html={f.a} /></details>)}</div>
+                </section>
+
+                <div class="st-cta">
+                    <h3>{story.cta.title}</h3>
+                    <p>{story.cta.text}</p>
+                    <div class="st-cta-btns">
+                        <a class="btn sand" href={href(lang, story.cta.primary[1])}>{story.cta.primary[0]} <span class="ar" aria-hidden="true">→</span></a>
+                        {story.cta.secondary && <a class="link light" href={href(lang, story.cta.secondary[1])}>{story.cta.secondary[0]}</a>}
+                    </div>
+                </div>
+
+                <h2 class="st-related-t">{t.more}</h2>
+                <div class="st-related">
+                    {story.related.map((r) => {
+                        const inner = <><Photo src={r.img.src} width={r.img.w} height={r.img.h} alt="" sizes="(max-width: 860px) 100vw, 260px" /><span><b>{r.title}</b><small>{r.page ? r.sub : t.soon}</small></span></>;
+                        return r.page ? <a href={href(lang, r.page)}>{inner}</a> : <div class="soon">{inner}</div>;
+                    })}
+                </div>
+            </article>
+
+            <aside class="st-aside">
+                <div class="st-card">
+                    <h3>{t.facts}</h3>
+                    <dl>{story.facts.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
+                </div>
+                <nav class="st-card st-toc" aria-label={t.chapters}>
+                    <h3>{t.chapters}</h3>
+                    <ol>{story.sections.map((s) => <li><a href={`#${s.id}`}>{s.title}</a></li>)}</ol>
+                </nav>
+            </aside>
+        </div>
+    </div>
+
+    <dialog class="gal" aria-label={t.galLabel}>
+        <div class="gal-track">
+            {all.map((m) => <figure class="gal-slide"><Photo src={m.src} width={m.w} height={m.h} alt={m.alt} sizes="100vw" /><figcaption>{m.alt}</figcaption></figure>)}
+        </div>
+        <button type="button" class="gal-btn gal-prev" aria-label={t.prev}>‹</button>
+        <button type="button" class="gal-btn gal-next" aria-label={t.next}>›</button>
+        <button type="button" class="gal-close" aria-label={t.close}>×</button>
+        <p class="gal-count"><span>1</span> / {all.length}</p>
+    </dialog>
+</Base>
+
+<script>
+    // Full-screen photos: opens at the photo that was clicked; arrows, swipe and keys.
+    const dlg = document.querySelector<HTMLDialogElement>('dialog.gal');
+    const track = dlg?.querySelector<HTMLElement>('.gal-track');
+    const count = dlg?.querySelector('.gal-count span');
+    if (dlg && track) {
+        const total = track.children.length;
+        const current = () => Math.round(track.scrollLeft / track.clientWidth);
+        const go = (i: number, smooth = true) => track.scrollTo({ left: ((i + total) % total) * track.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+        track.addEventListener('scroll', () => { if (count) count.textContent = String(current() + 1); }, { passive: true });
+        document.querySelectorAll<HTMLElement>('[data-gal-open]').forEach((b) =>
+            b.addEventListener('click', () => { dlg.showModal(); go(Number(b.dataset.galOpen), false); })
+        );
+        dlg.querySelector('.gal-prev')?.addEventListener('click', () => go(current() - 1));
+        dlg.querySelector('.gal-next')?.addEventListener('click', () => go(current() + 1));
+        dlg.querySelector('.gal-close')?.addEventListener('click', () => dlg.close());
+        dlg.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') go(current() - 1);
+            if (e.key === 'ArrowRight') go(current() + 1);
+        });
+    }
+</script>

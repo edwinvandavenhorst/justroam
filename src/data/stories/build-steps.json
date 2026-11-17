@@ -1,0 +1,720 @@
+{
+ "en": [
+  {
+   "id": "start",
+   "title": "Start of the journey: buying the pickup",
+   "html": "<h3>Decision point</h3><p>We needed a double-cab pickup (4 seats) to make sure we could use the pickup for our family trips. Finding a pickup that met these requirements was hard as most Dutch pickups have deleted backseats due to tax incentives. Add our budget and we could select from just a few pickups, ultimately landing on our Ford Ranger.</p><h3>The bigger mission</h3><p>Beyond family travel, this pickup enables nature disconnect retreats for small groups where we leave phones, notifications, and daily distractions behind. The 4-person capacity allows us to guide intimate groups into remote places for genuine rest and reconnection with nature.</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_1.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_2.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_3.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_4.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-1",
+   "title": "Step 1: Remove tonneau cover & add canopy",
+   "html": "<h3>The first step was simple</h3><p>Dipping my toe into this conversion was luckily the easiest part. A couple of bolts and the tonneau cover and roll-bar were gone. Off to the next assignment.</p><h3>Decision point</h3><p>Sourcing the aluminum canopy was straightforward. We chose the Bushtech based on availability. The dealer was incredibly supportive: Installation at their shop was possible, I got help from the dealer in putting it on the Ranger using their forklift. From there, with a final check up from the dealer, I mounted the canopy.</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_5.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_6.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_7.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-2",
+   "title": "Step 2: Upgrade lights and install winch",
+   "html": "<h3>Decision point</h3><ul><li><strong>LED headlights:</strong> Upgrading from halogen to LED was straightforward and offered significantly more light and visibility at night.</li><li><strong>Auxiliary lights in grill:</strong> We wanted to keep the stock bumper and grill, so integrating auxiliary lights into the grill mesh was the cleanest option. The result really completed the front-end look.</li><li><strong>Winch installation:</strong> We wanted to make sure that the Ranger could recover itself in remote areas. Essential safety equipment for off-road travel and getting unstuck when there's no one around to help.</li></ul><h3>Learnings</h3><p><strong>Sequence matters:</strong> I installed the lights first, then had to remove the bumper again weeks later to fit the winch. Next time, I'd do both upgrades in one session. This would have saved hours of work</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_8.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_9.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_15.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_16.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_17.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_18.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_54.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_19.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-3",
+   "title": "Step 3: Install snorkel",
+   "html": "<h3>Decision point</h3><p>The snorkel provides security for water crossings and is an essential security during remote travel. We went with a quality brand because it's constantly exposed to UV rays. Going cheap might save a bit, but a cracked snorkel leading to water ingestion could cost thousands in engine damage.</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_10.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_11.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-4",
+   "title": "Step 4: Install water tank",
+   "html": "<h3>Decision point</h3><ul><li>We initially wanted an 80l tank positioned above the wheel arch. When it arrived, it was way too large and would've dominated the interior space. After searching alternatives, we found a 50l flat tank that fits perfectly. It fits the space well and is not intrusive for the rest of the interior.</li><li>We decided to not install any water level gauge to keep it simple. We just fill up when we can and so far we haven't run out of water.</li><li>We installed a heating pad to prevent freezing in winter conditions. Essential for protecting both the tank and pump when camping in sub-zero temperatures.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_12.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_13.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-5",
+   "title": "Step 5: Install electrical system",
+   "html": "<h3>Learnings</h3><ul><li><strong>Map out all power needs before buying components.</strong> Taking time to plan upfront saved me from buying and rebuying connectors and switches.</li><li><strong>Double-check every crimp:</strong> A loose connection can cause failures that are hard to diagnose later. Use proper crimping tools and test each connection before closing everything up.</li><li><strong>Pull all wires at once:</strong> Run cables from battery to front in one session to avoid missing connections or having to disassemble panels multiple times.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_51.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_14.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_20.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_53.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_49.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_52.jpeg",
+     "w": 1960,
+     "h": 1225
+    }
+   ]
+  },
+  {
+   "id": "step-6",
+   "title": "Step 6: Build interior",
+   "html": "<h3>Learnings</h3><ul><li><strong>Decide what wood to use:</strong> the type of wood used is essential in how strong the construction is and if it can withstand the weather.</li><li><strong>Measure everything twice (or three times):</strong>  I didn't have exact dimensions for the fridge, cooker, and drawer sliders before building. This meant rebuilding sections multiple times to get everything to fit, wasting wood and hours of work.</li><li><strong>Get the right sliders:</strong> I bought sliders that were too light which resulted in broken sliders after the first offroad trip. After that trip, I had to make upgrades and modifications plus spend more money</li><li><strong>Test ergonomics before finalizing:</strong> Solar panels under the kitchen seemed smart until the suspension lift made everything too high to reach comfortably. Learned this on the first trip and had to rebuild the entire layout. Lesson: mock up the full setup with actual heights before committing.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_21.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_31.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_32.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_38.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_39.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_40.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_55.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_56.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_57.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-7",
+   "title": "Step 7: Place roof tents",
+   "html": "<h3>Decision points</h3><ul><li><strong>1 versus 2 tents:</strong> We chose 2 tents to give some more space to each individual. Sleeping four in one tent would mean cramped quarters and poor sleep quality.</li><li><strong>Awning:</strong> We wanted the full 270 degree awning with optional tent to create a large shaded cover. With that, we can cook in the rain or escape the sun without retreating into the tents.</li></ul><h3>Learnings</h3><ul><li><strong>Installation:</strong> Having a roof tent specialist install them was essential. They knew exactly how to position and secure the tents for proper weight distribution and aerodynamics. Not something to DIY.</li><li><strong>Roof rack installation:</strong> I initially planned to use standard roof bars for the front tent. The specialist strongly advised against this as these bars aren't designed for the weight and vibration of off-road driving and would likely fail or detach. Sold them and installed a proper fixed roof rack instead. Safety first.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_23.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_24.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_25.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_26.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_27.jpeg",
+     "w": 1960,
+     "h": 1103
+    },
+    {
+     "src": "/images/build/IMG_28.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_29.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_30.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-8",
+   "title": "Step 8: Upgrade suspension and clutch",
+   "html": "<h3>Decision points</h3><ul><li><strong>Upgraded suspension:</strong> No difficult decision at all. Once the roof tents were installed, I immediately noticed the impact of the weight and overall stability of the Ranger. The upgrade to heavy duty suspension enables us to safely travel on- and offroad with the full equipment and four people. </li><li><strong>Upgraded clutch:</strong> On our first trip, we realized the stock clutch couldn't handle the increased weight and off-road driving. Frequent clutch slipping on steep terrain burned it up quickly. After returning home, we upgraded to a heavy-duty clutch. Now the Ranger handles technical terrain without issue.</li></ul><h3>Learnings</h3><ul><li><strong>Clutch:</strong> Heavy-duty clutches cost €3500+. We tested the stock clutch first and it failed after one trip. Learned our lesson and upgraded. But this approach saved us from spending on upgrades we might not have needed. Our advice is often to test first, then upgrade based on real-world experiences.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_35.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_36.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-9",
+   "title": "Step 9: Make offroad ready",
+   "html": "<h3>Decision points</h3><ul><li><strong>Rock sliders:</strong> We decided to remove the stock running boards which were made of plastic and replace them with rock sliders. These sliders protect the Ranger better against big rocks while still offering the ability to step up on them and reach the tent covers.</li><li><strong>Recovery boards:</strong> After getting stuck in our back yard and being winched out by another 4x4 it became clear that we needed these boards. They are a precaution for when it's slippery and you need to get out of that situation.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_22.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_34.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_58.jpeg",
+     "w": 1960,
+     "h": 1470
+    }
+   ]
+  },
+  {
+   "id": "step-10",
+   "title": "Step 10: Finished interior",
+   "html": "<h3>Walk-through</h3><p>Welcome to the fully built interior. The interior has the following features:</p><ul><li>Water tap and basin for cooking and cleaning</li><li>Shower connection for quick water access or showering</li><li>Large drawer with gas stove, water basin, storage</li><li>Large drawer with fridge (45l) and storage</li><li>Drawer for cutlery, condiments, winch and tent equipment</li><li>Side cabinet with access to water pump and storage</li><li>Side cubby for plates and cups</li><li>Side cabinet for storing the camping seats (4 + bench)</li><li>Side cabinet for compressor and access to the second battery</li><li>Camping table mounted on the ceiling for easy access</li><li>Solar panels mounted under the camping table for easy access</li><li>Water tank and access to the fill cap</li><li>Small items we always carry are a foldable shovel to help recover the Ranger or just dig a hole. A small axe to chop wood for making a fire</li><li>Fire extinguisher just in case</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_41.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_42.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_43.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_44.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_45.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_46.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_47.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_48.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_49.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  }
+ ],
+ "nl": [
+  {
+   "id": "start",
+   "title": "Start van de reis: de koop",
+   "html": "<h3>Keuzemoment</h3><p>We wilden een double cab pickup (4 zitplaatsen), zodat we de wagen echt voor gezinsreizen konden gebruiken. Een geschikte pickup vinden was lastig, omdat veel wagens in Nederland geen achterbank hebben ivm de bijtellingsregels voor bedrijfswagens. Samen met ons vastgestelde budget bleef er maar een kleine selectie over en uiteindelijk kozen we voor onze Ford Ranger.</p><h3>De grotere missie</h3><p>Naast gezinsreizen maakt deze pickup ‘disconnect’-retraites in de natuur mogelijk: kleine groepen, weg van telefoons, meldingen en dagelijkse drukte. Dankzij 4 slaapplaatsen kunnen we groepen meenemen naar afgelegen plekken voor echte rust en hernieuwde verbinding met de natuur.</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_1.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_2.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_3.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_4.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-1",
+   "title": "Stap 1: Tonneau cover verwijderen & aluminium opbouw plaatsen",
+   "html": "<h3>De eerste stap was simpel</h3><p>Gelukkig was het begin van onze ombouw het makkelijkst: een paar bouten los en de tonneau cover en roll-bar waren weg. Op naar de volgende klus.</p><h3>Keuzemoment</h3><p>De aluminium opbouw regelen was vrij rechttoe rechtaan. We kozen voor Bushtech op basis van beschikbaarheid. De dealer was super behulpzaam: montage in de werkplaats was mogelijk, en met hun heftruck hielpen ze om alles op de auto te zetten. Daarna heb ik, na een laatste check, de opbouw definitief gemonteerd.</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_5.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_6.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_7.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-2",
+   "title": "Stap 2: Verlichting upgraden en lier installeren",
+   "html": "<h3>Keuzemomenten</h3><ul><li><strong>LED-koplampen:</strong> Van halogeen naar LED was eenvoudig en gaf ’s nachts veel meer licht en zicht.</li><li><strong>Extra lampen in de grille:</strong> We wilden de originele bumper en grille behouden. Lampen in de grill integreren gaf het strakste resultaat en maakte de voorkant echt “af”.</li><li><strong>Lier:</strong> Zelfredzaamheid in afgelegen gebieden was een must. Een lier is essentieel veiligheidsmateriaal voor off-road reizen, zeker als er niemand in de buurt is om te helpen.</li></ul><h3>Leerpunten</h3><p><strong>Volgorde is belangrijk:</strong> ik begon met het vervangen van de lampen in de koplampen om vervolgens weken later de bumper opnieuw te moeten demonteren voor de lier. Volgende keer doe ik dit in één sessie, dat scheelt uren werk.</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_8.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_9.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_15.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_16.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_17.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_18.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_54.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_19.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-3",
+   "title": "Stap 3: Snorkel installeren",
+   "html": "<h3>Keuzemoment</h3><p>Een snorkel geeft zekerheid bij waterdoorsteken iets wat belangrijk is voor reizen waarbij we door water waden. We kozen voor een kwaliteitsmerk omdat het continu aan UV wordt blootgesteld. Besparen lijkt aantrekkelijk, maar een gescheurde snorkel en water in de motor kan je duizenden euro’s aan motorschade kosten.</p>",
+   "images": [
+    {
+     "src": "/images/build/IMG_10.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_11.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-4",
+   "title": "Stap 4: Watertank installeren",
+   "html": "<h3>Keuzemomenten</h3><ul><li>We wilden eerst een tank van 80 L boven de wielkast. Toen hij binnenkwam bleek hij véél te groot en zou hij de hele ruimte domineren. Uiteindelijk vonden we een platte tank van 50 L die perfect past en nauwelijks in de weg zit.</li><li>We hebben geen meter geplaatst om het simpel te houden. We vullen bij wanneer het kan en tot nu toe nog nooit zonder water gezeten.</li><li>We plaatsten een verwarmingsmat om bevriezen in de winter te voorkomen. Belangrijk om zowel de tank als de pomp te beschermen bij temperaturen rond of onder het vriespunt.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_12.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_13.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-5",
+   "title": "Stap 5: Elektrisch systeem installeren",
+   "html": "<h3>Leerpunten</h3><ul><li><strong>Breng alle stroombehoeften eerst in kaart.</strong> Goed plannen voorkwam onnodige vertraging door het extra moeten kopen van connectoren en schakelaars.</li><li><strong>Check elke krimpverbinding:</strong> een losse verbinding kan later storingen geven die lastig te vinden zijn. Belangrijk is dat elke verbinding goed wordt getest vóór je het dichtbouwt.</li><li><strong>Trek alle kabels in één keer:</strong> van accu naar voren in één sessie voorkomt gemiste aansluitingen en opnieuw panelen demonteren.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_51.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_14.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_20.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_53.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_49.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_52.jpeg",
+     "w": 1960,
+     "h": 1225
+    }
+   ]
+  },
+  {
+   "id": "step-6",
+   "title": "Stap 6: Interieur bouwen",
+   "html": "<h3>Leerpunten</h3><ul><li><strong>Kies het juiste hout:</strong> de gekozen houtsoort bepaalt sterkte en weerbestendigheid.</li><li><strong>Meet alles twee (of drie) keer:</strong> ik had niet alle exacte maten van koelkast, kookstel en ladegeleiders. Daardoor moest ik delen opnieuw bouwen met helaas een behoorlijke verspilling van hout en uren.</li><li><strong>Koop de juiste ladegeleiders:</strong> ik kocht te lichte geleiders; tijdens de eerste off-road reis gingen ze kapot. Daarna moest ik de geleiders upgraden en de lades modificeren (en extra geld uitgeven).</li><li><strong>Test ergonomie vóór je definitief bouwt:</strong> zonnepanelen onder de keuken leek slim, tot de verhoging door de nieuwe veren en schokbrekers alles te hoog maakte om alles comfortabel te bereiken. Na onze eerste reis hebben we helaas het hele interieur opnieuw ingericht en gebouwd. Les: zorg dat zware lades met de koelkast en het kookstel zo laag mogelijk zitten in de opbouw.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_21.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_31.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_32.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_38.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_39.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_40.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_55.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_56.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_57.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-7",
+   "title": "Stap 7: Daktenten plaatsen",
+   "html": "<h3>Keuzemomenten</h3><ul><li><strong>1 versus 2 tenten:</strong> we kozen voor 2 tenten zodat iedereen meer ruimte heeft. Met vier personen in één tent betekent krap slapen en minder slaapkwaliteit.</li><li><strong>Luifel:</strong> we wilden een 270° luifel met optionele tent voor veel schaduw. Zo kunnen we koken in de regen of uit de zon blijven zonder ons terug te moeten trekken in onze daktenten.</li></ul><h3>Leerpunten</h3><ul><li><strong>Montage:</strong> een specialist laten installeren was essentieel. Zij weten exact hoe je tenten positioneert en vastzet voor gewichtsverdeling en aerodynamica niet iets om zelf te proberen.</li><li><strong>Dakdrager:</strong> ik wilde eerst standaard dakdragers gebruiken voor de voorste tent. De specialist raadde dit sterk af: te veel gewicht en vibratie tijdens off-road rijden. Snel de dragers verkocht en een vaste drager gemonteerd. Veiligheid eerst.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_23.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_24.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_25.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_26.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_27.jpeg",
+     "w": 1960,
+     "h": 1103
+    },
+    {
+     "src": "/images/build/IMG_28.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_29.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_30.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-8",
+   "title": "Stap 8: Vering en koppeling upgraden",
+   "html": "<h3>Keuzemomenten</h3><ul><li><strong>Zwaardere vering:</strong> geen moeilijke keuze. Met de daktenten op de wagen merkte ik direct het effect op gewicht en stabiliteit. Heavy duty veren en schokbrekers maakt het mogelijk om veilig te reizen met volle bepakking en vier persoen zowel op asfalt als in het terrein.</li><li><strong>Zwaardere koppeling:</strong> op de eerste reis bleek dat de standaard koppeling het extra gewicht en off-road rijden niet goed aankon. Wegrijden met een slippende koppeling op steile stukken zorgde dat de koppeling snel op brandde. Na thuiskomst hebben we om deze reden direct een heavy-duty koppeling geplaatst en zijn er geen problemen meer tijdens het wegrijden.</li></ul><h3>Leerpunten</h3><ul><li><strong>Koppeling:</strong> heavy-duty koppelingen kosten €3500+. We hebben eerst de standaard koppeling getest; die faalde op onze eerste reis. Les geleerd en upgrade gedaan. Maar: eerst testen kan geld besparen als een upgrade misschien niet nodig blijkt.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_35.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_36.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  },
+  {
+   "id": "step-9",
+   "title": "Stap 9: Off-road ready maken",
+   "html": "<h3>Keuzemomenten</h3><ul><li><strong>Rock sliders:</strong> we haalden de standaard (plastic) side steps weg en vervingen ze door rock sliders. Beter beschermd tegen rotsen én nog steeds handig om op te stappen om bij het dak te komen of de tenthoezen te verwijderen.</li><li><strong>Recovery boards:</strong> nadat we vast kwamen te zitten in onze achtertuin en we door een andere 4x4 uit deze benarde situatie zijn getrokken, was het duidelijk: deze boards moesten er komen. Dit geeft ons de nodige grip op modder/sneeuw/zand voor als je ergens vast zit.</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_22.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_34.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_58.jpeg",
+     "w": 1960,
+     "h": 1470
+    }
+   ]
+  },
+  {
+   "id": "step-10",
+   "title": "Stap 10: Interieur afgerond",
+   "html": "<h3>Rondleiding</h3><p>Welkom in het volledig gebouwde interieur. Dit zit erin:</p><ul><li>Kraan en wasbak voor koken en schoonmaken</li><li>Douche-aansluiting voor snel toegang tot water of douchen</li><li>Grote lade met gasfornuis, wasbak en opslag</li><li>Grote lade met koelkast (45 L) en opslag</li><li>Lade voor bestek, kruiden, lier- en tentspullen</li><li>Opslag met toegang tot waterpomp + opslag</li><li>Kast voor borden en bekers</li><li>Opslag voor campingstoelen (4 + bank)</li><li>Opslag voor compressor + toegang tot tweede accu</li><li>Camping tafel aan het plafond gemonteerd</li><li>Zonnepanelen onder de tafel gemonteerd</li><li>Watertank + toegang tot vuldop</li><li>Altijd mee: opvouwbare schep (recoveren / kuil graven) en een kleine bijl om hout te hakken</li><li>Brandblusser voor de zekerheid</li></ul>",
+   "images": [
+    {
+     "src": "/images/build/IMG_41.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_42.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_43.jpeg",
+     "w": 1960,
+     "h": 1470
+    },
+    {
+     "src": "/images/build/IMG_44.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_45.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_46.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_47.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_48.jpeg",
+     "w": 1960,
+     "h": 2614
+    },
+    {
+     "src": "/images/build/IMG_49.jpeg",
+     "w": 1960,
+     "h": 2614
+    }
+   ]
+  }
+ ]
+}
