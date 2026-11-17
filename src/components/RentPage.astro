@@ -180,22 +180,22 @@ const jsonLd = [
 // site: pos = which part of a landscape photo stays in view, fit 'contain' =
 // portrait photos shown whole on a light background. A carousel with every
 // photo small underneath, and full screen on click.
-const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'; en: string; nl: string }[] = [
+const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'; noCaption?: boolean; en: string; nl: string }[] = [
     { src: '/images/rent/IMG_5025.jpeg', w: 1960, h: 1470, pos: 'center 25%', en: 'Camped under the trees with both tents up', nl: 'Kamperen onder de bomen met beide tenten open' },
-    { src: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, pos: 'center 25%', en: 'The Ranger at night with both tents lit', nl: 'De Ranger in het donker met beide tenten verlicht' },
-    { src: '/images/rent/image_forrest_1.jpeg', w: 1960, h: 1103, pos: 'center 80%', en: 'The Ranger in a forest', nl: 'De Ranger in het bos' },
-    { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, pos: 'center 60%', en: 'The Ranger by a lake', nl: 'De Ranger bij een meer' },
+    { src: '/images/rent/IMG_4042.jpeg', w: 1920, h: 1440, pos: 'center 25%', en: 'The Ranger at night in Slovenia', nl: 'De Ranger \'s nachts in Slovenië' },
+    { src: '/images/rent/image_forrest_1.jpeg', w: 1960, h: 1103, pos: 'center 80%', en: 'The Ranger with the tents and awning open', nl: 'De Ranger met de tenten en de luifel open' },
+    { src: '/images/rent/IMG_4254.jpeg', w: 1960, h: 1470, pos: 'center 60%', noCaption: true, en: 'The Ranger by a lake', nl: 'De Ranger bij een meer' },
     { src: '/images/rent/IMG_4825.jpeg', w: 1960, h: 1470, pos: 'center 20%', en: 'The Ranger with the tents folded', nl: 'De Ranger met ingeklapte tenten' },
-    { src: '/images/rent/IMG_4829.jpeg', w: 1960, h: 1938, fit: 'contain', en: 'Open canopy with the drawer system', nl: 'Open laadbak met het ladesysteem' },
-    { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, pos: 'center 20%', en: 'Slide-out table in the back', nl: 'Uitschuiftafel achterin' },
+    { src: '/images/rent/IMG_4829.jpeg', w: 1960, h: 1938, fit: 'contain', en: 'A view on what is in the back', nl: 'Een kijkje in wat er achterin zit' },
+    { src: '/images/rent/IMG_4831.jpeg', w: 1960, h: 1470, pos: 'center 20%', en: 'Fold-out water basin behind the cooker', nl: 'Uitklapbare waterbak achter het kookstel' },
     { src: '/images/rent/IMG_4832.jpeg', w: 1960, h: 1470, en: 'Two-burner gas stove on the slide-out kitchen', nl: 'Tweepits gasstel op de uitschuifkeuken' },
     { src: '/images/rent/IMG_4834.jpeg', w: 1960, h: 1470, en: 'Cooking on the gas stove', nl: 'Koken op het gasstel' },
-    { src: '/images/rent/IMG_4837.jpeg', w: 1960, h: 2613, fit: 'contain', en: 'Kitchen drawer with pans and cutlery', nl: 'Keukenlade met pannen en bestek' },
-    { src: '/images/rent/IMG_4840.jpeg', w: 1960, h: 2614, fit: 'contain', en: 'Drawer with the fridge slid out', nl: 'Lade met de koelkast uitgeschoven' },
+    { src: '/images/rent/IMG_4837.jpeg', w: 1960, h: 2613, fit: 'contain', en: 'Drawer with cutlery and other camping equipment', nl: 'Lade met bestek en andere kampeerspullen' },
+    { src: '/images/rent/IMG_4840.jpeg', w: 1960, h: 2614, fit: 'contain', en: 'Drawer with access to the fridge', nl: 'Lade met toegang tot de koelkast' },
     { src: '/images/rent/IMG_4841.jpeg', w: 1960, h: 2614, fit: 'contain', en: '45 litre fridge', nl: '45 liter koelkast' },
     { src: '/images/rent/IMG_4843.jpeg', w: 1960, h: 2613, fit: 'contain', en: 'Power panel with switches, USB and a fire extinguisher', nl: 'Stroompaneel met schakelaars, USB en een brandblusser' },
     { src: '/images/rent/IMG_4866.jpeg', w: 1960, h: 2613, fit: 'contain', en: 'Ladder up to the tent', nl: 'Ladder naar de tent' },
-    { src: '/images/rent/IMG_Forrest_2.jpeg', w: 1960, h: 1103, en: 'Awning open beside the Ranger', nl: 'Luifel uitgeklapt naast de Ranger' },
+    { src: '/images/rent/IMG_Forrest_2.jpeg', w: 1960, h: 1103, en: '270-degree awning for protection against rain and sun', nl: 'Luifel van 270 graden, tegen regen en zon' },
     { src: '/images/rent/IMG_3836.jpeg', w: 1960, h: 2614, en: 'Recovery boards on the side', nl: 'Zandplaten aan de zijkant' }
 ];
 
@@ -221,7 +221,7 @@ const photos: { src: string; w: number; h: number; pos?: string; fit?: 'contain'
         </div>
         <dialog class="gal" aria-label={copy.galLabel}>
             <div class="gal-track">
-                {photos.map((m) => <figure class="gal-slide"><Photo src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes="100vw" /><figcaption>{m[lang]}</figcaption></figure>)}
+                {photos.map((m) => <figure class="gal-slide"><Photo src={m.src} width={m.w} height={m.h} alt={m[lang]} sizes="100vw" />{!m.noCaption && <figcaption>{m[lang]}</figcaption>}</figure>)}
             </div>
             <button type="button" class="gal-btn gal-prev" aria-label={copy.galPrev}>‹</button>
             <button type="button" class="gal-btn gal-next" aria-label={copy.galNext}>›</button>
