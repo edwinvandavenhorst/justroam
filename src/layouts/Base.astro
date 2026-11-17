@@ -57,5 +57,36 @@ const schemas = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
         <slot />
     </main>
     <Footer lang={lang} />
+    <div class="mail-help" role="status" hidden data-text={lang === 'nl' ? 'Opende je mailprogramma niet? Mail ons op' : 'Did your mail app not open? Email us at'} data-copy={lang === 'nl' ? 'Kopieer adres' : 'Copy address'} data-copied={lang === 'nl' ? 'Gekopieerd' : 'Copied'}></div>
+    <script>
+        // A mailto link opens the default mail app with the email prepared.
+        // Without a mail app set up (common with webmail such as Gmail) the
+        // click does nothing at all, so if the page keeps focus we show the
+        // address with a copy button.
+        const box = document.querySelector<HTMLElement>('.mail-help');
+        let timer = 0;
+        document.addEventListener('click', (e) => {
+            const a = (e.target as Element).closest<HTMLAnchorElement>('a[href^="mailto:"]');
+            if (!a || !box) return;
+            const address = decodeURIComponent(a.href.slice(7).split('?')[0]);
+            clearTimeout(timer);
+            timer = window.setTimeout(() => {
+                if (!document.hasFocus() || document.visibilityState !== 'visible') return;
+                box.innerHTML = '';
+                const p = document.createElement('p');
+                p.append(`${box.dataset.text} `, Object.assign(document.createElement('b'), { textContent: address }));
+                const copy = Object.assign(document.createElement('button'), { type: 'button', textContent: box.dataset.copy || '' });
+                copy.addEventListener('click', async () => {
+                    try { await navigator.clipboard.writeText(address); copy.textContent = box.dataset.copied || ''; } catch { /* the address is on screen */ }
+                });
+                const close = Object.assign(document.createElement('button'), { type: 'button', className: 'mail-help-x', textContent: '×' });
+                close.setAttribute('aria-label', 'Close');
+                close.addEventListener('click', () => { box.hidden = true; });
+                box.append(p, copy, close);
+                box.hidden = false;
+            }, 1500);
+        });
+        window.addEventListener('blur', () => clearTimeout(timer));
+    </script>
 </body>
 </html>
