@@ -640,13 +640,22 @@ html:has(.chapters) { scroll-padding-top: 175px; }
     .st-related { grid-template-columns: 1fr; }
 }
 
-/* trip stories: vintage postcard on top instead of the photo mosaic */
-.st-postcard { position: relative; max-width: 1080px; margin: 6px auto 0; }
-.postcard-hero { margin: 0; transform: rotate(-1.2deg); filter: drop-shadow(0 18px 30px rgba(60, 35, 15, 0.22)); }
-.postcard-hero svg { display: block; width: 100%; height: auto; border-radius: 10px; }
-.pc-letter { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; }
+/* trip stories: title next to a "Greetings from" photo postcard (blog mockup D) */
+.st-hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: 48px; align-items: center; margin-top: 6px; }
+.st-hero .st-head { margin-top: 0; }
+.st-hero h1 { font-size: clamp(42px, 4.8vw, 72px); line-height: 0.95; }
+.st-hero .st-short { margin-top: 18px; }
+.st-card-col { display: grid; justify-items: end; gap: 12px; }
+.st-postcard { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; transform: rotate(2deg); filter: drop-shadow(0 14px 24px rgba(60, 35, 15, 0.2)); transition: transform 0.3s; }
+.st-postcard:hover { transform: rotate(0.5deg) scale(1.01); }
+.postcard-hero { margin: 0; }
+.postcard-hero svg { display: block; width: 100%; height: auto; }
 .pc-script { font-family: 'Yellowtail', cursive; }
-.pc-ribbon { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.04em; }
+.pc-word { font-family: 'Alfa Slab One', serif; }
 .pc-stamp { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 0.05em; }
-.st-allphotos { position: absolute; right: 18px; bottom: -22px; }
-@media (max-width: 640px) { .st-allphotos { position: static; margin-top: 18px; } .postcard-hero { transform: none; } }
+.st-allphotos { background: none; border: 0; border-bottom: 2px solid var(--sand); padding: 0 0 2px; font: 700 15px var(--font); color: var(--brown); cursor: pointer; }
+@media (max-width: 900px) {
+    .st-hero { grid-template-columns: 1fr; gap: 22px; }
+    .st-card-col { order: -1; justify-items: start; }
+    .st-postcard { transform: none; }
+}

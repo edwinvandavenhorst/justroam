@@ -32,21 +32,17 @@ const P = {
     weisseeLake: ph('weissee-lake', 1280, 960, 'Turquoise water at the Weißsee', 'Turquoise water bij de Weißsee')
 };
 
-// The postcard on top: Bosnian flag colours (navy and yellow, white stars on
-// the stamp) and a kilim band, the woven pattern of Bosnian rugs.
+// The postcard on top (blog mockup D): a photo from the trip, the greeting
+// written on it, and a stamp in the colours of the Bosnian flag (navy and
+// yellow with white stars), postmarked in Lukomir.
 const card = (nl: boolean): PostcardData => ({
     greeting: nl ? 'Groeten uit' : 'Greetings from',
     word: nl ? 'BOSNIË' : 'BOSNIA',
-    sub: nl ? 'en een beetje Slovenië · zomer 2025' : '& a little bit of Slovenia · summer 2025',
-    photos: ['strbacki-buk', 'lukomir-road', 'una-rapids', 'livno-plateau-evening', 'jajce-gate', 'rama-lake-beach'].map((n) => {
-        const portrait = n === 'jajce-gate';
-        return { src: dir + n + '.jpg', w: portrait ? 960 : 1280, h: portrait ? 1280 : 960 };
-    }),
-    background: { src: dir + 'lukomir-gravel.jpg', w: 1280, h: 960 },
-    colors: { ink: '#1d2a6b', accent: '#f5c518', script: '#b5262b', shadow: '#1d2a6b', band: ['#b5262b', '#1d2a6b', '#f5c518'] },
-    stamp: { country: 'BOSNA I HERCEGOVINA', value: '1 KM', year: '2025' },
+    photo: { src: dir + 'rama-lake-roof.jpg', w: 1280, h: 960 },
+    colors: { word: '#f5c518', outline: '#1d2a6b', stampBg: '#1d2a6b', stampAccent: '#f5c518', stampStars: true },
+    stamp: { country: 'BOSNA I HERCEGOVINA', value: '1 KM' },
     postmark: { place: 'LUKOMIR · BIH', date: '13.08.25' },
-    label: nl ? 'Ansichtkaart: groeten uit Bosnië, met foto\'s van de reis in de letters' : 'Postcard: greetings from Bosnia, with photos from the trip inside the letters'
+    label: nl ? 'Ansichtkaart: groeten uit Bosnië, met de Ranger aan het Rama-meer' : 'Postcard: greetings from Bosnia, with the Ranger at Rama lake'
 });
 
 export function bosniaStory(lang: Lang): StoryData {

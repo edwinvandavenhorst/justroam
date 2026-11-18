@@ -99,33 +99,49 @@ const jsonLd = [
         <a class="back-link" href={href(lang, 'stories.html')}>← {t.back}</a>
 
         {story.postcard ? (
-            <div class="st-postcard">
-                <Postcard card={story.postcard} />
-                <button type="button" class="btn light st-allphotos" data-gal-open="0">{t.allPhotos} ({all.length}) <span class="ar" aria-hidden="true">→</span></button>
+            <div class="st-hero">
+                <div>
+                    <header class="st-head">
+                        <span class="kicker">{story.kicker}</span>
+                        <h1>{story.h1}</h1>
+                        <p class="st-by">{story.byline}</p>
+                    </header>
+                    <section class="st-short">
+                        <h2>{t.short}</h2>
+                        <p set:html={story.short} />
+                    </section>
+                </div>
+                <div class="st-card-col">
+                    <button type="button" class="st-postcard" data-gal-open="0" aria-label={`${t.allPhotos} (${all.length})`}><Postcard card={story.postcard} /></button>
+                    <button type="button" class="link st-allphotos" data-gal-open="0">{t.allPhotos} ({all.length})</button>
+                </div>
             </div>
         ) : (
-        <div class="st-mosaic">
-            {story.mosaic.slice(0, 5).map((m, i) => (
-                <button type="button" data-gal-open={indexOf.get(m.src)} aria-label={`${t.open}: ${all[indexOf.get(m.src)!].alt}`}>
-                    <Photo src={m.src} width={m.w} height={m.h} alt={all[indexOf.get(m.src)!].alt} sizes={i === 0 ? '(max-width: 860px) 100vw, 50vw' : '(max-width: 860px) 50vw, 25vw'} eager={i < 3} />
-                    {i === 4 && <span class="st-more">{t.allPhotos} ({all.length})</span>}
-                </button>
-            ))}
-        </div>
+            <>
+                <div class="st-mosaic">
+                    {story.mosaic.slice(0, 5).map((m, i) => (
+                        <button type="button" data-gal-open={indexOf.get(m.src)} aria-label={`${t.open}: ${all[indexOf.get(m.src)!].alt}`}>
+                            <Photo src={m.src} width={m.w} height={m.h} alt={all[indexOf.get(m.src)!].alt} sizes={i === 0 ? '(max-width: 860px) 100vw, 50vw' : '(max-width: 860px) 50vw, 25vw'} eager={i < 3} />
+                            {i === 4 && <span class="st-more">{t.allPhotos} ({all.length})</span>}
+                        </button>
+                    ))}
+                </div>
+                <header class="st-head">
+                    <span class="kicker">{story.kicker}</span>
+                    <h1>{story.h1}</h1>
+                    <p class="st-by">{story.byline}</p>
+                </header>
+            </>
         )}
-
-        <header class="st-head">
-            <span class="kicker">{story.kicker}</span>
-            <h1>{story.h1}</h1>
-            <p class="st-by">{story.byline}</p>
-        </header>
 
         <div class="st-layout">
             <article class="st-body">
-                <section class="st-short">
-                    <h2>{t.short}</h2>
-                    <p set:html={story.short} />
-                </section>
+                {!story.postcard && (
+                    <section class="st-short">
+                        <h2>{t.short}</h2>
+                        <p set:html={story.short} />
+                    </section>
+                )}
                 {story.intro && <div class="st-intro" set:html={story.intro} />}
 
                 {story.sections.map((s) => (
