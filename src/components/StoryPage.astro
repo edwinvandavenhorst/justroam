@@ -60,7 +60,9 @@ const add = (img: StoryImage, fallback: string) => {
     }
     return indexOf.get(img.src)!;
 };
-story.mosaic.forEach((m) => add(m, story.h1));
+// With a postcard on top the photos open in the order of the story (the
+// trip); otherwise the mosaic photos come first.
+if (!story.postcard) story.mosaic.forEach((m) => add(m, story.h1));
 story.sections.forEach((s) => s.images?.forEach((img, i) => add(img, `${s.title} (${i + 1})`)));
 
 const url = business.url + href(lang, page);
